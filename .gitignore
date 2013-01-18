@@ -11,6 +11,7 @@
 *.sln
 *.sln.docstates
 *.csproj
+*.csproj.Debug.cachefile
 *.contentproj
 
 # Build results
