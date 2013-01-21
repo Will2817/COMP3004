@@ -18,6 +18,7 @@ namespace Lotus
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
+        public static Dictionary<String, Texture2D> textures;
         public static SpriteFont dataFont; //font used to display data in the window
         public static bool displayInstrumentation = true; //display extra, debug,  info on game window when true
         public static bool performBackfaceCulling = true; //toggle back face culling on and off
@@ -37,6 +38,8 @@ namespace Lotus
         Matrix worldScaleMatrix;
 
         CubeModel board;
+        Graph positions;
+        String hover;
 
         public Game1()
         {
@@ -96,6 +99,11 @@ namespace Lotus
             graphics.ApplyChanges();
             Window.Title = "COMP3004 Lotus";
 
+            textures = new Dictionary<string, Texture2D>();
+
+            textures.Add("circle", Content.Load<Texture2D>(@"Images/circle"));
+            textures.Add("line", Content.Load<Texture2D>(@"Images/line"));
+
             cameraInitialPosition = new Vector3(1.75f, 0.9f, 1.75f);
             camera = new Camera(this,  //game
                                 cameraInitialPosition,  //camera location
@@ -114,6 +122,13 @@ namespace Lotus
 
             board = new CubeModel(this, 2, 0.1f, 2);
             board.translate(Matrix.CreateTranslation(new Vector3(0,-0.05f,0)));
+
+            positions = new Graph();
+
+            positions.add("1", new String[] { "2"}, -0.53f, -0.18f);
+            positions.add("2", new String[] { }, 0.50f, -0.17f);
+
+            hover = "None";
 
             base.Initialize();
         }
@@ -236,6 +251,7 @@ namespace Lotus
             effect.TextureEnabled = true;  //because we are about to render textures not colors
 
             board.Draw(effect);
+            positions.draw(this, effect);
 
             if (displayInstrumentation)
             {
@@ -266,8 +282,40 @@ namespace Lotus
 
                 //figure out how far the centroid of the object is to the camera position
                 Vector3 centroidLocation = Vector3.Transform(new Vector3(0, 0, 0), world);
-                spriteBatch.DrawString(dataFont, "Dist to Cam:" + Vector3.Distance(centroidLocation, camera.cameraPosition), new Vector2(Window.ClientBounds.Width - 260, 10), Color.Black);
+                spriteBatch.DrawString(dataFont, "Dist to Cam:" + Vector3.Distance(centroidLocation, camera.cameraPosition), new Vector2(Window.ClientBounds.Width - 260, 10), Color.White);
 
+                Vector3 pos0 = new Vector3(Mouse.GetState().X, Mouse.GetState().Y, 0);
+                Vector3 pos1 = new Vector3(Mouse.GetState().X, Mouse.GetState().Y, 1);
+                pos0 = GraphicsDevice.Viewport.Unproject(pos0, camera.projection, camera.view, Matrix.Identity);
+                pos1 = GraphicsDevice.Viewport.Unproject(pos1, camera.projection, camera.view, Matrix.Identity);
+
+                Ray ray = new Ray(pos0, pos1 - pos0);
+
+                float? depth = ray.Intersects(new Plane(Vector3.UnitY, 0));
+
+                if (depth != null)
+                {
+                    Vector3 ms_world_pos = (pos0 + (pos1 - pos0) * depth.Value);
+
+                    hover = positions.findNodeClicked(ms_world_pos.X, ms_world_pos.Z);
+
+                    spriteBatch.DrawString(dataFont, "Hover:" + hover, new Vector2(Window.ClientBounds.Width - 260, 70), Color.White);
+                    spriteBatch.DrawString(dataFont, "x:" + ms_world_pos.X, new Vector2(Window.ClientBounds.Width - 260, 90), Color.White);
+                    spriteBatch.DrawString(dataFont, "z:" + ms_world_pos.Z, new Vector2(Window.ClientBounds.Width - 260, 110), Color.White);
+                }
+                /*
+                Vector3 toBoard = camera.cameraPosition;
+                Vector3 distCenterScreen = new Vector3(Math.Abs( (float)(Window.ClientBounds.Width/2 - Mouse.GetState().X)/Window.ClientBounds.Width), Math.Abs((float)(Window.ClientBounds.Height/2 - Mouse.GetState().Y)/Window.ClientBounds.Height),0);
+                Vector3 distCenterCamera = distCenterScreen+camera.cameraPosition;
+                while (toBoard.Y > 0)
+                {
+                    toBoard -= distCenterCamera/100;
+                }*/
+
+             //   spriteBatch.DrawString(dataFont, "x:" + toBoard.X, new Vector2(Window.ClientBounds.Width - 260, 30), Color.White);
+             //   spriteBatch.DrawString(dataFont, "y:" + toBoard.Y, new Vector2(Window.ClientBounds.Width - 260, 50), Color.White);
+             //   spriteBatch.DrawString(dataFont, "z:" + toBoard.Z, new Vector2(Window.ClientBounds.Width - 260, 70), Color.White);
+                
                 //spriteBatch.DrawString(dataFont, "Mouse X=" + Mouse.GetState().X + " Y=" + Mouse.GetState().Y, new Vector2(Window.ClientBounds.Width - 260, 10), Color.Black);
 
                 spriteBatch.End();
