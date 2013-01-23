@@ -21,12 +21,37 @@ namespace Lotus
         {
             effect.VertexColorEnabled = false;  //because we are about to render textures not color
             effect.TextureEnabled = true;  //because we are about to render textures not colors
-            Color color = Color.Gray;
+            VertexPositionTexture[] vertexTextures;
             foreach (Node sourceNode in nodes.Values)
             {
                 foreach (Node destNode in sourceNode.neighbours.Values)
                 {
+                    Matrix world = Matrix.Identity;
 
+                    vertexTextures = new VertexPositionTexture[2 * 3];
+
+                    float width = 0.01f;
+                    float length = (destNode.position-sourceNode.position).Length();
+                    float angle = (float)Math.Atan2(destNode.position.X - sourceNode.position.X, destNode.position.Z - sourceNode.position.Z);
+                    Matrix rotate = Matrix.CreateRotationY(angle-(float)MathHelper.PiOver2);
+                    Matrix translate = Matrix.CreateTranslation(sourceNode.position);                                       
+
+                    Vector3 vertex1 = new Vector3(0, 0, width);
+                    Vector3 vertex2 = new Vector3(0, 0, -width);
+                    Vector3 vertex3 = new Vector3(length, 0, width);
+                    Vector3 vertex4 = new Vector3(length, 0, -width);
+
+                    vertexTextures[0] = new VertexPositionTexture(vertex3, new Vector2(0, 1));
+                    vertexTextures[1] = new VertexPositionTexture(vertex1, new Vector2(0, 0));
+                    vertexTextures[2] = new VertexPositionTexture(vertex2, new Vector2(1, 0));
+                    vertexTextures[3] = new VertexPositionTexture(vertex3, new Vector2(0, 1));
+                    vertexTextures[4] = new VertexPositionTexture(vertex2, new Vector2(1, 0));
+                    vertexTextures[5] = new VertexPositionTexture(vertex4, new Vector2(1, 1));
+                    world *= rotate * translate;
+                    effect.World = world;
+                    effect.Texture = Game1.textures["line"];
+                    effect.CurrentTechnique.Passes[0].Apply();
+                    game.GraphicsDevice.DrawUserPrimitives<VertexPositionTexture>(PrimitiveType.TriangleList, vertexTextures, 0, 2);
 
 
                     //effect.Texture = Game1.textures["line"];
@@ -79,6 +104,7 @@ namespace Lotus
                     {
                         adj.Add(nodes[candidate]);
                     }
+
                 }
             }
             nodes.Add(name, new Node(name, adj, _x, _z));
@@ -88,11 +114,11 @@ namespace Lotus
         {
             public Dictionary<string, Node> neighbours;
             public string value;
-            public float x, z;
             public static float rad = 0.06f;
             public static float y = 0f;
             public Color color = Color.Gray;
             public VertexPositionTexture[] vertexTextures;
+            public Vector3 position;
 
             public Node(string name, List<Node> adjacents, float _x = 0, float _z = 0)
             {
@@ -100,15 +126,14 @@ namespace Lotus
                 neighbours = new Dictionary<string, Node>();
                 vertexTextures = new VertexPositionTexture[2 * 3];
 
-                x = _x;
-                z = _z;
+                position = new Vector3(_x, y, _z);
 
-                vertexTextures[0] = new VertexPositionTexture(new Vector3(x - rad, y, z + rad), new Vector2(0, 1)); //0 y values need to be fixed to board height
-                vertexTextures[1] = new VertexPositionTexture(new Vector3(x - rad, y, z - rad), new Vector2(0, 0)); //4
-                vertexTextures[2] = new VertexPositionTexture(new Vector3(x + rad, y, z - rad), new Vector2(1, 0)); //5
-                vertexTextures[3] = new VertexPositionTexture(new Vector3(x - rad, y, z + rad), new Vector2(0, 1)); //0
-                vertexTextures[4] = new VertexPositionTexture(new Vector3(x + rad, y, z - rad), new Vector2(1, 0)); //5
-                vertexTextures[5] = new VertexPositionTexture(new Vector3(x + rad, y, z + rad), new Vector2(1, 1));  //1
+                vertexTextures[0] = new VertexPositionTexture(position + new Vector3(-rad, 0,rad), new Vector2(0, 1)); //0 y values need to be fixed to board height
+                vertexTextures[1] = new VertexPositionTexture(position + new Vector3(-rad, 0,-rad), new Vector2(0, 0)); //4
+                vertexTextures[2] = new VertexPositionTexture(position + new Vector3(rad, 0,-rad), new Vector2(1, 0)); //5
+                vertexTextures[3] = new VertexPositionTexture(position + new Vector3(-rad, 0,rad), new Vector2(0, 1)); //0
+                vertexTextures[4] = new VertexPositionTexture(position + new Vector3(rad, 0,-rad), new Vector2(1, 0)); //5
+                vertexTextures[5] = new VertexPositionTexture(position + new Vector3(rad, 0,rad), new Vector2(1, 1));  //1
 
                 foreach (Node neighbour in adjacents)
                 {
@@ -118,8 +143,8 @@ namespace Lotus
 
             public bool isInRange(float qx, float qz)
             {
-                float xDist = qx - x;
-                float zDist = qz - z;
+                float xDist = qx - position.X;
+                float zDist = qz - position.Z;
                 double dist = Math.Sqrt(xDist * xDist + zDist * zDist);
                 return dist <= rad;
             }

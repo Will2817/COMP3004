@@ -124,9 +124,39 @@ namespace Lotus
             board.translate(Matrix.CreateTranslation(new Vector3(0,-0.05f,0)));
 
             positions = new Graph();
-
-            positions.add("1", new String[] { "2"}, -0.53f, -0.18f);
-            positions.add("2", new String[] { }, 0.50f, -0.17f);
+            positions.add("14", new String[] { }, 0.485f, 0.625f);
+            positions.add("13", new String[] { "14" }, 0.78f, 0.25f);
+            positions.add("12", new String[] { "13" }, 0.77f, -0.26f);
+            positions.add("11", new String[] { "12" }, 0.47f, -0.66f);
+            positions.add("10", new String[] { "11" }, -0.01f, -0.81f);
+            positions.add("9", new String[] { "10" }, -0.485f, -0.66f);
+            positions.add("8", new String[] { "9" }, -0.79f, -0.25f);
+            positions.add("7", new String[] { "8" }, -0.785f, 0.25f);
+            positions.add("6", new String[] { "7" }, -0.48f, 0.65f);
+            positions.add("5", new String[] { "6" }, -0.025f, 0.775f);
+            positions.add("4", new String[] { "5" }, -0.01f, 0.535f);
+            positions.add("3b", new String[] { "4" }, 0.305f, 0.435f);
+            positions.add("2b", new String[] { "3b" }, 0.515f, 0.16f);
+            positions.add("1b", new String[] { "2b" }, 0.50f, -0.17f);
+            positions.add("3a", new String[] { "4" }, -0.33f, 0.435f);
+            positions.add("2a", new String[] { "3a" }, -0.54f, 0.16f);
+            positions.add("1a", new String[] { "2a" }, -0.53f, -0.18f);
+            positions.add("p1d", new String[] { "1a", "1b" }, -0.25f, -0.4f);
+            positions.add("p1c", new String[] { "1a", "1b" }, -0.25f, -0.2f);
+            positions.add("p1b", new String[] { "1a", "1b" }, -0.25f, 0.0f);
+            positions.add("p1a", new String[] { "1a", "1b" }, -0.25f, 0.2f);
+            positions.add("p2d", new String[] { "1a", "1b" }, -0.10f, -0.4f);
+            positions.add("p2c", new String[] { "1a", "1b" }, -0.10f, -0.2f);
+            positions.add("p2b", new String[] { "1a", "1b" }, -0.10f, 0.0f);
+            positions.add("p2a", new String[] { "1a", "1b" }, -0.10f, 0.2f);
+            positions.add("p3d", new String[] { "1a", "1b" }, 0.10f, -0.4f);
+            positions.add("p3c", new String[] { "1a", "1b" }, 0.10f, -0.2f);
+            positions.add("p3b", new String[] { "1a", "1b" }, 0.10f, 0.0f);
+            positions.add("p3a", new String[] { "1a", "1b" }, 0.10f, 0.2f);
+            positions.add("p4d", new String[] { "1a", "1b" }, 0.25f, -0.4f);
+            positions.add("p4c", new String[] { "1a", "1b" }, 0.25f, -0.2f);
+            positions.add("p4b", new String[] { "1a", "1b" }, 0.25f, 0.0f);
+            positions.add("p4a", new String[] { "1a", "1b" }, 0.25f, 0.2f);
 
             hover = "None";
 
@@ -251,10 +281,11 @@ namespace Lotus
             effect.TextureEnabled = true;  //because we are about to render textures not colors
 
             board.Draw(effect);
-            positions.draw(this, effect);
+            
 
             if (displayInstrumentation)
             {
+                positions.draw(this, effect);
                 effect.World = axisWorld; //position axis at origin
                 // Start using the BasicEffect to draw User primitives
                 effect.VertexColorEnabled = true;  //because we are about to render colors not textures
