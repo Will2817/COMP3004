@@ -11,8 +11,6 @@ namespace _7Wonders
     public class Button : Visual
     {
         protected string sfont;
-        protected SpriteFont font;
-        protected string text;
         protected bool mouseDown = false;
         protected bool pressed = false;
         protected bool clicked = false;
@@ -20,7 +18,7 @@ namespace _7Wonders
         protected Color fColor;
 
         public Button(Game1 theGame, Vector2 _pos,int _w, int _h, string _t, string _sfont, string texture)
-            : base(theGame, _pos, _w, _h, (texture != null)? texture : "Images/line")
+            : base(theGame, _pos, _w, _h, (texture != null) ? texture : "line")
         {
             sfont = _sfont;
             bColor = Color.Gray;
@@ -30,8 +28,8 @@ namespace _7Wonders
 
         public override void LoadContent()
         {
-            font = game.Content.Load<SpriteFont>(sfont);
-            image = game.Content.Load<Texture2D>("Images/line");
+            font = Game1.fonts[sfont];
+            image = Game1.textures["line"];
         }
 
         public void setText(String t)

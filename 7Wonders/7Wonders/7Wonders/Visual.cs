@@ -23,6 +23,9 @@ namespace _7Wonders
         protected int height;
         protected int opacity;
         protected Color color;
+        protected string text;
+        protected string sFont;
+        protected SpriteFont font;
 
         public Visual(Game1 theGame, Vector2 _pos, int _w, int _h, string _text)
         {
@@ -46,6 +49,16 @@ namespace _7Wonders
             color = new Color(_color.R, _color.G, _color.B, opacity);
         }
 
+        public Visual(Game1 theGame, Vector2 _pos, string _text, string _sFont, Color _color)
+        {
+            game = theGame;
+            position = _pos;
+            opacity = 255;
+            color = new Color(_color.R, _color.G, _color.B, opacity);
+            sFont = _sFont;
+            text = _text;
+        }
+
         public void setPosition(Vector2 _vec)
         {
             position = _vec;
@@ -62,7 +75,10 @@ namespace _7Wonders
         }
         public virtual void LoadContent()
         {
-            image = game.Content.Load<Texture2D>(texture);
+            if (text != null)
+                font = Game1.fonts["Font1"];
+            else
+                image = Game1.textures[texture];
         }
 
         public virtual void Update(GameTime gameTime, MouseState mState)
@@ -71,8 +87,15 @@ namespace _7Wonders
 
         public virtual void Draw(GameTime gameTime,SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(image, new Rectangle((int)position.X - 1, (int)position.Y - 1, width + 2, height + 2), new Color(0, 0, 0, opacity));
-            spriteBatch.Draw(image, new Rectangle((int)position.X, (int)position.Y, width, height), new Rectangle(0, 0, image.Width, image.Height), new Color(color.R, color.G, color.B,opacity));
+            if (text != null)
+            {
+                spriteBatch.DrawString(font, text, new Vector2(position.X + 2, position.Y + 2), new Color(255, 255, 255, opacity));
+            }
+            else
+            {
+                spriteBatch.Draw(image, new Rectangle((int)position.X - 1, (int)position.Y - 1, width + 2, height + 2), new Color(0, 0, 0, opacity));
+                spriteBatch.Draw(image, new Rectangle((int)position.X, (int)position.Y, width, height), new Rectangle(0, 0, image.Width, image.Height), new Color(color.R, color.G, color.B, opacity));
+            }
         }
 
         public void setColor(Color _color)

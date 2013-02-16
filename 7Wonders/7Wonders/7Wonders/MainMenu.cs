@@ -13,50 +13,56 @@ using System.Windows.Forms;
 
 namespace _7Wonders
 {
-    class MainMenu
+    public class MainMenu : Interface
     {
-        protected Game1 game;
         protected static Dictionary<String, Visual> visuals1;
         protected static Dictionary<String, Visual> visuals2;
         protected static Dictionary<String, Visual> visuals3;
-        protected static Dictionary<String, Visual> activeVisuals;
-        protected Texture2D background;
-        protected Menu menu;
 
         protected static Button HGame;
         protected static Button JGame;
+        protected static Button CRoom;
+
+        protected static Checkbox randomBox;
+        protected static Checkbox onlyABox;
 
         public MainMenu(Game1 theGame)
+            :base (theGame, "title")
         {
-            game = theGame;
             visuals1 = new Dictionary<String, Visual>();
             visuals2 = new Dictionary<String, Visual>();
             visuals3 = new Dictionary<String, Visual>();
 
-            HGame = new Button(game, new Vector2(150, 450), 200, 50, "Host Game", "Fonts/Font1", null);
-            JGame = new Button(game, new Vector2(450, 450), 200, 50, "Join Game", "Fonts/Font1", null);
+            HGame = new Button(game, new Vector2(150, 450), 200, 50, "Host Game", "Font1", null);
+            JGame = new Button(game, new Vector2(450, 450), 200, 50, "Join Game", "Font1", null);
+            CRoom = new Button(game, new Vector2(260, 420), 170, 50, "Create Room", "Font1", null);
+
+            randomBox = new Checkbox(game, new Vector2(450, 285));
+            onlyABox = new Checkbox(game, new Vector2(450, 355));
 
             visuals1.Add("HGame", HGame);
             visuals1.Add("JGame", JGame);
 
-            visuals2.Add("DBox", new Visual(game,new Vector2(250,200),300,300, "Images/line", Color.Silver));
-            visuals2.Add("box1", new Visual(game, new Vector2(275, 210), 200, 50, "Images/line", Color.SlateGray));
-            visuals2.Add("box2", new Visual(game, new Vector2(260, 270), 150, 50, "Images/line", Color.SlateGray));
-            visuals2.Add("check1", new Checkbox(game, new Vector2(450, 285)));
-            visuals2.Add("box3", new Visual(game, new Vector2(260, 340), 150, 50, "Images/line", Color.SlateGray));
-            visuals2.Add("check2", new Checkbox(game, new Vector2(450, 355)));
-            visuals2.Add("CRoom", new Button(game, new Vector2(260, 420), 170, 50, "Create Room", "Fonts/Font1", null));
+            visuals2.Add("DBox", new Visual(game,new Vector2(250,200),300,300, "line", Color.Silver));
+            visuals2.Add("Box1", new Visual(game, new Vector2(275, 210), 200, 50, "line", Color.SlateGray));
+            visuals2.Add("String1", new Visual(game, new Vector2(280, 215), "Room Setup", "Font1", Color.White));
+            visuals2.Add("Box2", new Visual(game, new Vector2(260, 270), 150, 50, "line", Color.SlateGray));
+            visuals2.Add("String2", new Visual(game, new Vector2(265, 275), "Assign boards", "Font1", Color.White));
+            visuals2.Add("Check1", randomBox);
+            visuals2.Add("Box3", new Visual(game, new Vector2(260, 340), 150, 50, "line", Color.SlateGray));
+            visuals2.Add("String3", new Visual(game, new Vector2(265, 345), "Only Side A", "Font1", Color.White));
+            visuals2.Add("Check2", onlyABox);
+            visuals2.Add("CRoom", CRoom);
 
             visuals3.Add("HGame", HGame);
             visuals3.Add("check2", new Checkbox(game, new Vector2(375, 350)));
 
             activeVisuals = visuals1;
-
-            menu = new Menu();
         }
 
-        public virtual void LoadContent()
+        public override void LoadContent()
         {
+            base.LoadContent();
             foreach (Visual v in visuals1.Values)
             {
                 v.LoadContent();
@@ -69,35 +75,41 @@ namespace _7Wonders
             {
                 v.LoadContent();
             }
-            background = game.Content.Load<Texture2D>("Images/title");
         }
 
         public virtual void Update(GameTime gameTime, MouseState mouseState)
         {
-            foreach (Visual v in activeVisuals.Values)
-            {
-                v.Update(gameTime, mouseState);
-            }
+            base.Update(gameTime, mouseState);
+
             if (HGame.isClicked())
             {
                 HGame.reset();
                 activeVisuals = visuals2;
             }
-
             if (JGame.isClicked())
             {
                 JGame.reset();
                 activeVisuals = visuals3;
             }
+            if (CRoom.isClicked())
+            {
+                finished = true;
+            }
         }
 
-        public virtual void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+        public override Dictionary<string, string> isFinished()
         {
-            spriteBatch.Draw(background, new Rectangle(0, 0, Game1.WIDTH, Game1.HEIGHT), Color.White);
-            foreach (Visual v in activeVisuals.Values)
+            if (finished)
             {
-                v.Draw(gameTime, spriteBatch);
+                return new Dictionary<string, string>()
+                {
+                    {"nextInterface", "lobby"},
+                    {"random", randomBox.ToString()},
+                    {"onlyA", onlyABox.ToString()}
+                };
             }
+
+            return new Dictionary<string, string>();
         }
     }
 }

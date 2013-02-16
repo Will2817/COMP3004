@@ -16,6 +16,9 @@ namespace _7Wonders
     /// </summary>
     public class Game1 : Microsoft.Xna.Framework.Game
     {
+        public static Dictionary<String, Texture2D> textures;
+        public static Dictionary<String, SpriteFont> fonts;
+
         public static int WIDTH = 800;
         public static int HEIGHT = 600;
         GraphicsDeviceManager graphics;
@@ -25,6 +28,9 @@ namespace _7Wonders
         int cycle = 0;
         Boolean leftkeylock = false;
         Boolean rightkeylock = false;
+
+        Interface activeInterface;
+
         MainMenu mainMenu;
 
         public Game1()
@@ -32,7 +38,10 @@ namespace _7Wonders
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             wonders = new Dictionary<String, Wonder>();
+            textures = new Dictionary<String, Texture2D>();
+            fonts = new Dictionary<String, SpriteFont>();
             mainMenu = new MainMenu(this);
+            activeInterface = mainMenu;
         }
 
         /// <summary>
@@ -51,13 +60,13 @@ namespace _7Wonders
             graphics.IsFullScreen = false;
             graphics.ApplyChanges();
             Window.Title = "7 Wonders";
-            wonders.Add("Wonder1a", new Wonder(this, Vector2.Zero, WIDTH, HEIGHT, "Images/wonder1a"));
-            wonders.Add("Wonder2a", new Wonder(this, Vector2.Zero, WIDTH, HEIGHT, "Images/wonder2a"));
-            wonders.Add("Wonder3a", new Wonder(this, Vector2.Zero, WIDTH, HEIGHT, "Images/wonder3a"));
-            wonders.Add("Wonder4a", new Wonder(this, Vector2.Zero, WIDTH, HEIGHT, "Images/wonder4a"));
-            wonders.Add("Wonder5a", new Wonder(this, Vector2.Zero, WIDTH, HEIGHT, "Images/wonder5a"));
-            wonders.Add("Wonder6a", new Wonder(this, Vector2.Zero, WIDTH, HEIGHT, "Images/wonder6a"));
-            wonders.Add("Wonder7a", new Wonder(this, Vector2.Zero, WIDTH, HEIGHT, "Images/wonder7a"));
+            wonders.Add("Wonder1a", new Wonder(this, Vector2.Zero, WIDTH, HEIGHT, "wonder1a"));
+            wonders.Add("Wonder2a", new Wonder(this, Vector2.Zero, WIDTH, HEIGHT, "wonder2a"));
+            wonders.Add("Wonder3a", new Wonder(this, Vector2.Zero, WIDTH, HEIGHT, "wonder3a"));
+            wonders.Add("Wonder4a", new Wonder(this, Vector2.Zero, WIDTH, HEIGHT, "wonder4a"));
+            wonders.Add("Wonder5a", new Wonder(this, Vector2.Zero, WIDTH, HEIGHT, "wonder5a"));
+            wonders.Add("Wonder6a", new Wonder(this, Vector2.Zero, WIDTH, HEIGHT, "wonder6a"));
+            wonders.Add("Wonder7a", new Wonder(this, Vector2.Zero, WIDTH, HEIGHT, "wonder7a"));
             base.Initialize();
         }
 
@@ -69,6 +78,19 @@ namespace _7Wonders
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
+
+            textures.Add("title", Content.Load<Texture2D>("Images/title"));
+            textures.Add("line", Content.Load<Texture2D>("Images/line"));
+            textures.Add("wonder1a", Content.Load<Texture2D>("Images/wonder1a"));
+            textures.Add("wonder2a", Content.Load<Texture2D>("Images/wonder2a"));
+            textures.Add("wonder3a", Content.Load<Texture2D>("Images/wonder3a"));
+            textures.Add("wonder4a", Content.Load<Texture2D>("Images/wonder4a"));
+            textures.Add("wonder5a", Content.Load<Texture2D>("Images/wonder5a"));
+            textures.Add("wonder6a", Content.Load<Texture2D>("Images/wonder6a"));
+            textures.Add("wonder7a", Content.Load<Texture2D>("Images/wonder7a"));
+
+            fonts.Add("Font1", Content.Load<SpriteFont>("Fonts/Font1"));
+
             foreach (Wonder w in wonders.Values)
             {
                 w.LoadContent();

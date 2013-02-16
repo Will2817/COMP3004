@@ -18,7 +18,7 @@ namespace _7Wonders
         protected Boolean mouseDown;
 
         public Checkbox(Game1 theGame, Vector2 _pos, int _w, int _h)
-            :base(theGame, _pos, _w, _h, "Images/line")
+            :base(theGame, _pos, _w, _h, "line")
         {
             selected = false;
             mouseDown = false;
@@ -26,7 +26,7 @@ namespace _7Wonders
         }
 
         public Checkbox(Game1 theGame, Vector2 _pos)
-            : base(theGame, _pos, 15, 15, "Images/line")
+            : base(theGame, _pos, 15, 15, "line")
         {
             selected = false;
             mouseDown = false;
