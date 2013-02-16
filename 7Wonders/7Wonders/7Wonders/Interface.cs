@@ -13,19 +13,22 @@ using System.Windows.Forms;
 
 namespace _7Wonders
 {
-    public abstract class Interface
+    abstract class Interface
         {
         protected Game1 game;
-        protected static Dictionary<String, Visual> activeVisuals;
+        protected Dictionary<String, Visual> activeVisuals;
         protected string backgroundText;
         protected Texture2D background;
-        protected bool finished =false;
+        protected bool finished = false;
+        protected float dim;
 
-        public Interface(Game1 theGame, string _backText)
+        public Interface(Game1 theGame, string _backText, float ?_dim=null)
         {
             game = theGame;
             backgroundText = _backText;
             activeVisuals = new Dictionary<string,Visual>();
+            if (_dim.HasValue) dim = _dim.Value;
+            else dim = 1;
         }
 
         public virtual void LoadContent()
@@ -43,7 +46,7 @@ namespace _7Wonders
 
         public virtual void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(background, new Rectangle(0, 0, Game1.WIDTH, Game1.HEIGHT), Color.White);
+            spriteBatch.Draw(background, new Rectangle(0, 0, Game1.WIDTH, Game1.HEIGHT), Color.White*dim);
             foreach (Visual v in activeVisuals.Values)
             {
                 v.Draw(gameTime, spriteBatch);
@@ -52,7 +55,12 @@ namespace _7Wonders
 
         public virtual Dictionary<string, string> isFinished()
         {
-            return new Dictionary<string, string>();
+            return null;
+        }
+
+        public void setDim(int _dim)
+        {
+            dim = _dim;
         }
     }
 }

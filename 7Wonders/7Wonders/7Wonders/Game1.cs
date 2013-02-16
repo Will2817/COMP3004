@@ -32,6 +32,7 @@ namespace _7Wonders
         Interface activeInterface;
 
         MainMenu mainMenu;
+        Lobby lobby;
 
         public Game1()
         {
@@ -41,6 +42,7 @@ namespace _7Wonders
             textures = new Dictionary<String, Texture2D>();
             fonts = new Dictionary<String, SpriteFont>();
             mainMenu = new MainMenu(this);
+            lobby = new Lobby(this);
             activeInterface = mainMenu;
         }
 
@@ -57,7 +59,7 @@ namespace _7Wonders
             device = graphics.GraphicsDevice;
             graphics.PreferredBackBufferWidth = WIDTH;
             graphics.PreferredBackBufferHeight = HEIGHT;
-            graphics.IsFullScreen = false;
+            graphics.IsFullScreen = true;
             graphics.ApplyChanges();
             Window.Title = "7 Wonders";
             wonders.Add("Wonder1a", new Wonder(this, Vector2.Zero, WIDTH, HEIGHT, "wonder1a"));
@@ -96,6 +98,7 @@ namespace _7Wonders
                 w.LoadContent();
             }
             mainMenu.LoadContent();
+            lobby.LoadContent();
             // TODO: use this.Content to load your game content here
         }
 
@@ -151,7 +154,20 @@ namespace _7Wonders
                 cycle = 0;
             }
 
-            mainMenu.Update(gameTime, Mouse.GetState());
+            activeInterface.Update(gameTime, Mouse.GetState());
+
+            Dictionary<string, string> message;
+
+            if ((message = activeInterface.isFinished()) != null)
+            {
+                switch (message["nextInterface"])
+                {
+                    case ("lobby") :
+                        activeInterface = lobby;
+                        lobby.recieveMessage(message);
+                        break;
+                }
+            }
 
             base.Update(gameTime);
         }
@@ -162,12 +178,12 @@ namespace _7Wonders
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.DarkBlue);
             spriteBatch.Begin();
 
             //wonders.Values.ElementAt(cycle).Draw(gameTime, spriteBatch);
             // TODO: Add your drawing code here
-            mainMenu.Draw(gameTime, spriteBatch);
+            activeInterface.Draw(gameTime, spriteBatch);
             spriteBatch.End();
             base.Draw(gameTime);
         }

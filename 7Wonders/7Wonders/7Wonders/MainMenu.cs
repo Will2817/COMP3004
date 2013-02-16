@@ -13,7 +13,7 @@ using System.Windows.Forms;
 
 namespace _7Wonders
 {
-    public class MainMenu : Interface
+    class MainMenu : Interface
     {
         protected static Dictionary<String, Visual> visuals1;
         protected static Dictionary<String, Visual> visuals2;
@@ -77,7 +77,7 @@ namespace _7Wonders
             }
         }
 
-        public virtual void Update(GameTime gameTime, MouseState mouseState)
+        public override void Update(GameTime gameTime, MouseState mouseState)
         {
             base.Update(gameTime, mouseState);
 
@@ -104,12 +104,12 @@ namespace _7Wonders
                 return new Dictionary<string, string>()
                 {
                     {"nextInterface", "lobby"},
-                    {"random", randomBox.ToString()},
-                    {"onlyA", onlyABox.ToString()}
+                    {"random", randomBox.isSelected().ToString()},
+                    {"onlyA", onlyABox.isSelected().ToString()}
                 };
             }
 
-            return new Dictionary<string, string>();
+            return null;
         }
     }
 }

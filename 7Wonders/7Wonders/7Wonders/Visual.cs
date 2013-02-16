@@ -21,11 +21,23 @@ namespace _7Wonders
         protected Vector2 position;
         protected int width;
         protected int height;
-        protected int opacity;
+        protected float opacity;
         protected Color color;
         protected string text;
         protected string sFont;
         protected SpriteFont font;
+
+        public Visual(Visual v)
+        {
+            position = v.position;
+            width = v.width;
+            height = v.height;
+            opacity = v.opacity;
+            color = v.color;
+            text = v.text;
+            sFont = v.sFont;
+            font = v.font;
+        }
 
         public Visual(Game1 theGame, Vector2 _pos, int _w, int _h, string _text)
         {
@@ -34,8 +46,8 @@ namespace _7Wonders
             width = _w;
             height = _h;
             texture = _text;
-            opacity = 255;
-            color = new Color(255, 255, 255, opacity);
+            opacity = 1;
+            color = Color.White*opacity;
         }
 
         public Visual(Game1 theGame, Vector2 _pos, int _w, int _h, string _text, Color _color)
@@ -45,39 +57,42 @@ namespace _7Wonders
             width = _w;
             height = _h;
             texture = _text;
-            opacity = 255;
-            color = new Color(_color.R, _color.G, _color.B, opacity);
+            opacity = 1;
+            color = _color*opacity;
         }
 
         public Visual(Game1 theGame, Vector2 _pos, string _text, string _sFont, Color _color)
         {
             game = theGame;
             position = _pos;
-            opacity = 255;
-            color = new Color(_color.R, _color.G, _color.B, opacity);
+            opacity = 1;
+            color = _color * opacity;
             sFont = _sFont;
             text = _text;
         }
 
-        public void setPosition(Vector2 _vec)
+        public Visual setPosition(Vector2 _vec)
         {
             position = _vec;
+            return this;
         }
 
-        public void setWidth(int _w)
+        public Visual setWidth(int _w)
         {
             width = _w;
+            return this;
         }
 
-        public void setHeight(int _h)
+        public Visual setHeight(int _h)
         {
             height = _h;
+            return this;
         }
         public virtual void LoadContent()
         {
             if (text != null)
-                font = Game1.fonts["Font1"];
-            else
+                font = Game1.fonts[sFont];
+            if (texture != null)
                 image = Game1.textures[texture];
         }
 
@@ -89,23 +104,31 @@ namespace _7Wonders
         {
             if (text != null)
             {
-                spriteBatch.DrawString(font, text, new Vector2(position.X + 2, position.Y + 2), new Color(255, 255, 255, opacity));
+                spriteBatch.DrawString(font, text, new Vector2(position.X + 2, position.Y + 2), color);
             }
-            else
+            if (image != null)
             {
-                spriteBatch.Draw(image, new Rectangle((int)position.X - 1, (int)position.Y - 1, width + 2, height + 2), new Color(0, 0, 0, opacity));
-                spriteBatch.Draw(image, new Rectangle((int)position.X, (int)position.Y, width, height), new Rectangle(0, 0, image.Width, image.Height), new Color(color.R, color.G, color.B, opacity));
+                spriteBatch.Draw(image, new Rectangle((int)position.X - 1, (int)position.Y - 1, width + 2, height + 2), Color.Black*opacity);
+                spriteBatch.Draw(image, new Rectangle((int)position.X, (int)position.Y, width, height), new Rectangle(0, 0, image.Width, image.Height), color);
             }
+        }
+
+        public Visual setImage(string texture)
+        {
+            image = Game1.textures[texture];
+            return this;
         }
 
         public void setColor(Color _color)
         {
-            color = _color;
+            color = _color*opacity;
         }
 
-        public void setOpacity(int _opacity)
+        public void setOpacity(float _opacity)
         {
-            opacity = (_opacity > 255) ? 255 : Math.Max(0, _opacity);
+            color *= 1/opacity;
+            opacity = (_opacity > 1) ? 1 : Math.Max(0, _opacity);
+            color *=  opacity;
         }
     }
 }
