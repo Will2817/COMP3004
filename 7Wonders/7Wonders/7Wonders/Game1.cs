@@ -16,8 +16,8 @@ namespace _7Wonders
     /// </summary>
     public class Game1 : Microsoft.Xna.Framework.Game
     {
-        const int WIDTH = 800;
-        const int HEIGHT = 600;
+        public static int WIDTH = 800;
+        public static int HEIGHT = 600;
         GraphicsDeviceManager graphics;
         GraphicsDevice device;
         SpriteBatch spriteBatch;
@@ -25,12 +25,14 @@ namespace _7Wonders
         int cycle = 0;
         Boolean leftkeylock = false;
         Boolean rightkeylock = false;
+        MainMenu mainMenu;
 
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             wonders = new Dictionary<String, Wonder>();
+            mainMenu = new MainMenu(this);
         }
 
         /// <summary>
@@ -42,6 +44,7 @@ namespace _7Wonders
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
+            IsMouseVisible = true;
             device = graphics.GraphicsDevice;
             graphics.PreferredBackBufferWidth = WIDTH;
             graphics.PreferredBackBufferHeight = HEIGHT;
@@ -70,6 +73,7 @@ namespace _7Wonders
             {
                 w.LoadContent();
             }
+            mainMenu.LoadContent();
             // TODO: use this.Content to load your game content here
         }
 
@@ -96,7 +100,7 @@ namespace _7Wonders
             // TODO: Add your update logic here
             foreach (Wonder w in wonders.Values)
             {
-                w.Update(gameTime);
+                w.Update(gameTime, Mouse.GetState());
             }
             KeyboardState keyboardState = Keyboard.GetState();
 
@@ -125,6 +129,8 @@ namespace _7Wonders
                 cycle = 0;
             }
 
+            mainMenu.Update(gameTime, Mouse.GetState());
+
             base.Update(gameTime);
         }
 
@@ -137,8 +143,9 @@ namespace _7Wonders
             GraphicsDevice.Clear(Color.CornflowerBlue);
             spriteBatch.Begin();
 
-            wonders.Values.ElementAt(cycle).Draw(gameTime, spriteBatch);
+            //wonders.Values.ElementAt(cycle).Draw(gameTime, spriteBatch);
             // TODO: Add your drawing code here
+            mainMenu.Draw(gameTime, spriteBatch);
             spriteBatch.End();
             base.Draw(gameTime);
         }
