@@ -59,7 +59,7 @@ namespace _7Wonders
             device = graphics.GraphicsDevice;
             graphics.PreferredBackBufferWidth = WIDTH;
             graphics.PreferredBackBufferHeight = HEIGHT;
-            graphics.IsFullScreen = true;
+            graphics.IsFullScreen = false;
             graphics.ApplyChanges();
             Window.Title = "7 Wonders";
             wonders.Add("Wonder1a", new Wonder(this, Vector2.Zero, WIDTH, HEIGHT, "wonder1a"));
@@ -83,13 +83,13 @@ namespace _7Wonders
 
             textures.Add("title", Content.Load<Texture2D>("Images/title"));
             textures.Add("line", Content.Load<Texture2D>("Images/line"));
-            textures.Add("wonder1a", Content.Load<Texture2D>("Images/wonder1a"));
-            textures.Add("wonder2a", Content.Load<Texture2D>("Images/wonder2a"));
-            textures.Add("wonder3a", Content.Load<Texture2D>("Images/wonder3a"));
-            textures.Add("wonder4a", Content.Load<Texture2D>("Images/wonder4a"));
-            textures.Add("wonder5a", Content.Load<Texture2D>("Images/wonder5a"));
-            textures.Add("wonder6a", Content.Load<Texture2D>("Images/wonder6a"));
-            textures.Add("wonder7a", Content.Load<Texture2D>("Images/wonder7a"));
+            textures.Add("wonder1a", Content.Load<Texture2D>("Images/Wonders/board0"));
+            textures.Add("wonder2a", Content.Load<Texture2D>("Images/Wonders/board1"));
+            textures.Add("wonder3a", Content.Load<Texture2D>("Images/Wonders/board2"));
+            textures.Add("wonder4a", Content.Load<Texture2D>("Images/Wonders/board3"));
+            textures.Add("wonder5a", Content.Load<Texture2D>("Images/Wonders/board4"));
+            textures.Add("wonder6a", Content.Load<Texture2D>("Images/Wonders/board5"));
+            textures.Add("wonder7a", Content.Load<Texture2D>("Images/Wonders/board6"));
 
             fonts.Add("Font1", Content.Load<SpriteFont>("Fonts/Font1"));
 
