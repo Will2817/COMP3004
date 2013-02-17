@@ -24,7 +24,6 @@ namespace _7Wonders
         GraphicsDeviceManager graphics;
         GraphicsDevice device;
         SpriteBatch spriteBatch;
-        Dictionary<String, Wonder> wonders;
         int cycle = 0;
         Boolean leftkeylock = false;
         Boolean rightkeylock = false;
@@ -38,7 +37,6 @@ namespace _7Wonders
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-            wonders = new Dictionary<String, Wonder>();
             textures = new Dictionary<String, Texture2D>();
             fonts = new Dictionary<String, SpriteFont>();
             mainMenu = new MainMenu(this);
@@ -62,13 +60,6 @@ namespace _7Wonders
             graphics.IsFullScreen = false;
             graphics.ApplyChanges();
             Window.Title = "7 Wonders";
-            wonders.Add("Wonder1a", new Wonder(this, Vector2.Zero, WIDTH, HEIGHT, "wonder1a"));
-            wonders.Add("Wonder2a", new Wonder(this, Vector2.Zero, WIDTH, HEIGHT, "wonder2a"));
-            wonders.Add("Wonder3a", new Wonder(this, Vector2.Zero, WIDTH, HEIGHT, "wonder3a"));
-            wonders.Add("Wonder4a", new Wonder(this, Vector2.Zero, WIDTH, HEIGHT, "wonder4a"));
-            wonders.Add("Wonder5a", new Wonder(this, Vector2.Zero, WIDTH, HEIGHT, "wonder5a"));
-            wonders.Add("Wonder6a", new Wonder(this, Vector2.Zero, WIDTH, HEIGHT, "wonder6a"));
-            wonders.Add("Wonder7a", new Wonder(this, Vector2.Zero, WIDTH, HEIGHT, "wonder7a"));
             base.Initialize();
         }
 
@@ -83,20 +74,18 @@ namespace _7Wonders
 
             textures.Add("title", Content.Load<Texture2D>("Images/title"));
             textures.Add("line", Content.Load<Texture2D>("Images/line"));
-            textures.Add("wonder1a", Content.Load<Texture2D>("Images/Wonders/board0"));
-            textures.Add("wonder2a", Content.Load<Texture2D>("Images/Wonders/board1"));
-            textures.Add("wonder3a", Content.Load<Texture2D>("Images/Wonders/board2"));
-            textures.Add("wonder4a", Content.Load<Texture2D>("Images/Wonders/board3"));
-            textures.Add("wonder5a", Content.Load<Texture2D>("Images/Wonders/board4"));
-            textures.Add("wonder6a", Content.Load<Texture2D>("Images/Wonders/board5"));
-            textures.Add("wonder7a", Content.Load<Texture2D>("Images/Wonders/board6"));
+            textures.Add("drop", Content.Load<Texture2D>("Images/down"));
+
+            for (int i = 0; i < 14; i++)
+            {
+                if (i<7)
+                    textures.Add("wonder"+i+"a", Content.Load<Texture2D>("Images/Wonders/board"+i));
+                else
+                    textures.Add("wonder"+(i-7)+"b", Content.Load<Texture2D>("Images/Wonders/board"+i));
+            }
 
             fonts.Add("Font1", Content.Load<SpriteFont>("Fonts/Font1"));
 
-            foreach (Wonder w in wonders.Values)
-            {
-                w.LoadContent();
-            }
             mainMenu.LoadContent();
             lobby.LoadContent();
             // TODO: use this.Content to load your game content here
@@ -123,10 +112,7 @@ namespace _7Wonders
                 this.Exit();
 
             // TODO: Add your update logic here
-            foreach (Wonder w in wonders.Values)
-            {
-                w.Update(gameTime, Mouse.GetState());
-            }
+
             KeyboardState keyboardState = Keyboard.GetState();
 
             if (keyboardState.IsKeyDown(Keys.Escape))
@@ -147,13 +133,6 @@ namespace _7Wonders
             if ((rightkeylock) && (keyboardState.IsKeyUp(Keys.Right)))
                 rightkeylock = false;
 
-            if (cycle<0){
-                cycle = wonders.Count-1;
-            }
-            if (cycle>wonders.Count-1){
-                cycle = 0;
-            }
-
             activeInterface.Update(gameTime, Mouse.GetState());
 
             Dictionary<string, string> message;
@@ -164,7 +143,7 @@ namespace _7Wonders
                 {
                     case ("lobby") :
                         activeInterface = lobby;
-                        lobby.recieveMessage(message);
+                        lobby.receiveMessage(message);
                         break;
                 }
             }

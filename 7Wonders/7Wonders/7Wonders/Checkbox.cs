@@ -15,14 +15,13 @@ namespace _7Wonders
     class Checkbox : Visual
     {
         protected Boolean selected;
-        protected Boolean mouseDown;
 
         public Checkbox(Game1 theGame, Vector2 _pos, int _w, int _h)
             :base(theGame, _pos, _w, _h, "line")
         {
             selected = false;
             mouseDown = false;
-            color = new Color(255, 255, 255, opacity);
+            tcolor = new Color(255, 255, 255, opacity);
         }
 
         public Checkbox(Game1 theGame, Vector2 _pos)
@@ -30,11 +29,12 @@ namespace _7Wonders
         {
             selected = false;
             mouseDown = false;
-            color = new Color(255, 255, 255, opacity);
+            tcolor = new Color(255, 255, 255, opacity);
         }
 
         public override void Update(GameTime gameTime, MouseState mState)
         {
+            if (!visible) return;
             if ((mState.LeftButton == ButtonState.Pressed)&&(!mouseDown))
             {
                 if ((mState.X > position.X) && (mState.X < position.X + width) && (mState.Y > position.Y) && (mState.Y < position.Y + height))
@@ -42,12 +42,12 @@ namespace _7Wonders
                     if (selected)
                     {
                         selected = false;
-                        color = new Color(255, 255, 255, opacity);
+                        tcolor = new Color(255, 255, 255, opacity);
                     }
                     else
                     {
                         selected = true;
-                        color = new Color(Color.Green.R,Color.Green.G,Color.Green.B, opacity);
+                        tcolor = new Color(Color.Green.R,Color.Green.G,Color.Green.B, opacity);
                     }
                     mouseDown = true;
                 }
@@ -60,8 +60,9 @@ namespace _7Wonders
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
+            if (!visible) return;
             spriteBatch.Draw(image, new Rectangle((int)position.X-1, (int)position.Y-1, width+2, height+2), new Color(0,0,0,opacity));
-            spriteBatch.Draw(image, new Rectangle((int)position.X, (int)position.Y, width, height), color);
+            spriteBatch.Draw(image, new Rectangle((int)position.X, (int)position.Y, width, height), tcolor);
         }
 
         public bool isSelected() { return selected; }
