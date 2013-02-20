@@ -66,5 +66,6 @@ namespace _7Wonders
         }
 
         public bool isSelected() { return selected; }
+        public Checkbox setSelected(bool _selected) { selected = _selected; return this; }
     }
 }

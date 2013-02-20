@@ -12,13 +12,14 @@ using Microsoft.Xna.Framework.Media;
 
 namespace _7Wonders
 {
-    abstract class Interface
+    public class Interface
         {
         protected Game1 game;
         protected Dictionary<String, Visual> activeVisuals;
         protected string backgroundText;
         protected Texture2D background;
         protected bool finished = false;
+        protected string nextInterface = ""; 
         protected float dim;
 
         public Interface(Game1 theGame, string _backText, float ?_dim=null)

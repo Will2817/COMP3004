@@ -47,7 +47,7 @@ namespace _7Wonders
 
         public override void Update(GameTime gameTime, MouseState mState)
         {
-            if (!visible) return;
+            if (!visible||!enabled) return;
             selected.Update(gameTime, mState);
             dropButton.Update(gameTime, mState);
             
@@ -71,6 +71,7 @@ namespace _7Wonders
         {
             if (!visible) return;
             selected.Draw(gameTime, spriteBatch);
+            if (!enabled) return;
             dropButton.Draw(gameTime, spriteBatch);            
             foreach (Visual v in strings.Values)
             {

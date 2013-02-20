@@ -32,6 +32,7 @@ namespace _7Wonders
         protected bool pressed = false;
         protected bool clicked = false;
         protected bool visible = true;
+        protected bool enabled = true;
 
         public Visual(Visual v)
         {
@@ -110,7 +111,7 @@ namespace _7Wonders
 
         public virtual void Update(GameTime gameTime, MouseState mState)
         {
-            if (!visible) return;
+            if (!visible||!enabled) return;
             clicked = false;
             if (mState.LeftButton == ButtonState.Pressed)
             {
@@ -203,6 +204,12 @@ namespace _7Wonders
         public string getString()
         {
             return text;
+        }
+
+        public virtual Visual setEnabled(bool _enable)
+        {
+            enabled = _enable;
+            return this;
         }
     }
 }

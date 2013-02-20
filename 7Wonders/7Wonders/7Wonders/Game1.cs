@@ -18,6 +18,7 @@ namespace _7Wonders
     {
         public static Dictionary<String, Texture2D> textures;
         public static Dictionary<String, SpriteFont> fonts;
+        public static Dictionary<String, Interface> interfaces;
 
         public static int WIDTH = 800;
         public static int HEIGHT = 600;
@@ -39,6 +40,8 @@ namespace _7Wonders
             Content.RootDirectory = "Content";
             textures = new Dictionary<String, Texture2D>();
             fonts = new Dictionary<String, SpriteFont>();
+            interfaces = new Dictionary<String, Interface>();
+
             mainMenu = new MainMenu(this);
             lobby = new Lobby(this);
             activeInterface = mainMenu;
