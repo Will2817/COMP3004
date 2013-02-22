@@ -62,6 +62,15 @@ namespace _7Wonders
         {
             dim = _dim;
         }
+
+        public virtual void receiveMessage(Dictionary<string, string> message)
+        {
+        }
+
+        public virtual void reset()
+        {
+            finished = false;
+        }
     }
 }
 

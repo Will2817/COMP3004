@@ -31,9 +31,6 @@ namespace _7Wonders
 
         Interface activeInterface;
 
-        MainMenu mainMenu;
-        Lobby lobby;
-
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -42,9 +39,9 @@ namespace _7Wonders
             fonts = new Dictionary<String, SpriteFont>();
             interfaces = new Dictionary<String, Interface>();
 
-            mainMenu = new MainMenu(this);
-            lobby = new Lobby(this);
-            activeInterface = mainMenu;
+            interfaces.Add("main", new MainMenu(this));
+            interfaces.Add("lobby", new Lobby(this));
+            activeInterface = interfaces["main"];
         }
 
         /// <summary>
@@ -89,9 +86,10 @@ namespace _7Wonders
 
             fonts.Add("Font1", Content.Load<SpriteFont>("Fonts/Font1"));
 
-            mainMenu.LoadContent();
-            lobby.LoadContent();
-            // TODO: use this.Content to load your game content here
+            foreach (Interface i in interfaces.Values)
+            {
+                i.LoadContent();
+            }
         }
 
         /// <summary>
@@ -142,13 +140,9 @@ namespace _7Wonders
 
             if ((message = activeInterface.isFinished()) != null)
             {
-                switch (message["nextInterface"])
-                {
-                    case ("lobby") :
-                        activeInterface = lobby;
-                        lobby.receiveMessage(message);
-                        break;
-                }
+                activeInterface.reset();
+                activeInterface = interfaces[message["nextInterface"]];
+                activeInterface.receiveMessage(message);
             }
 
             base.Update(gameTime);

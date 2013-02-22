@@ -14,55 +14,38 @@ namespace _7Wonders
 {
     class Checkbox : Visual
     {
-        protected Boolean selected;
+        protected bool selected = false;
 
         public Checkbox(Game1 theGame, Vector2 _pos, int _w, int _h)
             :base(theGame, _pos, _w, _h, "line")
         {
-            selected = false;
-            mouseDown = false;
-            tcolor = new Color(255, 255, 255, opacity);
+            textureColor = new Color(255, 255, 255, opacity);
         }
 
         public Checkbox(Game1 theGame, Vector2 _pos)
             : base(theGame, _pos, 15, 15, "line")
         {
-            selected = false;
-            mouseDown = false;
-            tcolor = new Color(255, 255, 255, opacity);
+            textureColor = new Color(255, 255, 255, opacity);
         }
 
         public override void Update(GameTime gameTime, MouseState mState)
         {
             if (!visible) return;
-            if ((mState.LeftButton == ButtonState.Pressed)&&(!mouseDown))
+            base.Update(gameTime, mState);
+            if (isClicked())
             {
-                if ((mState.X > position.X) && (mState.X < position.X + width) && (mState.Y > position.Y) && (mState.Y < position.Y + height))
-                {
-                    if (selected)
-                    {
-                        selected = false;
-                        tcolor = new Color(255, 255, 255, opacity);
-                    }
-                    else
-                    {
-                        selected = true;
-                        tcolor = new Color(Color.Green.R,Color.Green.G,Color.Green.B, opacity);
-                    }
-                    mouseDown = true;
-                }
-            }
-            if ((mState.LeftButton == ButtonState.Released) && (mouseDown))
-            {
-                mouseDown = false;
+                selected = !selected;
+                if (selected) textureColor = new Color(Color.Green.R, Color.Green.G, Color.Green.B, opacity);
+                else textureColor = new Color(255, 255, 255, opacity);
+                reset();
             }
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             if (!visible) return;
-            spriteBatch.Draw(image, new Rectangle((int)position.X-1, (int)position.Y-1, width+2, height+2), new Color(0,0,0,opacity));
-            spriteBatch.Draw(image, new Rectangle((int)position.X, (int)position.Y, width, height), tcolor);
+            spriteBatch.Draw(texture, new Rectangle((int)position.X-1, (int)position.Y-1, width+2, height+2), new Color(0,0,0,opacity));
+            spriteBatch.Draw(texture, new Rectangle((int)position.X, (int)position.Y, width, height), textureColor);
         }
 
         public bool isSelected() { return selected; }

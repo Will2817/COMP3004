@@ -21,6 +21,8 @@ namespace _7Wonders
         protected List<Visual> readyCBs;
 
         protected Button sideButton;
+        protected Button backButton;
+        protected Button startButton;
         protected DropDown dropped = null;
 
         protected const int NUMPLAYERS = 7;
@@ -37,7 +39,9 @@ namespace _7Wonders
             int height = (Game1.HEIGHT - 10) / 6;
             int height2 = (Game1.HEIGHT - 49) * 2 / 21;
             int wide2 = (Game1.WIDTH / 3) - 100;
-            sideButton = new Button(game, new Vector2(Game1.WIDTH - 140, Game1.HEIGHT - 140), 140, 40, "Toggle Side", "Font1", null);
+            sideButton = new Button(game, new Vector2(Game1.WIDTH - 140, Game1.HEIGHT - 140), 140, 40, "Toggle Side", "Font1");
+            backButton = new Button(game, new Vector2(10, Game1.HEIGHT - 100), 75, 40, "Back", "Font1");
+            startButton = new Button(game, new Vector2(90, Game1.HEIGHT - 100), 75, 40, "Start", "Font1");
 
             dropDowns = new List<Visual>();
             dropDowns.Add((new DropDown(game, new Vector2(5, 5), wide2, height2, new List<string>() { "Host Player" })).setEnabled(false));
@@ -73,6 +77,8 @@ namespace _7Wonders
             visuals1.Add("wonder6", new Visual(game, new Vector2(wide + half + 1, 5 + height * 2), half, height, "wonder6a", Color.White));
             visuals1.Add("selected", new Visual(game, new Vector2(wide, 5+height*4), half * 2, height*2, "wonder0a", Color.White));
             visuals1.Add("toggleButton", sideButton);
+            visuals1.Add("backButton", backButton);
+            visuals1.Add("startButton", startButton);
             activeVisuals = visuals1;
         }
 
@@ -85,11 +91,12 @@ namespace _7Wonders
             }
         }
 
-        public void receiveMessage(Dictionary<string, string> message)
+        public override void receiveMessage(Dictionary<string, string> message)
         {
             random = Boolean.Parse(message["random"]);
             onlyA = Boolean.Parse(message["onlyA"]);
             if (onlyA) sideButton.setVisible(false);
+            else sideButton.setVisible(true);
         }
 
         public override void Update(GameTime gameTime, MouseState mouseState)
@@ -102,26 +109,31 @@ namespace _7Wonders
                 {
                     string wonder = "wonder" + i;
                     if (viewSideB)
-                        visuals1[wonder].setImage(wonder + "b");
+                        visuals1[wonder].setTexture(wonder + "b");
                     else
-                        visuals1[wonder].setImage(wonder + "a");
+                        visuals1[wonder].setTexture(wonder + "a");
                 }
-                string image = visuals1["selected"].getImage();
+                string image = visuals1["selected"].getTexture();
                 if (viewSideB)
-                    visuals1["selected"].setImage(image.Substring(0, image.Length - 1) + "b");
+                    visuals1["selected"].setTexture(image.Substring(0, image.Length - 1) + "b");
                 else
-                    visuals1["selected"].setImage(image.Substring(0, image.Length - 1) + "a");
+                    visuals1["selected"].setTexture(image.Substring(0, image.Length - 1) + "a");
 
                 sideButton.reset();               
+            }
+            if (backButton.isClicked())
+            {
+                finished = true;
+                backButton.reset();
             }
             for (int i=0; i<7; i++)
             {
                 string wonder = "wonder" + i;
                 if (visuals1[wonder].isClicked()){
                     if (viewSideB)
-                        visuals1["selected"].setImage(wonder + "b");
+                        visuals1["selected"].setTexture(wonder + "b");
                     else
-                        visuals1["selected"].setImage(wonder + "a");                        
+                        visuals1["selected"].setTexture(wonder + "a");                        
                 }
             }
             for (int i=dropDowns.Count; i >0; i--)
@@ -156,13 +168,20 @@ namespace _7Wonders
         {
             if (finished)
             {
-                return new Dictionary<string, string>()
-                {
-                    {"nextInterface", "lobby"},
-                };
+                return MainMenu.createMessage();
             }
 
             return null;
+        }
+
+        public static Dictionary<string, string> createMessage(bool random, bool onlyA)
+        {
+            return new Dictionary<string, string>()
+                {
+                    {"nextInterface", "lobby"},
+                    {"random", random.ToString()},
+                    {"onlyA", onlyA.ToString()}
+                };
         }
     }
 }

@@ -15,20 +15,22 @@ namespace _7Wonders
     public class Visual
     {
         protected Game1 game;
-        protected string texture;
-        protected Texture2D image;
+
+        protected Texture2D texture;
+        protected string textureName;
+
+        protected SpriteFont font;
+        protected string fontName;
+        protected string text;       
 
         protected Vector2 position;
         protected int width;
         protected int height;
-        protected float opacity;
-        protected Color tcolor = Color.Gray;
-        protected Color scolor = Color.White;
-        protected string text;
-        protected string sFont;
-        protected SpriteFont font;
 
-        protected bool mouseDown = false;
+        protected float opacity = 1;
+        protected Color textureColor = Color.Gray;
+        protected Color stringColor = Color.White;
+
         protected bool pressed = false;
         protected bool clicked = false;
         protected bool visible = true;
@@ -36,52 +38,102 @@ namespace _7Wonders
 
         public Visual(Visual v)
         {
+            game = v.game;
+            textureName = v.textureName;
+            texture = v.texture;
+            fontName = v.fontName;
+            font = v.font;
+            text = v.text;
             position = v.position;
             width = v.width;
             height = v.height;
             opacity = v.opacity;
-            tcolor = v.tcolor;
-            scolor = v.scolor;
+            textureColor = v.textureColor;
+            stringColor = v.stringColor;
             text = v.text;
-            sFont = v.sFont;
-            font = v.font;
         }
 
-        public Visual(Game1 theGame, Vector2 _pos, int _w, int _h, string _text, Color ?_color=null)
+        public Visual(Game1 theGame, Vector2 _pos, int _w, int _h, string _textureName, Color ?_color=null)
         {
             game = theGame;
             position = _pos;
             width = _w;
             height = _h;
-            texture = _text;
-            opacity = 1;
-            tcolor = ((_color.HasValue) ? _color.Value : Color.White)*opacity;
-            scolor *= opacity;
+            textureName = _textureName;
+            textureColor = ((_color.HasValue) ? _color.Value : Color.White)*opacity;
+            stringColor *= opacity;
         }
 
-        public Visual(Game1 theGame, Vector2 _pos, string _text, string _sFont, Color _color)
+        public Visual(Game1 theGame, Vector2 _pos, string _text, string _fontName, Color _color)
         {
             game = theGame;
             position = _pos;
-            opacity = 1;
-            tcolor *= opacity;
-            scolor = _color * opacity;
-            sFont = _sFont;
+            textureColor *= opacity;
+            stringColor = _color * opacity;
+            fontName = _fontName;
             text = _text;
         }
 
-        public Visual(Game1 theGame, Vector2 _pos, int _w, int _h, string _text, string _sFont, Color _scolor, Color ?_tcolor=null)
+        public Visual(Game1 theGame, Vector2 _pos, int _w, int _h, string _text, string _fontName, Color _stringColor, Color ?_textureColor=null)
         {
             game = theGame;
             position = _pos;
             width = _w;
             height = _h;
-            opacity = 1;
-            scolor = _scolor * opacity;
-            tcolor = ((_tcolor.HasValue) ? _tcolor.Value: tcolor)*opacity;            
-            sFont = _sFont;
+            stringColor = _stringColor * opacity;
+            textureColor = ((_textureColor.HasValue) ? _textureColor.Value : textureColor) * opacity;            
+            fontName = _fontName;
             text = _text;
-            texture = "line";
+            textureName = "line";
+        }
+
+        public virtual void LoadContent()
+        {
+            if (fontName != null)
+                font = Game1.fonts[fontName];
+            if (textureName != null)
+                texture = Game1.textures[textureName];
+        }
+
+        public virtual void Update(GameTime gameTime, MouseState mState)
+        {
+            if (!visible||!enabled) return;
+
+            clicked = false;
+            if (mState.LeftButton == ButtonState.Pressed)
+            {
+                if (isMouseOver(mState)) pressed = true;
+            }
+            else
+            {
+                if (pressed)
+                {
+                    if(isMouseOver(mState)) clicked = true;
+                    pressed = false;
+                }
+            }
+        }
+
+        public virtual void Draw(GameTime gameTime,SpriteBatch spriteBatch)
+        {
+            if (!visible) return;
+            if (texture != null)
+            {
+                spriteBatch.Draw(texture, new Rectangle((int)position.X - 1, (int)position.Y - 1, width + 2, height + 2), Color.Black * opacity);
+                spriteBatch.Draw(texture, new Rectangle((int)position.X, (int)position.Y, width, height), new Rectangle(0, 0, texture.Width, texture.Height), textureColor);
+            }
+            if (text != null)
+            {
+                spriteBatch.DrawString(font, text, new Vector2(position.X + 2, position.Y + 2), stringColor);
+            }
+        }
+
+        private bool isMouseOver(MouseState mState)
+        {
+            if ((mState.X > position.X) && (mState.X < position.X + width) &&
+                (mState.Y > position.Y) && (mState.Y < position.Y + height))
+                return true;
+            return false;
         }
 
         public Visual setPosition(Vector2 _vec)
@@ -101,92 +153,36 @@ namespace _7Wonders
             height = _h;
             return this;
         }
-        public virtual void LoadContent()
-        {
-            if (text != null)
-                font = Game1.fonts[sFont];
-            if (texture != null)
-                image = Game1.textures[texture];
-        }
 
-        public virtual void Update(GameTime gameTime, MouseState mState)
+        public Visual setTexture(string _texture)
         {
-            if (!visible||!enabled) return;
-            clicked = false;
-            if (mState.LeftButton == ButtonState.Pressed)
-            {
-                if (!mouseDown)
-                {
-                    mouseDown = true;
-                    if ((mState.X > position.X) && (mState.X < position.X + width) &&
-                        (mState.Y > position.Y) && (mState.Y < position.Y + height))
-                    {
-                        pressed = true;
-                    }
-                }
-                mouseDown = true;
-            }
-            else
-            {
-                if (mouseDown)
-                {
-                    mouseDown = false;
-                    if (pressed)
-                    {
-                        pressed = false;
-                        if ((mState.X > position.X) && (mState.X < position.X + width) &&
-                            (mState.Y > position.Y) && (mState.Y < position.Y + height))
-                        {
-                            clicked = true;
-                        }
-                    }
-                }
-            }
-        }
-
-        public virtual void Draw(GameTime gameTime,SpriteBatch spriteBatch)
-        {
-            if (!visible) return;
-            if (image != null)
-            {
-                spriteBatch.Draw(image, new Rectangle((int)position.X - 1, (int)position.Y - 1, width + 2, height + 2), Color.Black*opacity);
-                spriteBatch.Draw(image, new Rectangle((int)position.X, (int)position.Y, width, height), new Rectangle(0, 0, image.Width, image.Height), tcolor);
-            }
-            if (text != null)
-            {
-                spriteBatch.DrawString(font, text, new Vector2(position.X + 2, position.Y + 2), scolor);
-            }
-        }
-
-        public Visual setImage(string _texture)
-        {
-            texture = _texture;
-            image = Game1.textures[texture];
+            textureName = _texture;
+            texture = Game1.textures[textureName];
             return this;
         }
 
-        public string getImage()
+        public string getTexture()
         {
-            return texture;
+            return textureName;
         }
 
         public void setColor(Color _color)
         {
-            tcolor = _color*opacity;
+            textureColor = _color * opacity;
         }
 
         public void setOpacity(float _opacity)
         {
-            tcolor *= 1 / opacity;
-            scolor *= 1 / opacity;
+            textureColor *= 1 / opacity;
+            stringColor *= 1 / opacity;
             opacity = (_opacity > 1) ? 1 : Math.Max(0, _opacity);
-            tcolor *= opacity;
-            scolor *= opacity;
+            textureColor *= opacity;
+            stringColor *= opacity;
         }
 
         public void reset()
         {
-            clicked = pressed = mouseDown = false;
+            clicked = pressed = false;
         }
 
         public bool isClicked() { return clicked; }
@@ -201,6 +197,7 @@ namespace _7Wonders
             text = _s;
             return this;
         }
+
         public string getString()
         {
             return text;
