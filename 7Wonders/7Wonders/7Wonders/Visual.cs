@@ -128,7 +128,7 @@ namespace _7Wonders
             }
         }
 
-        private bool isMouseOver(MouseState mState)
+        public bool isMouseOver(MouseState mState)
         {
             if ((mState.X > position.X) && (mState.X < position.X + width) &&
                 (mState.Y > position.Y) && (mState.Y < position.Y + height))

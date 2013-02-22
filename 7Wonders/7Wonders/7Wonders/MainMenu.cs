@@ -22,6 +22,10 @@ namespace _7Wonders
         protected static Button JGame;
         protected static Button CRoom;
         protected static Button backButton;
+        protected static Textbox ip1;
+        protected static Textbox ip2;
+        protected static Textbox ip3;
+        protected static Textbox ip4;
 
         protected static Checkbox randomBox;
         protected static Checkbox onlyABox;
@@ -35,8 +39,12 @@ namespace _7Wonders
 
             HGame = new Button(game, new Vector2(150, 450), 200, 50, "Host Game", "Font1");
             JGame = new Button(game, new Vector2(450, 450), 200, 50, "Join Game", "Font1");
-            CRoom = new Button(game, new Vector2(260, 420), 130, 50, "Create Room", "Font1");
-            backButton = new Button(game, new Vector2(400, 420), 130, 50, "Back", "Font1");
+            CRoom = new Button(game, new Vector2(260, 420), 145, 50, "Create Room", "Font1");
+            backButton = new Button(game, new Vector2(410, 420), 120, 50, "Back", "Font1");
+            ip1 = new Textbox(game, new Vector2(270, 300), 55, 35, "", "Font1", 3);
+            ip2 = new Textbox(game, new Vector2(335, 300), 55, 35, "", "Font1", 3);
+            ip3 = new Textbox(game, new Vector2(400, 300), 55, 35, "", "Font1", 3);
+            ip4 = new Textbox(game, new Vector2(465, 300), 55, 35, "", "Font1", 3);
 
             randomBox = new Checkbox(game, new Vector2(450, 285));
             onlyABox = new Checkbox(game, new Vector2(450, 355));
@@ -56,8 +64,14 @@ namespace _7Wonders
             visuals2.Add("CRoom", CRoom);
             visuals2.Add("backButton", backButton);
 
-            visuals3.Add("HGame", HGame);
-            visuals3.Add("check2", new Checkbox(game, new Vector2(375, 350)));
+            visuals3.Add("DBox", new Visual(game, new Vector2(250, 200), 300, 300, "line", Color.Silver));
+            visuals3.Add("Box1", new Visual(game, new Vector2(275, 210), 200, 50, "line", Color.SlateGray));
+            visuals3.Add("String1", new Visual(game, new Vector2(280, 215), "Enter Ip Address", "Font1", Color.White));
+            visuals3.Add("ip1", ip1);
+            visuals3.Add("ip2", ip2);
+            visuals3.Add("ip3", ip3);
+            visuals3.Add("ip4", ip4);
+            visuals3.Add("backButton", backButton);
 
             activeVisuals = visuals1;
         }

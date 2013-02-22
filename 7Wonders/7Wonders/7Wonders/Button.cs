@@ -10,12 +10,14 @@ namespace _7Wonders
 {
     public class Button : Visual
     {
+        protected static int highlight = 50;
+
         public Button(Game1 theGame, Vector2 _pos,int _w, int _h, string _t, string _sfont, string texture=null)
-            : base(theGame, _pos, _w, _h, (texture != null) ? texture: "line")
+            : base(theGame, _pos, _w, _h, (texture != null) ? texture: "button")
         {
             fontName = _sfont;
-            textureColor = Color.Gray;
-            stringColor = Color.DarkGray;
+            textureColor = new Color(255 - highlight, 255 - highlight, 255 - highlight) * opacity;
+            stringColor = Color.Black * opacity;
             text = _t;
         }
 
@@ -29,12 +31,11 @@ namespace _7Wonders
             Color actual = textureColor;
             if (pressed)
             {
-                actual = new Color(Math.Max(textureColor.B - 50, 0), Math.Max(textureColor.G - 50, 0), Math.Max(textureColor.R - 50, 0));
+                actual = new Color(Math.Max(textureColor.B + highlight, 0), Math.Max(textureColor.G + highlight, 0), Math.Max(textureColor.R + highlight, 0));
             }
             spriteBatch.Draw(Game1.textures["line"], new Rectangle((int)position.X - 1, (int)position.Y - 1, width + 2, height + 2), Color.Black*opacity);
-            //if (textureName != "line") spriteBatch.Draw(Game1.textures["line"], new Rectangle((int)position.X, (int)position.Y, width, height), actual);
             spriteBatch.Draw(texture, new Rectangle((int)position.X, (int)position.Y, width, height), actual);
-            spriteBatch.DrawString(font, text, new Vector2(position.X + 2, position.Y + 2), new Color(255, 255, 255, opacity));
+            spriteBatch.DrawString(font, text, new Vector2(position.X + 11, position.Y + 7), stringColor);
         }
     }
 }
