@@ -172,7 +172,7 @@
 				},
 				{
 					"cost":[{"w":2}],
-					"effects":[{"coin":"9"}]
+					"effects":[{"coin":9}]
 				},
 				{
 					"cost":[{"p":2}],
@@ -188,7 +188,7 @@
 			"stages": [
 				{
 					"cost":[{"s":2}],
-					"effects":[{"victory":"2"}, {"coin":4}]
+					"effects":[{"victory":2}, {"coin":4}]
 				},
 				{
 					"cost":[{"w":2}],
