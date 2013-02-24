@@ -29,4 +29,19 @@ and select all .cs files.
 in the Solution Explorer right-click -> add -> existing item on each folder
 you made earlier and add all the files in each folder.
 
+Update 2/24/2013:
+
+there is now a Json folder to hold json files in the project.
+add the folder and all files into your solution.
+
+also you will have to go into the properties of each json file and set
+the Build Action:None, and set Copy to Output Directory:"Copy if newer"
+
+There is also now a Newtonsoft.Json dll in the program, to add it go to the
+references folder (NOT IN THE CONTENT AREA... LOOK ABOVE) and add a reference to
+it... you will have to you the browse to find it.
+
+
+
+
 

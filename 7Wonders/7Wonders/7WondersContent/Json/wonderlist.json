@@ -1,0 +1,284 @@
+{
+	"wonders": [
+		{
+			"name":"Gizah",
+			"side":"A",
+			"image":"GizahA",
+			"resource":"s",
+			"stages": [
+				{
+					"cost":[{"s":2}],
+					"effects":[{"victory":3}]
+				},
+				{
+					"cost":[{"w":3}],
+					"effects":[{"victory":5}]
+				},
+				{
+					"cost":[{"s":4}],
+					"effects":[{"victory":7}]
+				}
+			]
+		},
+		{
+			"name":"Gizah",
+			"side":"B",
+			"image":"GizahB",
+			"resource":"s",
+			"stages": [
+				{
+					"cost":[{"w":2}],
+					"effects":[{"victory":3}]
+				},
+				{
+					"cost":[{"s":3}],
+					"effects":[{"victory":5}]
+				},
+				{
+					"cost":[{"c":3}],
+					"effects":[{"victory":5}]
+				},
+				{
+					"cost":[{"s":3, "p":1}],
+					"effects":[{"victory":7}]
+				}
+			]
+		},
+		{
+			"name":"Rhodos",
+			"side":"A",
+			"image":"RhodosA",
+			"resource":"o",
+			"stages": [
+				{
+					"cost":[{"w":2}],
+					"effects":[{"victory":3}]
+				},
+				{
+					"cost":[{"c":3}],
+					"effects":[{"army":2}]
+				},
+				{
+					"cost":[{"o":4}],
+					"effects":[{"victory":7}]
+				}
+			]
+		},
+		{
+			"name":"Rhodos",
+			"side":"B",
+			"image":"RhodosB",
+			"resource":"o",
+			"stages": [
+				{
+					"cost":[{"s":3}],
+					"effects":[{"army":1}, {"victory":3}, {"coin":3}]
+				},
+				{
+					"cost":[{"o":4}],
+					"effects":[{"army":1}, {"victory":4}, {"coin":4}]
+				}
+			]
+		},
+		{
+			"name":"Alexandria",
+			"side":"A",
+			"image":"AlexandriaA",
+			"resource":"g",
+			"stages": [
+				{
+					"cost":[{"s":2}],
+					"effects":[{"victory":3}]
+				},
+				{
+					"cost":[{"o":2}],
+					"effects":[{"rchoice":["c", "o", "w", "s"]}]
+				},
+				{
+					"cost":[{"g":2}],
+					"effects":[{"victory":7}]
+				}
+			]
+		},
+		{
+			"name":"Alexandria",
+			"side":"B",
+			"image":"AlexandriaB",
+			"resource":"g",
+			"stages": [
+				{
+					"cost":[{"c":2}],
+					"effects":[{"rchoice":["c", "o", "w", "s"]}]
+				},
+				{
+					"cost":[{"w":2}],
+					"effects":[{"rchoice":["g", "l", "p"]}]
+				},
+				{
+					"cost":[{"s":3}],
+					"effects":[{"victory":7}]
+				}
+			]
+		},
+		{
+			"name":"Babylon",
+			"side":"A",
+			"image":"BabylonA",
+			"resource":"c",
+			"stages": [
+				{
+					"cost":[{"c":2}],
+					"effects":[{"victory":3}]
+				},
+				{
+					"cost":[{"w":3}],
+					"effects":[{"schoice":["t", "c", "g"]}]
+				},
+				{
+					"cost":[{"c":4}],
+					"effects":[{"victory":7}]
+				}
+			]
+		},
+		{
+			"name":"Alexandria",
+			"side":"B",
+			"image":"AlexandriaB",
+			"resource":"c",
+			"stages": [
+				{
+					"cost":[{"l":1}, {"c":1}],
+					"effects":[{"victory":"3"}]
+				},
+				{
+					"cost":[{"g":1}, {"w":2}],
+					"effects":[{"lastcard":true}]
+				},
+				{
+					"cost":[{"p":1}, {"c":3}],
+					"effects":[{"schoice":["t", "c", "g"]}]
+				}
+			]
+		},
+		{
+			"name":"Ephesos",
+			"side":"A",
+			"image":"EphesosA",
+			"resource":"p",
+			"stages": [
+				{
+					"cost":[{"s":2}],
+					"effects":[{"victory":3}]
+				},
+				{
+					"cost":[{"w":2}],
+					"effects":[{"coin":"9"}]
+				},
+				{
+					"cost":[{"p":2}],
+					"effects":[{"victory":7}]
+				}
+			]
+		},
+		{
+			"name":"Ephesos",
+			"side":"B",
+			"image":"EphesosB",
+			"resource":"p",
+			"stages": [
+				{
+					"cost":[{"s":2}],
+					"effects":[{"victory":"2"}, {"coin":4}]
+				},
+				{
+					"cost":[{"w":2}],
+					"effects":[{"victory":3}, {"coin":4}]
+				},
+				{
+					"cost":[{"p":1}, {"l":1}, {"g":1}],
+					"effects":[{"victory":3}, {"coin":4}]
+				}
+			]
+		},
+		{
+			"name":"Olympia",
+			"side":"A",
+			"image":"OlympiaA",
+			"resource":"w",
+			"stages": [
+				{
+					"cost":[{"w":2}],
+					"effects":[{"victory":3}]
+				},
+				{
+					"cost":[{"s":2}],
+					"effects":[{"freeBuild":true}]
+				},
+				{
+					"cost":[{"o":2}],
+					"effects":[{"victory":7}]
+				}
+			]
+		},
+		{
+			"name":"Olympia",
+			"side":"B",
+			"image":"OlympiaB",
+			"resource":"w",
+			"stages": [
+				{
+					"cost":[{"w":2}],
+					"effects":[{"rcostEast":1}, {"rcostWest":1}]
+				},
+				{
+					"cost":[{"s":2}],
+					"effects":[{"victory":5}]
+				},
+				{
+					"cost":[{"l":1}, {"o":2}],
+					"effects":[{"guildCopy":true}]
+				}
+			]
+		},
+		{
+			"name":"Halikarnassos",
+			"side":"A",
+			"image":"HalikarnassosA",
+			"resource":"l",
+			"stages": [
+				{
+					"cost":[{"c":2}],
+					"effects":[{"victory":3}]
+				},
+				{
+					"cost":[{"o":3}],
+					"effects":[{"discard":true}]
+				},
+				{
+					"cost":[{"l":2}],
+					"effects":[{"victory":7}]
+				}
+			]
+		},
+		{
+			"name":"Halikarnassos",
+			"side":"B",
+			"image":"HalikarnassosB",
+			"resource":"l",
+			"stages": [
+				{
+					"cost":[{"o":2}],
+					"effects":[{"victory":2}, {"discard":true}]
+				},
+				{
+					"cost":[{"s":2}],
+					"effects":[{"victory":1}, {"discard":true}]
+				},
+				{
+					"cost":[{"l":1, "o":2}],
+					"effects":[{"discard":true}]
+				}
+			]
+		}
+	]
+}

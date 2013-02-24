@@ -1,6 +1,8 @@
 using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
@@ -8,6 +10,7 @@ using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+using Newtonsoft.Json.Linq;
 
 namespace _7Wonders
 {
@@ -31,8 +34,10 @@ namespace _7Wonders
         int cycle = 0;
         Boolean leftkeylock = false;
         Boolean rightkeylock = false;
-
         Interface activeInterface;
+        JObject o = JObject.Parse(File.ReadAllText("Content/Json/wonderlist.json"));
+        //string image;
+        
 
         public Game1()
         {
@@ -45,6 +50,8 @@ namespace _7Wonders
             interfaces.Add("main", new MainMenu(this));
             interfaces.Add("lobby", new Lobby(this));
             activeInterface = interfaces["main"];
+            //JArray cards = (JArray)o["cards"];
+            //image = (string) cards[0]["image"];
         }
 
         /// <summary>
@@ -250,6 +257,7 @@ namespace _7Wonders
             //wonders.Values.ElementAt(cycle).Draw(gameTime, spriteBatch);
             // TODO: Add your drawing code here
             activeInterface.Draw(gameTime, spriteBatch);
+           // spriteBatch.Draw(textures[image], new Rectangle(0, 0, 100, 40), Color.White);
             spriteBatch.End();
             base.Draw(gameTime);
         }
