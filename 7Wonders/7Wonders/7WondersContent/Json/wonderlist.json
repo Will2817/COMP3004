@@ -141,14 +141,14 @@
 			]
 		},
 		{
-			"name":"Alexandria",
+			"name":"Babylon",
 			"side":"B",
-			"image":"AlexandriaB",
+			"image":"BabylonB",
 			"resource":"c",
 			"stages": [
 				{
 					"cost":[{"l":1}, {"c":1}],
-					"effects":[{"victory":"3"}]
+					"effects":[{"victory":3}]
 				},
 				{
 					"cost":[{"g":1}, {"w":2}],
