@@ -19,6 +19,7 @@ namespace _7Wonders
         protected static Dictionary<String, Visual> visuals1;
         protected List<Visual> dropDowns;
         protected List<Visual> readyCBs;
+        protected Dictionary<String, Visual> wonders;
 
         protected Button sideButton;
         protected Button backButton;
@@ -51,9 +52,12 @@ namespace _7Wonders
             }
 
             readyCBs = new List<Visual>();
-            for (int i = 0; i < NUMPLAYERS; i++){
+            for (int i = 0; i < NUMPLAYERS; i++)
+            {
                 readyCBs.Add(new Checkbox(game, new Vector2(50 + wide2, 20 + (height2 + 3) * i), 15, 15));
             }
+
+            wonders = new Dictionary<String, Visual>();
 
             visuals1 = new Dictionary<String, Visual>();
             visuals1.Add("Divider1", new Visual(game, new Vector2(wide-5, 0), 2, Game1.HEIGHT, "line", Color.Silver));
@@ -68,14 +72,29 @@ namespace _7Wonders
                 visuals1.Add("ready" + i, readyCBs[i]);
             }
 
-            visuals1.Add("wonder0", new Visual(game, new Vector2(wide, 5), half, height, "wonder0a", Color.White));
-            visuals1.Add("wonder1", new Visual(game, new Vector2(wide, 5+height), half, height, "wonder1a", Color.White));
-            visuals1.Add("wonder2", new Visual(game, new Vector2(wide, 5+height*2), half, height, "wonder2a", Color.White));
-            visuals1.Add("wonder3", new Visual(game, new Vector2(wide, 5+height*3), half, height, "wonder3a", Color.White));
-            visuals1.Add("wonder4", new Visual(game, new Vector2(wide + half + 1, 5), half, height, "wonder4a", Color.White));
-            visuals1.Add("wonder5", new Visual(game, new Vector2(wide + half + 1, 5 + height), half, height, "wonder5a", Color.White));
-            visuals1.Add("wonder6", new Visual(game, new Vector2(wide + half + 1, 5 + height * 2), half, height, "wonder6a", Color.White));
-            visuals1.Add("selected", new Visual(game, new Vector2(wide, 5+height*4), half * 2, height*2, "wonder0a", Color.White));
+            int count = 0;
+            int count2 = 1;
+            //need to work on this so that it adapts better to number of wonders
+            foreach (Wonder w in Game1.wonders.Values)
+            {
+                w.getVisual().setPosition(new Vector2(wide*count2, 5 + height * count)).setWidth(half).setHeight(height);
+                visuals1.Add(w.getVisual().getTexture(), w.getVisual());
+
+                if (w.getSide() == 'B')
+                {
+                    w.getVisual().setVisible(false);
+                    count++;
+                }
+
+                if (count>(Game1.wonders.Count / 4))
+                {
+                    count=0;
+                    count2++;
+                }
+                
+            }
+
+            visuals1.Add("selected", new Visual(game, new Vector2(wide, 5 + height * 4), half * 2, height * 2, Game1.wonders.Values.First().getVisual().getTexture()));
             visuals1.Add("toggleButton", sideButton);
             visuals1.Add("backButton", backButton);
             visuals1.Add("startButton", startButton);
@@ -105,19 +124,28 @@ namespace _7Wonders
             if (sideButton.isClicked())
             {
                 viewSideB = !viewSideB;
-                for (int i = 0; i < 7; i++)
+                foreach (Wonder w in Game1.wonders.Values)
                 {
-                    string wonder = "wonder" + i;
                     if (viewSideB)
-                        visuals1[wonder].setTexture(wonder + "b");
+                    {
+                        if (w.getSide() == 'B')
+                            w.getVisual().setVisible(true);
+                        else
+                            w.getVisual().setVisible(false);
+                    }
                     else
-                        visuals1[wonder].setTexture(wonder + "a");
+                    {
+                        if (w.getSide() == 'A')
+                            w.getVisual().setVisible(true);
+                        else
+                            w.getVisual().setVisible(false);
+                    }
                 }
                 string image = visuals1["selected"].getTexture();
                 if (viewSideB)
-                    visuals1["selected"].setTexture(image.Substring(0, image.Length - 1) + "b");
+                    visuals1["selected"].setTexture(image.Substring(0, image.Length - 1) + "B");
                 else
-                    visuals1["selected"].setTexture(image.Substring(0, image.Length - 1) + "a");
+                    visuals1["selected"].setTexture(image.Substring(0, image.Length - 1) + "A");
 
                 sideButton.reset();               
             }
@@ -126,16 +154,19 @@ namespace _7Wonders
                 finished = true;
                 backButton.reset();
             }
-            for (int i=0; i<7; i++)
+
+            foreach (Wonder w in Game1.wonders.Values)
             {
-                string wonder = "wonder" + i;
-                if (visuals1[wonder].isClicked()){
+                string wonder = w.getVisual().getTexture().Substring(0, w.getVisual().getTexture().Length - 2);
+                if (visuals1[w.getVisual().getTexture()].isClicked())
+                {
                     if (viewSideB)
-                        visuals1["selected"].setTexture(wonder + "b");
+                        visuals1["selected"].setTexture(wonder + "_B");
                     else
-                        visuals1["selected"].setTexture(wonder + "a");                        
+                        visuals1["selected"].setTexture(wonder + "_A");
                 }
             }
+
             for (int i=dropDowns.Count; i >0; i--)
             {
                 DropDown dd = (DropDown) dropDowns[i-1];

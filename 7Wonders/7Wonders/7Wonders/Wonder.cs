@@ -9,15 +9,36 @@ using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+using Newtonsoft.Json.Linq;
 
 namespace _7Wonders
 {
-    class Wonder : Visual
+    public class Wonder
     {
-        public Wonder(Game1 theGame, Vector2 _pos, int _w, int _h, string _text)
-            :base(theGame, _pos, _w, _h, _text)
+        protected string name;
+        protected char side;
+        protected Visual image;
+
+        public Wonder(Game1 theGame,JObject _json)
         {
-        
+            name = (string)_json["name"];
+            side = (char)_json["side"];
+            image = new Visual(theGame, new Vector2(0, 0), 0, 0, (string)_json["image"]);
+        }
+
+        public string getName()
+        {
+            return name;
+        }
+
+        public char getSide()
+        {
+            return side;
+        }
+
+        public Visual getVisual()
+        {
+            return image;
         }
     }
 }

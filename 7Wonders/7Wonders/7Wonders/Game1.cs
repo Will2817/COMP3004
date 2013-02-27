@@ -22,6 +22,7 @@ namespace _7Wonders
         public static Dictionary<String, Texture2D> textures;
         public static Dictionary<String, SpriteFont> fonts;
         public static Dictionary<String, Interface> interfaces;
+        public static Dictionary<String, Wonder> wonders;
 
         public string recordedPresses = "";
         static KeyboardState prevState = Keyboard.GetState();
@@ -35,9 +36,7 @@ namespace _7Wonders
         Boolean leftkeylock = false;
         Boolean rightkeylock = false;
         Interface activeInterface;
-        JObject o = JObject.Parse(File.ReadAllText("Content/Json/wonderlist.json"));
-        //string image;
-        
+        JObject wondersJson = JObject.Parse(File.ReadAllText("Content/Json/wonderlist.json"));        
 
         public Game1()
         {
@@ -45,12 +44,19 @@ namespace _7Wonders
             Content.RootDirectory = "Content";
             textures = new Dictionary<String, Texture2D>();
             fonts = new Dictionary<String, SpriteFont>();
-            interfaces = new Dictionary<String, Interface>();
 
+            wonders = new Dictionary<String, Wonder>();
+            foreach (JObject j in (JArray)wondersJson["wonders"])
+            {
+                wonders.Add((string)j["image"], new Wonder(this, j));
+            }
+
+            interfaces = new Dictionary<String, Interface>();
             interfaces.Add("main", new MainMenu(this));
             interfaces.Add("lobby", new Lobby(this));
             activeInterface = interfaces["main"];
-            //JArray cards = (JArray)o["cards"];
+
+
             //image = (string) cards[0]["image"];
         }
 
@@ -87,12 +93,9 @@ namespace _7Wonders
             textures.Add("drop", Content.Load<Texture2D>("Images/down"));
             textures.Add("button", Content.Load<Texture2D>("Images/button"));
 
-            for (int i = 0; i < 14; i++)
+            foreach (JObject j in (JArray)wondersJson["wonders"])
             {
-                if (i<7)
-                    textures.Add("wonder"+i+"a", Content.Load<Texture2D>("Images/Wonders/board"+i));
-                else
-                    textures.Add("wonder"+(i-7)+"b", Content.Load<Texture2D>("Images/Wonders/board"+i));
+                textures.Add((string) j["image"], Content.Load<Texture2D>("Images/Wonders/" + j["image"]));
             }
 
             fonts.Add("Font1", Content.Load<SpriteFont>("Fonts/Font1"));
