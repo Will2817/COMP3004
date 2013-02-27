@@ -8,6 +8,7 @@ namespace ChatThingy
     interface ChatService
     {
         void setClientService(ClientService clientService);
+        void start();
         void displayIncoming(Message message);
     }
 }

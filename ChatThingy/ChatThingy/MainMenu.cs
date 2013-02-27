@@ -34,6 +34,8 @@ namespace ChatThingy
                 {
                     ip = LOCALHOST;
                     Thread hostThread = new Thread(new ThreadStart(startHost));
+                    hostThread.Start();
+                    while (!hostThread.IsAlive);
                     new ClientServiceImpl(ip, new ChatServiceImpl(name));
                     break;
                 }
@@ -54,11 +56,6 @@ namespace ChatThingy
         private void startHost()
         {
             new HostServiceImpl();
-        }
-
-        private void startClient()
-        {
-            new ClientServiceImpl(ip, new ChatServiceImpl(name));
         }
     }
 }

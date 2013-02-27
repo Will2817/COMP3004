@@ -17,6 +17,11 @@ namespace ChatThingy
             this.name = name;
             writing = false;
             displaying = false;
+            Console.WriteLine("Welcome to chat " + name);
+        }
+
+        public void start()
+        {
             waitInput();
         }
 

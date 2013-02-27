@@ -26,11 +26,7 @@ namespace ChatThingy
             mPeer = new NetServer(mConfig);
             mPeer.Start();
             mOutgoingMessage = mPeer.CreateMessage();
-        }
-
-        public void WriteMssage(String message)
-        {
-            mOutgoingMessage.Write(message);
+            while(true) CheckForMessages();
         }
 
         public void BroadcastMessage(String message)

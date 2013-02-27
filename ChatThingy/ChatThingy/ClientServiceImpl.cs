@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using Lidgren.Network;
 
 namespace ChatThingy
@@ -23,7 +24,10 @@ namespace ChatThingy
             this.chatService = chatService;
             this.chatService.setClientService(this);
             mConfig = new NetPeerConfiguration(Program.tag);
-            Initialize();
+            Thread worker = new Thread(new ThreadStart(Initialize));
+            worker.Start();
+            while (!worker.IsAlive);
+            this.chatService.start();
         }
 
         private void Initialize()
@@ -37,12 +41,13 @@ namespace ChatThingy
 
         private void Connect()
         {
-            mPeer.Connect(hostIP, port);
-            connection = mPeer.Connections[0];
+            connection = mPeer.Connect(hostIP, port);
+            while (true) CheckForMessages();
         }
 
         public void SendMessage(Message message)
         {
+            while (mOutgoingMessage == null) ;
             mOutgoingMessage.Write(message.ToString());
             NetDeliveryMethod method = NetDeliveryMethod.ReliableOrdered;
             mPeer.SendMessage(mOutgoingMessage, connection, method);
