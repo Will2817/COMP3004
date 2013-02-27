@@ -3,7 +3,7 @@
 		{
 			"name":"Gizah",
 			"side":"A",
-			"image":"GizahA",
+			"image":"Gizah_A",
 			"resource":"s",
 			"stages": [
 				{
@@ -23,7 +23,7 @@
 		{
 			"name":"Gizah",
 			"side":"B",
-			"image":"GizahB",
+			"image":"Gizah_B",
 			"resource":"s",
 			"stages": [
 				{
@@ -47,7 +47,7 @@
 		{
 			"name":"Rhodos",
 			"side":"A",
-			"image":"RhodosA",
+			"image":"Rhodos_A",
 			"resource":"o",
 			"stages": [
 				{
@@ -67,7 +67,7 @@
 		{
 			"name":"Rhodos",
 			"side":"B",
-			"image":"RhodosB",
+			"image":"Rhodos_B",
 			"resource":"o",
 			"stages": [
 				{
@@ -83,7 +83,7 @@
 		{
 			"name":"Alexandria",
 			"side":"A",
-			"image":"AlexandriaA",
+			"image":"Alexandria_A",
 			"resource":"g",
 			"stages": [
 				{
@@ -103,7 +103,7 @@
 		{
 			"name":"Alexandria",
 			"side":"B",
-			"image":"AlexandriaB",
+			"image":"Alexandria_B",
 			"resource":"g",
 			"stages": [
 				{
@@ -123,7 +123,7 @@
 		{
 			"name":"Babylon",
 			"side":"A",
-			"image":"BabylonA",
+			"image":"Babylon_A",
 			"resource":"c",
 			"stages": [
 				{
@@ -143,7 +143,7 @@
 		{
 			"name":"Babylon",
 			"side":"B",
-			"image":"BabylonB",
+			"image":"Babylon_B",
 			"resource":"c",
 			"stages": [
 				{
@@ -163,7 +163,7 @@
 		{
 			"name":"Ephesos",
 			"side":"A",
-			"image":"EphesosA",
+			"image":"Ephesos_A",
 			"resource":"p",
 			"stages": [
 				{
@@ -183,7 +183,7 @@
 		{
 			"name":"Ephesos",
 			"side":"B",
-			"image":"EphesosB",
+			"image":"Ephesos_B",
 			"resource":"p",
 			"stages": [
 				{
@@ -203,7 +203,7 @@
 		{
 			"name":"Olympia",
 			"side":"A",
-			"image":"OlympiaA",
+			"image":"Olympia_A",
 			"resource":"w",
 			"stages": [
 				{
@@ -223,7 +223,7 @@
 		{
 			"name":"Olympia",
 			"side":"B",
-			"image":"OlympiaB",
+			"image":"Olympia_B",
 			"resource":"w",
 			"stages": [
 				{
@@ -243,7 +243,7 @@
 		{
 			"name":"Halikarnassos",
 			"side":"A",
-			"image":"HalikarnassosA",
+			"image":"Halikarnassos_A",
 			"resource":"l",
 			"stages": [
 				{
@@ -263,7 +263,7 @@
 		{
 			"name":"Halikarnassos",
 			"side":"B",
-			"image":"HalikarnassosB",
+			"image":"Halikarnassos_B",
 			"resource":"l",
 			"stages": [
 				{
