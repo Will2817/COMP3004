@@ -78,15 +78,10 @@ namespace _7Wonders
             foreach (Wonder w in Game1.wonders.Values)
             {
                 w.getVisual().setPosition(new Vector2(wide*count2, 5 + height * count)).setWidth(half).setHeight(height);
-                visuals1.Add(w.getVisual().getTexture(), w.getVisual());
+                visuals1.Add(w.getName(), w.getVisual());
+                count++;
 
-                if (w.getSide() == 'B')
-                {
-                    w.getVisual().setVisible(false);
-                    count++;
-                }
-
-                if (count>(Game1.wonders.Count / 4))
+                if (count>(Game1.wonders.Count / 2))
                 {
                     count=0;
                     count2++;
@@ -127,19 +122,9 @@ namespace _7Wonders
                 foreach (Wonder w in Game1.wonders.Values)
                 {
                     if (viewSideB)
-                    {
-                        if (w.getSide() == 'B')
-                            w.getVisual().setVisible(true);
-                        else
-                            w.getVisual().setVisible(false);
-                    }
+                        w.setSideB();
                     else
-                    {
-                        if (w.getSide() == 'A')
-                            w.getVisual().setVisible(true);
-                        else
-                            w.getVisual().setVisible(false);
-                    }
+                        w.setSideA();
                 }
                 string image = visuals1["selected"].getTexture();
                 if (viewSideB)
@@ -157,13 +142,12 @@ namespace _7Wonders
 
             foreach (Wonder w in Game1.wonders.Values)
             {
-                string wonder = w.getVisual().getTexture().Substring(0, w.getVisual().getTexture().Length - 2);
-                if (visuals1[w.getVisual().getTexture()].isClicked())
+                if (visuals1[w.getName()].isClicked())
                 {
                     if (viewSideB)
-                        visuals1["selected"].setTexture(wonder + "_B");
+                        visuals1["selected"].setTexture(w.getName() + "_B");
                     else
-                        visuals1["selected"].setTexture(wonder + "_A");
+                        visuals1["selected"].setTexture(w.getName() + "_A");
                 }
             }
 

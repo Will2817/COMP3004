@@ -16,14 +16,18 @@ namespace _7Wonders
     public class Wonder
     {
         protected string name;
-        protected char side;
+        protected Side sideA;
+        protected Side sideB;
+        protected Side activeSide;
         protected Visual image;
 
         public Wonder(Game1 theGame,JObject _json)
         {
             name = (string)_json["name"];
-            side = (char)_json["side"];
-            image = new Visual(theGame, new Vector2(0, 0), 0, 0, (string)_json["image"]);
+            sideA = new Side(theGame, (JObject)_json["a"]);
+            sideB = new Side(theGame, (JObject)_json["b"]);
+            activeSide = sideA;
+            image = new Visual(theGame, new Vector2(0, 0), 0, 0, activeSide.getTexture());
         }
 
         public string getName()
@@ -31,9 +35,21 @@ namespace _7Wonders
             return name;
         }
 
-        public char getSide()
+        public Side getSide()
         {
-            return side;
+            return activeSide;
+        }
+
+        public void setSideA()
+        {
+            activeSide = sideA;
+            image.setTexture(activeSide.getTexture());
+        }
+
+        public void setSideB()
+        {
+            activeSide = sideB;
+            image.setTexture(activeSide.getTexture());
         }
 
         public Visual getVisual()

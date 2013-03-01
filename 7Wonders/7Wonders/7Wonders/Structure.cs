@@ -11,19 +11,19 @@ namespace _7Wonders
         protected List<string> costs;
         protected List<string> effects;
 
-        public Structure(JArray _costs, JArray _effect)
+        public Structure(JArray _costs, JArray _effects)
         {
             costs = new List<string>();
             effects = new List<string>();
             
-            foreach (JObject j in _costs)
+            foreach (JObject j in (JArray)_costs)
             {
-                costs.Add((string) j);
+                //Add to costs
             }
 
-            foreach (JObject j in _effect)
+            foreach (JObject j in _effects)
             {
-                effects.Add((string)j);
+                //add to effect
             }
         }
 

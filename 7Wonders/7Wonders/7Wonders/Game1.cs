@@ -48,7 +48,7 @@ namespace _7Wonders
             wonders = new Dictionary<String, Wonder>();
             foreach (JObject j in (JArray)wondersJson["wonders"])
             {
-                wonders.Add((string)j["image"], new Wonder(this, j));
+                wonders.Add((string)j["name"], new Wonder(this, j));
             }
 
             interfaces = new Dictionary<String, Interface>();
@@ -95,7 +95,8 @@ namespace _7Wonders
 
             foreach (JObject j in (JArray)wondersJson["wonders"])
             {
-                textures.Add((string) j["image"], Content.Load<Texture2D>("Images/Wonders/" + j["image"]));
+                textures.Add((string)j["a"]["image"], Content.Load<Texture2D>("Images/Wonders/" + j["a"]["image"]));
+                textures.Add((string)j["b"]["image"], Content.Load<Texture2D>("Images/Wonders/" + j["b"]["image"]));
             }
 
             fonts.Add("Font1", Content.Load<SpriteFont>("Fonts/Font1"));

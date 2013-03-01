@@ -13,13 +13,15 @@ using Newtonsoft.Json.Linq;
 
 namespace _7Wonders
 {
-    class Side
+    public class Side
     {
         List<Structure> stages;
+        string texture;
 
-
-        public Side(JObject j)
+        public Side(Game1 theGame, JObject j)
         {
+
+            texture = (string)j["image"];
 
             stages = new List<Structure>();
 
@@ -27,6 +29,11 @@ namespace _7Wonders
             {
                 stages.Add(new Structure((JArray)stage["cost"], (JArray)stage["effects"]));
             }
+        }
+
+        public string getTexture()
+        {
+            return texture;
         }
     }
 }
