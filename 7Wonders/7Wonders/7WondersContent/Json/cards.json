@@ -1,27 +1,4 @@
 {
-    "guilds": [
-        {
-            "brown": "Raw"
-        },
-        {
-            "gray": "Manufactured"
-        },
-        {
-            "blue": "Civilian"
-        },
-        {
-            "green": "science"
-        },
-        {
-            "yellow": "Commercial"
-        },
-        {
-            "red": "Military"
-        },
-        {
-            "purple": "Guilds"
-        }
-    ],
     "cards": [
         {
             "name": "Lumber Yard",
