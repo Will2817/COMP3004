@@ -10,7 +10,7 @@
             "blue": "Civilian"
         },
         {
-            "green": "Scientific"
+            "green": "science"
         },
         {
             "yellow": "Commercial"
@@ -39,6 +39,9 @@
             ],
             "chains": [
                 null
+            ],
+            "previous": [
+                null
             ]
         },
         {
@@ -56,6 +59,9 @@
                 }
             ],
             "chains": [
+                null
+            ],
+            "previous": [
                 null
             ]
         },
@@ -75,6 +81,9 @@
             ],
             "chains": [
                 null
+            ],
+            "previous": [
+                null
             ]
         },
         {
@@ -93,11 +102,14 @@
             ],
             "chains": [
                 null
+            ],
+            "previous": [
+                null
             ]
         },
         {
             "name": "Tree Farm",
-            "image": 5,
+            "image": "05",
             "players": 6,
             "age": 1,
             "guild": "brown",
@@ -108,17 +120,16 @@
             ],
             "effects": [
                 {
-                    "choice": [
-                        {
-                            "w": 1
-                        },
-                        {
-                            "c": 1
-                        }
+                    "rchoice": [
+                        "w",
+                        "c"
                     ]
                 }
             ],
             "chains": [
+                null
+            ],
+            "previous": [
                 null
             ]
         },
@@ -135,17 +146,16 @@
             ],
             "effects": [
                 {
-                    "choice": [
-                        {
-                            "s": 1
-                        },
-                        {
-                            "c": 1
-                        }
+                    "rchoice": [
+                        "s",
+                        "c"
                     ]
                 }
             ],
             "chains": [
+                null
+            ],
+            "previous": [
                 null
             ]
         },
@@ -162,17 +172,16 @@
             ],
             "effects": [
                 {
-                    "choice": [
-                        {
-                            "c": 1
-                        },
-                        {
-                            "o": 1
-                        }
+                    "rchoice": [
+                        "c",
+                        "o"
                     ]
                 }
             ],
             "chains": [
+                null
+            ],
+            "previous": [
                 null
             ]
         },
@@ -189,17 +198,16 @@
             ],
             "effects": [
                 {
-                    "choice": [
-                        {
-                            "s": 1
-                        },
-                        {
-                            "w": 1
-                        }
+                    "rchoice": [
+                        "s",
+                        "w"
                     ]
                 }
             ],
             "chains": [
+                null
+            ],
+            "previous": [
                 null
             ]
         },
@@ -216,17 +224,16 @@
             ],
             "effects": [
                 {
-                    "choice": [
-                        {
-                            "w": 1
-                        },
-                        {
-                            "o": 1
-                        }
+                    "rchoice": [
+                        "w",
+                        "o"
                     ]
                 }
             ],
             "chains": [
+                null
+            ],
+            "previous": [
                 null
             ]
         },
@@ -243,17 +250,16 @@
             ],
             "effects": [
                 {
-                    "choice": [
-                        {
-                            "s": 1
-                        },
-                        {
-                            "o": 1
-                        }
+                    "rchoice": [
+                        "s",
+                        "o"
                     ]
                 }
             ],
             "chains": [
+                null
+            ],
+            "previous": [
                 null
             ]
         },
@@ -275,6 +281,9 @@
             ],
             "chains": [
                 null
+            ],
+            "previous": [
+                null
             ]
         },
         {
@@ -294,6 +303,9 @@
                 }
             ],
             "chains": [
+                null
+            ],
+            "previous": [
                 null
             ]
         },
@@ -315,6 +327,9 @@
             ],
             "chains": [
                 null
+            ],
+            "previous": [
+                null
             ]
         },
         {
@@ -335,6 +350,9 @@
             ],
             "chains": [
                 null
+            ],
+            "previous": [
+                null
             ]
         },
         {
@@ -352,6 +370,9 @@
                 }
             ],
             "chains": [
+                null
+            ],
+            "previous": [
                 null
             ]
         },
@@ -371,6 +392,9 @@
             ],
             "chains": [
                 null
+            ],
+            "previous": [
+                null
             ]
         },
         {
@@ -389,6 +413,9 @@
             ],
             "chains": [
                 null
+            ],
+            "previous": [
+                null
             ]
         },
         {
@@ -399,18 +426,10 @@
             "guild": "purple",
             "cost": [
                 {
-                    "coin": 1
-                },
-                {
-                    "o": 2
-                },
-                {
-                    "c": 1
-                },
-                {
-                    "s": 1
-                },
-                {
+                    "coin": 1,
+                    "o": 2,
+                    "c": 1,
+                    "s": 1,
                     "w": 1
                 }
             ],
@@ -424,6 +443,9 @@
             ],
             "chains": [
                 null
+            ],
+            "previous": [
+                null
             ]
         },
         {
@@ -434,9 +456,7 @@
             "guild": "purple",
             "cost": [
                 {
-                    "o": 2
-                },
-                {
+                    "o": 2,
                     "s": 2
                 }
             ],
@@ -450,6 +470,9 @@
             ],
             "chains": [
                 null
+            ],
+            "previous": [
+                null
             ]
         },
         {
@@ -460,12 +483,8 @@
             "guild": "purple",
             "cost": [
                 {
-                    "g": 1
-                },
-                {
-                    "l": 1
-                },
-                {
+                    "g": 1,
+                    "l": 1,
                     "p": 1
                 }
             ],
@@ -479,6 +498,9 @@
             ],
             "chains": [
                 null
+            ],
+            "previous": [
+                null
             ]
         },
         {
@@ -489,12 +511,8 @@
             "guild": "purple",
             "cost": [
                 {
-                    "c": 3
-                },
-                {
-                    "p": 1
-                },
-                {
+                    "c": 3,
+                    "p": 1,
                     "l": 1
                 }
             ],
@@ -508,6 +526,9 @@
             ],
             "chains": [
                 null
+            ],
+            "previous": [
+                null
             ]
         },
         {
@@ -518,9 +539,7 @@
             "guild": "purple",
             "cost": [
                 {
-                    "c": 3
-                },
-                {
+                    "c": 3,
                     "g": 1
                 }
             ],
@@ -534,6 +553,9 @@
             ],
             "chains": [
                 null
+            ],
+            "previous": [
+                null
             ]
         },
         {
@@ -544,24 +566,24 @@
             "guild": "purple",
             "cost": [
                 {
-                    "o": 2
-                },
-                {
-                    "s": 1
-                },
-                {
+                    "o": 2,
+                    "s": 1,
                     "l": 1
                 }
             ],
             "effects": [
                 {
                     "victory": [
-                        1,
-                        "neighboringDefeat"
+                        {
+                            "neighboringDefeat": 1
+                        }
                     ]
                 }
             ],
             "chains": [
+                null
+            ],
+            "previous": [
                 null
             ]
         },
@@ -573,12 +595,8 @@
             "guild": "purple",
             "cost": [
                 {
-                    "w": 3
-                },
-                {
-                    "p": 1
-                },
-                {
+                    "w": 3,
+                    "p": 1,
                     "g": 1
                 }
             ],
@@ -596,6 +614,9 @@
             ],
             "chains": [
                 null
+            ],
+            "previous": [
+                null
             ]
         },
         {
@@ -605,14 +626,25 @@
             "age": 3,
             "guild": "purple",
             "cost": [
-                {"w":2},{"o":2},{"p":1}
+                {
+                    "w": 2,
+                    "o": 2,
+                    "p": 1
+                }
             ],
             "effects": [
                 {
-                    "schoice":["t", "c", "g"]
+                    "schoice": [
+                        "t",
+                        "c",
+                        "g"
+                    ]
                 }
             ],
             "chains": [
+                null
+            ],
+            "previous": [
                 null
             ]
         },
@@ -623,17 +655,24 @@
             "age": 3,
             "guild": "purple",
             "cost": [
-                {"w":3},{"s":1},{"l":1}
+                {
+                    "w": 3,
+                    "s": 1,
+                    "l": 1
+                }
             ],
             "effects": [
                 {
-                     "victory": [
+                    "victory": [
                         1,
                         "neighboringBlue"
                     ]
                 }
             ],
             "chains": [
+                null
+            ],
+            "previous": [
                 null
             ]
         },
@@ -644,14 +683,25 @@
             "age": 0,
             "guild": "",
             "cost": [
-                {"s":2},{"c":2},{"g":1}
+                {
+                    "s": 2,
+                    "c": 2,
+                    "g": 1
+                }
             ],
             "effects": [
                 {
-                    "victory": [{"neighboringWonders":1}]
+                    "victory": [
+                        {
+                            "neighboringWonders": 1
+                        }
+                    ]
                 }
             ],
             "chains": [
+                null
+            ],
+            "previous": [
                 null
             ]
         },
@@ -671,6 +721,9 @@
             ],
             "chains": [
                 null
+            ],
+            "previous": [
+                null
             ]
         },
         {
@@ -680,15 +733,20 @@
             "age": 1,
             "guild": "blue",
             "cost": [
-                "s":1
+                {
+                    "s": 1
+                }
             ],
             "effects": [
                 {
-                    "victory":3
+                    "victory": 3
                 }
             ],
             "chains": [
                 "Aqueduct"
+            ],
+            "previous": [
+                null
             ]
         },
         {
@@ -706,7 +764,10 @@
                 }
             ],
             "chains": [
-                "temple"
+                "Temple"
+            ],
+            "previous": [
+                null
             ]
         },
         {
@@ -725,6 +786,9 @@
             ],
             "chains": [
                 "Statue"
+            ],
+            "previous": [
+                null
             ]
         },
         {
@@ -734,7 +798,9 @@
             "age": 2,
             "guild": "blue",
             "cost": [
-                "s":3
+                {
+                    "s": 3
+                }
             ],
             "effects": [
                 {
@@ -744,10 +810,9 @@
             "chains": [
                 null
             ],
-			"previous": [
-				"Baths"
-			]
-			
+            "previous": [
+                "Baths"
+            ]
         },
         {
             "name": "Temple",
@@ -756,7 +821,11 @@
             "age": 2,
             "guild": "blue",
             "cost": [
-                {"w":1},{"c":1},{"g":1}
+                {
+                    "w": 1,
+                    "c": 1,
+                    "g": 1
+                }
             ],
             "effects": [
                 {
@@ -766,9 +835,9 @@
             "chains": [
                 "Pantheon"
             ],
-			"previous":[
-				"Altar"
-			]
+            "previous": [
+                "Altar"
+            ]
         },
         {
             "name": "Statue",
@@ -777,7 +846,10 @@
             "age": 2,
             "guild": "blue",
             "cost": [
-                {"o":2},{"w":1}
+                {
+                    "o": 2,
+                    "w": 1
+                }
             ],
             "effects": [
                 {
@@ -787,9 +859,9 @@
             "chains": [
                 "Gardens"
             ],
-			"previous":[
-				"Theater"
-			]
+            "previous": [
+                "Theater"
+            ]
         },
         {
             "name": "Pantheon",
@@ -798,7 +870,13 @@
             "age": 3,
             "guild": "blue",
             "cost": [
-                {"c":2},{"o":1},{"g":1},{"p":1},{"l":1}
+                {
+                    "c": 2,
+                    "o": 1,
+                    "g": 1,
+                    "p": 1,
+                    "l": 1
+                }
             ],
             "effects": [
                 {
@@ -808,9 +886,9 @@
             "chains": [
                 null
             ],
-			"previous": [
-				"Temple"
-			]
+            "previous": [
+                "Temple"
+            ]
         },
         {
             "name": "Gardens",
@@ -819,7 +897,10 @@
             "age": 3,
             "guild": "blue",
             "cost": [
-                {"c":2},{"w":1}
+                {
+                    "c": 2,
+                    "w": 1
+                }
             ],
             "effects": [
                 {
@@ -829,9 +910,9 @@
             "chains": [
                 null
             ],
-			"previous": [
-				"Statue"
-			]
+            "previous": [
+                "Statue"
+            ]
         },
         {
             "name": "Town Hall",
@@ -840,7 +921,11 @@
             "age": 3,
             "guild": "blue",
             "cost": [
-                {"s":2},{"o":1},{"g":1}
+                {
+                    "s": 2,
+                    "o": 1,
+                    "g": 1
+                }
             ],
             "effects": [
                 {
@@ -848,6 +933,9 @@
                 }
             ],
             "chains": [
+                null
+            ],
+            "previous": [
                 null
             ]
         },
@@ -858,14 +946,25 @@
             "age": 3,
             "guild": "blue",
             "cost": [
-                {"s":1},{"o":1},{"w":1},{"c":1},{"g":1},{"p":1},{"l":1}
+                {
+                    "s": 1,
+                    "o": 1,
+                    "w": 1,
+                    "c": 1,
+                    "g": 1,
+                    "p": 1,
+                    "l": 1
+                }
             ],
             "effects": [
                 {
-                    "victory":8
+                    "victory": 8
                 }
             ],
             "chains": [
+                null
+            ],
+            "previous": [
                 null
             ]
         },
@@ -876,7 +975,10 @@
             "age": 2,
             "guild": "blue",
             "cost": [
-                {"c":2},{"l":1}
+                {
+                    "c": 2,
+                    "l": 1
+                }
             ],
             "effects": [
                 {
@@ -886,9 +988,9 @@
             "chains": [
                 null
             ],
-			"previous": [
-				"Scriptorium"
-			]
+            "previous": [
+                "Scriptorium"
+            ]
         },
         {
             "name": "Senate",
@@ -897,7 +999,11 @@
             "age": 3,
             "guild": "blue",
             "cost": [
-                {"w":2},{"s":1},{"o":1}
+                {
+                    "w": 2,
+                    "s": 1,
+                    "o": 1
+                }
             ],
             "effects": [
                 {
@@ -907,9 +1013,9 @@
             "chains": [
                 null
             ],
-			"previous": [
-				"Library"
-			]
+            "previous": [
+                "Library"
+            ]
         },
         {
             "name": "Stockade",
@@ -918,14 +1024,19 @@
             "age": 1,
             "guild": "red",
             "cost": [
-                {"w":1}
+                {
+                    "w": 1
+                }
             ],
             "effects": [
                 {
-                    "shield": 1
+                    "army": 1
                 }
             ],
             "chains": [
+                null
+            ],
+            "previous": [
                 null
             ]
         },
@@ -936,14 +1047,19 @@
             "age": 1,
             "guild": "red",
             "cost": [
-                {"o":1}
+                {
+                    "o": 1
+                }
             ],
             "effects": [
                 {
-                    "shield": 1
+                    "army": 1
                 }
             ],
             "chains": [
+                null
+            ],
+            "previous": [
                 null
             ]
         },
@@ -954,14 +1070,19 @@
             "age": 1,
             "guild": "red",
             "cost": [
-                {"c":1}
+                {
+                    "c": 1
+                }
             ],
             "effects": [
                 {
-                    "shield": 1
+                    "army": 1
                 }
             ],
             "chains": [
+                null
+            ],
+            "previous": [
                 null
             ]
         },
@@ -972,15 +1093,20 @@
             "age": 2,
             "guild": "red",
             "cost": [
-                {"s":3}
+                {
+                    "s": 3
+                }
             ],
             "effects": [
                 {
-                    "shield": 2
+                    "army": 2
                 }
             ],
             "chains": [
                 "Fortifications"
+            ],
+            "previous": [
+                null
             ]
         },
         {
@@ -990,15 +1116,21 @@
             "age": 2,
             "guild": "red",
             "cost": [
-                {"o":2},{"w":1}
+                {
+                    "o": 2,
+                    "w": 1
+                }
             ],
             "effects": [
                 {
-                    "shield": 2
+                    "army": 2
                 }
             ],
             "chains": [
                 "Circus"
+            ],
+            "previous": [
+                null
             ]
         },
         {
@@ -1008,19 +1140,22 @@
             "age": 3,
             "guild": "red",
             "cost": [
-                {"o":3},{"s":1}
+                {
+                    "o": 3,
+                    "s": 1
+                }
             ],
             "effects": [
                 {
-                    "shield": 3
+                    "army": 3
                 }
             ],
             "chains": [
                 null
             ],
-			"previous": [
-				"Walls"
-			]
+            "previous": [
+                "Walls"
+            ]
         },
         {
             "name": "Circus",
@@ -1029,19 +1164,22 @@
             "age": 3,
             "guild": "red",
             "cost": [
-                {"s":3},{"o":1}
+                {
+                    "s": 3,
+                    "o": 1
+                }
             ],
             "effects": [
                 {
-                    "shield": 3
+                    "army": 3
                 }
             ],
             "chains": [
                 null
             ],
-			"previous": [
-				"Training Ground"
-			]
+            "previous": [
+                "Training Ground"
+            ]
         },
         {
             "name": "Arsenal",
@@ -1050,14 +1188,21 @@
             "age": 3,
             "guild": "red",
             "cost": [
-                {"w":2},{"o":1},{"l":1}
+                {
+                    "w": 2,
+                    "o": 1,
+                    "l": 1
+                }
             ],
             "effects": [
                 {
-                    "shield": 3
+                    "army": 3
                 }
             ],
             "chains": [
+                null
+            ],
+            "previous": [
                 null
             ]
         },
@@ -1068,19 +1213,23 @@
             "age": 2,
             "guild": "red",
             "cost": [
-                {"c":1},{"w":1},{"o":1}
+                {
+                    "c": 1,
+                    "w": 1,
+                    "o": 1
+                }
             ],
             "effects": [
                 {
-                    "shield": 2
+                    "army": 2
                 }
             ],
             "chains": [
                 null
             ],
-			"previous": [
-				"Apothecary"
-			]
+            "previous": [
+                "Apothecary"
+            ]
         },
         {
             "name": "Archery Range",
@@ -1089,19 +1238,22 @@
             "age": 2,
             "guild": "red",
             "cost": [
-                {"w":2},{"o":1}
+                {
+                    "w": 2,
+                    "o": 1
+                }
             ],
             "effects": [
                 {
-                    "shield": 2
+                    "army": 2
                 }
             ],
             "chains": [
                 null
             ],
-			"previous": [
-				"Workshop"
-			]
+            "previous": [
+                "Workshop"
+            ]
         },
         {
             "name": "Siege Workshop",
@@ -1110,19 +1262,22 @@
             "age": 3,
             "guild": "red",
             "cost": [
-                {"c":3},{"w":1}
+                {
+                    "c": 3,
+                    "w": 1
+                }
             ],
             "effects": [
                 {
-                    "shield": 3
+                    "army": 3
                 }
             ],
             "chains": [
                 null
             ],
-			"previous": [
-				"Laboratory"
-			]
+            "previous": [
+                "Laboratory"
+            ]
         },
         {
             "name": "Tavern",
@@ -1140,6 +1295,9 @@
             ],
             "chains": [
                 null
+            ],
+            "previous": [
+                null
             ]
         },
         {
@@ -1153,12 +1311,14 @@
             ],
             "effects": [
                 {
-                    "purchase":[1, "right", "raw"]
-					
+                    "rcostEast": 1
                 }
             ],
             "chains": [
                 "Forum"
+            ],
+            "previous": [
+                null
             ]
         },
         {
@@ -1172,11 +1332,14 @@
             ],
             "effects": [
                 {
-                    "purchase": [1, "left", "raw"]
+                    "costWest": 1
                 }
             ],
             "chains": [
                 "Forum"
+            ],
+            "previous": [
+                null
             ]
         },
         {
@@ -1190,11 +1353,15 @@
             ],
             "effects": [
                 {
-                    "purchase": [1, "both", "manufactured"]
+                    "mcostEast": 1,
+                    "mcostWest": 1
                 }
             ],
             "chains": [
                 "Caravansery"
+            ],
+            "previous": [
+                null
             ]
         },
         {
@@ -1204,22 +1371,26 @@
             "age": 2,
             "guild": "yellow",
             "cost": [
-                {"c":2}
+                {
+                    "c": 2
+                }
             ],
             "effects": [
                 {
-                    "choice": [
-						"g":1, "l":1, "p": 1
-					],
-					"trade": false
+                    "rchoice": [
+                        "g",
+                        "l",
+                        "p"
+                    ]
                 }
             ],
             "chains": [
                 "Haven"
             ],
-			"previous": [
-				"East Trading Post","West Trading Post"
-			]
+            "previous": [
+                "East Trading Post",
+                "West Trading Post"
+            ]
         },
         {
             "name": "Caravansery",
@@ -1228,22 +1399,26 @@
             "age": 2,
             "guild": "yellow",
             "cost": [
-                "w":2
+                {
+                    "w": 2
+                }
             ],
             "effects": [
                 {
-                    "choice": [
-						"c":1, "s":1, "o":1, "w":1
-					],
-					"trade": false
+                    "rchoice": [
+                        "c",
+                        "s",
+                        "o",
+                        "w"
+                    ]
                 }
             ],
             "chains": [
                 "Lighthouse"
             ],
-			"previous": [
-				"Marketplace"
-			]
+            "previous": [
+                "Marketplace"
+            ]
         },
         {
             "name": "Vineyard",
@@ -1259,12 +1434,15 @@
                     "coin": [
                         1,
                         "neighboringBrown",
-						1,
-						"ownBrown"
+                        1,
+                        "ownBrown"
                     ]
                 }
             ],
             "chains": [
+                null
+            ],
+            "previous": [
                 null
             ]
         },
@@ -1282,12 +1460,15 @@
                     "coin": [
                         2,
                         "neighboringGray",
-						2,
-						"ownGray"
+                        2,
+                        "ownGray"
                     ]
                 }
             ],
             "chains": [
+                null
+            ],
+            "previous": [
                 null
             ]
         },
@@ -1298,20 +1479,32 @@
             "age": 3,
             "guild": "yellow",
             "cost": [
-                {"w":1},{"o":1},{"l":1}
+                {
+                    "w": 1,
+                    "o": 1,
+                    "l": 1
+                }
             ],
             "effects": [
                 {
-                    "victory: [1, "ownBrown"],
-					"coin": [1, "ownBrown"]
+                    "victory": [
+                        {
+                            "ownBrown": 1
+                        }
+                    ],
+                    "coin": [
+                        {
+                            "ownBrown": 1
+                        }
+                    ]
                 }
             ],
             "chains": [
                 null
             ],
-			"previous": [
-				"Forum"
-			]
+            "previous": [
+                "Forum"
+            ]
         },
         {
             "name": "Lighthouse",
@@ -1320,20 +1513,29 @@
             "age": 3,
             "guild": "yellow",
             "cost": [
-                {"s":1},{"g":1}
+                {
+                    "s": 1,
+                    "g": 1
+                }
             ],
             "effects": [
                 {
-                    "victory": [1, "ownYellow"],
-					"coin": [1, "ownYellow"]
+                    "victory": [
+                        1,
+                        "ownYellow"
+                    ],
+                    "coin": [
+                        1,
+                        "ownYellow"
+                    ]
                 }
             ],
             "chains": [
                 null
             ],
-			"previous": [
-				"Caravansery"
-			]
+            "previous": [
+                "Caravansery"
+            ]
         },
         {
             "name": "Chamber of Commerce",
@@ -1342,15 +1544,27 @@
             "age": 3,
             "guild": "yellow",
             "cost": [
-                {"c":2},{"p":1}
+                {
+                    "c": 2,
+                    "p": 1
+                }
             ],
             "effects": [
                 {
-                    "victory": [2, "ownGray"],
-					"coin": [2, "ownGray"]
+                    "victory": [
+                        2,
+                        "ownGray"
+                    ],
+                    "coin": [
+                        2,
+                        "ownGray"
+                    ]
                 }
             ],
             "chains": [
+                null
+            ],
+            "previous": [
                 null
             ]
         },
@@ -1361,20 +1575,29 @@
             "age": 3,
             "guild": "yellow",
             "cost": [
-                {"s":2},{"o":1}
+                {
+                    "s": 2,
+                    "o": 1
+                }
             ],
             "effects": [
                 {
-                    "coin": [3, "ownWonder"],
-					"victory": [1, "ownWonder"]
+                    "coin": [
+                        3,
+                        "ownWonder"
+                    ],
+                    "victory": [
+                        1,
+                        "ownWonder"
+                    ]
                 }
             ],
             "chains": [
                 null
             ],
-			"previous": [
-				"Dispensary"
-			]
+            "previous": [
+                "Dispensary"
+            ]
         },
         {
             "name": "Apothecary",
@@ -1383,15 +1606,22 @@
             "age": 1,
             "guild": "green",
             "cost": [
-                {"l":1}
+                {
+                    "l": 1
+                }
             ],
             "effects": [
                 {
-                    "schoice":["t", "c", "g"]
+                    "schoice": [
+                        "t",
+                        "c",
+                        "g"
+                    ]
                 }
             ],
             "chains": [
-                "Stables","Dispensary"
+                "Stables",
+                "Dispensary"
             ]
         },
         {
@@ -1401,15 +1631,21 @@
             "age": 1,
             "guild": "green",
             "cost": [
-                "g":1
+                {
+                    "g": 1
+                }
             ],
             "effects": [
                 {
-                    "scientific": "ruler?"
+                    "science": "c"
                 }
             ],
             "chains": [
-                "Archery Range", "Laboratory"
+                "Archery Range",
+                "Laboratory"
+            ],
+            "previous": [
+                null
             ]
         },
         {
@@ -1419,15 +1655,21 @@
             "age": 1,
             "guild": "green",
             "cost": [
-                {"p":1}
+                {
+                    "p": 1
+                }
             ],
             "effects": [
                 {
-                    "scientific": "tablet"
+                    "science": "t"
                 }
             ],
             "chains": [
-                "Courthouse","Library"
+                "Courthouse",
+                "Library"
+            ],
+            "previous": [
+                null
             ]
         },
         {
@@ -1437,19 +1679,23 @@
             "age": 2,
             "guild": "green",
             "cost": [
-                {"o":2},{"g":1}
+                {
+                    "o": 2,
+                    "g": 1
+                }
             ],
             "effects": [
                 {
-                    "scientific": "ruler?"
+                    "science": "c"
                 }
             ],
             "chains": [
-                "Arena", "Lodge"
+                "Arena",
+                "Lodge"
             ],
-			"previous": [
-				"Apothecary"
-			]
+            "previous": [
+                "Apothecary"
+            ]
         },
         {
             "name": "Laboratory",
@@ -1458,145 +1704,196 @@
             "age": 2,
             "guild": "green",
             "cost": [
-                {"c":2},{"p":1}
+                {
+                    "c": 2,
+                    "p": 1
+                }
             ],
             "effects": [
                 {
-                    "scientific": "gear? Cog?"
+                    "science": "g"
                 }
             ],
             "chains": [
                 "Siege Workshop",
-				"Observatory"
+                "Observatory"
             ],
-			"previous": [
-				"Workshop"
-			]
+            "previous": [
+                "Workshop"
+            ]
         },
         {
-            "name": "",
+            "name": "Library",
             "image": "69",
-            "players": 0,
-            "age": 0,
-            "guild": "",
+            "players": 3,
+            "age": 2,
+            "guild": "green",
             "cost": [
-                null
+                {
+                    "s": 2,
+                    "l": 1
+                }
             ],
             "effects": [
                 {
-                    "w": 1
+                    "science": "t"
                 }
             ],
             "chains": [
-                null
+                "Senate",
+                "University"
+            ],
+            "previous": [
+                "Scriptorium"
             ]
         },
         {
-            "name": "",
+            "name": "School",
             "image": "70",
-            "players": 0,
-            "age": 0,
-            "guild": "",
+            "players": 3,
+            "age": 2,
+            "guild": "green",
             "cost": [
-                null
+                {
+                    "w": 1,
+                    "p": 1
+                }
             ],
             "effects": [
                 {
-                    "w": 1
+                    "science": "t"
                 }
             ],
             "chains": [
+                "Academy",
+                "Study"
+            ],
+            "previous": [
                 null
             ]
         },
         {
-            "name": "",
+            "name": "Lodge",
             "image": "71",
-            "players": 0,
-            "age": 0,
-            "guild": "",
+            "players": 3,
+            "age": 3,
+            "guild": "green",
             "cost": [
-                null
+                {
+                    "c": 2,
+                    "p": 1,
+                    "l": 1
+                }
             ],
             "effects": [
                 {
-                    "w": 1
+                    "science": "c"
                 }
             ],
             "chains": [
                 null
+            ],
+            "previous": [
+                "Dispensary"
             ]
         },
         {
-            "name": "",
+            "name": "Observatory",
             "image": "72",
-            "players": 0,
-            "age": 0,
-            "guild": "",
+            "players": 3,
+            "age": 3,
+            "guild": "green",
             "cost": [
-                null
+                {
+                    "o": 2,
+                    "g": 1,
+                    "l": 1
+                }
             ],
             "effects": [
                 {
-                    "w": 1
+                    "science": "g"
                 }
             ],
             "chains": [
                 null
+            ],
+            "previous": [
+                "Laboratory"
             ]
         },
         {
-            "name": "",
+            "name": "University",
             "image": "73",
-            "players": 0,
-            "age": 0,
-            "guild": "",
+            "players": 3,
+            "age": 3,
+            "guild": "green",
             "cost": [
-                null
+                {
+                    "w": 2,
+                    "p": 1,
+                    "g": 1
+                }
             ],
             "effects": [
                 {
-                    "w": 1
+                    "science": "t"
                 }
             ],
             "chains": [
                 null
+            ],
+            "previous": [
+                "Library"
             ]
         },
         {
-            "name": "",
+            "name": "Academy",
             "image": "74",
-            "players": 0,
-            "age": 0,
-            "guild": "",
+            "players": 3,
+            "age": 3,
+            "guild": "green",
             "cost": [
-                null
+                {
+                    "s": 3,
+                    "g": 1
+                }
             ],
             "effects": [
                 {
-                    "w": 1
+                    "science": "c"
                 }
             ],
             "chains": [
                 null
+            ],
+            "previous": [
+                "School"
             ]
         },
         {
-            "name": "",
+            "name": "Study",
             "image": "75",
-            "players": 0,
-            "age": 0,
-            "guild": "",
+            "players": 3,
+            "age": 3,
+            "guild": "green",
             "cost": [
-                null
+                {
+                    "w": 2,
+                    "p": 1,
+                    "l": 1
+                }
             ],
             "effects": [
                 {
-                    "w": 1
+                    "science": "g"
                 }
             ],
             "chains": [
                 null
+            ],
+            "previous": [
+                "School"
             ]
         }
     ]
