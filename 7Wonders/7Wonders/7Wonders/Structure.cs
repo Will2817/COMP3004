@@ -15,8 +15,6 @@ namespace _7Wonders
         protected List<string> chains;
         protected List<string> previous;
 
-        protected int costsSize, effectsSize, chainsSize, previousSize;
-
         // Constructor
         public Structure(JObject _costs, JObject _effects)
         {
@@ -24,11 +22,6 @@ namespace _7Wonders
             effects = new List<string>();
             chains = new List<string>();
             previous = new List<string>();
-
-            costsSize = 0;
-            effectsSize = 0;
-            chainsSize = 0;
-            previousSize = 0;
             
             foreach (JProperty p in _costs.Properties())
             {
@@ -55,15 +48,93 @@ namespace _7Wonders
                     case "w":
                         Console.WriteLine(p.Name + ":" + p.Value);
                         break;
-                    default: break;
-
+                    default:
+                        Console.WriteLine("Error: No such cost " + p.Name);
+                        break;
                 }
+
+                // Add to the list
+                costs.Add(p.Name + ":" + p.Value);
             }
 
             foreach (JProperty p in _effects.Properties())
             {
-                //add to effect
+                switch (p.Name)
+                {
+                    //Case - Resource : Type : Value
+                    case "c": // Clay
+                        Console.WriteLine("resource:" + p.Name + ":" + p.Value);
+                        effects.Add("resource:" + p.Name + ":" + p.Value);
+                        break;
+                    case "g": // Glass
+                        Console.WriteLine("resource:" + p.Name + ":" + p.Value);
+                        effects.Add("resource:" + p.Name + ":" + p.Value);
+                        break;
+                    case "l": // Loom
+                        Console.WriteLine("resource:" + p.Name + ":" + p.Value);
+                        effects.Add("resource:" + p.Name + ":" + p.Value);
+                        break;
+                    case "o": // Ore
+                        Console.WriteLine("resource:" + p.Name + ":" + p.Value);
+                        effects.Add("resource:" + p.Name + ":" + p.Value);
+                        break;
+                    case "p": // Papyrus
+                        Console.WriteLine("resource:" + p.Name + ":" + p.Value);
+                        effects.Add("resource:" + p.Name + ":" + p.Value);
+                        break;
+                    case "s": // Stone
+                        Console.WriteLine("resource:" + p.Name + ":" + p.Value);
+                        effects.Add("resource:" + p.Name + ":" + p.Value);
+                        break;
+                    case "w": // Wood
+                        Console.WriteLine("resource:" + p.Name + ":" + p.Value);
+                        effects.Add("resource:" + p.Name + ":" + p.Value);
+                        break;
+
+                    // Case - Resource Choice: c1 : c2 : ...
+                    case "rchoice":
+                        string temp = "rchoice:";
+                        foreach (JArray s in p["rchoice"])
+                            temp += ":" + s;
+
+                        Console.WriteLine(temp);
+                        effects.Add(temp);
+                        break;
+
+                    // Case - Army : Value
+                    case "army":
+                        Console.WriteLine(p.Name + ":" + p.Value);
+                        effects.Add(p.Name + ":" + p.Value);
+                        break;
+
+                    // Case - Victory Points : Determinant : Value
+                    // NOT DONE
+                    case "victory":
+                       
+                        break;
+
+                    // Case - Coin : Determinant : Value
+                    // NOT DONE
+                    case "coin":
+
+                        break;
+                    
+                    // Case - Science: 't'ablet, 'c'ompass, 'g'ear
+                    case "science":
+                        Console.WriteLine(p.Name + ":" + p.Value);
+                        effects.Add(p.Name + ":" + p.Value);
+                        break;
+
+                    default:
+                        Console.WriteLine("Error: No such effect " + p.Name);
+                        break;
+                }
             }
+        }
+
+        public List<string> getCosts()
+        {
+            return costs;
         }
 
         public List<string> getEffects()
@@ -71,9 +142,15 @@ namespace _7Wonders
             return effects;
         }
 
-        public List<string> getCosts()
+        public List<string> getChains()
         {
-            return costs;
+            return chains;
         }
+
+        public List<string> getPrevious()
+        {
+            return previous;
+        }
+        
     }
 }

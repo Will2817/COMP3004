@@ -339,10 +339,9 @@
                 "w": 1
             },
             "effects": {
-                "victory": [
-                    1,
-                    "neighboringBrown"
-                ]
+                "victory": {
+                    "neighboringBrown": 1
+                }
             },
             "chains": [
                 null
@@ -362,10 +361,9 @@
                 "s": 2
             },
             "effects": {
-                "victory": [
-                    2,
-                    "neighboringGray"
-                ]
+                "victory": {
+                    "neighboringGray": 2
+                }
             },
             "chains": [
                 null
@@ -386,10 +384,9 @@
                 "p": 1
             },
             "effects": {
-                "victory": [
-                    1,
-                    "neighboringYellow"
-                ]
+                "victory": {
+                    "neighboringYellow": 1
+                }
             },
             "chains": [
                 null
@@ -410,10 +407,9 @@
                 "l": 1
             },
             "effects": {
-                "victory": [
-                    1,
-                    "neighboringGreen"
-                ]
+                "victory": {
+                    "neighboringGreen": 1
+                }
             },
             "chains": [
                 null
@@ -433,10 +429,9 @@
                 "g": 1
             },
             "effects": {
-                "victory": [
-                    1,
-                    "neighboringRed"
-                ]
+                "victory": {
+                    "neighboringRed": 1
+                }
             },
             "chains": [
                 null
@@ -457,11 +452,9 @@
                 "l": 1
             },
             "effects": {
-                "victory": [
-                    {
-                        "neighboringDefeat": 1
-                    }
-                ]
+                "victory": {
+                    "neighboringDefeat": 1
+                }
             },
             "chains": [
                 null
@@ -482,14 +475,11 @@
                 "g": 1
             },
             "effects": {
-                "victory": [
-                    1,
-                    "ownBrown",
-                    1,
-                    "ownGray",
-                    1,
-                    "ownPurple"
-                ]
+                "victory": {
+                    "ownBrown": 1,
+                    "ownGray": 1,
+                    "ownPurple": 1
+                }
             },
             "chains": [
                 null
@@ -535,10 +525,9 @@
                 "l": 1
             },
             "effects": {
-                "victory": [
-                    1,
-                    "neighboringBlue"
-                ]
+                "victory": {
+                    "neighboringBlue": 1
+                }
             },
             "chains": [
                 null
@@ -559,11 +548,9 @@
                 "g": 1
             },
             "effects": {
-                "victory": [
-                    {
-                        "neighboringWonders": 1
-                    }
-                ]
+                "victory": {
+                    "neighboringWonders": 1
+                }
             },
             "chains": [
                 null
@@ -1059,11 +1046,11 @@
             "age": 1,
             "guild": "yellow",
             "cost": {},
-            "effects": [
+            "effects": 
                 {
-                    "coin": 5
+                    "coin": {"own":5}
                 }
-            ],
+            ,
             "chains": [
                 null
             ],
@@ -1096,7 +1083,7 @@
             "guild": "yellow",
             "cost": {},
             "effects": {
-                "costWest": 1
+                "rcostWest": 1
             },
             "chains": [
                 "Forum"
@@ -1179,12 +1166,12 @@
             "guild": "yellow",
             "cost": {},
             "effects": {
-                "coin": [
-                    1,
-                    "neighboringBrown",
-                    1,
-                    "ownBrown"
-                ]
+                "coin": {
+                    
+                    "neighboringBrown":1,
+                    
+                    "ownBrown":1
+                }
             },
             "chains": [
                 null
@@ -1201,12 +1188,12 @@
             "guild": "yellow",
             "cost": {},
             "effects": {
-                "coin": [
-                    2,
-                    "neighboringGray",
-                    2,
-                    "ownGray"
-                ]
+                "coin": {
+                   
+                    "neighboringGray":2,
+              
+                    "ownGray":2
+                }
             },
             "chains": [
                 null
@@ -1227,16 +1214,12 @@
                 "l": 1
             },
             "effects": {
-                "victory": [
-                    {
-                        "ownBrown": 1
-                    }
-                ],
-                "coin": [
-                    {
-                        "ownBrown": 1
-                    }
-                ]
+                "victory": {
+                    "ownBrown": 1
+                },
+                "coin": {
+                    "ownBrown": 1
+                }
             },
             "chains": [
                 null
@@ -1256,14 +1239,15 @@
                 "g": 1
             },
             "effects": {
-                "victory": [
+                "victory": 
+                    {
+                        "ownYellow": 1
+                    }
+                ,
+                "coin": {
                     1,
                     "ownYellow"
-                ],
-                "coin": [
-                    1,
-                    "ownYellow"
-                ]
+                }
             },
             "chains": [
                 null
@@ -1283,14 +1267,14 @@
                 "p": 1
             },
             "effects": {
-                "victory": [
-                    2,
-                    "ownGray"
-                ],
-                "coin": [
-                    2,
-                    "ownGray"
-                ]
+                "victory": {
+                    "ownGray": 2
+                },
+                "coin": 
+                    {
+                        "ownGray": 2
+                    }
+                
             },
             "chains": [
                 null
@@ -1310,14 +1294,12 @@
                 "o": 1
             },
             "effects": {
-                "coin": [
-                    3,
-                    "ownWonder"
-                ],
-                "victory": [
-                    1,
-                    "ownWonder"
-                ]
+                "coin": {
+                    "ownWonder": 3
+                },
+                "victory": {
+                    "ownWonder": 1
+                }
             },
             "chains": [
                 null
