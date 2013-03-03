@@ -16,6 +16,7 @@ namespace _7Wonders
     {
         protected bool selected = false;
 
+        // Checkbox constructor - Virtual
         public Checkbox(Game1 theGame, Vector2 _pos, int _w, int _h)
             :base(theGame, _pos, _w, _h, "line")
         {

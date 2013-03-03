@@ -12,8 +12,10 @@ using Microsoft.Xna.Framework.Media;
 
 namespace _7Wonders
 {
+    // Visual Class
     public class Visual
     {
+        // Variables
         protected Game1 game;
 
         protected Texture2D texture;
@@ -36,6 +38,7 @@ namespace _7Wonders
         protected bool visible = true;
         protected bool enabled = true;
 
+        // Constructor with Visual as a parameter
         public Visual(Visual v)
         {
             game = v.game;

@@ -20,7 +20,7 @@ namespace _7Wonders
         protected Visual image;
         protected int players;
         protected int age;
-        protected string guild;
+        protected string colour;
         protected Structure structure;
 
         // Card Constructure
@@ -31,7 +31,7 @@ namespace _7Wonders
             //image = new Visual();
             players = (int)_json["players"];
             age = (int)_json["age"];
-            guild = (string)_json["guild"];
+            colour = (string)_json["guild"];
         }
 
         // Name Accessor
@@ -58,9 +58,47 @@ namespace _7Wonders
             return age;
         }
 
-        public string getGuild()
+        // Guild Colour Accessor
+        public string getColour()
         {
-            return guild;
+            return colour;
+        }
+
+        // Gets the full name of the Guild - used for display
+        public string getGuildType(string colour)
+        {
+            string c = colour;
+
+            switch (colour)
+            {
+                case "brown": 
+                    c = "Raw Materials Structure";
+                    break;
+                case "gray": 
+                    c = "Manufactured Goods Structure";
+                    break;
+                case "purple":
+                    c = "Guilds Structure";
+                    break;
+                case "blue":
+                    c = "Civilian Structure";
+                    break;
+                case "red":
+                    c = "Military Structure";
+                    break;
+                case "yellow":
+                    c = "Commercial Structure";
+                    break;
+                case "green":
+                    c = "Scientific Structure";
+                    break;
+                default:
+                    Console.WriteLine("Error: Invalid Guild Colour, getGuildType(" + c + ")");
+                    break;
+
+            }
+
+            return c;
         }
 
         public List<string> getCost()

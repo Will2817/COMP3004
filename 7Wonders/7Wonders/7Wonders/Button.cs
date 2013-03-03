@@ -24,10 +24,13 @@ namespace _7Wonders
             text = _t;
         }
 
+        // Text Mutator
         public void setText(String t)
         {
             text = t;
         }
+
+        // Draw function
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             if (!visible) return;
