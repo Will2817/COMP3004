@@ -30,12 +30,18 @@ namespace _7Wonders
             chainsSize = 0;
             previousSize = 0;
             
-            foreach (JObject j in (JArray)_costs)
+            foreach (JProperty p in (JArray)_costs)
             {
-                //(string)j.["s"]; Stone?
+                switch (p.Name)
+                {
+                    case "c":
+                        costs = _costs.Properties();
+                        break;
+
+                }
             }
 
-            foreach (JObject j in _effects)
+            foreach (JProperty p in _effects)
             {
                 //add to effect
             }
