@@ -18,7 +18,7 @@ namespace _7Wonders
         protected int costsSize, effectsSize, chainsSize, previousSize;
 
         // Constructor
-        public Structure(JArray _costs, JArray _effects)
+        public Structure(JObject _costs, JObject _effects)
         {
             costs = new List<string>();
             effects = new List<string>();
@@ -30,18 +30,19 @@ namespace _7Wonders
             chainsSize = 0;
             previousSize = 0;
             
-            foreach (JProperty p in (JArray)_costs)
+            foreach (JProperty p in _costs.Properties())
             {
                 switch (p.Name)
                 {
                     case "c":
-                        //costs = _costs.Properties();
+                        //do stuff;
                         break;
+                    default: break;
 
                 }
             }
 
-            foreach (JProperty p in _effects)
+            foreach (JProperty p in _effects.Properties())
             {
                 //add to effect
             }

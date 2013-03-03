@@ -24,18 +24,23 @@ namespace _7Wonders
         private int DROPDOWNWIDTH = (Game1.WIDTH / 3) - 100;
         private int DROPDOWNHEIGHT = (Game1.HEIGHT * 2 / 3 - (Game1.MAXPLAYER + 1) * MARGIN) / Game1.MAXPLAYER;
 
+        protected Dictionary<String, Player> players;
+        protected Player player;
+
+
+
         protected static Dictionary<String, Visual> visuals1;
 
         public MainGame(Game1 theGame)
             : base(theGame, "title", 0.4f)
         {
+            players = new Dictionary<string, Player>();
             visuals1 = new Dictionary<String, Visual>();
-            activeVisuals = visuals1;
-
-
-            visuals1 = new Dictionary<String, Visual>();
+ 
             visuals1.Add("Divider1", new Visual(game, new Vector2(SEC1WIDTH - 1, 0), DIVIDERWIDTH, Game1.HEIGHT, "line", Color.Silver));
             visuals1.Add("Divider2", new Visual(game, new Vector2(0, SEC1HEIGHT - 1), Game1.WIDTH, DIVIDERWIDTH, "line", Color.Silver));
+
+            activeVisuals = visuals1;
         }
 
         public override void LoadContent()
@@ -68,7 +73,7 @@ namespace _7Wonders
             return null;
         }
 
-        public static Dictionary<string, string> createMessage(bool random, bool onlyA)
+        public static Dictionary<string, string> createMessage()
         {
             return new Dictionary<string, string>()
                 {

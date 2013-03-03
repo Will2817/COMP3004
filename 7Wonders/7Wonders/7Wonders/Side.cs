@@ -27,7 +27,7 @@ namespace _7Wonders
 
             foreach (JObject stage in j["stages"])
             {
-                stages.Add(new Structure((JArray)stage["cost"], (JArray)stage["effects"]));
+                stages.Add(new Structure((JObject)stage["cost"], (JObject)stage["effects"]));
             }
         }
 
