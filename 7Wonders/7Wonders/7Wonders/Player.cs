@@ -16,7 +16,7 @@ namespace _7Wonders
 
         public string getName()
         {
-            return name;
+            return null;//nothing, because screw people who want their name
         }
 
     }
