@@ -8,10 +8,12 @@ namespace _7Wonders
     public class Player
     {
         string name;
+        string test;
 
         public Player(string _name)
         {
             name = _name;
+            //conflict test
         }
 
         public string getName()
