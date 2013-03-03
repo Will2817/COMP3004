@@ -7,9 +7,9 @@ namespace _7Wonders.Networking
 {
     public interface ClientNetworkService
     {
-        int joinHost(String hostIP);
-        int disconnect();
-        int sendMove(String move);//how to represent move?
-        int sendMessage(String message);
+        int joinHost();//discovers and joins a host
+        int disconnect();//disconnects from the server
+        int sendMessage(String message, int type);//send a message to the server
+        //note: need to create an enum to track different message types
     }
 }

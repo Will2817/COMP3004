@@ -7,12 +7,11 @@ namespace _7Wonders.Networking
 {
     public interface HostNetworkService
     {
-        int bootPlayer(String playerIP);//represent player as IP or other?
-        int blockConnections();
-        int allowConnections();
-        int broadcastGameState(String gameState);//broadcast as game state, or action list?
-        int sendHand(String hand, String playerIP);//hand is a string representation of a JArray; player as IP or other?
-        int sendWonder(String wonder, String playerIP);//needs to be separate from hand/game state?
-        int shutdown();
+        void bootClient(long clientID);//represent client as IP or other?
+        void blockConnections();//sets server to block incoming connections
+        void allowConnections();//sets server to resume allowing incoming connections
+        void broadcastMessage(String message, int type);//broadcast a message to all clients
+        void sendMessage(String message, int type, long clientID);//sends a private message to a single client
+        void shutdown();//shuts down the server
     }
 }
