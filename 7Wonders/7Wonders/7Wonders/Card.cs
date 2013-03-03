@@ -28,7 +28,7 @@ namespace _7Wonders
         {
             // Initializing Variables
             name = (string)_json["name"];
-            //image = new Visual();
+            image = new Visual(theGame, Vector2.Zero, 0, 0, (string)_json["image"]);
             players = (int)_json["players"];
             age = (int)_json["age"];
             colour = (string)_json["guild"];
