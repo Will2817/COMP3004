@@ -190,7 +190,7 @@ namespace _7Wonders
 
             foreach (JProperty p in _previous.Properties())
             {
-                previous.Add(string)p.Value);
+                previous.Add((string)p.Value);
             }
         }
 
