@@ -12,9 +12,6 @@
             },
             "chains": [
                 null
-            ],
-            "previous": [
-                null
             ]
         },
         {
@@ -28,9 +25,6 @@
                 "s": 1
             },
             "chains": [
-                null
-            ],
-            "previous": [
                 null
             ]
         },
@@ -46,9 +40,6 @@
             },
             "chains": [
                 null
-            ],
-            "previous": [
-                null
             ]
         },
         {
@@ -62,9 +53,6 @@
                 "o": 1
             },
             "chains": [
-                null
-            ],
-            "previous": [
                 null
             ]
         },
@@ -85,9 +73,6 @@
             },
             "chains": [
                 null
-            ],
-            "previous": [
-                null
             ]
         },
         {
@@ -105,8 +90,7 @@
                     "c"
                 ]
             },
-            "chains": null,
-            "previous": [
+            "chains": [
                 null
             ]
         },
@@ -127,9 +111,6 @@
             },
             "chains": [
                 null
-            ],
-            "previous": [
-                null
             ]
         },
         {
@@ -148,9 +129,6 @@
                 ]
             },
             "chains": [
-                null
-            ],
-            "previous": [
                 null
             ]
         },
@@ -171,9 +149,6 @@
             },
             "chains": [
                 null
-            ],
-            "previous": [
-                null
             ]
         },
         {
@@ -193,9 +168,6 @@
             },
             "chains": [
                 null
-            ],
-            "previous": [
-                null
             ]
         },
         {
@@ -211,9 +183,6 @@
                 "w": 2
             },
             "chains": [
-                null
-            ],
-            "previous": [
                 null
             ]
         },
@@ -231,9 +200,6 @@
             },
             "chains": [
                 null
-            ],
-            "previous": [
-                null
             ]
         },
         {
@@ -249,9 +215,6 @@
                 "c": 2
             },
             "chains": [
-                null
-            ],
-            "previous": [
                 null
             ]
         },
@@ -269,9 +232,6 @@
             },
             "chains": [
                 null
-            ],
-            "previous": [
-                null
             ]
         },
         {
@@ -285,9 +245,6 @@
                 "l": 1
             },
             "chains": [
-                null
-            ],
-            "previous": [
                 null
             ]
         },
@@ -303,9 +260,6 @@
             },
             "chains": [
                 null
-            ],
-            "previous": [
-                null
             ]
         },
         {
@@ -319,9 +273,6 @@
                 "p": 1
             },
             "chains": [
-                null
-            ],
-            "previous": [
                 null
             ]
         },
@@ -345,9 +296,6 @@
             },
             "chains": [
                 null
-            ],
-            "previous": [
-                null
             ]
         },
         {
@@ -366,9 +314,6 @@
                 }
             },
             "chains": [
-                null
-            ],
-            "previous": [
                 null
             ]
         },
@@ -390,9 +335,6 @@
             },
             "chains": [
                 null
-            ],
-            "previous": [
-                null
             ]
         },
         {
@@ -413,9 +355,6 @@
             },
             "chains": [
                 null
-            ],
-            "previous": [
-                null
             ]
         },
         {
@@ -434,9 +373,6 @@
                 }
             },
             "chains": [
-                null
-            ],
-            "previous": [
                 null
             ]
         },
@@ -457,9 +393,6 @@
                 }
             },
             "chains": [
-                null
-            ],
-            "previous": [
                 null
             ]
         },
@@ -483,9 +416,6 @@
             },
             "chains": [
                 null
-            ],
-            "previous": [
-                null
             ]
         },
         {
@@ -508,9 +438,6 @@
             },
             "chains": [
                 null
-            ],
-            "previous": [
-                null
             ]
         },
         {
@@ -530,9 +457,6 @@
                 }
             },
             "chains": [
-                null
-            ],
-            "previous": [
                 null
             ]
         },
@@ -554,9 +478,6 @@
             },
             "chains": [
                 null
-            ],
-            "previous": [
-                null
             ]
         },
         {
@@ -572,9 +493,6 @@
                 }
             },
             "chains": [
-                null
-            ],
-            "previous": [
                 null
             ]
         },
@@ -593,9 +511,6 @@
                 }
             },
             "chains": [
-                "Aqueduct"
-            ],
-            "previous": [
                 null
             ]
         },
@@ -612,9 +527,6 @@
                 }
             },
             "chains": [
-                "Temple"
-            ],
-            "previous": [
                 null
             ]
         },
@@ -631,9 +543,6 @@
                 }
             },
             "chains": [
-                "Statue"
-            ],
-            "previous": [
                 null
             ]
         },
@@ -652,9 +561,6 @@
                 }
             },
             "chains": [
-                null
-            ],
-            "previous": [
                 "Baths"
             ]
         },
@@ -675,9 +581,6 @@
                 }
             },
             "chains": [
-                "Pantheon"
-            ],
-            "previous": [
                 "Altar"
             ]
         },
@@ -697,9 +600,6 @@
                 }
             },
             "chains": [
-                "Gardens"
-            ],
-            "previous": [
                 "Theater"
             ]
         },
@@ -722,9 +622,6 @@
                 }
             },
             "chains": [
-                null
-            ],
-            "previous": [
                 "Temple"
             ]
         },
@@ -744,9 +641,6 @@
                 }
             },
             "chains": [
-                null
-            ],
-            "previous": [
                 "Statue"
             ]
         },
@@ -767,9 +661,6 @@
                 }
             },
             "chains": [
-                null
-            ],
-            "previous": [
                 null
             ]
         },
@@ -795,9 +686,6 @@
             },
             "chains": [
                 null
-            ],
-            "previous": [
-                null
             ]
         },
         {
@@ -816,9 +704,6 @@
                 }
             },
             "chains": [
-                null
-            ],
-            "previous": [
                 "Scriptorium"
             ]
         },
@@ -839,9 +724,6 @@
                 }
             },
             "chains": [
-                null
-            ],
-            "previous": [
                 "Library"
             ]
         },
@@ -859,9 +741,6 @@
             },
             "chains": [
                 null
-            ],
-            "previous": [
-                null
             ]
         },
         {
@@ -877,9 +756,6 @@
                 "army": 1
             },
             "chains": [
-                null
-            ],
-            "previous": [
                 null
             ]
         },
@@ -897,9 +773,6 @@
             },
             "chains": [
                 null
-            ],
-            "previous": [
-                null
             ]
         },
         {
@@ -915,9 +788,6 @@
                 "army": 2
             },
             "chains": [
-                "Fortifications"
-            ],
-            "previous": [
                 null
             ]
         },
@@ -935,9 +805,6 @@
                 "army": 2
             },
             "chains": [
-                "Circus"
-            ],
-            "previous": [
                 null
             ]
         },
@@ -955,9 +822,6 @@
                 "army": 3
             },
             "chains": [
-                null
-            ],
-            "previous": [
                 "Walls"
             ]
         },
@@ -975,9 +839,6 @@
                 "army": 3
             },
             "chains": [
-                null
-            ],
-            "previous": [
                 "Training Ground"
             ]
         },
@@ -997,9 +858,6 @@
             },
             "chains": [
                 null
-            ],
-            "previous": [
-                null
             ]
         },
         {
@@ -1017,9 +875,6 @@
                 "army": 2
             },
             "chains": [
-                null
-            ],
-            "previous": [
                 "Apothecary"
             ]
         },
@@ -1037,9 +892,6 @@
                 "army": 2
             },
             "chains": [
-                null
-            ],
-            "previous": [
                 "Workshop"
             ]
         },
@@ -1057,9 +909,6 @@
                 "army": 3
             },
             "chains": [
-                null
-            ],
-            "previous": [
                 "Laboratory"
             ]
         },
@@ -1077,9 +926,6 @@
             },
             "chains": [
                 null
-            ],
-            "previous": [
-                null
             ]
         },
         {
@@ -1093,9 +939,6 @@
                 "rcostEast": 1
             },
             "chains": [
-                "Forum"
-            ],
-            "previous": [
                 null
             ]
         },
@@ -1110,9 +953,6 @@
                 "rcostWest": 1
             },
             "chains": [
-                "Forum"
-            ],
-            "previous": [
                 null
             ]
         },
@@ -1128,9 +968,6 @@
                 "mcostWest": 1
             },
             "chains": [
-                "Caravansery"
-            ],
-            "previous": [
                 null
             ]
         },
@@ -1151,9 +988,6 @@
                 ]
             },
             "chains": [
-                "Haven"
-            ],
-            "previous": [
                 "East Trading Post",
                 "West Trading Post"
             ]
@@ -1176,9 +1010,6 @@
                 ]
             },
             "chains": [
-                "Lighthouse"
-            ],
-            "previous": [
                 "Marketplace"
             ]
         },
@@ -1197,9 +1028,6 @@
             },
             "chains": [
                 null
-            ],
-            "previous": [
-                null
             ]
         },
         {
@@ -1216,9 +1044,6 @@
                 }
             },
             "chains": [
-                null
-            ],
-            "previous": [
                 null
             ]
         },
@@ -1242,9 +1067,6 @@
                 }
             },
             "chains": [
-                null
-            ],
-            "previous": [
                 "Forum"
             ]
         },
@@ -1267,9 +1089,6 @@
                 }
             },
             "chains": [
-                null
-            ],
-            "previous": [
                 "Caravansery"
             ]
         },
@@ -1293,9 +1112,6 @@
             },
             "chains": [
                 null
-            ],
-            "previous": [
-                null
             ]
         },
         {
@@ -1317,9 +1133,6 @@
                 }
             },
             "chains": [
-                null
-            ],
-            "previous": [
                 "Dispensary"
             ]
         },
@@ -1340,8 +1153,7 @@
                 ]
             },
             "chains": [
-                "Stables",
-                "Dispensary"
+                null
             ]
         },
         {
@@ -1357,10 +1169,6 @@
                 "science": "c"
             },
             "chains": [
-                "Archery Range",
-                "Laboratory"
-            ],
-            "previous": [
                 null
             ]
         },
@@ -1377,10 +1185,6 @@
                 "science": "t"
             },
             "chains": [
-                "Courthouse",
-                "Library"
-            ],
-            "previous": [
                 null
             ]
         },
@@ -1398,10 +1202,6 @@
                 "science": "c"
             },
             "chains": [
-                "Arena",
-                "Lodge"
-            ],
-            "previous": [
                 "Apothecary"
             ]
         },
@@ -1419,10 +1219,6 @@
                 "science": "g"
             },
             "chains": [
-                "Siege Workshop",
-                "Observatory"
-            ],
-            "previous": [
                 "Workshop"
             ]
         },
@@ -1440,10 +1236,6 @@
                 "science": "t"
             },
             "chains": [
-                "Senate",
-                "University"
-            ],
-            "previous": [
                 "Scriptorium"
             ]
         },
@@ -1461,10 +1253,6 @@
                 "science": "t"
             },
             "chains": [
-                "Academy",
-                "Study"
-            ],
-            "previous": [
                 null
             ]
         },
@@ -1483,9 +1271,6 @@
                 "science": "c"
             },
             "chains": [
-                null
-            ],
-            "previous": [
                 "Dispensary"
             ]
         },
@@ -1504,9 +1289,6 @@
                 "science": "g"
             },
             "chains": [
-                null
-            ],
-            "previous": [
                 "Laboratory"
             ]
         },
@@ -1525,9 +1307,6 @@
                 "science": "t"
             },
             "chains": [
-                null
-            ],
-            "previous": [
                 "Library"
             ]
         },
@@ -1545,9 +1324,6 @@
                 "science": "c"
             },
             "chains": [
-                null
-            ],
-            "previous": [
                 "School"
             ]
         },
@@ -1566,9 +1342,6 @@
                 "science": "g"
             },
             "chains": [
-                null
-            ],
-            "previous": [
                 "School"
             ]
         }

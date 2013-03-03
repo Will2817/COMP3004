@@ -22,6 +22,7 @@ namespace _7Wonders
         protected int age;
         protected string colour;
         protected Structure structure;
+        protected List<string> chains;
 
         // Card Constructure
         public Card(Game1 theGame, JObject _json)
@@ -32,37 +33,18 @@ namespace _7Wonders
             players = (int)_json["players"];
             age = (int)_json["age"];
             colour = (string)_json["guild"];
+            
+            // Need to go into chains and copy each value
         }
 
-        // Name Accessor
-        public string getName()
-        {
-            return name;
-        }
-
-        // Image Accessor
-        public Visual getVisual()
-        {
-            return image;
-        }
-
-        // Number Of Players Accessor
-        public int getPlayers()
-        {
-            return players;
-        }
-
-        // Age Accessor
-        public int getAge()
-        {
-            return age;
-        }
-
-        // Guild Colour Accessor
-        public string getColour()
-        {
-            return colour;
-        }
+        // Accessors
+        public string getName()         {   return name; }
+        public Visual getVisual()       {   return image; }
+        public int getPlayers()         {   return players; }
+        public int getAge()             {   return age; }
+        public string getColour()       {   return colour; }
+        public List<string> getCost()   { return structure.getCosts(); }
+        public List<string> getEffects(){ return structure.getEffects(); }
 
         // Gets the full name of the Guild - used for display
         public string getGuildType(string colour)
@@ -95,21 +77,8 @@ namespace _7Wonders
                 default:
                     Console.WriteLine("Error: Invalid Guild Colour, getGuildType(" + c + ")");
                     break;
-
             }
-
             return c;
-        }
-
-        public List<string> getCost()
-        {
-            return structure.getCosts();
-        }
-
-        public List<string> getEffects()
-        {
-            return structure.getEffects();
-        }
-        
+        }        
     }
 }

@@ -12,16 +12,12 @@ namespace _7Wonders
         // Variables
         protected List<string> costs;
         protected List<string> effects;
-        protected List<string> chains;
-        protected List<string> previous;
 
         // Constructor
-        public Structure(JObject _costs, JObject _effects, JObject _chains, JObject _previous)
+        public Structure(JObject _costs, JObject _effects)
         {
             costs = new List<string>();
             effects = new List<string>();
-            chains = new List<string>();
-            previous = new List<string>();
             
             foreach (JProperty p in _costs.Properties())
             {
@@ -64,8 +60,6 @@ namespace _7Wonders
 
             foreach (JProperty p in _effects.Properties())
             {
-                
-
                 switch (p.Name)
                 {
                     //Case - Resource : Type : Value
@@ -183,36 +177,11 @@ namespace _7Wonders
                 }
             }
 
-            foreach (JProperty p in _chains.Properties())
-            {
-                chains.Add((string)p.Value);
-            }
-
-            foreach (JProperty p in _previous.Properties())
-            {
-                previous.Add((string)p.Value);
-            }
+           
         }
 
-        public List<string> getCosts()
-        {
-            return costs;
-        }
-
-        public List<string> getEffects()
-        {
-            return effects;
-        }
-
-        public List<string> getChains()
-        {
-            return chains;
-        }
-
-        public List<string> getPrevious()
-        {
-            return previous;
-        }
-        
+        // Accessors
+        public List<string> getCosts()  {   return costs; }
+        public List<string> getEffects(){   return effects; }        
     }
 }
