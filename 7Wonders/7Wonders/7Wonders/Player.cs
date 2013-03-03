@@ -7,12 +7,11 @@ namespace _7Wonders
 {
     public class Player
     {
-        string name;
-        string test;
+        string nameID;
 
         public Player(string _name)
         {
-            name = _name;
+            nameID = _name;
             //conflict test
         }
 
