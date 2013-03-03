@@ -1,4 +1,5 @@
-﻿using System;
+﻿// Libraries
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,10 +9,12 @@ using Microsoft.Xna.Framework;
 
 namespace _7Wonders
 {
+    // Button class - extends Visual
     public class Button : Visual
     {
         protected static int highlight = 50;
 
+        // Button Constructor
         public Button(Game1 theGame, Vector2 _pos,int _w, int _h, string _t, string _sfont, string texture=null)
             : base(theGame, _pos, _w, _h, (texture != null) ? texture: "button")
         {

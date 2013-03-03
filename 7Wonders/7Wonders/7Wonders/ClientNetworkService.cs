@@ -5,7 +5,7 @@ using System.Text;
 
 namespace _7Wonders.Networking
 {
-    interface ClientNetworkService
+    public interface ClientNetworkService
     {
         int joinHost(String hostIP);
         int disconnect();

@@ -15,38 +15,44 @@ namespace _7Wonders
 {
     public class Card
     {
+        // Protected Variables
         protected string name;
         protected Visual image;
         protected int players;
         protected int age;
         protected string guild;
-        protected Structure cost;
-        protected Structure effect;
+        protected Structure structure;
 
+        // Card Constructure
         public Card(Game1 theGame, JObject _json)
         {
+            // Initializing Variables
             name = (string)_json["name"];
-            //image = new Visual ??
+            //image = new Visual();
             players = (int)_json["players"];
             age = (int)_json["age"];
             guild = (string)_json["guild"];
         }
 
+        // Name Accessor
         public string getName()
         {
             return name;
         }
 
+        // Image Accessor
         public Visual getVisual()
         {
             return image;
         }
 
+        // Number Of Players Accessor
         public int getPlayers()
         {
             return players;
         }
 
+        // Age Accessor
         public int getAge()
         {
             return age;
@@ -57,6 +63,15 @@ namespace _7Wonders
             return guild;
         }
 
+        public List<string> getCost()
+        {
+            return structure.getCosts();
+        }
+
+        public List<string> getEffects()
+        {
+            return structure.getEffects();
+        }
         
     }
 }

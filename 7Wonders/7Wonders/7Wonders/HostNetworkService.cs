@@ -5,7 +5,7 @@ using System.Text;
 
 namespace _7Wonders.Networking
 {
-    interface HostNetworkService
+    public interface HostNetworkService
     {
         int bootPlayer(String playerIP);//represent player as IP or other?
         int blockConnections();

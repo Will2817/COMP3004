@@ -6,7 +6,7 @@ using Newtonsoft.Json.Linq;
 
 namespace _7Wonders
 {
-    class Structure
+    public class Structure
     {
         protected List<string> costs;
         protected List<string> effects;
