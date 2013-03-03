@@ -7,22 +7,23 @@ using System.Threading;
 using Lidgren.Network;
 using Newtonsoft.Json.Linq;
 
-namespace _7Wonders.Networking
+namespace _7Wonders.Client
 {
-    class ClientNetworkServiceImpl : ClientNetworkService
+    class NetServiceImpl : NetService
     {
         String hostIP;
         private String tag;
         private int port;
         private long discoveryWait;
-        //need an application service that interacts with the networking service
+        private NetEventHandlerService eventHandler;
         private NetClient client;
         private NetPeerConfiguration config;
         private NetOutgoingMessage outMessage;
         private NetConnection connection;
 
-        public ClientNetworkServiceImpl()
+        public NetServiceImpl(NetEventHandlerService eventHandler)
         {
+            this.eventHandler = eventHandler;
             JObject constants = JObject.Parse(File.ReadAllText("Content/Json/constants-networking.json"));
             tag = constants.Value<String>("tag");
             port = constants.Value<int>("port");
@@ -88,14 +89,13 @@ namespace _7Wonders.Networking
                     switch (inMessage.MessageType)
                     {
                         case NetIncomingMessageType.Data:
-                            //pass the message on to the application
+                            String message = inMessage.ReadString();
+                            int type = inMessage.ReadInt32();
                             break;
                         case NetIncomingMessageType.StatusChanged:
                             NetConnectionStatus status = (NetConnectionStatus) inMessage.ReadByte();
                             if (status == NetConnectionStatus.Disconnecting || status == NetConnectionStatus.Disconnected)
-                            {
-                                //tell the application it has been disconnected from the server
-                            }
+                                eventHandler.handleDisconnect();
                             break;
                         default:
                             break;

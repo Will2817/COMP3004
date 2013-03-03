@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace _7Wonders.Networking
+namespace _7Wonders.Client
 {
-    public interface ClientNetworkService
+    public interface NetService
     {
         int joinHost();//discovers and joins a host
         int disconnect();//disconnects from the server

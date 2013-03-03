@@ -6,22 +6,22 @@ using System.Text;
 using Lidgren.Network;
 using Newtonsoft.Json.Linq;
 
-namespace _7Wonders.Networking
+namespace _7Wonders.Host
 {
-    class HostNetworkServiceImpl : HostNetworkService
+    class NetServiceImpl : NetService
     {
         private String tag;
         private int port;
-        //need an application service that interacts with the networking service
+        private NetEventHandlerService eventHandler;
         private NetServer server;
         private NetPeerConfiguration config;
         private NetOutgoingMessage outMessage;
         private Dictionary<long, NetConnection> connections;
         private Boolean acceptingClients;
-        private int maxClients;
 
-        public HostNetworkServiceImpl(int maxClients)
+        public NetServiceImpl(NetEventHandlerService eventHandler)
         {
+            this.eventHandler = eventHandler;
             JObject constants = JObject.Parse(File.ReadAllText("Content/Json/constants-networking.json"));
             tag = constants.Value<String>("tag");
             port = constants.Value<int>("port");
@@ -31,6 +31,7 @@ namespace _7Wonders.Networking
             server = new NetServer(config);
             server.Start();
             outMessage = server.CreateMessage();
+            connections = new Dictionary<long, NetConnection>();
             acceptingClients = true;
 
         }
@@ -49,8 +50,9 @@ namespace _7Wonders.Networking
                             if (acceptingClients)
                             {
                                 inMessage.SenderConnection.Approve();
-                                connections.Add(inMessage.ReadInt64(), inMessage.SenderConnection);
-                                //tell the application that a new client has been added
+                                long clientID = inMessage.ReadInt64();
+                                connections.Add(clientID, inMessage.SenderConnection);
+                                eventHandler.handleNewClient(clientID);
                             }
                             else
                                 inMessage.SenderConnection.Deny();
@@ -60,13 +62,17 @@ namespace _7Wonders.Networking
                             server.SendDiscoveryResponse(outMessage, inMessage.SenderEndPoint);
                             break;
                         case NetIncomingMessageType.Data:
-                            //pass the message on to the application
+                            String message = inMessage.ReadString();
+                            int type = inMessage.ReadInt32();
+                            long senderID = inMessage.SenderConnection.RemoteUniqueIdentifier;
+                            eventHandler.handleMessage(message, type, senderID);
                             break;
                         case NetIncomingMessageType.StatusChanged:
                             NetConnectionStatus status = (NetConnectionStatus)inMessage.ReadByte();
                             if (status == NetConnectionStatus.Disconnecting || status == NetConnectionStatus.Disconnected)
                             {
-                                //tell the application that a client has disconnected
+                                long clientID = inMessage.SenderConnection.RemoteUniqueIdentifier;
+                                eventHandler.handleClientDrop(clientID);
                             }
                             break;
                         default:

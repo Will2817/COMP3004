@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace _7Wonders.Networking
+namespace _7Wonders.Host
 {
-    public interface HostNetworkService
+    public interface NetService
     {
         void bootClient(long clientID);//represent client as IP or other?
         void blockConnections();//sets server to block incoming connections
