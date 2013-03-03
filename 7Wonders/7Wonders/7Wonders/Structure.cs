@@ -16,7 +16,7 @@ namespace _7Wonders
         protected List<string> previous;
 
         // Constructor
-        public Structure(JObject _costs, JObject _effects)
+        public Structure(JObject _costs, JObject _effects, JObject _chains, JObject _previous)
         {
             costs = new List<string>();
             effects = new List<string>();
