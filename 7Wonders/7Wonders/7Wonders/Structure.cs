@@ -35,7 +35,7 @@ namespace _7Wonders
                 switch (p.Name)
                 {
                     case "c":
-                        costs = _costs.Properties();
+                        //costs = _costs.Properties();
                         break;
 
                 }
