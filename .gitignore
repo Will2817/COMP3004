@@ -38,3 +38,9 @@
 .builds
 *.dotCover
 *.cacheFile
+
+*.BACKUP.*
+*.BASE.*
+*.REMOTE.*
+*.LOCAL.*
+*.orig
