@@ -6,14 +6,10 @@
             "players": 3,
             "age": 1,
             "guild": "brown",
-            "cost": [
-                null
-            ],
-            "effects": [
-                {
-                    "w": 1
-                }
-            ],
+            "cost": {},
+            "effects": {
+                "w": 1
+            },
             "chains": [
                 null
             ],
@@ -27,14 +23,10 @@
             "players": 3,
             "age": 1,
             "guild": "brown",
-            "cost": [
-                null
-            ],
-            "effects": [
-                {
-                    "s": 1
-                }
-            ],
+            "cost": {},
+            "effects": {
+                "s": 1
+            },
             "chains": [
                 null
             ],
@@ -48,14 +40,10 @@
             "players": 3,
             "age": 1,
             "guild": "brown",
-            "cost": [
-                null
-            ],
-            "effects": [
-                {
-                    "c": 1
-                }
-            ],
+            "cost": {},
+            "effects": {
+                "c": 1
+            },
             "chains": [
                 null
             ],
@@ -69,14 +57,10 @@
             "players": 3,
             "age": 1,
             "guild": "brown",
-            "cost": [
-                null
-            ],
-            "effects": [
-                {
-                    "o": 1
-                }
-            ],
+            "cost": {},
+            "effects": {
+                "o": 1
+            },
             "chains": [
                 null
             ],
@@ -90,19 +74,15 @@
             "players": 6,
             "age": 1,
             "guild": "brown",
-            "cost": [
-                {
-                    "coin": 1
-                }
-            ],
-            "effects": [
-                {
-                    "rchoice": [
-                        "w",
-                        "c"
-                    ]
-                }
-            ],
+            "cost": {
+                "coin": 1
+            },
+            "effects": {
+                "rchoice": [
+                    "w",
+                    "c"
+                ]
+            },
             "chains": [
                 null
             ],
@@ -116,22 +96,16 @@
             "players": 4,
             "age": 1,
             "guild": "brown",
-            "cost": [
-                {
-                    "coin": 1
-                }
-            ],
-            "effects": [
-                {
-                    "rchoice": [
-                        "s",
-                        "c"
-                    ]
-                }
-            ],
-            "chains": [
-                null
-            ],
+            "cost": {
+                "coin": 1
+            },
+            "effects": {
+                "rchoice": [
+                    "s",
+                    "c"
+                ]
+            },
+            "chains": null,
             "previous": [
                 null
             ]
@@ -142,19 +116,15 @@
             "players": 3,
             "age": 1,
             "guild": "brown",
-            "cost": [
-                {
-                    "coin": 1
-                }
-            ],
-            "effects": [
-                {
-                    "rchoice": [
-                        "c",
-                        "o"
-                    ]
-                }
-            ],
+            "cost": {
+                "coin": 1
+            },
+            "effects": {
+                "rchoice": [
+                    "c",
+                    "o"
+                ]
+            },
             "chains": [
                 null
             ],
@@ -168,19 +138,15 @@
             "players": 3,
             "age": 1,
             "guild": "brown",
-            "cost": [
-                {
-                    "coin": 1
-                }
-            ],
-            "effects": [
-                {
-                    "rchoice": [
-                        "s",
-                        "w"
-                    ]
-                }
-            ],
+            "cost": {
+                "coin": 1
+            },
+            "effects": {
+                "rchoice": [
+                    "s",
+                    "w"
+                ]
+            },
             "chains": [
                 null
             ],
@@ -194,19 +160,15 @@
             "players": 3,
             "age": 1,
             "guild": "brown",
-            "cost": [
-                {
-                    "coin": 1
-                }
-            ],
-            "effects": [
-                {
-                    "rchoice": [
-                        "w",
-                        "o"
-                    ]
-                }
-            ],
+            "cost": {
+                "coin": 1
+            },
+            "effects": {
+                "rchoice": [
+                    "w",
+                    "o"
+                ]
+            },
             "chains": [
                 null
             ],
@@ -220,19 +182,15 @@
             "players": 6,
             "age": 1,
             "guild": "brown",
-            "cost": [
-                {
-                    "coin": 1
-                }
-            ],
-            "effects": [
-                {
-                    "rchoice": [
-                        "s",
-                        "o"
-                    ]
-                }
-            ],
+            "cost": {
+                "coin": 1
+            },
+            "effects": {
+                "rchoice": [
+                    "s",
+                    "o"
+                ]
+            },
             "chains": [
                 null
             ],
@@ -246,16 +204,12 @@
             "players": 3,
             "age": 2,
             "guild": "brown",
-            "cost": [
-                {
-                    "coin": 1
-                }
-            ],
-            "effects": [
-                {
-                    "w": 2
-                }
-            ],
+            "cost": {
+                "coin": 1
+            },
+            "effects": {
+                "w": 2
+            },
             "chains": [
                 null
             ],
@@ -269,16 +223,12 @@
             "players": 3,
             "age": 2,
             "guild": "brown",
-            "cost": [
-                {
-                    "coin": 1
-                }
-            ],
-            "effects": [
-                {
-                    "s": 2
-                }
-            ],
+            "cost": {
+                "coin": 1
+            },
+            "effects": {
+                "s": 2
+            },
             "chains": [
                 null
             ],
@@ -292,16 +242,12 @@
             "players": 2,
             "age": 2,
             "guild": "brown",
-            "cost": [
-                {
-                    "coin": 1
-                }
-            ],
-            "effects": [
-                {
-                    "c": 2
-                }
-            ],
+            "cost": {
+                "coin": 1
+            },
+            "effects": {
+                "c": 2
+            },
             "chains": [
                 null
             ],
@@ -315,16 +261,12 @@
             "players": 3,
             "age": 2,
             "guild": "brown",
-            "cost": [
-                {
-                    "coin": 1
-                }
-            ],
-            "effects": [
-                {
-                    "o": 2
-                }
-            ],
+            "cost": {
+                "coin": 1
+            },
+            "effects": {
+                "o": 2
+            },
             "chains": [
                 null
             ],
@@ -338,14 +280,10 @@
             "players": 3,
             "age": 1,
             "guild": "gray",
-            "cost": [
-                null
-            ],
-            "effects": [
-                {
-                    "l": 1
-                }
-            ],
+            "cost": {},
+            "effects": {
+                "l": 1
+            },
             "chains": [
                 null
             ],
@@ -359,14 +297,10 @@
             "players": 2,
             "age": 1,
             "guild": "gray",
-            "cost": [
-                null
-            ],
-            "effects": [
-                {
-                    "g": 1
-                }
-            ],
+            "cost": {},
+            "effects": {
+                "g": 1
+            },
             "chains": [
                 null
             ],
@@ -380,14 +314,10 @@
             "players": 3,
             "age": 1,
             "guild": "gray",
-            "cost": [
-                null
-            ],
-            "effects": [
-                {
-                    "p": 1
-                }
-            ],
+            "cost": {},
+            "effects": {
+                "p": 1
+            },
             "chains": [
                 null
             ],
@@ -401,23 +331,19 @@
             "players": 0,
             "age": 3,
             "guild": "purple",
-            "cost": [
-                {
-                    "coin": 1,
-                    "o": 2,
-                    "c": 1,
-                    "s": 1,
-                    "w": 1
-                }
-            ],
-            "effects": [
-                {
-                    "victory": [
-                        1,
-                        "neighboringBrown"
-                    ]
-                }
-            ],
+            "cost": {
+                "coin": 1,
+                "o": 2,
+                "c": 1,
+                "s": 1,
+                "w": 1
+            },
+            "effects": {
+                "victory": [
+                    1,
+                    "neighboringBrown"
+                ]
+            },
             "chains": [
                 null
             ],
@@ -431,20 +357,16 @@
             "players": 0,
             "age": 3,
             "guild": "purple",
-            "cost": [
-                {
-                    "o": 2,
-                    "s": 2
-                }
-            ],
-            "effects": [
-                {
-                    "victory": [
-                        2,
-                        "neighboringGray"
-                    ]
-                }
-            ],
+            "cost": {
+                "o": 2,
+                "s": 2
+            },
+            "effects": {
+                "victory": [
+                    2,
+                    "neighboringGray"
+                ]
+            },
             "chains": [
                 null
             ],
@@ -458,21 +380,17 @@
             "players": 0,
             "age": 3,
             "guild": "purple",
-            "cost": [
-                {
-                    "g": 1,
-                    "l": 1,
-                    "p": 1
-                }
-            ],
-            "effects": [
-                {
-                    "victory": [
-                        1,
-                        "neighboringYellow"
-                    ]
-                }
-            ],
+            "cost": {
+                "g": 1,
+                "l": 1,
+                "p": 1
+            },
+            "effects": {
+                "victory": [
+                    1,
+                    "neighboringYellow"
+                ]
+            },
             "chains": [
                 null
             ],
@@ -486,21 +404,17 @@
             "players": 0,
             "age": 3,
             "guild": "purple",
-            "cost": [
-                {
-                    "c": 3,
-                    "p": 1,
-                    "l": 1
-                }
-            ],
-            "effects": [
-                {
-                    "victory": [
-                        1,
-                        "neighboringGreen"
-                    ]
-                }
-            ],
+            "cost": {
+                "c": 3,
+                "p": 1,
+                "l": 1
+            },
+            "effects": {
+                "victory": [
+                    1,
+                    "neighboringGreen"
+                ]
+            },
             "chains": [
                 null
             ],
@@ -514,20 +428,16 @@
             "players": 0,
             "age": 3,
             "guild": "purple",
-            "cost": [
-                {
-                    "c": 3,
-                    "g": 1
-                }
-            ],
-            "effects": [
-                {
-                    "victory": [
-                        1,
-                        "neighboringRed"
-                    ]
-                }
-            ],
+            "cost": {
+                "c": 3,
+                "g": 1
+            },
+            "effects": {
+                "victory": [
+                    1,
+                    "neighboringRed"
+                ]
+            },
             "chains": [
                 null
             ],
@@ -541,22 +451,18 @@
             "players": 0,
             "age": 3,
             "guild": "purple",
-            "cost": [
-                {
-                    "o": 2,
-                    "s": 1,
-                    "l": 1
-                }
-            ],
-            "effects": [
-                {
-                    "victory": [
-                        {
-                            "neighboringDefeat": 1
-                        }
-                    ]
-                }
-            ],
+            "cost": {
+                "o": 2,
+                "s": 1,
+                "l": 1
+            },
+            "effects": {
+                "victory": [
+                    {
+                        "neighboringDefeat": 1
+                    }
+                ]
+            },
             "chains": [
                 null
             ],
@@ -570,25 +476,21 @@
             "players": 0,
             "age": 3,
             "guild": "purple",
-            "cost": [
-                {
-                    "w": 3,
-                    "p": 1,
-                    "g": 1
-                }
-            ],
-            "effects": [
-                {
-                    "victory": [
-                        1,
-                        "ownBrown",
-                        1,
-                        "ownGray",
-                        1,
-                        "ownPurple"
-                    ]
-                }
-            ],
+            "cost": {
+                "w": 3,
+                "p": 1,
+                "g": 1
+            },
+            "effects": {
+                "victory": [
+                    1,
+                    "ownBrown",
+                    1,
+                    "ownGray",
+                    1,
+                    "ownPurple"
+                ]
+            },
             "chains": [
                 null
             ],
@@ -602,22 +504,18 @@
             "players": 0,
             "age": 3,
             "guild": "purple",
-            "cost": [
-                {
-                    "w": 2,
-                    "o": 2,
-                    "p": 1
-                }
-            ],
-            "effects": [
-                {
-                    "schoice": [
-                        "t",
-                        "c",
-                        "g"
-                    ]
-                }
-            ],
+            "cost": {
+                "w": 2,
+                "o": 2,
+                "p": 1
+            },
+            "effects": {
+                "schoice": [
+                    "t",
+                    "c",
+                    "g"
+                ]
+            },
             "chains": [
                 null
             ],
@@ -631,21 +529,17 @@
             "players": 0,
             "age": 3,
             "guild": "purple",
-            "cost": [
-                {
-                    "w": 3,
-                    "s": 1,
-                    "l": 1
-                }
-            ],
-            "effects": [
-                {
-                    "victory": [
-                        1,
-                        "neighboringBlue"
-                    ]
-                }
-            ],
+            "cost": {
+                "w": 3,
+                "s": 1,
+                "l": 1
+            },
+            "effects": {
+                "victory": [
+                    1,
+                    "neighboringBlue"
+                ]
+            },
             "chains": [
                 null
             ],
@@ -659,22 +553,18 @@
             "players": 0,
             "age": 0,
             "guild": "",
-            "cost": [
-                {
-                    "s": 2,
-                    "c": 2,
-                    "g": 1
-                }
-            ],
-            "effects": [
-                {
-                    "victory": [
-                        {
-                            "neighboringWonders": 1
-                        }
-                    ]
-                }
-            ],
+            "cost": {
+                "s": 2,
+                "c": 2,
+                "g": 1
+            },
+            "effects": {
+                "victory": [
+                    {
+                        "neighboringWonders": 1
+                    }
+                ]
+            },
             "chains": [
                 null
             ],
@@ -688,14 +578,10 @@
             "players": 4,
             "age": 1,
             "guild": "blue",
-            "cost": [
-                null
-            ],
-            "effects": [
-                {
-                    "victory": 3
-                }
-            ],
+            "cost": {},
+            "effects": {
+                "victory": 3
+            },
             "chains": [
                 null
             ],
@@ -709,16 +595,12 @@
             "players": 3,
             "age": 1,
             "guild": "blue",
-            "cost": [
-                {
-                    "s": 1
-                }
-            ],
-            "effects": [
-                {
-                    "victory": 3
-                }
-            ],
+            "cost": {
+                "s": 1
+            },
+            "effects": {
+                "victory": 3
+            },
             "chains": [
                 "Aqueduct"
             ],
@@ -732,9 +614,7 @@
             "players": 3,
             "age": 1,
             "guild": "blue",
-            "cost": [
-                null
-            ],
+            "cost": {},
             "effects": [
                 {
                     "victory": 2
@@ -753,14 +633,10 @@
             "players": 3,
             "age": 1,
             "guild": "blue",
-            "cost": [
-                null
-            ],
-            "effects": [
-                {
-                    "victory": 2
-                }
-            ],
+            "cost": {},
+            "effects": {
+                "victory": 2
+            },
             "chains": [
                 "Statue"
             ],
@@ -774,16 +650,12 @@
             "players": 3,
             "age": 2,
             "guild": "blue",
-            "cost": [
-                {
-                    "s": 3
-                }
-            ],
-            "effects": [
-                {
-                    "victory": 5
-                }
-            ],
+            "cost": {
+                "s": 3
+            },
+            "effects": {
+                "victory": 5
+            },
             "chains": [
                 null
             ],
@@ -797,18 +669,14 @@
             "players": 3,
             "age": 2,
             "guild": "blue",
-            "cost": [
-                {
-                    "w": 1,
-                    "c": 1,
-                    "g": 1
-                }
-            ],
-            "effects": [
-                {
-                    "victory": 3
-                }
-            ],
+            "cost": {
+                "w": 1,
+                "c": 1,
+                "g": 1
+            },
+            "effects": {
+                "victory": 3
+            },
             "chains": [
                 "Pantheon"
             ],
@@ -822,17 +690,13 @@
             "players": 3,
             "age": 2,
             "guild": "blue",
-            "cost": [
-                {
-                    "o": 2,
-                    "w": 1
-                }
-            ],
-            "effects": [
-                {
-                    "victory": 4
-                }
-            ],
+            "cost": {
+                "o": 2,
+                "w": 1
+            },
+            "effects": {
+                "victory": 4
+            },
             "chains": [
                 "Gardens"
             ],
@@ -846,20 +710,16 @@
             "players": 3,
             "age": 3,
             "guild": "blue",
-            "cost": [
-                {
-                    "c": 2,
-                    "o": 1,
-                    "g": 1,
-                    "p": 1,
-                    "l": 1
-                }
-            ],
-            "effects": [
-                {
-                    "victory": 7
-                }
-            ],
+            "cost": {
+                "c": 2,
+                "o": 1,
+                "g": 1,
+                "p": 1,
+                "l": 1
+            },
+            "effects": {
+                "victory": 7
+            },
             "chains": [
                 null
             ],
@@ -873,17 +733,13 @@
             "players": 3,
             "age": 3,
             "guild": "blue",
-            "cost": [
-                {
-                    "c": 2,
-                    "w": 1
-                }
-            ],
-            "effects": [
-                {
-                    "victory": 5
-                }
-            ],
+            "cost": {
+                "c": 2,
+                "w": 1
+            },
+            "effects": {
+                "victory": 5
+            },
             "chains": [
                 null
             ],
@@ -897,18 +753,14 @@
             "players": 3,
             "age": 3,
             "guild": "blue",
-            "cost": [
-                {
-                    "s": 2,
-                    "o": 1,
-                    "g": 1
-                }
-            ],
-            "effects": [
-                {
-                    "victory": 6
-                }
-            ],
+            "cost": {
+                "s": 2,
+                "o": 1,
+                "g": 1
+            },
+            "effects": {
+                "victory": 6
+            },
             "chains": [
                 null
             ],
@@ -922,22 +774,18 @@
             "players": 3,
             "age": 3,
             "guild": "blue",
-            "cost": [
-                {
-                    "s": 1,
-                    "o": 1,
-                    "w": 1,
-                    "c": 1,
-                    "g": 1,
-                    "p": 1,
-                    "l": 1
-                }
-            ],
-            "effects": [
-                {
-                    "victory": 8
-                }
-            ],
+            "cost": {
+                "s": 1,
+                "o": 1,
+                "w": 1,
+                "c": 1,
+                "g": 1,
+                "p": 1,
+                "l": 1
+            },
+            "effects": {
+                "victory": 8
+            },
             "chains": [
                 null
             ],
@@ -951,17 +799,13 @@
             "players": 3,
             "age": 2,
             "guild": "blue",
-            "cost": [
-                {
-                    "c": 2,
-                    "l": 1
-                }
-            ],
-            "effects": [
-                {
-                    "victory": 4
-                }
-            ],
+            "cost": {
+                "c": 2,
+                "l": 1
+            },
+            "effects": {
+                "victory": 4
+            },
             "chains": [
                 null
             ],
@@ -975,18 +819,14 @@
             "players": 3,
             "age": 3,
             "guild": "blue",
-            "cost": [
-                {
-                    "w": 2,
-                    "s": 1,
-                    "o": 1
-                }
-            ],
-            "effects": [
-                {
-                    "victory": 6
-                }
-            ],
+            "cost": {
+                "w": 2,
+                "s": 1,
+                "o": 1
+            },
+            "effects": {
+                "victory": 6
+            },
             "chains": [
                 null
             ],
@@ -1000,16 +840,12 @@
             "players": 3,
             "age": 1,
             "guild": "red",
-            "cost": [
-                {
-                    "w": 1
-                }
-            ],
-            "effects": [
-                {
-                    "army": 1
-                }
-            ],
+            "cost": {
+                "w": 1
+            },
+            "effects": {
+                "army": 1
+            },
             "chains": [
                 null
             ],
@@ -1023,16 +859,12 @@
             "players": 3,
             "age": 1,
             "guild": "red",
-            "cost": [
-                {
-                    "o": 1
-                }
-            ],
-            "effects": [
-                {
-                    "army": 1
-                }
-            ],
+            "cost": {
+                "o": 1
+            },
+            "effects": {
+                "army": 1
+            },
             "chains": [
                 null
             ],
@@ -1046,16 +878,12 @@
             "players": 3,
             "age": 1,
             "guild": "red",
-            "cost": [
-                {
-                    "c": 1
-                }
-            ],
-            "effects": [
-                {
-                    "army": 1
-                }
-            ],
+            "cost": {
+                "c": 1
+            },
+            "effects": {
+                "army": 1
+            },
             "chains": [
                 null
             ],
@@ -1069,16 +897,12 @@
             "players": 3,
             "age": 2,
             "guild": "red",
-            "cost": [
-                {
-                    "s": 3
-                }
-            ],
-            "effects": [
-                {
-                    "army": 2
-                }
-            ],
+            "cost": {
+                "s": 3
+            },
+            "effects": {
+                "army": 2
+            },
             "chains": [
                 "Fortifications"
             ],
@@ -1092,17 +916,13 @@
             "players": 4,
             "age": 2,
             "guild": "red",
-            "cost": [
-                {
-                    "o": 2,
-                    "w": 1
-                }
-            ],
-            "effects": [
-                {
-                    "army": 2
-                }
-            ],
+            "cost": {
+                "o": 2,
+                "w": 1
+            },
+            "effects": {
+                "army": 2
+            },
             "chains": [
                 "Circus"
             ],
@@ -1116,17 +936,13 @@
             "players": 3,
             "age": 3,
             "guild": "red",
-            "cost": [
-                {
-                    "o": 3,
-                    "s": 1
-                }
-            ],
-            "effects": [
-                {
-                    "army": 3
-                }
-            ],
+            "cost": {
+                "o": 3,
+                "s": 1
+            },
+            "effects": {
+                "army": 3
+            },
             "chains": [
                 null
             ],
@@ -1140,17 +956,13 @@
             "players": 4,
             "age": 3,
             "guild": "red",
-            "cost": [
-                {
-                    "s": 3,
-                    "o": 1
-                }
-            ],
-            "effects": [
-                {
-                    "army": 3
-                }
-            ],
+            "cost": {
+                "s": 3,
+                "o": 1
+            },
+            "effects": {
+                "army": 3
+            },
             "chains": [
                 null
             ],
@@ -1164,18 +976,14 @@
             "players": 3,
             "age": 3,
             "guild": "red",
-            "cost": [
-                {
-                    "w": 2,
-                    "o": 1,
-                    "l": 1
-                }
-            ],
-            "effects": [
-                {
-                    "army": 3
-                }
-            ],
+            "cost": {
+                "w": 2,
+                "o": 1,
+                "l": 1
+            },
+            "effects": {
+                "army": 3
+            },
             "chains": [
                 null
             ],
@@ -1189,18 +997,14 @@
             "players": 3,
             "age": 2,
             "guild": "red",
-            "cost": [
-                {
-                    "c": 1,
-                    "w": 1,
-                    "o": 1
-                }
-            ],
-            "effects": [
-                {
-                    "army": 2
-                }
-            ],
+            "cost": {
+                "c": 1,
+                "w": 1,
+                "o": 1
+            },
+            "effects": {
+                "army": 2
+            },
             "chains": [
                 null
             ],
@@ -1214,17 +1018,13 @@
             "players": 3,
             "age": 2,
             "guild": "red",
-            "cost": [
-                {
-                    "w": 2,
-                    "o": 1
-                }
-            ],
-            "effects": [
-                {
-                    "army": 2
-                }
-            ],
+            "cost": {
+                "w": 2,
+                "o": 1
+            },
+            "effects": {
+                "army": 2
+            },
             "chains": [
                 null
             ],
@@ -1238,17 +1038,13 @@
             "players": 3,
             "age": 3,
             "guild": "red",
-            "cost": [
-                {
-                    "c": 3,
-                    "w": 1
-                }
-            ],
-            "effects": [
-                {
-                    "army": 3
-                }
-            ],
+            "cost": {
+                "c": 3,
+                "w": 1
+            },
+            "effects": {
+                "army": 3
+            },
             "chains": [
                 null
             ],
@@ -1262,9 +1058,7 @@
             "players": 4,
             "age": 1,
             "guild": "yellow",
-            "cost": [
-                null
-            ],
+            "cost": {},
             "effects": [
                 {
                     "coin": 5
@@ -1283,14 +1077,10 @@
             "players": 3,
             "age": 1,
             "guild": "yellow",
-            "cost": [
-                null
-            ],
-            "effects": [
-                {
-                    "rcostEast": 1
-                }
-            ],
+            "cost": {},
+            "effects": {
+                "rcostEast": 1
+            },
             "chains": [
                 "Forum"
             ],
@@ -1304,14 +1094,10 @@
             "players": 3,
             "age": 1,
             "guild": "yellow",
-            "cost": [
-                null
-            ],
-            "effects": [
-                {
-                    "costWest": 1
-                }
-            ],
+            "cost": {},
+            "effects": {
+                "costWest": 1
+            },
             "chains": [
                 "Forum"
             ],
@@ -1325,15 +1111,11 @@
             "players": 3,
             "age": 1,
             "guild": "yellow",
-            "cost": [
-                null
-            ],
-            "effects": [
-                {
-                    "mcostEast": 1,
-                    "mcostWest": 1
-                }
-            ],
+            "cost": {},
+            "effects": {
+                "mcostEast": 1,
+                "mcostWest": 1
+            },
             "chains": [
                 "Caravansery"
             ],
@@ -1347,20 +1129,16 @@
             "players": 3,
             "age": 2,
             "guild": "yellow",
-            "cost": [
-                {
-                    "c": 2
-                }
-            ],
-            "effects": [
-                {
-                    "rchoice": [
-                        "g",
-                        "l",
-                        "p"
-                    ]
-                }
-            ],
+            "cost": {
+                "c": 2
+            },
+            "effects": {
+                "rchoice": [
+                    "g",
+                    "l",
+                    "p"
+                ]
+            },
             "chains": [
                 "Haven"
             ],
@@ -1375,21 +1153,17 @@
             "players": 3,
             "age": 2,
             "guild": "yellow",
-            "cost": [
-                {
-                    "w": 2
-                }
-            ],
-            "effects": [
-                {
-                    "rchoice": [
-                        "c",
-                        "s",
-                        "o",
-                        "w"
-                    ]
-                }
-            ],
+            "cost": {
+                "w": 2
+            },
+            "effects": {
+                "rchoice": [
+                    "c",
+                    "s",
+                    "o",
+                    "w"
+                ]
+            },
             "chains": [
                 "Lighthouse"
             ],
@@ -1403,19 +1177,15 @@
             "players": 3,
             "age": 2,
             "guild": "yellow",
-            "cost": [
-                null
-            ],
-            "effects": [
-                {
-                    "coin": [
-                        1,
-                        "neighboringBrown",
-                        1,
-                        "ownBrown"
-                    ]
-                }
-            ],
+            "cost": {},
+            "effects": {
+                "coin": [
+                    1,
+                    "neighboringBrown",
+                    1,
+                    "ownBrown"
+                ]
+            },
             "chains": [
                 null
             ],
@@ -1429,19 +1199,15 @@
             "players": 4,
             "age": 2,
             "guild": "yellow",
-            "cost": [
-                null
-            ],
-            "effects": [
-                {
-                    "coin": [
-                        2,
-                        "neighboringGray",
-                        2,
-                        "ownGray"
-                    ]
-                }
-            ],
+            "cost": {},
+            "effects": {
+                "coin": [
+                    2,
+                    "neighboringGray",
+                    2,
+                    "ownGray"
+                ]
+            },
             "chains": [
                 null
             ],
@@ -1455,27 +1221,23 @@
             "players": 3,
             "age": 3,
             "guild": "yellow",
-            "cost": [
-                {
-                    "w": 1,
-                    "o": 1,
-                    "l": 1
-                }
-            ],
-            "effects": [
-                {
-                    "victory": [
-                        {
-                            "ownBrown": 1
-                        }
-                    ],
-                    "coin": [
-                        {
-                            "ownBrown": 1
-                        }
-                    ]
-                }
-            ],
+            "cost": {
+                "w": 1,
+                "o": 1,
+                "l": 1
+            },
+            "effects": {
+                "victory": [
+                    {
+                        "ownBrown": 1
+                    }
+                ],
+                "coin": [
+                    {
+                        "ownBrown": 1
+                    }
+                ]
+            },
             "chains": [
                 null
             ],
@@ -1489,24 +1251,20 @@
             "players": 3,
             "age": 3,
             "guild": "yellow",
-            "cost": [
-                {
-                    "s": 1,
-                    "g": 1
-                }
-            ],
-            "effects": [
-                {
-                    "victory": [
-                        1,
-                        "ownYellow"
-                    ],
-                    "coin": [
-                        1,
-                        "ownYellow"
-                    ]
-                }
-            ],
+            "cost": {
+                "s": 1,
+                "g": 1
+            },
+            "effects": {
+                "victory": [
+                    1,
+                    "ownYellow"
+                ],
+                "coin": [
+                    1,
+                    "ownYellow"
+                ]
+            },
             "chains": [
                 null
             ],
@@ -1520,24 +1278,20 @@
             "players": 4,
             "age": 3,
             "guild": "yellow",
-            "cost": [
-                {
-                    "c": 2,
-                    "p": 1
-                }
-            ],
-            "effects": [
-                {
-                    "victory": [
-                        2,
-                        "ownGray"
-                    ],
-                    "coin": [
-                        2,
-                        "ownGray"
-                    ]
-                }
-            ],
+            "cost": {
+                "c": 2,
+                "p": 1
+            },
+            "effects": {
+                "victory": [
+                    2,
+                    "ownGray"
+                ],
+                "coin": [
+                    2,
+                    "ownGray"
+                ]
+            },
             "chains": [
                 null
             ],
@@ -1551,24 +1305,20 @@
             "players": 3,
             "age": 3,
             "guild": "yellow",
-            "cost": [
-                {
-                    "s": 2,
-                    "o": 1
-                }
-            ],
-            "effects": [
-                {
-                    "coin": [
-                        3,
-                        "ownWonder"
-                    ],
-                    "victory": [
-                        1,
-                        "ownWonder"
-                    ]
-                }
-            ],
+            "cost": {
+                "s": 2,
+                "o": 1
+            },
+            "effects": {
+                "coin": [
+                    3,
+                    "ownWonder"
+                ],
+                "victory": [
+                    1,
+                    "ownWonder"
+                ]
+            },
             "chains": [
                 null
             ],
@@ -1582,20 +1332,16 @@
             "players": 3,
             "age": 1,
             "guild": "green",
-            "cost": [
-                {
-                    "l": 1
-                }
-            ],
-            "effects": [
-                {
-                    "schoice": [
-                        "t",
-                        "c",
-                        "g"
-                    ]
-                }
-            ],
+            "cost": {
+                "l": 1
+            },
+            "effects": {
+                "schoice": [
+                    "t",
+                    "c",
+                    "g"
+                ]
+            },
             "chains": [
                 "Stables",
                 "Dispensary"
@@ -1607,16 +1353,12 @@
             "players": 3,
             "age": 1,
             "guild": "green",
-            "cost": [
-                {
-                    "g": 1
-                }
-            ],
-            "effects": [
-                {
-                    "science": "c"
-                }
-            ],
+            "cost": {
+                "g": 1
+            },
+            "effects": {
+                "science": "c"
+            },
             "chains": [
                 "Archery Range",
                 "Laboratory"
@@ -1631,16 +1373,12 @@
             "players": 3,
             "age": 1,
             "guild": "green",
-            "cost": [
-                {
-                    "p": 1
-                }
-            ],
-            "effects": [
-                {
-                    "science": "t"
-                }
-            ],
+            "cost": {
+                "p": 1
+            },
+            "effects": {
+                "science": "t"
+            },
             "chains": [
                 "Courthouse",
                 "Library"
@@ -1655,17 +1393,13 @@
             "players": 3,
             "age": 2,
             "guild": "green",
-            "cost": [
-                {
-                    "o": 2,
-                    "g": 1
-                }
-            ],
-            "effects": [
-                {
-                    "science": "c"
-                }
-            ],
+            "cost": {
+                "o": 2,
+                "g": 1
+            },
+            "effects": {
+                "science": "c"
+            },
             "chains": [
                 "Arena",
                 "Lodge"
@@ -1680,17 +1414,13 @@
             "players": 3,
             "age": 2,
             "guild": "green",
-            "cost": [
-                {
-                    "c": 2,
-                    "p": 1
-                }
-            ],
-            "effects": [
-                {
-                    "science": "g"
-                }
-            ],
+            "cost": {
+                "c": 2,
+                "p": 1
+            },
+            "effects": {
+                "science": "g"
+            },
             "chains": [
                 "Siege Workshop",
                 "Observatory"
@@ -1705,17 +1435,13 @@
             "players": 3,
             "age": 2,
             "guild": "green",
-            "cost": [
-                {
-                    "s": 2,
-                    "l": 1
-                }
-            ],
-            "effects": [
-                {
-                    "science": "t"
-                }
-            ],
+            "cost": {
+                "s": 2,
+                "l": 1
+            },
+            "effects": {
+                "science": "t"
+            },
             "chains": [
                 "Senate",
                 "University"
@@ -1730,17 +1456,13 @@
             "players": 3,
             "age": 2,
             "guild": "green",
-            "cost": [
-                {
-                    "w": 1,
-                    "p": 1
-                }
-            ],
-            "effects": [
-                {
-                    "science": "t"
-                }
-            ],
+            "cost": {
+                "w": 1,
+                "p": 1
+            },
+            "effects": {
+                "science": "t"
+            },
             "chains": [
                 "Academy",
                 "Study"
@@ -1755,18 +1477,14 @@
             "players": 3,
             "age": 3,
             "guild": "green",
-            "cost": [
-                {
-                    "c": 2,
-                    "p": 1,
-                    "l": 1
-                }
-            ],
-            "effects": [
-                {
-                    "science": "c"
-                }
-            ],
+            "cost": {
+                "c": 2,
+                "p": 1,
+                "l": 1
+            },
+            "effects": {
+                "science": "c"
+            },
             "chains": [
                 null
             ],
@@ -1780,18 +1498,14 @@
             "players": 3,
             "age": 3,
             "guild": "green",
-            "cost": [
-                {
-                    "o": 2,
-                    "g": 1,
-                    "l": 1
-                }
-            ],
-            "effects": [
-                {
-                    "science": "g"
-                }
-            ],
+            "cost": {
+                "o": 2,
+                "g": 1,
+                "l": 1
+            },
+            "effects": {
+                "science": "g"
+            },
             "chains": [
                 null
             ],
@@ -1805,18 +1519,14 @@
             "players": 3,
             "age": 3,
             "guild": "green",
-            "cost": [
-                {
-                    "w": 2,
-                    "p": 1,
-                    "g": 1
-                }
-            ],
-            "effects": [
-                {
-                    "science": "t"
-                }
-            ],
+            "cost": {
+                "w": 2,
+                "p": 1,
+                "g": 1
+            },
+            "effects": {
+                "science": "t"
+            },
             "chains": [
                 null
             ],
@@ -1830,17 +1540,13 @@
             "players": 3,
             "age": 3,
             "guild": "green",
-            "cost": [
-                {
-                    "s": 3,
-                    "g": 1
-                }
-            ],
-            "effects": [
-                {
-                    "science": "c"
-                }
-            ],
+            "cost": {
+                "s": 3,
+                "g": 1
+            },
+            "effects": {
+                "science": "c"
+            },
             "chains": [
                 null
             ],
@@ -1854,18 +1560,14 @@
             "players": 3,
             "age": 3,
             "guild": "green",
-            "cost": [
-                {
-                    "w": 2,
-                    "p": 1,
-                    "l": 1
-                }
-            ],
-            "effects": [
-                {
-                    "science": "g"
-                }
-            ],
+            "cost": {
+                "w": 2,
+                "p": 1,
+                "l": 1
+            },
+            "effects": {
+                "science": "g"
+            },
             "chains": [
                 null
             ],
