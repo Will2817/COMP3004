@@ -23,6 +23,7 @@ namespace _7Wonders
         public static Dictionary<String, SpriteFont> fonts;
         public static Dictionary<String, Interface> interfaces;
         public static Dictionary<String, Wonder> wonders;
+        public static int MAXPLAYER = 7;
 
         public string recordedPresses = "";
         static KeyboardState prevState = Keyboard.GetState();
@@ -52,9 +53,10 @@ namespace _7Wonders
             }
 
             interfaces = new Dictionary<String, Interface>();
-            interfaces.Add("main", new MainMenu(this));
+            interfaces.Add("mainmenu", new MainMenu(this));
             interfaces.Add("lobby", new Lobby(this));
-            activeInterface = interfaces["main"];
+            interfaces.Add("maingame", new MainGame(this));
+            activeInterface = interfaces["mainmenu"];
 
 
             //image = (string) cards[0]["image"];

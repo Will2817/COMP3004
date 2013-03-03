@@ -14,6 +14,16 @@ namespace _7Wonders
 {
     class Lobby : Interface
     {
+        private const int MARGIN = 5;
+        private const int CHECKBOXDIM = 15;
+        private const int DIVIDERWIDTH = 2;
+        private int SEC1WIDTH = Game1.WIDTH / 3;
+        private int WONDERHEIGHT = (Game1.HEIGHT - 10) / 6;
+        private int WONDERWIDTH = Game1.WIDTH / 3 - 10;
+        private int SEC1HEIGHT = Game1.HEIGHT * 2/3;
+        private int DROPDOWNWIDTH = (Game1.WIDTH / 3) - 100;
+        private int DROPDOWNHEIGHT = (Game1.HEIGHT*2/3 - (Game1.MAXPLAYER + 1) * MARGIN) / Game1.MAXPLAYER;        
+
         protected List<string> playerTypes = new List<string>() { "Open", "AIType1", "AIType2", "AIType3" };
 
         protected static Dictionary<String, Visual> visuals1;
@@ -35,33 +45,28 @@ namespace _7Wonders
         public Lobby(Game1 theGame)
             : base(theGame, "title", 0.4f)
         {
-            int wide = Game1.WIDTH / 3;
-            int half = (Game1.WIDTH - wide) / 2;
-            int height = (Game1.HEIGHT - 10) / 6;
-            int height2 = (Game1.HEIGHT - 49) * 2 / 21;
-            int wide2 = (Game1.WIDTH / 3) - 100;
             sideButton = new Button(game, new Vector2(Game1.WIDTH - 140, Game1.HEIGHT - 140), 140, 40, "Toggle Side", "Font1");
             backButton = new Button(game, new Vector2(10, Game1.HEIGHT - 100), 75, 40, "Back", "Font1");
             startButton = new Button(game, new Vector2(90, Game1.HEIGHT - 100), 75, 40, "Start", "Font1");
 
             dropDowns = new List<Visual>();
-            dropDowns.Add((new DropDown(game, new Vector2(5, 5), wide2, height2, new List<string>() { "Host Player" })).setEnabled(false));
+            dropDowns.Add((new DropDown(game, new Vector2(MARGIN, MARGIN), DROPDOWNWIDTH, DROPDOWNHEIGHT, new List<string>() { "Host Player" })).setEnabled(false));
             for (int i = 1; i < NUMPLAYERS; i++)
             {
-                dropDowns.Add(new DropDown(game, new Vector2(5, 5 + (height2 + 3) * i), wide2, height2, playerTypes));
+                dropDowns.Add(new DropDown(game, new Vector2(MARGIN, MARGIN + (MARGIN + DROPDOWNHEIGHT) * i), DROPDOWNWIDTH, DROPDOWNHEIGHT, playerTypes));
             }
 
             readyCBs = new List<Visual>();
             for (int i = 0; i < NUMPLAYERS; i++)
             {
-                readyCBs.Add(new Checkbox(game, new Vector2(50 + wide2, 20 + (height2 + 3) * i), 15, 15));
+                readyCBs.Add(new Checkbox(game, new Vector2(50 + DROPDOWNWIDTH, 20 + (MARGIN + DROPDOWNHEIGHT) * i), CHECKBOXDIM, CHECKBOXDIM));
             }
 
             wonders = new Dictionary<String, Visual>();
 
             visuals1 = new Dictionary<String, Visual>();
-            visuals1.Add("Divider1", new Visual(game, new Vector2(wide-5, 0), 2, Game1.HEIGHT, "line", Color.Silver));
-            visuals1.Add("Divider2", new Visual(game, new Vector2(0, height*4), wide-6, 2, "line", Color.Silver));
+            visuals1.Add("Divider1", new Visual(game, new Vector2(SEC1WIDTH - 1, 0), DIVIDERWIDTH, Game1.HEIGHT, "line", Color.Silver));
+            visuals1.Add("Divider2", new Visual(game, new Vector2(0, SEC1HEIGHT - 1), Game1.WIDTH, DIVIDERWIDTH, "line", Color.Silver));
 
             for (int i = dropDowns.Count; i > 0; i--)
             {
@@ -77,11 +82,11 @@ namespace _7Wonders
             //need to work on this so that it adapts better to number of wonders
             foreach (Wonder w in Game1.wonders.Values)
             {
-                w.getVisual().setPosition(new Vector2(wide*count2, 5 + height * count)).setWidth(half).setHeight(height);
+                w.getVisual().setPosition(new Vector2(5 + SEC1WIDTH * count2, 5 + WONDERHEIGHT * count)).setWidth(WONDERWIDTH).setHeight(WONDERHEIGHT);
                 visuals1.Add(w.getName(), w.getVisual());
                 count++;
 
-                if (count>(Game1.wonders.Count / 2))
+                if (count>3)
                 {
                     count=0;
                     count2++;
@@ -89,7 +94,7 @@ namespace _7Wonders
                 
             }
 
-            visuals1.Add("selected", new Visual(game, new Vector2(wide, 5 + height * 4), half * 2, height * 2, Game1.wonders.Values.First().getVisual().getTexture()));
+            visuals1.Add("selected", new Visual(game, new Vector2(5 + SEC1WIDTH, 5 + SEC1HEIGHT), WONDERWIDTH * 2 + 10, WONDERHEIGHT * 2, Game1.wonders.Values.First().getVisual().getTexture()));
             visuals1.Add("toggleButton", sideButton);
             visuals1.Add("backButton", backButton);
             visuals1.Add("startButton", startButton);

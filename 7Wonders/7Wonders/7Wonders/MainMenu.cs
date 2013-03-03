@@ -133,7 +133,7 @@ namespace _7Wonders
         {
             return new Dictionary<string, string>()
                 {
-                    {"nextInterface", "main"},
+                    {"nextInterface", "mainmenu"},
                 };
         }
     }
