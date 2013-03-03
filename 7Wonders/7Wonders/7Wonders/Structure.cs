@@ -25,6 +25,8 @@ namespace _7Wonders
             
             foreach (JProperty p in _costs.Properties())
             {
+                // I don't think we need this switch statement at all
+                // This may come handy for outputting information
                 switch (p.Name)
                 {
                     case "c":
@@ -46,6 +48,9 @@ namespace _7Wonders
                         Console.WriteLine(p.Name + ":" + p.Value);
                         break;
                     case "w":
+                        Console.WriteLine(p.Name + ":" + p.Value);
+                        break;
+                    case "coin":
                         Console.WriteLine(p.Name + ":" + p.Value);
                         break;
                     default:
