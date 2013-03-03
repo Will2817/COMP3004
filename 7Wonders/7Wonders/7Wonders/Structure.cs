@@ -99,7 +99,7 @@ namespace _7Wonders
                     // Case - Resource Choice: c1 : c2 : ...
                     case "rchoice":
                         string temp = "rchoice:";
-                        foreach (JArray s in p["rchoice"])
+                        foreach (JObject s in (JArray)p.Value)
                             temp += ":" + s;
 
                         Console.WriteLine(temp);
@@ -134,6 +134,16 @@ namespace _7Wonders
                         Console.WriteLine("Error: No such effect " + p.Name);
                         break;
                 }
+            }
+
+            foreach (JProperty p in _chains.Properties())
+            {
+
+            }
+
+            foreach (JProperty p in _previous.Properties())
+            {
+
             }
         }
 
