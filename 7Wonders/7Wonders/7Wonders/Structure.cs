@@ -101,8 +101,8 @@ namespace _7Wonders
                     // Case - Resource Choice: c1 : c2 : ...
                     case "rchoice":
                         string rchoice = p.Name;
-                        foreach (JArray c in p)
-                            rchoice += ":" + c;
+                        foreach (JProperty c in p)
+                            rchoice += ":" + c.Value;
 
                         Console.WriteLine(rchoice);
                         effects.Add(rchoice);
@@ -111,8 +111,8 @@ namespace _7Wonders
                     // Case - Science choice : tablet : compass : gear
                     case "schoice":
                         string schoice = p.Name;
-                        foreach (JArray c in p)
-                            schoice += ":" + c;                         
+                        foreach (JProperty c in p)
+                            schoice += ":" + c.Value;                         
 
                         Console.WriteLine(schoice);
                         effects.Add(schoice);
