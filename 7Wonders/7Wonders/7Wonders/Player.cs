@@ -10,11 +10,13 @@ namespace _7Wonders
         protected string nameID;
         protected Wonder board;
         protected string ip; // needed?
+        protected List<Card> hand;
 
         protected int victory;
         protected int army;
         protected int coin;
         protected int defeat;
+        
 
         // Resources
         // Clay, Ore, Stone, Wood, Glass, Loom, Papyrus
@@ -24,10 +26,13 @@ namespace _7Wonders
         // Tablet, Compass, Gear
         int[] sciences = new int[3];
 
-        public Player(string _name, Wonder _board)
+        public Player(string _name, Wonder _board, List<Card> _hand)
         {
+            // Initialized through the constructor
             nameID = _name;
             board = _board;
+            hand = _hand;
+
             ip = null;
             victory = 0;
             army = 0;
@@ -48,6 +53,7 @@ namespace _7Wonders
         }
 
         // Accessors
+        public List<Card> getHand() { return hand; }
         public string getIP()       { return ip; }
         public int getVictory()     { return victory; }
         public int getCoin()        { return coin; }
@@ -59,6 +65,11 @@ namespace _7Wonders
         public void setNameID(string n)
         {
             nameID = n;
+        }
+
+        public void setHand(List<Card> _hand)
+        {
+            hand = _hand;
         }
 
         public void setIP(string _ip)

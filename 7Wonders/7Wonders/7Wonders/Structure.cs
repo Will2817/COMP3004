@@ -64,6 +64,8 @@ namespace _7Wonders
 
             foreach (JProperty p in _effects.Properties())
             {
+                
+
                 switch (p.Name)
                 {
                     //Case - Resource : Type : Value
@@ -98,14 +100,23 @@ namespace _7Wonders
 
                     // Case - Resource Choice: c1 : c2 : ...
                     case "rchoice":
-                        string temp = "rchoice:";
-                        foreach (JObject s in (JArray)p.Value)
-                            temp += ":" + s;
+                        string rchoice = p.Name;
+                        foreach (JArray c in p)
+                            rchoice += ":" + c;
 
-                        Console.WriteLine(temp);
-                        effects.Add(temp);
+                        Console.WriteLine(rchoice);
+                        effects.Add(rchoice);
                         break;
 
+                    // Case - Science choice : tablet : compass : gear
+                    case "schoice":
+                        string schoice = p.Name;
+                        foreach (JArray c in p)
+                            schoice += ":" + c;                         
+
+                        Console.WriteLine(schoice);
+                        effects.Add(schoice);
+                        break;
                     // Case - Army : Value
                     case "army":
                         Console.WriteLine(p.Name + ":" + p.Value);
@@ -115,17 +126,53 @@ namespace _7Wonders
                     // Case - Victory Points : Determinant : Value
                     // NOT DONE
                     case "victory":
-                       
+                        foreach (JProperty s in p)
+                        {
+                            Console.WriteLine(p.Name + ":" + s.Name + ":" + s.Value);
+                            effects.Add(p.Name + ":" + s.Name + ":" + s.Value);
+
+                        }
                         break;
 
                     // Case - Coin : Determinant : Value
                     // NOT DONE
                     case "coin":
 
+                        foreach (JProperty c in p)
+                        {
+                            Console.WriteLine(p.Name + ":" + c.Name + ":" + c.Value);
+                            effects.Add(p.Name + ":" + c.Name + ":" + c.Value);
+                        }
+
+                        
                         break;
                     
                     // Case - Science: 't'ablet, 'c'ompass, 'g'ear
                     case "science":
+                        Console.WriteLine(p.Name + ":" + p.Value);
+                        effects.Add(p.Name + ":" + p.Value);
+                        break;
+
+                    // Case - Raw Resources cost via Eastern trade : value
+                    case "rcostEast":
+                        Console.WriteLine(p.Name + ":" + p.Value);
+                        effects.Add(p.Name + ":" + p.Value);
+                        break;
+
+                    // Case - Raw Resources cost via Western Trade : value
+                    case "rcostWest":
+                        Console.WriteLine(p.Name + ":" + p.Value);
+                        effects.Add(p.Name + ":" + p.Value);
+                        break;
+
+                    // Case - Manufactured Resources cost via East Trade : value
+                    case "mcostEast":
+                        Console.WriteLine(p.Name + ":" + p.Value);
+                        effects.Add(p.Name + ":" + p.Value);
+                        break;
+
+                    // Case - Manufactured Resources cost via West Trade : value
+                    case "mcostWest":
                         Console.WriteLine(p.Name + ":" + p.Value);
                         effects.Add(p.Name + ":" + p.Value);
                         break;
@@ -138,12 +185,12 @@ namespace _7Wonders
 
             foreach (JProperty p in _chains.Properties())
             {
-
+                chains.Add((string)p.Value);
             }
 
             foreach (JProperty p in _previous.Properties())
             {
-
+                previous.Add(string)p.Value);
             }
         }
 
