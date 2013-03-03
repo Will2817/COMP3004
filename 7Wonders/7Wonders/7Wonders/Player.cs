@@ -76,8 +76,7 @@ namespace _7Wonders
 
         public void addVictory(int v)
         {
-            victory += v;
-            
+            victory += v;            
         }
 
         public void setCoin(int c)
@@ -88,12 +87,22 @@ namespace _7Wonders
                 coin = 0;
         }
 
+        public void addCoin(int c)
+        {
+            coin += c;
+        }
+
         public void setDefeat(int d)
         {
             if (d >= 0)
                 defeat = d;
             else
                 defeat = 0;
+        }
+
+        public void addDefeat(int d)
+        {
+            defeat += d;
         }
 
         public void setResources(int [] r)
