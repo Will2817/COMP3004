@@ -4,106 +4,74 @@
             "name": "Gizah",
             "a": {
                 "image": "Gizah_A",
-                "effects": [
-                    {
-                        "s": 1
-                    }
-                ],
+                "effects": {
+                    "s": 1
+                },
                 "stages": [
                     {
-                        "cost": [
-                            {
-                                "s": 2
-                            }
-                        ],
-                        "effects": [
-                            {
-                                "victory": 3
-                            }
-                        ]
+                        "cost": {
+                            "s": 2
+                        },
+                        "effects": {
+                            "victory": 3
+                        }
                     },
                     {
-                        "cost": [
-                            {
-                                "w": 3
-                            }
-                        ],
-                        "effects": [
-                            {
-                                "victory": 5
-                            }
-                        ]
+                        "cost": {
+                            "w": 3
+                        },
+                        "effects": {
+                            "victory": 5
+                        }
                     },
                     {
-                        "cost": [
-                            {
-                                "s": 4
-                            }
-                        ],
-                        "effects": [
-                            {
-                                "victory": 7
-                            }
-                        ]
+                        "cost": {
+                            "s": 4
+                        },
+                        "effects": {
+                            "victory": 7
+                        }
                     }
                 ]
             },
             "b": {
                 "image": "Gizah_B",
-                "effects": [
-                    {
-                        "s": 1
-                    }
-                ],
+                "effects": {
+                    "s": 1
+                },
                 "stages": [
                     {
-                        "cost": [
-                            {
-                                "w": 2
-                            }
-                        ],
-                        "effects": [
-                            {
-                                "victory": 3
-                            }
-                        ]
+                        "cost": {
+                            "w": 2
+                        },
+                        "effects": {
+                            "victory": 3
+                        }
                     },
                     {
-                        "cost": [
-                            {
-                                "s": 3
-                            }
-                        ],
-                        "effects": [
-                            {
-                                "victory": 5
-                            }
-                        ]
+                        "cost": {
+                            "s": 3
+                        },
+                        "effects": {
+                            "victory": 5
+                        }
                     },
                     {
-                        "cost": [
-                            {
-                                "c": 3
-                            }
-                        ],
-                        "effects": [
-                            {
-                                "victory": 5
-                            }
-                        ]
+                        "cost": {
+                            "c": 3
+                        },
+                        "effects": {
+                            "victory": 5
+                        }
                     },
                     {
-                        "cost": [
-                            {
-                                "s": 3,
-                                "p": 1
-                            }
-                        ],
-                        "effects": [
-                            {
-                                "victory": 7
-                            }
-                        ]
+                        "cost": {
+                            "s": 3,
+                            "p": 1
+                        },
+                        "effects": {
+                            "victory": 7
+                        }
                     }
                 ]
             }
@@ -112,93 +80,61 @@
             "name": "Rhodos",
             "a": {
                 "image": "Rhodos_A",
-                "effects": [
-                    {
-                        "o": 1
-                    }
-                ],
+                "effects": {
+                    "o": 1
+                },
                 "stages": [
                     {
-                        "cost": [
-                            {
-                                "w": 2
-                            }
-                        ],
-                        "effects": [
-                            {
-                                "victory": 3
-                            }
-                        ]
+                        "cost": {
+                            "w": 2
+                        },
+                        "effects": {
+                            "victory": 3
+                        }
                     },
                     {
-                        "cost": [
-                            {
-                                "c": 3
-                            }
-                        ],
-                        "effects": [
-                            {
-                                "army": 2
-                            }
-                        ]
+                        "cost": {
+                            "c": 3
+                        },
+                        "effects": {
+                            "army": 2
+                        }
                     },
                     {
-                        "cost": [
-                            {
-                                "o": 4
-                            }
-                        ],
-                        "effects": [
-                            {
-                                "victory": 7
-                            }
-                        ]
+                        "cost": {
+                            "o": 4
+                        },
+                        "effects": {
+                            "victory": 7
+                        }
                     }
                 ]
             },
             "b": {
                 "image": "Rhodos_B",
-                "effects": [
-                    {
-                        "o": 1
-                    }
-                ],
+                "effects": {
+                    "o": 1
+                },
                 "stages": [
                     {
-                        "cost": [
-                            {
-                                "s": 3
-                            }
-                        ],
-                        "effects": [
-                            {
-                                "army": 1
-                            },
-                            {
-                                "victory": 3
-                            },
-                            {
-                                "coin": 3
-                            }
-                        ]
+                        "cost": {
+                            "s": 3
+                        },
+                        "effects": {
+                            "army": 1,
+                            "victory": 3,
+                            "coin": 3
+                        }
                     },
                     {
-                        "cost": [
-                            {
-                                "o": 4
-                            }
-                        ],
-                        "effects": [
-                            {
-                                "army": 1
-                            },
-                            {
-                                "victory": 4
-                            },
-                            {
-                                "coin": 4
-                            }
-                        ]
+                        "cost": {
+                            "o": 4
+                        },
+                        "effects": {
+                            "army": 1,
+                            "victory": 4,
+                            "coin": 4
+                        }
                     }
                 ]
             }
@@ -207,107 +143,79 @@
             "name": "Alexandria",
             "a": {
                 "image": "Alexandria_A",
-                "effects": [
-                    {
-                        "g": 1
-                    }
-                ],
+                "effects": {
+                    "g": 1
+                },
                 "stages": [
                     {
-                        "cost": [
-                            {
-                                "s": 2
-                            }
-                        ],
-                        "effects": [
-                            {
-                                "victory": 3
-                            }
-                        ]
+                        "cost": {
+                            "s": 2
+                        },
+                        "effects": {
+                            "victory": 3
+                        }
                     },
                     {
-                        "cost": [
-                            {
-                                "o": 2
-                            }
-                        ],
-                        "effects": [
-                            {
-                                "rchoice": [
-                                    "c",
-                                    "o",
-                                    "w",
-                                    "s"
-                                ]
-                            }
-                        ]
+                        "cost": {
+                            "o": 2
+                        },
+                        "effects": {
+                            "rchoice": [
+                                "c",
+                                "o",
+                                "w",
+                                "s"
+                            ]
+                        }
                     },
                     {
-                        "cost": [
-                            {
-                                "g": 2
-                            }
-                        ],
-                        "effects": [
-                            {
-                                "victory": 7
-                            }
-                        ]
+                        "cost": {
+                            "g": 2
+                        },
+                        "effects": {
+                            "victory": 7
+                        }
                     }
                 ]
             },
             "b": {
                 "image": "Alexandria_B",
-                "effects": [
-                    {
-                        "g": 1
-                    }
-                ],
+                "effects": {
+                    "g": 1
+                },
                 "stages": [
                     {
-                        "cost": [
-                            {
-                                "c": 2
-                            }
-                        ],
-                        "effects": [
-                            {
-                                "rchoice": [
-                                    "c",
-                                    "o",
-                                    "w",
-                                    "s"
-                                ]
-                            }
-                        ]
+                        "cost": {
+                            "c": 2
+                        },
+                        "effects": {
+                            "rchoice": [
+                                "c",
+                                "o",
+                                "w",
+                                "s"
+                            ]
+                        }
                     },
                     {
-                        "cost": [
-                            {
-                                "w": 2
-                            }
-                        ],
-                        "effects": [
-                            {
-                                "rchoice": [
-                                    "g",
-                                    "l",
-                                    "p"
-                                ]
-                            }
-                        ]
+                        "cost": {
+                            "w": 2
+                        },
+                        "effects": {
+                            "rchoice": [
+                                "g",
+                                "l",
+                                "p"
+                            ]
+                        }
                     },
                     {
-                        "cost": [
-                            {
-                                "s": 3
-                            }
-                        ],
-                        "effects": [
-                            {
-                                "victory": 7
-                            }
-                        ]
+                        "cost": {
+                            "s": 3
+                        },
+                        "effects": {
+                            "victory": 7
+                        }
                     }
                 ]
             }
@@ -316,110 +224,76 @@
             "name": "Babylon",
             "a": {
                 "image": "Babylon_A",
-                "effects": [
-                    {
-                        "c": 1
-                    }
-                ],
+                "effects": {
+                    "c": 1
+                },
                 "stages": [
                     {
-                        "cost": [
-                            {
-                                "c": 2
-                            }
-                        ],
-                        "effects": [
-                            {
-                                "victory": 3
-                            }
-                        ]
+                        "cost": {
+                            "c": 2
+                        },
+                        "effects": {
+                            "victory": 3
+                        }
                     },
                     {
-                        "cost": [
-                            {
-                                "w": 3
-                            }
-                        ],
-                        "effects": [
-                            {
-                                "schoice": [
-                                    "t",
-                                    "c",
-                                    "g"
-                                ]
-                            }
-                        ]
+                        "cost": {
+                            "w": 3
+                        },
+                        "effects": {
+                            "schoice": [
+                                "t",
+                                "c",
+                                "g"
+                            ]
+                        }
                     },
                     {
-                        "cost": [
-                            {
-                                "c": 4
-                            }
-                        ],
-                        "effects": [
-                            {
-                                "victory": 7
-                            }
-                        ]
+                        "cost": {
+                            "c": 4
+                        },
+                        "effects": {
+                            "victory": 7
+                        }
                     }
                 ]
             },
             "b": {
                 "image": "Babylon_B",
-                "effects": [
-                    {
-                        "c": 1
-                    }
-                ],
+                "effects": {
+                    "c": 1
+                },
                 "stages": [
                     {
-                        "cost": [
-                            {
-                                "l": 1
-                            },
-                            {
-                                "c": 1
-                            }
-                        ],
-                        "effects": [
-                            {
-                                "victory": 3
-                            }
-                        ]
+                        "cost": {
+                            "l": 1,
+                            "c": 1
+                        },
+                        "effects": {
+                            "victory": 3
+                        }
                     },
                     {
-                        "cost": [
-                            {
-                                "g": 1
-                            },
-                            {
-                                "w": 2
-                            }
-                        ],
-                        "effects": [
-                            {
-                                "lastcard": true
-                            }
-                        ]
+                        "cost": {
+                            "g": 1,
+                            "w": 2
+                        },
+                        "effects": {
+                            "lastcard": true
+                        }
                     },
                     {
-                        "cost": [
-                            {
-                                "p": 1
-                            },
-                            {
-                                "c": 3
-                            }
-                        ],
-                        "effects": [
-                            {
-                                "schoice": [
-                                    "t",
-                                    "c",
-                                    "g"
-                                ]
-                            }
-                        ]
+                        "cost": {
+                            "p": 1,
+                            "c": 3
+                        },
+                        "effects": {
+                            "schoice": [
+                                "t",
+                                "c",
+                                "g"
+                            ]
+                        }
                     }
                 ]
             }
@@ -428,108 +302,70 @@
             "name": "Ephesos",
             "a": {
                 "image": "Ephesos_A",
-                "effects": [
-                    {
-                        "p": 1
-                    }
-                ],
+                "effects": {
+                    "p": 1
+                },
                 "stages": [
                     {
-                        "cost": [
-                            {
-                                "s": 2
-                            }
-                        ],
-                        "effects": [
-                            {
-                                "victory": 3
-                            }
-                        ]
+                        "cost": {
+                            "s": 2
+                        },
+                        "effects": {
+                            "victory": 3
+                        }
                     },
                     {
-                        "cost": [
-                            {
-                                "w": 2
-                            }
-                        ],
-                        "effects": [
-                            {
-                                "coin": 9
-                            }
-                        ]
+                        "cost": {
+                            "w": 2
+                        },
+                        "effects": {
+                            "coin": 9
+                        }
                     },
                     {
-                        "cost": [
-                            {
-                                "p": 2
-                            }
-                        ],
-                        "effects": [
-                            {
-                                "victory": 7
-                            }
-                        ]
+                        "cost": {
+                            "p": 2
+                        },
+                        "effects": {
+                            "victory": 7
+                        }
                     }
                 ]
             },
             "b": {
                 "image": "Ephesos_B",
-                "effects": [
-                    {
-                        "p": 1
-                    }
-                ],
+                "effects": {
+                    "p": 1
+                },
                 "stages": [
                     {
-                        "cost": [
-                            {
-                                "s": 2
-                            }
-                        ],
-                        "effects": [
-                            {
-                                "victory": 2
-                            },
-                            {
-                                "coin": 4
-                            }
-                        ]
+                        "cost": {
+                            "s": 2
+                        },
+                        "effects": {
+                            "victory": 2,
+                            "coin": 4
+                        }
                     },
                     {
-                        "cost": [
-                            {
-                                "w": 2
-                            }
-                        ],
-                        "effects": [
-                            {
-                                "victory": 3
-                            },
-                            {
-                                "coin": 4
-                            }
-                        ]
+                        "cost": {
+                            "w": 2
+                        },
+                        "effects": {
+                            "victory": 3,
+                            "coin": 4
+                        }
                     },
                     {
-                        "cost": [
-                            {
-                                "p": 1
-                            },
-                            {
-                                "l": 1
-                            },
-                            {
-                                "g": 1
-                            }
-                        ],
-                        "effects": [
-                            {
-                                "victory": 3
-                            },
-                            {
-                                "coin": 4
-                            }
-                        ]
+                        "cost": {
+                            "p": 1,
+                            "l": 1,
+                            "g": 1
+                        },
+                        "effects": {
+                            "victory": 3,
+                            "coin": 4
+                        }
                     }
                 ]
             }
@@ -538,99 +374,67 @@
             "name": "Olympia",
             "a": {
                 "image": "Olympia_A",
-                "effects": [
-                    {
-                        "w": 1
-                    }
-                ],
+                "effects": {
+                    "w": 1
+                },
                 "stages": [
                     {
-                        "cost": [
-                            {
-                                "w": 2
-                            }
-                        ],
-                        "effects": [
-                            {
-                                "victory": 3
-                            }
-                        ]
+                        "cost": {
+                            "w": 2
+                        },
+                        "effects": {
+                            "victory": 3
+                        }
                     },
                     {
-                        "cost": [
-                            {
-                                "s": 2
-                            }
-                        ],
-                        "effects": [
-                            {
-                                "freeBuild": true
-                            }
-                        ]
+                        "cost": {
+                            "s": 2
+                        },
+                        "effects": {
+                            "freeBuild": true
+                        }
                     },
                     {
-                        "cost": [
-                            {
-                                "o": 2
-                            }
-                        ],
-                        "effects": [
-                            {
-                                "victory": 7
-                            }
-                        ]
+                        "cost": {
+                            "o": 2
+                        },
+                        "effects": {
+                            "victory": 7
+                        }
                     }
                 ]
             },
             "b": {
                 "image": "Olympia_B",
-                "effects": [
-                    {
-                        "w": 1
-                    }
-                ],
+                "effects": {
+                    "w": 1
+                },
                 "stages": [
                     {
-                        "cost": [
-                            {
-                                "w": 2
-                            }
-                        ],
-                        "effects": [
-                            {
-                                "rcostEast": 1
-                            },
-                            {
-                                "rcostWest": 1
-                            }
-                        ]
+                        "cost": {
+                            "w": 2
+                        },
+                        "effects": {
+                            "rcostEast": 1,
+                            "rcostWest": 1
+                        }
                     },
                     {
-                        "cost": [
-                            {
-                                "s": 2
-                            }
-                        ],
-                        "effects": [
-                            {
-                                "victory": 5
-                            }
-                        ]
+                        "cost": {
+                            "s": 2
+                        },
+                        "effects": {
+                            "victory": 5
+                        }
                     },
                     {
-                        "cost": [
-                            {
-                                "l": 1
-                            },
-                            {
-                                "o": 2
-                            }
-                        ],
-                        "effects": [
-                            {
-                                "guildCopy": true
-                            }
-                        ]
+                        "cost": {
+                            "l": 1,
+                            "o": 2
+                        },
+                        "effects": {
+                            "guildCopy": true
+                        }
                     }
                 ]
             }
@@ -639,100 +443,68 @@
             "name": "Halikarnassos",
             "a": {
                 "image": "Halikarnassos_A",
-                "effects": [
-                    {
-                        "l": 1
-                    }
-                ],
+                "effects": {
+                    "l": 1
+                },
                 "stages": [
                     {
-                        "cost": [
-                            {
-                                "c": 2
-                            }
-                        ],
-                        "effects": [
-                            {
-                                "victory": 3
-                            }
-                        ]
+                        "cost": {
+                            "c": 2
+                        },
+                        "effects": {
+                            "victory": 3
+                        }
                     },
                     {
-                        "cost": [
-                            {
-                                "o": 3
-                            }
-                        ],
-                        "effects": [
-                            {
-                                "discard": true
-                            }
-                        ]
+                        "cost": {
+                            "o": 3
+                        },
+                        "effects": {
+                            "discard": true
+                        }
                     },
                     {
-                        "cost": [
-                            {
-                                "l": 2
-                            }
-                        ],
-                        "effects": [
-                            {
-                                "victory": 7
-                            }
-                        ]
+                        "cost": {
+                            "l": 2
+                        },
+                        "effects": {
+                            "victory": 7
+                        }
                     }
                 ]
             },
             "b": {
                 "image": "Halikarnassos_B",
-                "effects": [
-                    {
-                        "l": 1
-                    }
-                ],
+                "effects": {
+                    "l": 1
+                },
                 "stages": [
                     {
-                        "cost": [
-                            {
-                                "o": 2
-                            }
-                        ],
-                        "effects": [
-                            {
-                                "victory": 2
-                            },
-                            {
-                                "discard": true
-                            }
-                        ]
+                        "cost": {
+                            "o": 2
+                        },
+                        "effects": {
+                            "victory": 2,
+                            "discard": true
+                        }
                     },
                     {
-                        "cost": [
-                            {
-                                "s": 2
-                            }
-                        ],
-                        "effects": [
-                            {
-                                "victory": 1
-                            },
-                            {
-                                "discard": true
-                            }
-                        ]
+                        "cost": {
+                            "s": 2
+                        },
+                        "effects": {
+                            "victory": 1,
+                            "discard": true
+                        }
                     },
                     {
-                        "cost": [
-                            {
-                                "l": 1,
-                                "o": 2
-                            }
-                        ],
-                        "effects": [
-                            {
-                                "discard": true
-                            }
-                        ]
+                        "cost": {
+                            "l": 1,
+                            "o": 2
+                        },
+                        "effects": {
+                            "discard": true
+                        }
                     }
                 ]
             }

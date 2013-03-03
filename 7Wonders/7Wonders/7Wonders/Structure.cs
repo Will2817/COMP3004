@@ -35,7 +35,25 @@ namespace _7Wonders
                 switch (p.Name)
                 {
                     case "c":
-                        //do stuff;
+                        Console.WriteLine(p.Name + ":" + p.Value);
+                        break;
+                    case "g":
+                        Console.WriteLine(p.Name + ":" + p.Value);
+                        break;
+                    case "l":
+                        Console.WriteLine(p.Name + ":" + p.Value);
+                        break;
+                    case "o":
+                        Console.WriteLine(p.Name + ":" + p.Value);
+                        break;
+                    case "p":
+                        Console.WriteLine(p.Name + ":" + p.Value);
+                        break;
+                    case "s":
+                        Console.WriteLine(p.Name + ":" + p.Value);
+                        break;
+                    case "w":
+                        Console.WriteLine(p.Name + ":" + p.Value);
                         break;
                     default: break;
 
