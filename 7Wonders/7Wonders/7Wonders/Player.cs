@@ -8,139 +8,140 @@ namespace _7Wonders
 {
     public class Player
     {
-        protected string name;
-        protected Wonder board;
+        protected string name;        
         protected long id;
+        protected Wonder board;
         protected List<Card> hand;
+        protected List<Card> played;
 
-        protected int victory;
-        protected int army;
-        protected int coin;
-        protected int defeat;
-        
+        // Players Score
+        // Victory Points, Army, Coins, Defeat tokens
+        // Sciences: tablet, compass, gear
+        protected Dictionary<Score, int> score;        
 
         // Resources
-        // Clay, Ore, Stone, Wood, Glass, Loom, Papyrus
-        int [] resources = new int [7];
+        // Clay, Ore, Stone, Wood, Glass, Loom, Papyrus including
+        protected Dictionary<Resource, int> resources;
 
-        // Science
-        // Tablet, Compass, Gear
-        int[] sciences = new int[3];
-
+        
+        // Default Player Constructor
         public Player(long _id)
         {
-            id = _id;
-            board = null;
-            name = null;
-            hand = null;
-            victory = 0;
-            army = 0;
-            coin = 0;
-            defeat = 0;
+            id          = _id;
+            name        = null;
+            board       = null;            
+            hand        = null;
+            played      = null;
+
+            // Setting the Players Score Dictionary
+            score = new Dictionary<Score, int>();
+            score.Add(Score.VICTORY, 0);    // Victory Points
+            score.Add(Score.ARMY, 0);       // Military Score
+            score.Add(Score.COIN, 0);       // Coins
+            score.Add(Score.DEFEAT, 0);     // Defeat Token
+            score.Add(Score.TABLET, 0);     // Science - Tablet
+            score.Add(Score.COMPASS, 0);    // Science - Compass
+            score.Add(Score.GEAR, 0);       // Science - Gear
+
+            // Setting the  resource dictionary
+            resources = new Dictionary<Resource, int>();
+            resources.Add(Resource.CLAY, 0);    // Clay
+            resources.Add(Resource.ORE, 0);     // Ore
+            resources.Add(Resource.STONE, 0);   // Stone
+            resources.Add(Resource.WOOD, 0);    // Wood
+            resources.Add(Resource.GLASS, 0);   // Glass
+            resources.Add(Resource.LOOM, 0);    // Loom
+            resources.Add(Resource.PAPYRUS, 0); // Papyrus
         }
 
-        public Player(string _name, Wonder _board, List<Card> _hand)
+
+       /* This is no longer needed, we will have hte player join the lobby or host
+        *  the game and once the game starts will we assign the board and cards to the player
+        * public Player(string _name, Wonder _board, List<Card> _hand)
         {
             // Initialized through the constructor
             name = _name;
             board = _board;
-            hand = _hand;
+            hand = new List<Card>(_hand);
 
-            id = 0;
-            victory = 0;
-            army = 0;
-            coin = 0; // Starts with 3?
-            defeat = 0;
+            // Setting the Players Score Dictionary
+            score = new Dictionary<string, int>();
+            score.Add("victory", 0);    // Victory Points
+            score.Add("army", 0);
+            score.Add("coin", 0);
+            score.Add("defeat", 0);
+            score.Add("tablet", 0);
+            score.Add("compass", 0);
+            score.Add("gear", 0);
 
-            for (int i = 0; i < resources.Length; i++)
-                resources[i] = 0;
+            // Setting the  resource dictionary
+            resources = new Dictionary<string, int>();
+            resources.Add("c", 0);  // Clay
+            resources.Add("o", 0);  // Ore
+            resources.Add("s", 0);  // Stone
+            resources.Add("w", 0);  // Wood
+            resources.Add("g", 0);  // Glass
+            resources.Add("l", 0);  // Loom
+            resources.Add("p", 0);  // Papyrus
+        }*/
 
-            for (int i = 0; i < sciences.Length; i++)
-                sciences[i] = 0;
+        // ACCESSORS
+        public string getName()         {   return name;    }        
+        public long getID()             {   return id;      }
+        public Wonder getBoard()        {   return board;   }
+        public List<Card> getHand()     {   return hand;    }
+        public List<Card> getPlayed()   {   return played;  }
+            
+        // Returns the dicitonary object of Score & Resources
+        public Dictionary<Score, int> getScore()           { return score;     }
+        public Dictionary<Resource, int> getResources()     { return resources; }
 
-        }
+        // Returns a boolean value if that specific card has been played yet or not
+        public bool cardPlayed(Card c) { return played.Contains(c); }
 
-        public string getName()
+        // Get the Score number of a certain 's'
+        public int getScoreNum(Score s) 
         {
-            return name;
-        }
-
-        // Accessors
-        public List<Card> getHand() { return hand; }
-        public long getID()       { return id; }
-        public int getVictory()     { return victory; }
-        public int getCoin()        { return coin; }
-        public int getDefeat()      { return defeat; }
-        public int[] getResources() { return resources; }
-        public int[] getSciences()  { return sciences; }
-
-        // Mutators
-        public void setNameID(string n)
-        {
-            name = n;
-        }
-
-        public void setHand(List<Card> _hand)
-        {
-            hand = _hand;
-        }
-
-        public void setVictory(int v)
-        {
-            if (v >= 0)
-                victory = v;
-            else
-                victory = 0;
-        }
-
-        public void addVictory(int v)
-        {
-            victory += v;            
-        }
-
-        public void setCoin(int c)
-        {
-            if (c >= 0)
-                coin = c;
-            else
-                coin = 0;
-        }
-
-        public void addCoin(int c)
-        {
-            coin += c;
-        }
-
-        public void setDefeat(int d)
-        {
-            if (d >= 0)
-                defeat = d;
-            else
-                defeat = 0;
-        }
-
-        public void addDefeat(int d)
-        {
-            defeat += d;
-        }
-
-        public void setResources(int [] r)
-        {
-            if (r != null)
+            if (score.ContainsKey(s))
             {
-                for (int i = 0; i < resources.Length; i++)
-                    resources[i] = r[i];
+                Console.WriteLine("Returing " + s + ": " + score[s]);
+                return score[s];
             }
+            else
+                Console.WriteLine("Error returning score: " + s);
+            
+            return -1;
         }
 
-        public void setSciences(int [] s)
+        // Get the Resource number of a certain 'r'
+        public int getResourceNum(Resource r) 
         {
-            if (s != null)
+            if (resources.ContainsKey(r))
             {
-                for (int i = 0; i < sciences.Length; i++)
-                    sciences[i] = s[i];
+                Console.WriteLine("Resources " + r + ": " + resources[r]);
+                return resources[r];
             }
+            else
+                Console.WriteLine("Error returning resource: " + r);
+            
+            return -1;
         }
+
+        // MUTATORS
+        public void setNameID(string n)         {   name = n;   }
+        public void setHand(List<Card> h)       {   hand = new List<Card>(h);   }
+        public void setPlayed(List<Card> p)     {   played = new List<Card>(p); }
+
+        public void addPlayed(Card c)             
+        {
+            if (!cardPlayed(c))
+                played.Add(c);
+            else
+                Console.WriteLine("Card '" + c + "' has been played already!");
+        }
+
+
+        
 
         public JObject toJObject()
         {
@@ -149,6 +150,42 @@ namespace _7Wonders
                     new JProperty("name", name),
                     new JProperty("id", id));
             return player;
+        }
+
+        // Sets the Score of a certain 's'
+        public void setScoreNum(Score s, int x)
+        {
+            if (score.ContainsKey(s))
+                score[s] = x;
+            else
+                Console.WriteLine("Error: Set Score failed, no such score " + s);
+        }
+
+        // Adds to the Score of a certain 's'
+        public void addScore(Score s, int x)
+        {
+            if (score.ContainsKey(s))
+                score[s] += x;
+            else
+                Console.WriteLine("Error: Add Score failed, no such score " + s);
+        }
+
+        // Sets the Resource of a certain 'r'
+        public void setResourceNum(Resource r, int x)
+        {
+            if (resources.ContainsKey(r))
+                resources[r] = x;
+            else
+                Console.WriteLine("Error: Set Resource failed, no such resource " + r);
+        }
+
+        //Adds to the Resource of a certain 'r'
+        public void addResosurce(Resource r, int x)
+        {
+            if (resources.ContainsKey(r))
+                resources[r] += x;
+            else
+                Console.WriteLine("Error: Add Resource failed, no such resource " + r);
         }
 
     }

@@ -29,7 +29,7 @@ namespace _7Wonders
             startButton = new Button(game, new Vector2(90, Game1.HEIGHT - 100), 75, 40, "Start", "Font1");
 
             dropDowns = new List<Visual>();
-            dropDowns.Add((new DropDown(game, new Vector2(MARGIN, MARGIN), DROPDOWNWIDTH, DROPDOWNHEIGHT, new List<string>() { "Host Player" })).setEnabled(false));
+            dropDowns.Add((new DropDown(game, new Vector2(MARGIN, MARGIN), DROPDOWNWIDTH, DROPDOWNHEIGHT, new List<string>() { System.Environment.MachineName })).setEnabled(false));
             
             for (int i = 1; i < NUMPLAYERS; i++)
             {
