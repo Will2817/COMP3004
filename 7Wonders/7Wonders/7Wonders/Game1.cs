@@ -59,6 +59,7 @@ namespace _7Wonders
             interfaces = new Dictionary<String, Interface>();
             interfaces.Add("mainmenu", new MainMenu(this));
             interfaces.Add("lobby", new Lobby(this));
+            interfaces.Add("hostlobby", new HostLobby(this));
             interfaces.Add("maingame", new MainGame(this));
             activeInterface = interfaces["mainmenu"];
 
@@ -161,14 +162,6 @@ namespace _7Wonders
             if ((message = activeInterface.isFinished()) != null)
             {
                 activeInterface.reset();
-                if (message["nextInterface"] == "lobby")
-                {
-                    if (message["role"] == "host")
-                    {
-
-                    }
-
-                }
                 activeInterface = interfaces[message["nextInterface"]];
                 activeInterface.receiveMessage(message);
             }

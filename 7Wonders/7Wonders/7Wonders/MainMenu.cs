@@ -30,6 +30,8 @@ namespace _7Wonders
         protected static Checkbox randomBox;
         protected static Checkbox onlyABox;
 
+        protected bool host = false;
+
         public MainMenu(Game1 theGame)
             :base (theGame, "title")
         {
@@ -101,11 +103,14 @@ namespace _7Wonders
             {
                 HGame.reset();
                 activeVisuals = visuals2;
+                host = true;
             }
             if (JGame.isClicked())
             {
                 JGame.reset();
-                activeVisuals = visuals3;
+                // activeVisuals = visuals3;
+                finished = true;
+                host = false;
             }
             if (CRoom.isClicked())
             {
@@ -122,8 +127,9 @@ namespace _7Wonders
         {
             if (finished)
             {
-                Console.WriteLine(randomBox.isSelected() + ", " + onlyABox.isSelected());
-                return Lobby.createMessage("host", randomBox.isSelected(), onlyABox.isSelected());
+                if (host)
+                    return HostLobby.createMessage(randomBox.isSelected(), onlyABox.isSelected());
+                else return Lobby.createMessage(randomBox.isSelected(), onlyABox.isSelected());
             }
 
             return null;

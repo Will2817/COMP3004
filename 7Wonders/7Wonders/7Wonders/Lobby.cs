@@ -14,47 +14,33 @@ namespace _7Wonders
 {
     class Lobby : Interface
     {
-        private const int MARGIN = 5;
-        private const int CHECKBOXDIM = 15;
-        private const int DIVIDERWIDTH = 2;
-        private int SEC1WIDTH = Game1.WIDTH / 3;
-        private int WONDERHEIGHT = (Game1.HEIGHT - 10) / 6;
-        private int WONDERWIDTH = Game1.WIDTH / 3 - 10;
-        private int SEC1HEIGHT = Game1.HEIGHT * 2/3;
-        private int DROPDOWNWIDTH = (Game1.WIDTH / 3) - 100;
-        private int DROPDOWNHEIGHT = (Game1.HEIGHT*2/3 - (Game1.MAXPLAYER + 1) * MARGIN) / Game1.MAXPLAYER;        
+        protected const int MARGIN = 5;
+        protected const int CHECKBOXDIM = 15;
+        protected const int DIVIDERWIDTH = 2;
+        protected int SEC1WIDTH = Game1.WIDTH / 3;
+        protected int WONDERHEIGHT = (Game1.HEIGHT - 10) / 6;
+        protected int WONDERWIDTH = Game1.WIDTH / 3 - 10;
+        protected int SEC1HEIGHT = Game1.HEIGHT * 2/3;
+        protected int DROPDOWNWIDTH = (Game1.WIDTH / 3) - 100;
+        protected int DROPDOWNHEIGHT = (Game1.HEIGHT*2/3 - (Game1.MAXPLAYER + 1) * MARGIN) / Game1.MAXPLAYER;        
 
-        protected List<string> playerTypes = new List<string>() { "Open", "AIType1", "AIType2", "AIType3" };
-
-        protected static Dictionary<String, Visual> visuals1;
-        protected List<Visual> dropDowns;
+        protected Dictionary<String, Visual> visuals1;
         protected List<Visual> readyCBs;
         protected Dictionary<String, Visual> wonders;
 
         protected Button sideButton;
         protected Button backButton;
-        protected Button startButton;
-        protected DropDown dropped = null;
 
         protected const int NUMPLAYERS = 7;
         protected bool random = false;
         protected bool onlyA = false;
         protected bool viewSideB = false;
-        protected bool existsADrop = false;
         
         public Lobby(Game1 theGame)
             : base(theGame, "title", 0.4f)
         {
             sideButton = new Button(game, new Vector2(Game1.WIDTH - 140, Game1.HEIGHT - 140), 140, 40, "Toggle Side", "Font1");
             backButton = new Button(game, new Vector2(10, Game1.HEIGHT - 100), 75, 40, "Back", "Font1");
-            startButton = new Button(game, new Vector2(90, Game1.HEIGHT - 100), 75, 40, "Start", "Font1");
-
-            dropDowns = new List<Visual>();
-            dropDowns.Add((new DropDown(game, new Vector2(MARGIN, MARGIN), DROPDOWNWIDTH, DROPDOWNHEIGHT, new List<string>() { "Host Player" })).setEnabled(false));
-            for (int i = 1; i < NUMPLAYERS; i++)
-            {
-                dropDowns.Add(new DropDown(game, new Vector2(MARGIN, MARGIN + (MARGIN + DROPDOWNHEIGHT) * i), DROPDOWNWIDTH, DROPDOWNHEIGHT, playerTypes));
-            }
 
             readyCBs = new List<Visual>();
             for (int i = 0; i < NUMPLAYERS; i++)
@@ -68,10 +54,6 @@ namespace _7Wonders
             visuals1.Add("Divider1", new Visual(game, new Vector2(SEC1WIDTH - 1, 0), DIVIDERWIDTH, Game1.HEIGHT, "line", Color.Silver));
             visuals1.Add("Divider2", new Visual(game, new Vector2(0, SEC1HEIGHT - 1), Game1.WIDTH, DIVIDERWIDTH, "line", Color.Silver));
 
-            for (int i = dropDowns.Count; i > 0; i--)
-            {
-                visuals1.Add("drop"+i, dropDowns[i-1]);
-            }
             for (int i = 0; i < readyCBs.Count; i++)
             {
                 visuals1.Add("ready" + i, readyCBs[i]);
@@ -97,7 +79,6 @@ namespace _7Wonders
             visuals1.Add("selected", new Visual(game, new Vector2(5 + SEC1WIDTH, 5 + SEC1HEIGHT), WONDERWIDTH * 2 + 10, WONDERHEIGHT * 2, Game1.wonders.Values.First().getVisual().getTexture()));
             visuals1.Add("toggleButton", sideButton);
             visuals1.Add("backButton", backButton);
-            visuals1.Add("startButton", startButton);
             activeVisuals = visuals1;
         }
 
@@ -155,33 +136,6 @@ namespace _7Wonders
                         visuals1["selected"].setTexture(w.getName() + "_A");
                 }
             }
-
-            for (int i=dropDowns.Count; i >0; i--)
-            {
-                DropDown dd = (DropDown) dropDowns[i-1];
-                if (dd.RequestDrop())
-                {
-                    if (dd == dropped)
-                    {
-                        dd.drop();
-                    }
-                    if (!existsADrop)
-                    {
-                        dd.drop();
-                        dropped = dd;
-                        existsADrop = true;
-                    }
-                    dd.resetRequest();
-                }
-                if (dd == dropped)
-                {
-                    if (!dd.getDown())
-                    {
-                        dropped = null;
-                        existsADrop = false;
-                    }
-                }
-            }
         }
 
         public override Dictionary<string, string> isFinished()
@@ -194,12 +148,12 @@ namespace _7Wonders
             return null;
         }
 
-        public static Dictionary<string, string> createMessage(string _role, bool random, bool onlyA)
+        public static Dictionary<string, string> createMessage(bool random, bool onlyA)
         {
             return new Dictionary<string, string>()
                 {
                     {"nextInterface", "lobby"},
-                    {"role" , _role},
+                    {"role" , "join"},
                     {"random", random.ToString()},
                     {"onlyA", onlyA.ToString()}
                 };
