@@ -123,7 +123,7 @@ namespace _7Wonders
             if (finished)
             {
                 Console.WriteLine(randomBox.isSelected() + ", " + onlyABox.isSelected());
-                return Lobby.createMessage(randomBox.isSelected(), onlyABox.isSelected());
+                return Lobby.createMessage("host", randomBox.isSelected(), onlyABox.isSelected());
             }
 
             return null;

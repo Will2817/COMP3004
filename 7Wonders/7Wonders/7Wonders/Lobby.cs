@@ -194,11 +194,12 @@ namespace _7Wonders
             return null;
         }
 
-        public static Dictionary<string, string> createMessage(bool random, bool onlyA)
+        public static Dictionary<string, string> createMessage(string _role, bool random, bool onlyA)
         {
             return new Dictionary<string, string>()
                 {
                     {"nextInterface", "lobby"},
+                    {"role" , _role},
                     {"random", random.ToString()},
                     {"onlyA", onlyA.ToString()}
                 };

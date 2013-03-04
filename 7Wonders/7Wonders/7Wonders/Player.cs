@@ -2,14 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Newtonsoft.Json.Linq;
 
 namespace _7Wonders
 {
     public class Player
     {
-        protected string nameID;
+        protected string name;
         protected Wonder board;
-        protected string ip; // needed?
+        protected string id; // needed?
         protected List<Card> hand;
 
         protected int victory;
@@ -29,11 +30,11 @@ namespace _7Wonders
         public Player(string _name, Wonder _board, List<Card> _hand)
         {
             // Initialized through the constructor
-            nameID = _name;
+            name = _name;
             board = _board;
             hand = _hand;
 
-            ip = null;
+            id = null;
             victory = 0;
             army = 0;
             coin = 0; // Starts with 3?
@@ -54,7 +55,7 @@ namespace _7Wonders
 
         // Accessors
         public List<Card> getHand() { return hand; }
-        public string getIP()       { return ip; }
+        public string getID()       { return id; }
         public int getVictory()     { return victory; }
         public int getCoin()        { return coin; }
         public int getDefeat()      { return defeat; }
@@ -64,7 +65,7 @@ namespace _7Wonders
         // Mutators
         public void setNameID(string n)
         {
-            nameID = n;
+            name = n;
         }
 
         public void setHand(List<Card> _hand)
@@ -72,9 +73,9 @@ namespace _7Wonders
             hand = _hand;
         }
 
-        public void setIP(string _ip)
+        public void setID(string _id)
         {
-            ip = _ip;
+            id = _id;
         }
 
         public void setVictory(int v)
@@ -134,6 +135,14 @@ namespace _7Wonders
             }
         }
 
+        public JObject toJObject()
+        {
+            JObject player = 
+                new JObject(
+                    new JProperty("name", name),
+                    new JProperty("id", id));
+            return player;
+        }
 
     }
 }

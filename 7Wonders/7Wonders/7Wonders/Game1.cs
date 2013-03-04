@@ -23,6 +23,8 @@ namespace _7Wonders
         public static Dictionary<String, SpriteFont> fonts;
         public static Dictionary<String, Interface> interfaces;
         public static Dictionary<String, Wonder> wonders;
+        public static GameState gameState;
+
         public static int MAXPLAYER = 7;
 
         public string recordedPresses = "";
@@ -37,7 +39,8 @@ namespace _7Wonders
         Boolean leftkeylock = false;
         Boolean rightkeylock = false;
         Interface activeInterface;
-        JObject wondersJson = JObject.Parse(File.ReadAllText("Content/Json/wonderlist.json"));        
+        JObject wondersJson = JObject.Parse(File.ReadAllText("Content/Json/wonderlist.json"));
+        
 
         public Game1()
         {
@@ -45,6 +48,7 @@ namespace _7Wonders
             Content.RootDirectory = "Content";
             textures = new Dictionary<String, Texture2D>();
             fonts = new Dictionary<String, SpriteFont>();
+            gameState = new GameState();
 
             wonders = new Dictionary<String, Wonder>();
             foreach (JObject j in (JArray)wondersJson["wonders"])
@@ -57,7 +61,6 @@ namespace _7Wonders
             interfaces.Add("lobby", new Lobby(this));
             interfaces.Add("maingame", new MainGame(this));
             activeInterface = interfaces["mainmenu"];
-
 
             //image = (string) cards[0]["image"];
         }
@@ -158,6 +161,14 @@ namespace _7Wonders
             if ((message = activeInterface.isFinished()) != null)
             {
                 activeInterface.reset();
+                if (message["nextinterface"] == "lobby")
+                {
+                    if (message["role"] == "host")
+                    {
+
+                    }
+
+                }
                 activeInterface = interfaces[message["nextInterface"]];
                 activeInterface.receiveMessage(message);
             }
