@@ -7,9 +7,11 @@
             "age": 1,
             "guild": "brown",
             "cost": {},
-            "effects": {
-                "w": 1
-            },
+            "effects": [
+                {
+                    "w": 1
+                }
+            ],
             "chains": [
                 null
             ]
@@ -21,9 +23,11 @@
             "age": 1,
             "guild": "brown",
             "cost": {},
-            "effects": {
-                "s": 1
-            },
+            "effects": [
+                {
+                    "s": 1
+                }
+            ],
             "chains": [
                 null
             ]
@@ -35,9 +39,11 @@
             "age": 1,
             "guild": "brown",
             "cost": {},
-            "effects": {
-                "c": 1
-            },
+            "effects": [
+                {
+                    "c": 1
+                }
+            ],
             "chains": [
                 null
             ]
@@ -49,9 +55,11 @@
             "age": 1,
             "guild": "brown",
             "cost": {},
-            "effects": {
-                "o": 1
-            },
+            "effects": [
+                {
+                    "o": 1
+                }
+            ],
             "chains": [
                 null
             ]
@@ -65,12 +73,14 @@
             "cost": {
                 "coin": 1
             },
-            "effects": {
-                "rchoice": [
-                    "w",
-                    "c"
-                ]
-            },
+            "effects": [
+                {
+                    "rchoice": [
+                        "w",
+                        "c"
+                    ]
+                }
+            ],
             "chains": [
                 null
             ]
@@ -84,12 +94,14 @@
             "cost": {
                 "coin": 1
             },
-            "effects": {
-                "rchoice": [
-                    "s",
-                    "c"
-                ]
-            },
+            "effects": [
+                {
+                    "rchoice": [
+                        "s",
+                        "c"
+                    ]
+                }
+            ],
             "chains": [
                 null
             ]
@@ -103,12 +115,14 @@
             "cost": {
                 "coin": 1
             },
-            "effects": {
-                "rchoice": [
-                    "c",
-                    "o"
-                ]
-            },
+            "effects": [
+                {
+                    "rchoice": [
+                        "c",
+                        "o"
+                    ]
+                }
+            ],
             "chains": [
                 null
             ]
@@ -122,12 +136,14 @@
             "cost": {
                 "coin": 1
             },
-            "effects": {
-                "rchoice": [
-                    "s",
-                    "w"
-                ]
-            },
+            "effects": [
+                {
+                    "rchoice": [
+                        "s",
+                        "w"
+                    ]
+                }
+            ],
             "chains": [
                 null
             ]
@@ -141,12 +157,14 @@
             "cost": {
                 "coin": 1
             },
-            "effects": {
-                "rchoice": [
-                    "w",
-                    "o"
-                ]
-            },
+            "effects": [
+                {
+                    "rchoice": [
+                        "w",
+                        "o"
+                    ]
+                }
+            ],
             "chains": [
                 null
             ]
@@ -160,12 +178,14 @@
             "cost": {
                 "coin": 1
             },
-            "effects": {
-                "rchoice": [
-                    "s",
-                    "o"
-                ]
-            },
+            "effects": [
+                {
+                    "rchoice": [
+                        "s",
+                        "o"
+                    ]
+                }
+            ],
             "chains": [
                 null
             ]
@@ -179,9 +199,11 @@
             "cost": {
                 "coin": 1
             },
-            "effects": {
-                "w": 2
-            },
+            "effects": [
+                {
+                    "w": 2
+                }
+            ],
             "chains": [
                 null
             ]
@@ -195,9 +217,11 @@
             "cost": {
                 "coin": 1
             },
-            "effects": {
-                "s": 2
-            },
+            "effects": [
+                {
+                    "s": 2
+                }
+            ],
             "chains": [
                 null
             ]
@@ -211,9 +235,11 @@
             "cost": {
                 "coin": 1
             },
-            "effects": {
-                "c": 2
-            },
+            "effects": [
+                {
+                    "c": 2
+                }
+            ],
             "chains": [
                 null
             ]
@@ -227,9 +253,11 @@
             "cost": {
                 "coin": 1
             },
-            "effects": {
-                "o": 2
-            },
+            "effects": [
+                {
+                    "o": 2
+                }
+            ],
             "chains": [
                 null
             ]
@@ -241,9 +269,11 @@
             "age": 1,
             "guild": "gray",
             "cost": {},
-            "effects": {
-                "l": 1
-            },
+            "effects": [
+                {
+                    "l": 1
+                }
+            ],
             "chains": [
                 null
             ]
@@ -255,9 +285,11 @@
             "age": 1,
             "guild": "gray",
             "cost": {},
-            "effects": {
-                "g": 1
-            },
+            "effects": [
+                {
+                    "g": 1
+                }
+            ],
             "chains": [
                 null
             ]
@@ -269,9 +301,11 @@
             "age": 1,
             "guild": "gray",
             "cost": {},
-            "effects": {
-                "p": 1
-            },
+            "effects": [
+                {
+                    "p": 1
+                }
+            ],
             "chains": [
                 null
             ]
@@ -289,11 +323,14 @@
                 "s": 1,
                 "w": 1
             },
-            "effects": {
-                "victory": {
-                    "neighboringBrown": 1
+            "effects": [
+                {
+                    "type": "victory",
+                    "amount": 1,
+                    "from": "neighbors",
+                    "basis": "brown"
                 }
-            },
+            ],
             "chains": [
                 null
             ]
@@ -308,11 +345,14 @@
                 "o": 2,
                 "s": 2
             },
-            "effects": {
-                "victory": {
-                    "neighboringGray": 2
+            "effects": [
+                {
+                    "type": "victory",
+                    "amount": 2,
+                    "from": "neighbors",
+                    "basis": "gray"
                 }
-            },
+            ],
             "chains": [
                 null
             ]
@@ -328,11 +368,14 @@
                 "l": 1,
                 "p": 1
             },
-            "effects": {
-                "victory": {
-                    "neighboringYellow": 1
+            "effects": [
+                {
+                    "type": "victory",
+                    "amount": 1,
+                    "from": "neighbors",
+                    "basis": "yellow"
                 }
-            },
+            ],
             "chains": [
                 null
             ]
@@ -348,11 +391,14 @@
                 "p": 1,
                 "l": 1
             },
-            "effects": {
-                "victory": {
-                    "neighboringGreen": 1
+            "effects": [
+                {
+                    "type": "victory",
+                    "amount": 1,
+                    "from": "neighbors",
+                    "basis": "green"
                 }
-            },
+            ],
             "chains": [
                 null
             ]
@@ -367,11 +413,14 @@
                 "c": 3,
                 "g": 1
             },
-            "effects": {
-                "victory": {
-                    "neighboringRed": 1
+            "effects": [
+                {
+                    "type": "victory",
+                    "amount": 1,
+                    "from": "neighbors",
+                    "basis": "red"
                 }
-            },
+            ],
             "chains": [
                 null
             ]
@@ -387,11 +436,14 @@
                 "s": 1,
                 "l": 1
             },
-            "effects": {
-                "victory": {
-                    "neighboringDefeat": 1
+            "effects": [
+                {
+                    "type": "victory",
+                    "amount": 1,
+                    "from": "neighbors",
+                    "basis": "defeat"
                 }
-            },
+            ],
             "chains": [
                 null
             ]
@@ -407,13 +459,26 @@
                 "p": 1,
                 "g": 1
             },
-            "effects": {
-                "victory": {
-                    "ownBrown": 1,
-                    "ownGray": 1,
-                    "ownPurple": 1
+            "effects": [
+                {
+                    "type": "victory",
+                    "amount": 1,
+                    "from": "player",
+                    "basis": "brown"
+                },
+                {
+                    "type": "victory",
+                    "amount": 1,
+                    "from": "player",
+                    "basis": "gray"
+                },
+                {
+                    "type": "victory",
+                    "amount": 1,
+                    "from": "player",
+                    "basis": "purple"
                 }
-            },
+            ],
             "chains": [
                 null
             ]
@@ -429,13 +494,15 @@
                 "o": 2,
                 "p": 1
             },
-            "effects": {
-                "schoice": [
-                    "t",
-                    "c",
-                    "g"
-                ]
-            },
+            "effects": [
+                {
+                    "schoice": [
+                        "t",
+                        "c",
+                        "g"
+                    ]
+                }
+            ],
             "chains": [
                 null
             ]
@@ -451,11 +518,14 @@
                 "s": 1,
                 "l": 1
             },
-            "effects": {
-                "victory": {
-                    "neighboringBlue": 1
+            "effects": [
+                {
+                    "type": "victory",
+                    "amount": 1,
+                    "from": "neighbors",
+                    "basis": "blue"
                 }
-            },
+            ],
             "chains": [
                 null
             ]
@@ -471,12 +541,14 @@
                 "c": 2,
                 "g": 1
             },
-            "effects": {
-                "victory": {
-                    "neighboringWonders": 1,
-					"ownWonders":1
+            "effects": [
+                {
+                    "type": "victory",
+                    "amount": 1,
+                    "from": "all",
+                    "basis": "wonderstages"
                 }
-            },
+            ],
             "chains": [
                 null
             ]
@@ -488,11 +560,17 @@
             "age": 1,
             "guild": "blue",
             "cost": {},
-            "effects": {
-                "victory": {
-                    "own": 3
+            "effects": [
+                {
+                    "victory": 3
+                },
+                {
+                    "type": "victory",
+                    "amount": 3,
+                    "from": "none",
+                    "basis": "none"
                 }
-            },
+            ],
             "chains": [
                 null
             ]
@@ -506,11 +584,17 @@
             "cost": {
                 "s": 1
             },
-            "effects": {
-                "victory": {
-                    "own": 3
+            "effects": [
+                {
+                    "victory": 3
+                },
+                {
+                    "type": "victory",
+                    "amount": 3,
+                    "from": "none",
+                    "basis": "none"
                 }
-            },
+            ],
             "chains": [
                 null
             ]
@@ -522,11 +606,17 @@
             "age": 1,
             "guild": "blue",
             "cost": {},
-            "effects": {
-                "victory": {
-                    "own": 2
+            "effects": [
+                {
+                    "victory": 2
+                },
+                {
+                    "type": "victory",
+                    "amount": 2,
+                    "from": "none",
+                    "basis": "none"
                 }
-            },
+            ],
             "chains": [
                 null
             ]
@@ -538,11 +628,17 @@
             "age": 1,
             "guild": "blue",
             "cost": {},
-            "effects": {
-                "victory": {
-                    "own": 2
+            "effects": [
+                {
+                    "victory": 2
+                },
+                {
+                    "type": "victory",
+                    "amount": 2,
+                    "from": "none",
+                    "basis": "none"
                 }
-            },
+            ],
             "chains": [
                 null
             ]
@@ -556,11 +652,17 @@
             "cost": {
                 "s": 3
             },
-            "effects": {
-                "victory": {
-                    "own": 5
+            "effects": [
+                {
+                    "victory": 5
+                },
+                {
+                    "type": "victory",
+                    "amount": 5,
+                    "from": "none",
+                    "basis": "none"
                 }
-            },
+            ],
             "chains": [
                 "Baths"
             ]
@@ -576,11 +678,17 @@
                 "c": 1,
                 "g": 1
             },
-            "effects": {
-                "victory": {
-                    "own": 3
+            "effects": [
+                {
+                    "victory": 3
+                },
+                {
+                    "type": "victory",
+                    "amount": 3,
+                    "from": "none",
+                    "basis": "none"
                 }
-            },
+            ],
             "chains": [
                 "Altar"
             ]
@@ -595,11 +703,17 @@
                 "o": 2,
                 "w": 1
             },
-            "effects": {
-                "victory": {
-                    "own": 4
+            "effects": [
+                {
+                    "victory": 4
+                },
+                {
+                    "type": "victory",
+                    "amount": 4,
+                    "from": "none",
+                    "basis": "none"
                 }
-            },
+            ],
             "chains": [
                 "Theater"
             ]
@@ -617,11 +731,17 @@
                 "p": 1,
                 "l": 1
             },
-            "effects": {
-                "victory": {
-                    "own": 7
+            "effects": [
+                {
+                    "victory": 7
+                },
+                {
+                    "type": "victory",
+                    "amount": 7,
+                    "from": "none",
+                    "basis": "none"
                 }
-            },
+            ],
             "chains": [
                 "Temple"
             ]
@@ -636,11 +756,17 @@
                 "c": 2,
                 "w": 1
             },
-            "effects": {
-                "victory": {
-                    "own": 5
+            "effects": [
+                {
+                    "victory": 5
+                },
+                {
+                    "type": "victory",
+                    "amount": 5,
+                    "from": "none",
+                    "basis": "none"
                 }
-            },
+            ],
             "chains": [
                 "Statue"
             ]
@@ -656,11 +782,17 @@
                 "o": 1,
                 "g": 1
             },
-            "effects": {
-                "victory": {
-                    "own": 6
+            "effects": [
+                {
+                    "victory": 6
+                },
+                {
+                    "type": "victory",
+                    "amount": 6,
+                    "from": "none",
+                    "basis": "none"
                 }
-            },
+            ],
             "chains": [
                 null
             ]
@@ -680,11 +812,17 @@
                 "p": 1,
                 "l": 1
             },
-            "effects": {
-                "victory": {
-                    "own": 8
+            "effects": [
+                {
+                    "victory": 8
+                },
+                {
+                    "type": "victory",
+                    "amount": 8,
+                    "from": "none",
+                    "basis": "none"
                 }
-            },
+            ],
             "chains": [
                 null
             ]
@@ -699,11 +837,17 @@
                 "c": 2,
                 "l": 1
             },
-            "effects": {
-                "victory": {
-                    "own": 4
+            "effects": [
+                {
+                    "victory": 4
+                },
+                {
+                    "type": "victory",
+                    "amount": 4,
+                    "from": "none",
+                    "basis": "none"
                 }
-            },
+            ],
             "chains": [
                 "Scriptorium"
             ]
@@ -719,11 +863,17 @@
                 "s": 1,
                 "o": 1
             },
-            "effects": {
-                "victory": {
-                    "own": 6
+            "effects": [
+                {
+                    "victory": 6
+                },
+                {
+                    "type": "victory",
+                    "amount": 6,
+                    "from": "none",
+                    "basis": "none"
                 }
-            },
+            ],
             "chains": [
                 "Library"
             ]
@@ -737,9 +887,11 @@
             "cost": {
                 "w": 1
             },
-            "effects": {
-                "army": 1
-            },
+            "effects": [
+                {
+                    "army": 1
+                }
+            ],
             "chains": [
                 null
             ]
@@ -753,9 +905,11 @@
             "cost": {
                 "o": 1
             },
-            "effects": {
-                "army": 1
-            },
+            "effects": [
+                {
+                    "army": 1
+                }
+            ],
             "chains": [
                 null
             ]
@@ -769,9 +923,11 @@
             "cost": {
                 "c": 1
             },
-            "effects": {
-                "army": 1
-            },
+            "effects": [
+                {
+                    "army": 1
+                }
+            ],
             "chains": [
                 null
             ]
@@ -785,9 +941,11 @@
             "cost": {
                 "s": 3
             },
-            "effects": {
-                "army": 2
-            },
+            "effects": [
+                {
+                    "army": 2
+                }
+            ],
             "chains": [
                 null
             ]
@@ -802,9 +960,11 @@
                 "o": 2,
                 "w": 1
             },
-            "effects": {
-                "army": 2
-            },
+            "effects": [
+                {
+                    "army": 2
+                }
+            ],
             "chains": [
                 null
             ]
@@ -819,9 +979,11 @@
                 "o": 3,
                 "s": 1
             },
-            "effects": {
-                "army": 3
-            },
+            "effects": [
+                {
+                    "army": 3
+                }
+            ],
             "chains": [
                 "Walls"
             ]
@@ -836,9 +998,11 @@
                 "s": 3,
                 "o": 1
             },
-            "effects": {
-                "army": 3
-            },
+            "effects": [
+                {
+                    "army": 3
+                }
+            ],
             "chains": [
                 "Training Ground"
             ]
@@ -854,9 +1018,11 @@
                 "o": 1,
                 "l": 1
             },
-            "effects": {
-                "army": 3
-            },
+            "effects": [
+                {
+                    "army": 3
+                }
+            ],
             "chains": [
                 null
             ]
@@ -872,9 +1038,11 @@
                 "w": 1,
                 "o": 1
             },
-            "effects": {
-                "army": 2
-            },
+            "effects": [
+                {
+                    "army": 2
+                }
+            ],
             "chains": [
                 "Apothecary"
             ]
@@ -889,9 +1057,11 @@
                 "w": 2,
                 "o": 1
             },
-            "effects": {
-                "army": 2
-            },
+            "effects": [
+                {
+                    "army": 2
+                }
+            ],
             "chains": [
                 "Workshop"
             ]
@@ -906,9 +1076,11 @@
                 "c": 3,
                 "w": 1
             },
-            "effects": {
-                "army": 3
-            },
+            "effects": [
+                {
+                    "army": 3
+                }
+            ],
             "chains": [
                 "Laboratory"
             ]
@@ -920,11 +1092,11 @@
             "age": 1,
             "guild": "yellow",
             "cost": {},
-            "effects": {
-                "coin": {
-                    "own": 5
+            "effects": [
+                {
+                    "coin": 5
                 }
-            },
+            ],
             "chains": [
                 null
             ]
@@ -936,9 +1108,11 @@
             "age": 1,
             "guild": "yellow",
             "cost": {},
-            "effects": {
-                "rcostEast": 1
-            },
+            "effects": [
+                {
+                    "rcostEast": 1
+                }
+            ],
             "chains": [
                 null
             ]
@@ -950,9 +1124,11 @@
             "age": 1,
             "guild": "yellow",
             "cost": {},
-            "effects": {
-                "rcostWest": 1
-            },
+            "effects": [
+                {
+                    "rcostWest": 1
+                }
+            ],
             "chains": [
                 null
             ]
@@ -964,10 +1140,14 @@
             "age": 1,
             "guild": "yellow",
             "cost": {},
-            "effects": {
-                "mcostEast": 1,
-                "mcostWest": 1
-            },
+            "effects": [
+                {
+                    "mcostEast": 1
+                },
+                {
+                    "mcostWest": 1
+                }
+            ],
             "chains": [
                 null
             ]
@@ -981,13 +1161,15 @@
             "cost": {
                 "c": 2
             },
-            "effects": {
-                "rchoice": [
-                    "g",
-                    "l",
-                    "p"
-                ]
-            },
+            "effects": [
+                {
+                    "rchoice": [
+                        "g",
+                        "l",
+                        "p"
+                    ]
+                }
+            ],
             "chains": [
                 "East Trading Post",
                 "West Trading Post"
@@ -1002,14 +1184,16 @@
             "cost": {
                 "w": 2
             },
-            "effects": {
-                "rchoice": [
-                    "c",
-                    "s",
-                    "o",
-                    "w"
-                ]
-            },
+            "effects": [
+                {
+                    "rchoice": [
+                        "c",
+                        "s",
+                        "o",
+                        "w"
+                    ]
+                }
+            ],
             "chains": [
                 "Marketplace"
             ]
@@ -1021,12 +1205,26 @@
             "age": 2,
             "guild": "yellow",
             "cost": {},
-            "effects": {
-                "coin": {
-                    "neighboringBrown": 1,
-                    "ownBrown": 1
+            "effects": [
+                {
+                    "coin": {
+                        "neighboringBrown": 1,
+                        "ownBrown": 1
+                    }
+                },
+                {
+                    "type": "coin",
+                    "amount": 1,
+                    "from": "neighbors",
+                    "basis": "brown"
+                },
+                {
+                    "type": "coin",
+                    "amount": 1,
+                    "from": "player",
+                    "basis": "brown"
                 }
-            },
+            ],
             "chains": [
                 null
             ]
@@ -1038,12 +1236,26 @@
             "age": 2,
             "guild": "yellow",
             "cost": {},
-            "effects": {
-                "coin": {
-                    "neighboringGray": 2,
-                    "ownGray": 2
+            "effects": [
+                {
+                    "coin": {
+                        "neighboringGray": 2,
+                        "ownGray": 2
+                    }
+                },
+                {
+                    "type": "coin",
+                    "amount": 2,
+                    "from": "neighbors",
+                    "basis": "gray"
+                },
+                {
+                    "type": "coin",
+                    "amount": 2,
+                    "from": "player",
+                    "basis": "gray"
                 }
-            },
+            ],
             "chains": [
                 null
             ]
@@ -1059,14 +1271,28 @@
                 "o": 1,
                 "l": 1
             },
-            "effects": {
-                "victory": {
-                    "ownBrown": 1
+            "effects": [
+                {
+                    "victory": {
+                        "ownBrown": 1
+                    },
+                    "coin": {
+                        "ownBrown": 1
+                    }
                 },
-                "coin": {
-                    "ownBrown": 1
+                {
+                    "type": "victory",
+                    "amount": 1,
+                    "from": "player",
+                    "basis": "brown"
+                },
+                {
+                    "type": "coin",
+                    "amount": 1,
+                    "from": "player",
+                    "basis": "brown"
                 }
-            },
+            ],
             "chains": [
                 "Forum"
             ]
@@ -1081,14 +1307,28 @@
                 "s": 1,
                 "g": 1
             },
-            "effects": {
-                "victory": {
-                    "ownYellow": 1
+            "effects": [
+                {
+                    "victory": {
+                        "ownYellow": 1
+                    },
+                    "coin": {
+                        "ownYellow": 1
+                    }
                 },
-                "coin": {
-                    "ownYellow": 1
+                {
+                    "type": "victory",
+                    "amount": 1,
+                    "from": "player",
+                    "basis": "yellow"
+                },
+                {
+                    "type": "coin",
+                    "amount": 1,
+                    "from": "player",
+                    "basis": "yellow"
                 }
-            },
+            ],
             "chains": [
                 "Caravansery"
             ]
@@ -1103,14 +1343,28 @@
                 "c": 2,
                 "p": 1
             },
-            "effects": {
-                "victory": {
-                    "ownGray": 2
+            "effects": [
+                {
+                    "victory": {
+                        "ownGray": 2
+                    },
+                    "coin": {
+                        "ownGray": 2
+                    }
                 },
-                "coin": {
-                    "ownGray": 2
+                {
+                    "type": "victory",
+                    "amount": 1,
+                    "from": "player",
+                    "basis": "gray"
+                },
+                {
+                    "type": "coin",
+                    "amount": 1,
+                    "from": "player",
+                    "basis": "gray"
                 }
-            },
+            ],
             "chains": [
                 null
             ]
@@ -1125,14 +1379,28 @@
                 "s": 2,
                 "o": 1
             },
-            "effects": {
-                "coin": {
-                    "ownWonder": 3
+            "effects": [
+                {
+                    "coin": {
+                        "ownWonder": 3
+                    },
+                    "victory": {
+                        "ownWonder": 1
+                    }
                 },
-                "victory": {
-                    "ownWonder": 1
+                {
+                    "type": "victory",
+                    "amount": 1,
+                    "from": "player",
+                    "basis": "wonderstages"
+                },
+                {
+                    "type": "coin",
+                    "amount": 3,
+                    "from": "player",
+                    "basis": "wonderstages"
                 }
-            },
+            ],
             "chains": [
                 "Dispensary"
             ]
@@ -1146,13 +1414,15 @@
             "cost": {
                 "l": 1
             },
-            "effects": {
-                "schoice": [
-                    "t",
-                    "c",
-                    "g"
-                ]
-            },
+            "effects": [
+                {
+                    "schoice": [
+                        "t",
+                        "c",
+                        "g"
+                    ]
+                }
+            ],
             "chains": [
                 null
             ]
@@ -1166,9 +1436,11 @@
             "cost": {
                 "g": 1
             },
-            "effects": {
-                "science": "c"
-            },
+            "effects": [
+                {
+                    "science": "c"
+                }
+            ],
             "chains": [
                 null
             ]
@@ -1182,9 +1454,11 @@
             "cost": {
                 "p": 1
             },
-            "effects": {
-                "science": "t"
-            },
+            "effects": [
+                {
+                    "science": "t"
+                }
+            ],
             "chains": [
                 null
             ]
@@ -1199,9 +1473,11 @@
                 "o": 2,
                 "g": 1
             },
-            "effects": {
-                "science": "c"
-            },
+            "effects": [
+                {
+                    "science": "c"
+                }
+            ],
             "chains": [
                 "Apothecary"
             ]
@@ -1216,9 +1492,11 @@
                 "c": 2,
                 "p": 1
             },
-            "effects": {
-                "science": "g"
-            },
+            "effects": [
+                {
+                    "science": "g"
+                }
+            ],
             "chains": [
                 "Workshop"
             ]
@@ -1233,9 +1511,11 @@
                 "s": 2,
                 "l": 1
             },
-            "effects": {
-                "science": "t"
-            },
+            "effects": [
+                {
+                    "science": "t"
+                }
+            ],
             "chains": [
                 "Scriptorium"
             ]
@@ -1250,9 +1530,11 @@
                 "w": 1,
                 "p": 1
             },
-            "effects": {
-                "science": "t"
-            },
+            "effects": [
+                {
+                    "science": "t"
+                }
+            ],
             "chains": [
                 null
             ]
@@ -1268,9 +1550,11 @@
                 "p": 1,
                 "l": 1
             },
-            "effects": {
-                "science": "c"
-            },
+            "effects": [
+                {
+                    "science": "c"
+                }
+            ],
             "chains": [
                 "Dispensary"
             ]
@@ -1286,9 +1570,11 @@
                 "g": 1,
                 "l": 1
             },
-            "effects": {
-                "science": "g"
-            },
+            "effects": [
+                {
+                    "science": "g"
+                }
+            ],
             "chains": [
                 "Laboratory"
             ]
@@ -1304,9 +1590,11 @@
                 "p": 1,
                 "g": 1
             },
-            "effects": {
-                "science": "t"
-            },
+            "effects": [
+                {
+                    "science": "t"
+                }
+            ],
             "chains": [
                 "Library"
             ]
@@ -1321,9 +1609,11 @@
                 "s": 3,
                 "g": 1
             },
-            "effects": {
-                "science": "c"
-            },
+            "effects": [
+                {
+                    "science": "c"
+                }
+            ],
             "chains": [
                 "School"
             ]
@@ -1339,9 +1629,11 @@
                 "p": 1,
                 "l": 1
             },
-            "effects": {
-                "science": "g"
-            },
+            "effects": [
+                {
+                    "science": "g"
+                }
+            ],
             "chains": [
                 "School"
             ]
