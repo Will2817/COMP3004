@@ -161,7 +161,7 @@ namespace _7Wonders
             if ((message = activeInterface.isFinished()) != null)
             {
                 activeInterface.reset();
-                if (message["nextinterface"] == "lobby")
+                if (message["nextInterface"] == "lobby")
                 {
                     if (message["role"] == "host")
                     {
