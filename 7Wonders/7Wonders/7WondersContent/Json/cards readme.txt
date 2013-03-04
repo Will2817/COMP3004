@@ -32,6 +32,7 @@ NAME:
 =========================================================================================================	
 IMAGE:
 	Should be a string without the .jpg
+	<name>_<age>_<players>
 
 =========================================================================================================	
 PLAYERS:
@@ -82,7 +83,7 @@ EFFECTS:
 		Gives the number of 'army' to the players currently military power
 	
 	
-	[Resource Cost Trading via East]
+	[Raw Resource Cost Trading via East]
 		{
 			"rcostEast":1
 		}
@@ -94,7 +95,7 @@ EFFECTS:
 				Manufacted resources such as glass, loom, or papyrus is not included within this category.
 
 
-	[Resource Cost Trading via West]
+	[Raw Resource Cost Trading via West]
 		{
 			"rcostWest": 1
 		}
@@ -105,7 +106,24 @@ EFFECTS:
 		NOTE: 	The 'r' in the rcostWest dictates that only raw resources can only be traded for 1 coin.
 				Manufacted resources such as glass, loom, or papyrus is not included within this category.
 			
-			
+
+	[Manufactured Resource Cost Trading via East]
+		{		
+			"mcostEast":1
+		}
+
+		Similar to Raw Resource trading of East
+
+
+	[Manufactured Resource Cost Trading via West]
+		{		
+			"mcostWest":1
+		}
+
+		Similar to Raw Resource trading of West
+
+
+
 	[Resource Production]
 		{
 			"<resource letter>" <amount>
@@ -142,9 +160,9 @@ EFFECTS:
 		}
 		
 		Gives the player a scientific symbol determined by the letter
-		t	tablet
-		c	compass
-		g	gear
+		tab		tablet
+		comp	compass
+		gear	gear
 
 	
 	[Science Choice]
@@ -152,9 +170,9 @@ EFFECTS:
 			"schoice": ["<array of science choices>"]
 		}
 		
-		t	tablet
-		c	compass
-		g	gear
+		tab		tablet
+		comp	compass
+		gear	gear
 		
 		
 	[Special Effects of Cards]
@@ -163,11 +181,13 @@ EFFECTS:
 			"amount":	<The amount recieved>,
 			"from": 	"<Who>",
 			"basis": 	"<Determinant on what is the factor of gaining the type and amount>"
+			"list": 	[c1,c2,...,cn]
 		}
 
 		TYPE:
 			coin		Coins given via the amount depending on the basis from whom
 			victory		Victory points given via the amount depending on the masis from whom
+			lastcard	Play last card and everything else is empty
 			
 		AMOUNT:
 			##			The number of types that will be given to the player, usually from 1-8
@@ -177,6 +197,7 @@ EFFECTS:
 			neighbors 	Both the West and East neighbors of the player
 			west 		West neighbor
 			east 		East neighbor
+			all		Player + neigbors
 			none		Nothing is taken into account
 
 		BASIS:

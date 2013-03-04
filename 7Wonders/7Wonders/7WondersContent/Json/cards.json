@@ -9,7 +9,8 @@
             "cost": {},
             "effects": [
                 {
-                    "w": 1
+                    "type": "w",
+                    "amount": 1
                 }
             ],
             "chains": [
@@ -25,7 +26,8 @@
             "cost": {},
             "effects": [
                 {
-                    "s": 1
+                    "type": "s",
+                    "amount": 1
                 }
             ],
             "chains": [
@@ -41,7 +43,8 @@
             "cost": {},
             "effects": [
                 {
-                    "c": 1
+                    "type": "c",
+                    "amount": 1
                 }
             ],
             "chains": [
@@ -57,7 +60,8 @@
             "cost": {},
             "effects": [
                 {
-                    "o": 1
+                    "type": "o",
+                    "amount": 1
                 }
             ],
             "chains": [
@@ -75,7 +79,8 @@
             },
             "effects": [
                 {
-                    "rchoice": [
+                    "type": "rchoice",
+                    "list": [
                         "w",
                         "c"
                     ]
@@ -96,7 +101,8 @@
             },
             "effects": [
                 {
-                    "rchoice": [
+                    "type": "rchoice",
+                    "list": [
                         "s",
                         "c"
                     ]
@@ -117,7 +123,8 @@
             },
             "effects": [
                 {
-                    "rchoice": [
+                    "type": "rchoice",
+                    "list": [
                         "c",
                         "o"
                     ]
@@ -138,7 +145,8 @@
             },
             "effects": [
                 {
-                    "rchoice": [
+                    "type": "rchoice",
+                    "list": [
                         "s",
                         "w"
                     ]
@@ -159,7 +167,8 @@
             },
             "effects": [
                 {
-                    "rchoice": [
+                    "type": "rchoice",
+                    "list": [
                         "w",
                         "o"
                     ]
@@ -180,7 +189,8 @@
             },
             "effects": [
                 {
-                    "rchoice": [
+                    "type": "rchoice",
+                    "list": [
                         "s",
                         "o"
                     ]
@@ -201,7 +211,8 @@
             },
             "effects": [
                 {
-                    "w": 2
+                    "type": "w",
+                    "amount": 2
                 }
             ],
             "chains": [
@@ -219,7 +230,8 @@
             },
             "effects": [
                 {
-                    "s": 2
+                    "type": "s",
+                    "amount": 2
                 }
             ],
             "chains": [
@@ -237,7 +249,8 @@
             },
             "effects": [
                 {
-                    "c": 2
+                    "type": "c",
+                    "amount": 2
                 }
             ],
             "chains": [
@@ -255,7 +268,8 @@
             },
             "effects": [
                 {
-                    "o": 2
+                    "type": "o",
+                    "amount": 2
                 }
             ],
             "chains": [
@@ -271,7 +285,8 @@
             "cost": {},
             "effects": [
                 {
-                    "l": 1
+                    "type": "l",
+                    "amount": 1
                 }
             ],
             "chains": [
@@ -287,7 +302,8 @@
             "cost": {},
             "effects": [
                 {
-                    "g": 1
+                    "type": "g",
+                    "amount": 1
                 }
             ],
             "chains": [
@@ -303,7 +319,8 @@
             "cost": {},
             "effects": [
                 {
-                    "p": 1
+                    "type": "p",
+                    "amount": 1
                 }
             ],
             "chains": [
@@ -496,10 +513,11 @@
             },
             "effects": [
                 {
-                    "schoice": [
-                        "t",
-                        "c",
-                        "g"
+                    "type": "schoice",
+                    "list": [
+                        "tab",
+                        "comp",
+                        "gear"
                     ]
                 }
             ],
@@ -562,9 +580,6 @@
             "cost": {},
             "effects": [
                 {
-                    "victory": 3
-                },
-                {
                     "type": "victory",
                     "amount": 3,
                     "from": "none",
@@ -586,9 +601,6 @@
             },
             "effects": [
                 {
-                    "victory": 3
-                },
-                {
                     "type": "victory",
                     "amount": 3,
                     "from": "none",
@@ -608,9 +620,6 @@
             "cost": {},
             "effects": [
                 {
-                    "victory": 2
-                },
-                {
                     "type": "victory",
                     "amount": 2,
                     "from": "none",
@@ -629,9 +638,6 @@
             "guild": "blue",
             "cost": {},
             "effects": [
-                {
-                    "victory": 2
-                },
                 {
                     "type": "victory",
                     "amount": 2,
@@ -653,9 +659,6 @@
                 "s": 3
             },
             "effects": [
-                {
-                    "victory": 5
-                },
                 {
                     "type": "victory",
                     "amount": 5,
@@ -680,9 +683,6 @@
             },
             "effects": [
                 {
-                    "victory": 3
-                },
-                {
                     "type": "victory",
                     "amount": 3,
                     "from": "none",
@@ -704,9 +704,6 @@
                 "w": 1
             },
             "effects": [
-                {
-                    "victory": 4
-                },
                 {
                     "type": "victory",
                     "amount": 4,
@@ -733,9 +730,6 @@
             },
             "effects": [
                 {
-                    "victory": 7
-                },
-                {
                     "type": "victory",
                     "amount": 7,
                     "from": "none",
@@ -757,9 +751,6 @@
                 "w": 1
             },
             "effects": [
-                {
-                    "victory": 5
-                },
                 {
                     "type": "victory",
                     "amount": 5,
@@ -783,9 +774,6 @@
                 "g": 1
             },
             "effects": [
-                {
-                    "victory": 6
-                },
                 {
                     "type": "victory",
                     "amount": 6,
@@ -814,9 +802,6 @@
             },
             "effects": [
                 {
-                    "victory": 8
-                },
-                {
                     "type": "victory",
                     "amount": 8,
                     "from": "none",
@@ -838,9 +823,6 @@
                 "l": 1
             },
             "effects": [
-                {
-                    "victory": 4
-                },
                 {
                     "type": "victory",
                     "amount": 4,
@@ -865,9 +847,6 @@
             },
             "effects": [
                 {
-                    "victory": 6
-                },
-                {
                     "type": "victory",
                     "amount": 6,
                     "from": "none",
@@ -889,7 +868,8 @@
             },
             "effects": [
                 {
-                    "army": 1
+                    "type": "army",
+                    "amount": 1
                 }
             ],
             "chains": [
@@ -907,7 +887,8 @@
             },
             "effects": [
                 {
-                    "army": 1
+                    "type": "army",
+                    "amount": 1
                 }
             ],
             "chains": [
@@ -925,7 +906,8 @@
             },
             "effects": [
                 {
-                    "army": 1
+                    "type": "army",
+                    "amount": 1
                 }
             ],
             "chains": [
@@ -943,7 +925,8 @@
             },
             "effects": [
                 {
-                    "army": 2
+                    "type": "army",
+                    "amount": 2
                 }
             ],
             "chains": [
@@ -962,7 +945,8 @@
             },
             "effects": [
                 {
-                    "army": 2
+                    "type": "army",
+                    "amount": 1
                 }
             ],
             "chains": [
@@ -981,7 +965,8 @@
             },
             "effects": [
                 {
-                    "army": 3
+                    "type": "army",
+                    "amount": 3
                 }
             ],
             "chains": [
@@ -1000,7 +985,8 @@
             },
             "effects": [
                 {
-                    "army": 3
+                    "type": "army",
+                    "amount": 3
                 }
             ],
             "chains": [
@@ -1020,7 +1006,8 @@
             },
             "effects": [
                 {
-                    "army": 3
+                    "type": "army",
+                    "amount": 3
                 }
             ],
             "chains": [
@@ -1040,7 +1027,8 @@
             },
             "effects": [
                 {
-                    "army": 2
+                    "type": "army",
+                    "amount": 2
                 }
             ],
             "chains": [
@@ -1059,7 +1047,8 @@
             },
             "effects": [
                 {
-                    "army": 2
+                    "type": "army",
+                    "amount": 2
                 }
             ],
             "chains": [
@@ -1078,7 +1067,8 @@
             },
             "effects": [
                 {
-                    "army": 3
+                    "type": "army",
+                    "amount": 3
                 }
             ],
             "chains": [
@@ -1094,7 +1084,8 @@
             "cost": {},
             "effects": [
                 {
-                    "coin": 5
+                    "type": "coin",
+                    "amount": 5
                 }
             ],
             "chains": [
@@ -1110,7 +1101,8 @@
             "cost": {},
             "effects": [
                 {
-                    "rcostEast": 1
+                    "type": "rcostEast",
+                    "amount": 1
                 }
             ],
             "chains": [
@@ -1126,7 +1118,8 @@
             "cost": {},
             "effects": [
                 {
-                    "rcostWest": 1
+                    "type": "rcostWest",
+                    "amount": 1
                 }
             ],
             "chains": [
@@ -1142,10 +1135,12 @@
             "cost": {},
             "effects": [
                 {
-                    "mcostEast": 1
+                    "type": "mcostEast",
+                    "amount": 1
                 },
                 {
-                    "mcostWest": 1
+                    "type": "mcostWest",
+                    "amount": 1
                 }
             ],
             "chains": [
@@ -1163,7 +1158,8 @@
             },
             "effects": [
                 {
-                    "rchoice": [
+                    "type": "rchoice",
+                    "list": [
                         "g",
                         "l",
                         "p"
@@ -1186,7 +1182,8 @@
             },
             "effects": [
                 {
-                    "rchoice": [
+                    "type": "rchoice",
+                    "list": [
                         "c",
                         "s",
                         "o",
@@ -1207,21 +1204,9 @@
             "cost": {},
             "effects": [
                 {
-                    "coin": {
-                        "neighboringBrown": 1,
-                        "ownBrown": 1
-                    }
-                },
-                {
                     "type": "coin",
                     "amount": 1,
-                    "from": "neighbors",
-                    "basis": "brown"
-                },
-                {
-                    "type": "coin",
-                    "amount": 1,
-                    "from": "player",
+                    "from": "all",
                     "basis": "brown"
                 }
             ],
@@ -1238,21 +1223,9 @@
             "cost": {},
             "effects": [
                 {
-                    "coin": {
-                        "neighboringGray": 2,
-                        "ownGray": 2
-                    }
-                },
-                {
                     "type": "coin",
                     "amount": 2,
-                    "from": "neighbors",
-                    "basis": "gray"
-                },
-                {
-                    "type": "coin",
-                    "amount": 2,
-                    "from": "player",
+                    "from": "all",
                     "basis": "gray"
                 }
             ],
@@ -1272,14 +1245,6 @@
                 "l": 1
             },
             "effects": [
-                {
-                    "victory": {
-                        "ownBrown": 1
-                    },
-                    "coin": {
-                        "ownBrown": 1
-                    }
-                },
                 {
                     "type": "victory",
                     "amount": 1,
@@ -1309,14 +1274,6 @@
             },
             "effects": [
                 {
-                    "victory": {
-                        "ownYellow": 1
-                    },
-                    "coin": {
-                        "ownYellow": 1
-                    }
-                },
-                {
                     "type": "victory",
                     "amount": 1,
                     "from": "player",
@@ -1344,14 +1301,6 @@
                 "p": 1
             },
             "effects": [
-                {
-                    "victory": {
-                        "ownGray": 2
-                    },
-                    "coin": {
-                        "ownGray": 2
-                    }
-                },
                 {
                     "type": "victory",
                     "amount": 1,
@@ -1381,14 +1330,6 @@
             },
             "effects": [
                 {
-                    "coin": {
-                        "ownWonder": 3
-                    },
-                    "victory": {
-                        "ownWonder": 1
-                    }
-                },
-                {
                     "type": "victory",
                     "amount": 1,
                     "from": "player",
@@ -1416,10 +1357,11 @@
             },
             "effects": [
                 {
-                    "schoice": [
-                        "t",
-                        "c",
-                        "g"
+                    "type": "schoice",
+                    "list": [
+                        "tab",
+                        "comp",
+                        "gear"
                     ]
                 }
             ],
@@ -1438,7 +1380,8 @@
             },
             "effects": [
                 {
-                    "science": "c"
+                    "type": "comp",
+                    "amount": 1
                 }
             ],
             "chains": [
@@ -1456,7 +1399,8 @@
             },
             "effects": [
                 {
-                    "science": "t"
+                    "type": "tab",
+                    "amount": 1
                 }
             ],
             "chains": [
@@ -1475,7 +1419,8 @@
             },
             "effects": [
                 {
-                    "science": "c"
+                    "type": "comp",
+                    "amount": 1
                 }
             ],
             "chains": [
@@ -1494,7 +1439,8 @@
             },
             "effects": [
                 {
-                    "science": "g"
+                    "type": "gear",
+                    "amount": 1
                 }
             ],
             "chains": [
@@ -1513,7 +1459,8 @@
             },
             "effects": [
                 {
-                    "science": "t"
+                    "type": "tab",
+                    "amount": 1
                 }
             ],
             "chains": [
@@ -1532,7 +1479,8 @@
             },
             "effects": [
                 {
-                    "science": "t"
+                    "type": "tab",
+                    "amount": 1
                 }
             ],
             "chains": [
@@ -1552,7 +1500,8 @@
             },
             "effects": [
                 {
-                    "science": "c"
+                    "type": "comp",
+                    "amount": 1
                 }
             ],
             "chains": [
@@ -1572,7 +1521,8 @@
             },
             "effects": [
                 {
-                    "science": "g"
+                    "type": "gear",
+                    "amount": 1
                 }
             ],
             "chains": [
@@ -1592,7 +1542,8 @@
             },
             "effects": [
                 {
-                    "science": "t"
+                    "type": "tab",
+                    "amount": 1
                 }
             ],
             "chains": [
@@ -1611,7 +1562,8 @@
             },
             "effects": [
                 {
-                    "science": "c"
+                    "type": "comp",
+                    "amount": 1
                 }
             ],
             "chains": [
@@ -1631,7 +1583,8 @@
             },
             "effects": [
                 {
-                    "science": "g"
+                    "type": "gear",
+                    "amount": 1
                 }
             ],
             "chains": [
