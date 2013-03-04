@@ -464,8 +464,8 @@
             "name": "Builders Guild",
             "image": "27",
             "players": 0,
-            "age": 0,
-            "guild": "",
+            "age": 3,
+            "guild": "purple",
             "cost": {
                 "s": 2,
                 "c": 2,
@@ -473,7 +473,8 @@
             },
             "effects": {
                 "victory": {
-                    "neighboringWonders": 1
+                    "neighboringWonders": 1,
+					"ownWonders":1
                 }
             },
             "chains": [
