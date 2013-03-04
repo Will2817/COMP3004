@@ -252,60 +252,58 @@
                 ]
             },
             "b": {
-                "amount": {
-                    "image": "Alexandria_B",
-                    "effects": [
-                        {
-                            "type": "g",
-                            "amount": 1
-                        }
-                    ],
-                    "stages": [
-                        {
-                            "cost": {
-                                "type": "c",
-                                "amount": 2
-                            },
-                            "effects": [
-                                {
-                                    "type": "rchoice",
-                                    "list": [
-                                        "c",
-                                        "o",
-                                        "w",
-                                        "s"
-                                    ]
-                                }
-                            ]
+                "image": "Alexandria_B",
+                "effects": [
+                    {
+                        "type": "g",
+                        "amount": 1
+                    }
+                ],
+                "stages": [
+                    {
+                        "cost": {
+                            "type": "c",
+                            "amount": 2
                         },
-                        {
-                            "cost": {
-                                "w": 2
-                            },
-                            "effects": [
-                                {
-                                    "type": "rchoice",
-                                    "list": [
-                                        "g",
-                                        "l",
-                                        "p"
-                                    ]
-                                }
-                            ]
+                        "effects": [
+                            {
+                                "type": "rchoice",
+                                "list": [
+                                    "c",
+                                    "o",
+                                    "w",
+                                    "s"
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "cost": {
+                            "w": 2
                         },
-                        {
-                            "cost": {
-                                "s": 3
-                            },
-                            "effects": [
-                                {
-                                    "type": "victory",
-                                    "amount": 7
-                                }
-                            ]
-                        }
-                    ]
-                }
+                        "effects": [
+                            {
+                                "type": "rchoice",
+                                "list": [
+                                    "g",
+                                    "l",
+                                    "p"
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "cost": {
+                            "s": 3
+                        },
+                        "effects": [
+                            {
+                                "type": "victory",
+                                "amount": 7
+                            }
+                        ]
+                    }
+                ]
             }
         },
         {
