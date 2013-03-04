@@ -5,9 +5,9 @@ using System.Text;
 
 namespace _7Wonders
 {
-    class GameState
+    public class GameState
     {
-        Dictionary<String, Player> players;
+        private Dictionary<String, Player> players;
 
         public GameState()
         {

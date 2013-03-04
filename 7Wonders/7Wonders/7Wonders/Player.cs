@@ -10,7 +10,7 @@ namespace _7Wonders
     {
         protected string name;
         protected Wonder board;
-        protected string id; // needed?
+        protected long id;
         protected List<Card> hand;
 
         protected int victory;
@@ -27,6 +27,18 @@ namespace _7Wonders
         // Tablet, Compass, Gear
         int[] sciences = new int[3];
 
+        public Player(long _id)
+        {
+            id = _id;
+            board = null;
+            name = null;
+            hand = null;
+            victory = 0;
+            army = 0;
+            coin = 0;
+            defeat = 0;
+        }
+
         public Player(string _name, Wonder _board, List<Card> _hand)
         {
             // Initialized through the constructor
@@ -34,7 +46,7 @@ namespace _7Wonders
             board = _board;
             hand = _hand;
 
-            id = null;
+            id = 0;
             victory = 0;
             army = 0;
             coin = 0; // Starts with 3?
@@ -50,12 +62,12 @@ namespace _7Wonders
 
         public string getName()
         {
-            return null;//nothing, because screw people who want their name
+            return name;
         }
 
         // Accessors
         public List<Card> getHand() { return hand; }
-        public string getID()       { return id; }
+        public long getID()       { return id; }
         public int getVictory()     { return victory; }
         public int getCoin()        { return coin; }
         public int getDefeat()      { return defeat; }
@@ -71,11 +83,6 @@ namespace _7Wonders
         public void setHand(List<Card> _hand)
         {
             hand = _hand;
-        }
-
-        public void setID(string _id)
-        {
-            id = _id;
         }
 
         public void setVictory(int v)
