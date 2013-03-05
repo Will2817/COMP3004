@@ -104,8 +104,12 @@ namespace _7Wonders.Client
                     {
                         case NetIncomingMessageType.Data:
                             Console.WriteLine("Client: I Got DATA");
-                            String message = inMessage.ReadString();
                             int type = inMessage.ReadInt32();
+                            String message = "";
+                            while (inMessage.Position < inMessage.LengthBits)
+                                message = message + inMessage.ReadString();
+                            Console.WriteLine("Data type: " + type);
+                            Console.WriteLine("Message: " + message);
                             eventHandler.handleMessage(message, type);
                             break;
                         case NetIncomingMessageType.StatusChanged:
@@ -125,8 +129,8 @@ namespace _7Wonders.Client
 
         public int sendMessage(String message, int type)
         {
-            outMessage.Write(message);
             outMessage.Write(type);
+            outMessage.Write(message);
             NetDeliveryMethod method = NetDeliveryMethod.ReliableUnordered;
             client.SendMessage(outMessage, connection, method);
             outMessage = client.CreateMessage();

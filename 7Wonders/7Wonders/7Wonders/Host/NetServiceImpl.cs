@@ -77,8 +77,8 @@ namespace _7Wonders.Host
                             break;
                         case NetIncomingMessageType.Data:
                             Console.WriteLine("SERVER: I got Data");
-                            String message = inMessage.ReadString();
                             int type = inMessage.ReadInt32();
+                            String message = inMessage.ReadString();
                             long senderID = inMessage.SenderConnection.RemoteUniqueIdentifier;
                             eventHandler.handleMessage(message, type, senderID);
                             break;
@@ -121,22 +121,16 @@ namespace _7Wonders.Host
         public void broadcastMessage(String message, int type)
         {
             foreach (NetConnection connection in server.Connections)
-            {
-                Console.WriteLine("SERVER: BroadCasting");
-                outMessage.Write(message);
-                outMessage.Write(type);
-                NetDeliveryMethod method = NetDeliveryMethod.ReliableUnordered;
-                server.SendMessage(outMessage, connection, method);
-                outMessage = server.CreateMessage();
-            }
+                sendMessage(message, type, connection.RemoteUniqueIdentifier);
         }
 
         public void sendMessage(String message, int type, long clientID)
         {
-            outMessage.Write(message);
             outMessage.Write(type);
+            outMessage.Write(message);
             NetDeliveryMethod method = NetDeliveryMethod.ReliableUnordered;
             server.SendMessage(outMessage, connections[clientID], method);
+            outMessage = server.CreateMessage();
         }
 
         public void shutdown()
