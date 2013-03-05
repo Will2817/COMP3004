@@ -19,6 +19,7 @@ namespace _7Wonders.Host
         private NetPeerConfiguration config;
         private NetOutgoingMessage outMessage;
         private Dictionary<long, NetConnection> connections;
+        private Dictionary<long, string> names;
         private Boolean acceptingClients;
 
         public NetServiceImpl()
@@ -34,6 +35,7 @@ namespace _7Wonders.Host
             server = new NetServer(config);
             server.Start();
             connections = new Dictionary<long, NetConnection>();
+            names = new Dictionary<long, string>();
             acceptingClients = true;
             Thread messageListener = new Thread(new ThreadStart(listenMessages));
             messageListener.Start();
@@ -46,7 +48,6 @@ namespace _7Wonders.Host
 
         private void listenMessages()
         {
-            //should probably have some sort of thread pool
             NetIncomingMessage inMessage;
             while (true)
             {
@@ -62,7 +63,9 @@ namespace _7Wonders.Host
                                 long clientID = inMessage.ReadInt64();
                                 string clientName = inMessage.ReadString();
                                 connections.Add(clientID, inMessage.SenderConnection);
-                                eventHandler.handleNewClient(clientID, clientName);
+                                names.Add(clientID, clientName);
+                                //Thread t = new Thread(() => eventHandler.handleNewClient(clientID, clientName));
+                                //t.Start();
                             }
                             else
                                 inMessage.SenderConnection.Deny();
@@ -84,6 +87,15 @@ namespace _7Wonders.Host
                             {
                                 long clientID = inMessage.SenderConnection.RemoteUniqueIdentifier;
                                 eventHandler.handleClientDrop(clientID);
+                            }
+                            if (status == NetConnectionStatus.Connected)
+                            {
+                                long id = inMessage.SenderConnection.RemoteUniqueIdentifier;
+                                if (names.ContainsKey(id))
+                                {
+                                    Thread t = new Thread(() => eventHandler.handleNewClient(id, names[id]));
+                                    t.Start();
+                                }
                             }
                             break;
                         default:
@@ -116,10 +128,10 @@ namespace _7Wonders.Host
         public void broadcastMessage(String message, int type)
         {
             Console.WriteLine("BroadCasting all");
-            foreach (NetConnection connection in connections.Values)
+            foreach (long id in connections.Keys)
             {
-                Console.WriteLine(connection.RemoteUniqueIdentifier);
-                sendMessage(message, type, connection.RemoteUniqueIdentifier);
+                Console.WriteLine(id);
+                sendMessage(message, type, id);
             }
         }
 
