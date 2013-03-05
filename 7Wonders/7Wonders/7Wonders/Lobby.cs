@@ -27,6 +27,8 @@ namespace _7Wonders
         protected Dictionary<String, Visual> visuals1;
         protected List<Visual> readyCBs;
         protected Dictionary<String, Visual> wonders;
+        protected List<string> playerTypes = new List<string>() { "Open", "AIType1", "AIType2", "AIType3" };
+        protected List<Visual> dropDowns;
 
         protected Button sideButton;
         protected Button backButton;
@@ -53,6 +55,19 @@ namespace _7Wonders
             visuals1 = new Dictionary<String, Visual>();
             visuals1.Add("Divider1", new Visual(game, new Vector2(SEC1WIDTH - 1, 0), DIVIDERWIDTH, Game1.HEIGHT, "line", Color.Silver));
             visuals1.Add("Divider2", new Visual(game, new Vector2(0, SEC1HEIGHT - 1), Game1.WIDTH, DIVIDERWIDTH, "line", Color.Silver));
+
+            dropDowns = new List<Visual>();
+            dropDowns.Add((new DropDown(game, new Vector2(MARGIN, MARGIN), DROPDOWNWIDTH, DROPDOWNHEIGHT, new List<string>() { System.Environment.MachineName })).setEnabled(false));
+
+            for (int i = 1; i < NUMPLAYERS; i++)
+            {
+                dropDowns.Add(new DropDown(game, new Vector2(MARGIN, MARGIN + (MARGIN + DROPDOWNHEIGHT) * i), DROPDOWNWIDTH, DROPDOWNHEIGHT, playerTypes).setEnabled(false));
+            }
+
+            for (int i = dropDowns.Count; i > 0; i--)
+            {
+                visuals1.Add("drop" + i, dropDowns[i - 1]);
+            }
 
             for (int i = 0; i < readyCBs.Count; i++)
             {

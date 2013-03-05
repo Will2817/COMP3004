@@ -15,10 +15,6 @@ namespace _7Wonders
     class HostLobby : Lobby
     {
 
-        protected List<string> playerTypes = new List<string>() { "Open", "AIType1", "AIType2", "AIType3" };
-
-        protected List<Visual> dropDowns;
-
         protected Button startButton;
         protected DropDown dropped = null;
         protected bool existsADrop = false;
@@ -28,17 +24,9 @@ namespace _7Wonders
         {
             startButton = new Button(game, new Vector2(90, Game1.HEIGHT - 100), 75, 40, "Start", "Font1");
 
-            dropDowns = new List<Visual>();
-            dropDowns.Add((new DropDown(game, new Vector2(MARGIN, MARGIN), DROPDOWNWIDTH, DROPDOWNHEIGHT, new List<string>() { System.Environment.MachineName })).setEnabled(false));
-            
-            for (int i = 1; i < NUMPLAYERS; i++)
+            foreach (DropDown dd in dropDowns)
             {
-                dropDowns.Add(new DropDown(game, new Vector2(MARGIN, MARGIN + (MARGIN + DROPDOWNHEIGHT) * i), DROPDOWNWIDTH, DROPDOWNHEIGHT, playerTypes));
-            }
-
-            for (int i = dropDowns.Count; i > 0; i--)
-            {
-                visuals1.Add("drop"+i, dropDowns[i-1]);
+                if (dd != dropDowns.First()) dd.setEnabled(true);
             }
 
             visuals1.Add("startButton", startButton);
