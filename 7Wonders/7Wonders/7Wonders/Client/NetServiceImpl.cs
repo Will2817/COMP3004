@@ -45,7 +45,7 @@ namespace _7Wonders.Client
 
         public int joinHost(bool local)
         {
-            Console.WriteLine("CLIENT: Discovering");
+            //Console.WriteLine("CLIENT: Discovering");
             if (local) client.DiscoverKnownPeer("127.0.0.1", port);
             else client.DiscoverLocalPeers(port);
             if (waitDiscoveryResponse() == -1)
@@ -99,15 +99,15 @@ namespace _7Wonders.Client
             {
                 if ((inMessage = client.ReadMessage()) != null)
                 {
-                    Console.WriteLine("Client: got messageType" + inMessage.MessageType);
+                 //   Console.WriteLine("Client: got messageType" + inMessage.MessageType);
                     switch (inMessage.MessageType)
                     {
                         case NetIncomingMessageType.Data:
                             Console.WriteLine("Client: I Got DATA");
                             int type = inMessage.ReadInt32();
-                            String message = "";
-                            while (inMessage.Position < inMessage.LengthBits)
-                                message = message + inMessage.ReadString();
+                            String message = inMessage.ReadString();
+              //              while (inMessage.Position < inMessage.LengthBits)
+                //                message = message + inMessage.ReadString();
                             Console.WriteLine("Data type: " + type);
                             Console.WriteLine("Message: " + message);
                             eventHandler.handleMessage(message, type);
@@ -118,7 +118,7 @@ namespace _7Wonders.Client
                                 eventHandler.handleDisconnect();
                             break;
                         case NetIncomingMessageType.WarningMessage:
-                            Console.WriteLine(inMessage.ReadString());
+                            //Console.WriteLine(inMessage.ReadString());
                             break;
                         default:
                             break;

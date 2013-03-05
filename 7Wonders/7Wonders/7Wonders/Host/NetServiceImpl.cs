@@ -126,11 +126,11 @@ namespace _7Wonders.Host
 
         public void sendMessage(String message, int type, long clientID)
         {
+            outMessage = server.CreateMessage();
             outMessage.Write(type);
             outMessage.Write(message);
             NetDeliveryMethod method = NetDeliveryMethod.ReliableUnordered;
             server.SendMessage(outMessage, connections[clientID], method);
-            outMessage = server.CreateMessage();
         }
 
         public void shutdown()

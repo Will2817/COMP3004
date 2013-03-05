@@ -27,11 +27,11 @@ namespace _7Wonders.Client
 
         }
 
-        public void joinHost()
+        public void joinHost(bool host)
         {
-            Console.WriteLine("Start Test");
-            int i = netService.joinHost(false);
-            Console.WriteLine("Over here:" + i);
+            //Console.WriteLine("Start Test");
+            int i = netService.joinHost(host);
+            //Console.WriteLine("Over here:" + i);
         }
 
         public GameState getState(){

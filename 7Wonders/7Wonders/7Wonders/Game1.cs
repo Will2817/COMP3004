@@ -166,11 +166,13 @@ namespace _7Wonders
                 {
                     Console.WriteLine("StartHost");
                     new Host.Host();
+                    Console.WriteLine("StartClient");
+                    client.joinHost(true);
                 }
-                if ((message["nextInterface"] == "lobby")||(message["nextInterface"] == "hostlobby"))
+                if ((message["nextInterface"] == "lobby"))
                 {
                     Console.WriteLine("StartClient");
-                    client.joinHost();
+                    client.joinHost(false);
                 }
                 activeInterface.reset();
                 activeInterface = interfaces[message["nextInterface"]];
