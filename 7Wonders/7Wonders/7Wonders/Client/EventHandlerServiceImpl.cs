@@ -20,8 +20,8 @@ namespace _7Wonders.Client
             switch ((HostMessageType)type)
             {
                 case HostMessageType.PLAYER_JOINED:
-                    Player newPlayer = new Player((JObject)JObject.Parse(message)["player"]);
-                    gameManager.addPlayer(newPlayer);
+                    gameManager.addPlayer(message);
+                    
                     break;
                 //other cases
                 default:

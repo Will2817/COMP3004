@@ -14,9 +14,9 @@ namespace _7Wonders.Host
             this.netService = netService;
         }
 
-        public void notifyPlayerJoined(Player player)
+        public void notifyPlayerJoined(string players)
         {
-            string message = player.toJString();
+            string message = players;
             Console.WriteLine("host broadcasting player: " + message);
             netService.broadcastMessage(message, (int) HostMessageType.PLAYER_JOINED);
         }

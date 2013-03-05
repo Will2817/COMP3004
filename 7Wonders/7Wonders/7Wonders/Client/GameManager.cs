@@ -26,9 +26,9 @@ namespace _7Wonders.Client
             this.netService = netService;
         }
 
-        public void addPlayer(Player _player)
+        public void addPlayer(string players)
         {
-            gameState.addPlayer(_player);
+            gameState.playersFromJson(players);
         }
 
         public GameState getGameState()
