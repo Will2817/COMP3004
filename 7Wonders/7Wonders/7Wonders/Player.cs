@@ -54,6 +54,12 @@ namespace _7Wonders
             resources.Add(Resource.PAPYRUS, 0); // Papyrus
         }
 
+        public Player(JObject j)
+        {
+            id = (long)j["id"];
+            name = (string)j["name"];
+        }
+
 
        /* This is no longer needed, we will have hte player join the lobby or host
         *  the game and once the game starts will we assign the board and cards to the player
@@ -143,13 +149,14 @@ namespace _7Wonders
 
         
 
-        public JObject toJObject()
+        public string toJString()
         {
             JObject player = 
-                new JObject(
-                    new JProperty("name", name),
-                    new JProperty("id", id));
-            return player;
+                new JObject ("player",
+                    new JObject(
+                        new JProperty("name", name),
+                        new JProperty("id", id)));
+            return player.ToString();
         }
 
         // Sets the Score of a certain 's'
