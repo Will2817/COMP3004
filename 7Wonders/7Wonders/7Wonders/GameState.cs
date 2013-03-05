@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Newtonsoft.Json.Linq;
 
 namespace _7Wonders
 {
@@ -27,6 +28,18 @@ namespace _7Wonders
         public Dictionary<String, Player> getPlayers()
         {
             return players;
+        }
+
+        public string playersToJson()
+        {
+            JObject jplayers =
+                new JObject(
+                    new JProperty("players",
+                        new JArray(
+                            from p in players.Values
+                            select new JObject(p.toJObject()))));
+
+            return jplayers.ToString();
         }
     }
 }

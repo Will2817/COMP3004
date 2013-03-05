@@ -159,6 +159,14 @@ namespace _7Wonders
                         new JProperty("id", id))));
             return player.ToString();
         }
+        public JObject toJObject()
+        {
+            JObject player =
+                new JObject(
+                    new JProperty("name", name),
+                    new JProperty("id", id));
+            return player;
+        }
 
         // Sets the Score of a certain 's'
         public void setScoreNum(Score s, int x)
