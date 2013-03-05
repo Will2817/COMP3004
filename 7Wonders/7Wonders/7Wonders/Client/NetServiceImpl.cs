@@ -40,11 +40,16 @@ namespace _7Wonders.Client
             this.eventHandler = eventHandler;
         }
 
-        public int joinHost()
+        public int joinHost(bool local)
         {
-            client.DiscoverLocalPeers(port);
+            Console.WriteLine("CLIENT: Discovering");
+            if (local) client.DiscoverKnownPeer("127.0.0.1", port);
+            else client.DiscoverLocalPeers(port);
             if (waitDiscoveryResponse() == -1)
+            {
+                Console.WriteLine("Error on wait");
                 return -1;
+            }
             while (client.ConnectionStatus == NetConnectionStatus.InitiatedConnect
                 || client.ConnectionStatus == NetConnectionStatus.RespondedAwaitingApproval
                 || client.ConnectionStatus == NetConnectionStatus.RespondedConnect);
@@ -60,7 +65,7 @@ namespace _7Wonders.Client
         {
             DateTime start = DateTime.UtcNow;
             NetIncomingMessage inMessage;
-            while (start - DateTime.UtcNow < TimeSpan.FromMilliseconds(discoveryWait))
+            while (DateTime.UtcNow - start < TimeSpan.FromMilliseconds(discoveryWait))
             {
                 while ((inMessage = client.ReadMessage()) != null)
                 {

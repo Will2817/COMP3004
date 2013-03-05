@@ -35,6 +35,12 @@ namespace _7Wonders.Host
                 netService.blockConnections();
             }
             messageSerializer.notifyPlayerJoined(_player);
+            Console.WriteLine("Start Players:");
+            foreach (Player p in gameState.getPlayers().Values)
+            {
+                Console.WriteLine(p.getName() + ", " + p.getID());
+            }
+            Console.WriteLine("End Players...");
         }
 
     }

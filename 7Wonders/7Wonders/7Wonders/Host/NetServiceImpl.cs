@@ -28,6 +28,7 @@ namespace _7Wonders.Host
             config = new NetPeerConfiguration(tag);
             config.EnableMessageType(NetIncomingMessageType.DiscoveryRequest);
             config.EnableMessageType(NetIncomingMessageType.ConnectionApproval);
+            config.Port = port;
             server = new NetServer(config);
             server.Start();
             outMessage = server.CreateMessage();
@@ -44,16 +45,18 @@ namespace _7Wonders.Host
 
         private void listenMessages()
         {
-            while (eventHandler == null);
+            Console.WriteLine("Server listening");
             //should probably have some sort of thread pool
             NetIncomingMessage inMessage;
             while (true)
             {
                 if ((inMessage = server.ReadMessage()) != null)
                 {
+                    Console.WriteLine(inMessage.MessageType.ToString());
                     switch (inMessage.MessageType)
                     {
                         case NetIncomingMessageType.ConnectionApproval:
+                            Console.WriteLine("Approve a connection");
                             if (acceptingClients)
                             {
                                 inMessage.SenderConnection.Approve();
@@ -66,16 +69,19 @@ namespace _7Wonders.Host
                                 inMessage.SenderConnection.Deny();
                             break;
                         case NetIncomingMessageType.DiscoveryRequest:
+                            Console.WriteLine("DiscoveryRequest!");
                             outMessage.Write(acceptingClients);
                             server.SendDiscoveryResponse(outMessage, inMessage.SenderEndPoint);
                             break;
                         case NetIncomingMessageType.Data:
+                            Console.WriteLine("I got Data");
                             String message = inMessage.ReadString();
                             int type = inMessage.ReadInt32();
                             long senderID = inMessage.SenderConnection.RemoteUniqueIdentifier;
                             eventHandler.handleMessage(message, type, senderID);
                             break;
                         case NetIncomingMessageType.StatusChanged:
+                            Console.WriteLine("I got a status change");
                             NetConnectionStatus status = (NetConnectionStatus)inMessage.ReadByte();
                             if (status == NetConnectionStatus.Disconnecting || status == NetConnectionStatus.Disconnected)
                             {

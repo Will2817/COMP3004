@@ -152,10 +152,11 @@ namespace _7Wonders
         public string toJString()
         {
             JObject player = 
-                new JObject ("player",
+                new JObject (
+                    new JProperty("player",
                     new JObject(
                         new JProperty("name", name),
-                        new JProperty("id", id)));
+                        new JProperty("id", id))));
             return player.ToString();
         }
 

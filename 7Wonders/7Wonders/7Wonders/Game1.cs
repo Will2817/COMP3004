@@ -40,6 +40,8 @@ namespace _7Wonders
         Boolean rightkeylock = false;
         Interface activeInterface;
         JObject wondersJson = JObject.Parse(File.ReadAllText("Content/Json/wonderlist.json"));
+        public static Client.Client client;
+
         
 
         public Game1()
@@ -49,6 +51,7 @@ namespace _7Wonders
             textures = new Dictionary<String, Texture2D>();
             fonts = new Dictionary<String, SpriteFont>();
             gameState = new GameState();
+            client = new Client.Client();
 
             wonders = new Dictionary<String, Wonder>();
             foreach (JObject j in (JArray)wondersJson["wonders"])
@@ -161,6 +164,16 @@ namespace _7Wonders
 
             if ((message = activeInterface.isFinished()) != null)
             {
+                if (message["nextInterface"] == "hostlobby")
+                {
+                    Console.WriteLine("StartHost");
+                    new Host.Host();
+                }
+                if ((message["nextInterface"] == "lobby")||(message["nextInterface"] == "hostlobby"))
+                {
+                    Console.WriteLine("StartClient");
+                    client.joinHost();
+                }
                 activeInterface.reset();
                 activeInterface = interfaces[message["nextInterface"]];
                 activeInterface.receiveMessage(message);
