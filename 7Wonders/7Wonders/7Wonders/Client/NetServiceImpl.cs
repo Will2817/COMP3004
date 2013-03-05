@@ -14,6 +14,7 @@ namespace _7Wonders.Client
         String hostIP;
         private String tag;
         private int port;
+        private int clientport;
         private long discoveryWait;
         private EventHandlerService eventHandler;
         private NetClient client;
@@ -26,10 +27,12 @@ namespace _7Wonders.Client
             JObject constants = JObject.Parse(File.ReadAllText("Content/Json/constants-networking.json"));
             tag = constants.Value<String>("tag");
             port = constants.Value<int>("port");
+            clientport = constants.Value<int>("clientport");
             discoveryWait = constants.Value<int>("discoverywait");
             config = new NetPeerConfiguration(tag);
             config.EnableMessageType(NetIncomingMessageType.DiscoveryResponse);
             config.DisableMessageType(NetIncomingMessageType.DiscoveryRequest);
+            config.Port = clientport;
             client = new NetClient(config);
             client.Start();
             outMessage = client.CreateMessage();
@@ -50,11 +53,11 @@ namespace _7Wonders.Client
                 Console.WriteLine("Error on wait");
                 return -1;
             }
-            while (client.ConnectionStatus == NetConnectionStatus.InitiatedConnect
+/*            while (client.ConnectionStatus == NetConnectionStatus.InitiatedConnect
                 || client.ConnectionStatus == NetConnectionStatus.RespondedAwaitingApproval
                 || client.ConnectionStatus == NetConnectionStatus.RespondedConnect);
             if (!(client.ConnectionStatus == NetConnectionStatus.Connected))
-                return -1;
+                return -1;*/
             Thread messageListenerThread = new Thread(new ThreadStart(listenMessages));
             messageListenerThread.Start();
             while (!messageListenerThread.IsAlive);
@@ -96,11 +99,14 @@ namespace _7Wonders.Client
             {
                 if ((inMessage = client.ReadMessage()) != null)
                 {
+                    Console.WriteLine("Client: got messageType" + inMessage.MessageType);
                     switch (inMessage.MessageType)
                     {
                         case NetIncomingMessageType.Data:
+                            Console.WriteLine("Client: I Got DATA");
                             String message = inMessage.ReadString();
                             int type = inMessage.ReadInt32();
+                            eventHandler.handleMessage(message, type);
                             break;
                         case NetIncomingMessageType.StatusChanged:
                             NetConnectionStatus status = (NetConnectionStatus) inMessage.ReadByte();

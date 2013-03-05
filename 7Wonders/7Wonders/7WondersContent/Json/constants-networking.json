@@ -1,5 +1,6 @@
 {
-    "port": 58314,
+    "port": 4314,
+	"clientport": 4320,
     "localhost" : "127.0.0.1",
     "tag" : "7Wonders",
 	"discoverywait" : 1000

@@ -13,6 +13,7 @@ namespace _7Wonders.Host
     {
         private String tag;
         private int port;
+        private int clientport;
         private EventHandlerService eventHandler;
         private NetServer server;
         private NetPeerConfiguration config;
@@ -25,6 +26,7 @@ namespace _7Wonders.Host
             JObject constants = JObject.Parse(File.ReadAllText("Content/Json/constants-networking.json"));
             tag = constants.Value<String>("tag");
             port = constants.Value<int>("port");
+            clientport = constants.Value<int>("clientport");
             config = new NetPeerConfiguration(tag);
             config.EnableMessageType(NetIncomingMessageType.DiscoveryRequest);
             config.EnableMessageType(NetIncomingMessageType.ConnectionApproval);

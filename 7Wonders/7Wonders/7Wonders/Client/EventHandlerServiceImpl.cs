@@ -17,9 +17,11 @@ namespace _7Wonders.Client
 
         public void handleMessage(String message, int type)
         {
+            Console.WriteLine(message+ " : " + type);
             switch ((HostMessageType)type)
             {
                 case HostMessageType.PLAYER_JOINED:
+                    Console.WriteLine("Player Joined");
                     Player newPlayer = new Player((JObject)JObject.Parse(message)["player"]);
                     gameManager.addPlayer(newPlayer);
                     break;
