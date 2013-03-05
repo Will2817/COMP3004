@@ -5,7 +5,7 @@ using System.Text;
 
 namespace _7Wonders.Host
 {
-    interface NetEventHandlerService
+    interface EventHandlerService
     {
         void handleNewClient(long clientID);
         void handleClientDrop(long clientID);

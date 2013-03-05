@@ -5,11 +5,11 @@ using System.Text;
 
 namespace _7Wonders.Host
 {
-    class NetEventHandlerServiceImpl : NetEventHandlerService
+    class EventHandlerServiceImpl : EventHandlerService
     {
         private GameManager gameManager;
 
-        public NetEventHandlerServiceImpl(GameManager gameManager)
+        public EventHandlerServiceImpl(GameManager gameManager)
         {
             this.gameManager = gameManager;
         }
@@ -27,15 +27,15 @@ namespace _7Wonders.Host
 
         public void handleMessage(String message, int type, long clientID)
         {
-            switch ((MessageTypes)type)
+            switch ((ClientMessageType)type)
             {
-                case MessageTypes.BOARD_SELECTION:
+                case ClientMessageType.BOARD_SELECTION:
                     //stuff
                     break;
-                case MessageTypes.TURN_ACTION:
+                case ClientMessageType.TURN_ACTION:
                     //stuff
                     break;
-                case MessageTypes.CHAT_MESSAGE:
+                case ClientMessageType.CHAT_MESSAGE:
                     //stuff
                     break;
                 default:

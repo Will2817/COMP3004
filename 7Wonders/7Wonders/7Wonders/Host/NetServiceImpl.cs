@@ -12,14 +12,14 @@ namespace _7Wonders.Host
     {
         private String tag;
         private int port;
-        private NetEventHandlerService eventHandler;
+        private EventHandlerService eventHandler;
         private NetServer server;
         private NetPeerConfiguration config;
         private NetOutgoingMessage outMessage;
         private Dictionary<long, NetConnection> connections;
         private Boolean acceptingClients;
 
-        public NetServiceImpl(NetEventHandlerService eventHandler)
+        public NetServiceImpl(EventHandlerService eventHandler)
         {
             this.eventHandler = eventHandler;
             JObject constants = JObject.Parse(File.ReadAllText("Content/Json/constants-networking.json"));
