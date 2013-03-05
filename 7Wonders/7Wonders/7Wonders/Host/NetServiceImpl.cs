@@ -115,8 +115,12 @@ namespace _7Wonders.Host
 
         public void broadcastMessage(String message, int type)
         {
-            foreach (NetConnection connection in server.Connections)
+            Console.WriteLine("BroadCasting all");
+            foreach (NetConnection connection in connections.Values)
+            {
+                Console.WriteLine(connection.RemoteUniqueIdentifier);
                 sendMessage(message, type, connection.RemoteUniqueIdentifier);
+            }
         }
 
         public void sendMessage(String message, int type, long clientID)
