@@ -11,10 +11,9 @@ namespace _7Wonders.Client
         MessageSerializerService messageSerializer;
         NetService netService;
 
-        public GameManager(Player thisPlayer)
+        public GameManager()
         {
             gameState = new GameState();
-            gameState.addPlayer(thisPlayer);
         }
 
         public void setMessageSerializer(MessageSerializerService messageSerializer)

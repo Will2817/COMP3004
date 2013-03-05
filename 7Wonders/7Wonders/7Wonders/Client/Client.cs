@@ -15,7 +15,7 @@ namespace _7Wonders.Client
 
         public Client()
         {
-            gameManager = new GameManager(new Player(0, System.Environment.MachineName));
+            gameManager = new GameManager();
             eventHandlerService = new EventHandlerServiceImpl();
             messageSerializerService = new MessageSerializerServiceImpl();
             netService = new NetServiceImpl();

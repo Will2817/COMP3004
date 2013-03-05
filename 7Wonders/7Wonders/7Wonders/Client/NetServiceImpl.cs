@@ -11,7 +11,6 @@ namespace _7Wonders.Client
 {
     class NetServiceImpl : NetService
     {
-        String hostIP;
         private String tag;
         private int port;
         private int clientport;
@@ -35,7 +34,6 @@ namespace _7Wonders.Client
             config.Port = clientport;
             client = new NetClient(config);
             client.Start();
-            outMessage = client.CreateMessage();
         }
 
         public void setEventHandler(EventHandlerService eventHandler)
@@ -77,10 +75,10 @@ namespace _7Wonders.Client
                         case NetIncomingMessageType.DiscoveryResponse:
                             if (inMessage.ReadBoolean())
                             {
+                                outMessage = client.CreateMessage();
                                 outMessage.Write(client.UniqueIdentifier);
                                 outMessage.Write(System.Environment.MachineName);
                                 connection = client.Connect(inMessage.SenderEndPoint, outMessage);
-                                outMessage = client.CreateMessage();
                                 return 0;
                             }
                             break;
@@ -99,15 +97,12 @@ namespace _7Wonders.Client
             {
                 if ((inMessage = client.ReadMessage()) != null)
                 {
-                 //   Console.WriteLine("Client: got messageType" + inMessage.MessageType);
                     switch (inMessage.MessageType)
                     {
                         case NetIncomingMessageType.Data:
                             Console.WriteLine("Client: I Got DATA");
                             int type = inMessage.ReadInt32();
                             String message = inMessage.ReadString();
-              //              while (inMessage.Position < inMessage.LengthBits)
-                //                message = message + inMessage.ReadString();
                             Console.WriteLine("Data type: " + type);
                             Console.WriteLine("Message: " + message);
                             eventHandler.handleMessage(message, type);
@@ -116,9 +111,6 @@ namespace _7Wonders.Client
                             NetConnectionStatus status = (NetConnectionStatus) inMessage.ReadByte();
                             if (status == NetConnectionStatus.Disconnecting || status == NetConnectionStatus.Disconnected)
                                 eventHandler.handleDisconnect();
-                            break;
-                        case NetIncomingMessageType.WarningMessage:
-                            //Console.WriteLine(inMessage.ReadString());
                             break;
                         default:
                             break;
@@ -129,11 +121,11 @@ namespace _7Wonders.Client
 
         public int sendMessage(String message, int type)
         {
+            outMessage = client.CreateMessage();
             outMessage.Write(type);
             outMessage.Write(message);
             NetDeliveryMethod method = NetDeliveryMethod.ReliableUnordered;
             client.SendMessage(outMessage, connection, method);
-            outMessage = client.CreateMessage();
             return 0;
         }
 

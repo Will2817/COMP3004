@@ -33,7 +33,6 @@ namespace _7Wonders.Host
             config.Port = port;
             server = new NetServer(config);
             server.Start();
-            outMessage = server.CreateMessage();
             connections = new Dictionary<long, NetConnection>();
             acceptingClients = true;
             Thread messageListener = new Thread(new ThreadStart(listenMessages));
@@ -47,7 +46,6 @@ namespace _7Wonders.Host
 
         private void listenMessages()
         {
-            Console.WriteLine("SERVER: Server listening");
             //should probably have some sort of thread pool
             NetIncomingMessage inMessage;
             while (true)
@@ -58,7 +56,6 @@ namespace _7Wonders.Host
                     switch (inMessage.MessageType)
                     {
                         case NetIncomingMessageType.ConnectionApproval:
-                            Console.WriteLine("SERVER: Approve a connection");
                             if (acceptingClients)
                             {
                                 inMessage.SenderConnection.Approve();
@@ -71,19 +68,17 @@ namespace _7Wonders.Host
                                 inMessage.SenderConnection.Deny();
                             break;
                         case NetIncomingMessageType.DiscoveryRequest:
-                            Console.WriteLine("SERVER: DiscoveryRequest!");
+                            outMessage = server.CreateMessage();
                             outMessage.Write(acceptingClients);
                             server.SendDiscoveryResponse(outMessage, inMessage.SenderEndPoint);
                             break;
                         case NetIncomingMessageType.Data:
-                            Console.WriteLine("SERVER: I got Data");
                             int type = inMessage.ReadInt32();
                             String message = inMessage.ReadString();
                             long senderID = inMessage.SenderConnection.RemoteUniqueIdentifier;
                             eventHandler.handleMessage(message, type, senderID);
                             break;
                         case NetIncomingMessageType.StatusChanged:
-                            Console.WriteLine("SERVER: I got a status change");
                             NetConnectionStatus status = (NetConnectionStatus)inMessage.ReadByte();
                             if (status == NetConnectionStatus.Disconnecting || status == NetConnectionStatus.Disconnected)
                             {
