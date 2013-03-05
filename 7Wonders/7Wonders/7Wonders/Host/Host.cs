@@ -10,9 +10,9 @@ namespace _7Wonders.Host
 
         public Host()
         {
-            GameManager gameManager = new GameManager();
+            /*GameManager gameManager;
             EventHandlerService netEventHandlerService = new EventHandlerServiceImpl(gameManager);
-            NetService netService = new NetServiceImpl(netEventHandlerService);
+            NetService netService = new NetServiceImpl(netEventHandlerService);*/
         }
     }
 }

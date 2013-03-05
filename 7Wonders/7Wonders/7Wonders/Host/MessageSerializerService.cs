@@ -9,7 +9,7 @@ namespace _7Wonders.Host
     {
         void notifyPlayerJoined(Player player);//send a player (all)
         void notifyPlayerDropped(Player player);//send a player (all)
-        void notifyPlayerReady(Player player);//(all)
+        /*void notifyPlayerReady(Player player);//(all)
         void notifyPlayerNotReady(Player player);//(all)
         void notifyAIAdded();//needed?
         void notifyAIDropped();//needed?
@@ -21,7 +21,7 @@ namespace _7Wonders.Host
         void sendHand(List<Card> hand, Player player);//list<card> (one)
         void broadcastTurnResult(GameState gameState);//gamestate (all)
         void broadcastMilitaryResult(Dictionary<Player, int> westResults, Dictionary<Player, int> eastResults);//? (all)
-        void broadcastFinalScore(Dictionary<Player, int> scores);//? (all)
+        void broadcastFinalScore(Dictionary<Player, int> scores);//? (all)*/
         void broadcastChatMessage(String message, HostMessageType type, long senderID);
     }
 }
