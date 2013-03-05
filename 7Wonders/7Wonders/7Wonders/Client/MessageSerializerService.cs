@@ -5,9 +5,8 @@ using System.Text;
 
 namespace _7Wonders.Client
 {
-    interface NetEventHandlerService
+    interface MessageSerializerService
     {
-        void handleMessage(String message, int type);
-        void handleDisconnect();
+        void sendChatMessage(String message);
     }
 }

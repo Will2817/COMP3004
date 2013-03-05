@@ -22,6 +22,6 @@ namespace _7Wonders.Host
         void broadcastTurnResult(GameState gameState);//gamestate (all)
         void broadcastMilitaryResult(Dictionary<Player, int> westResults, Dictionary<Player, int> eastResults);//? (all)
         void broadcastFinalScore(Dictionary<Player, int> scores);//? (all)*/
-        void broadcastChatMessage(String message, HostMessageType type, long senderID);
+        void broadcastChatMessage(String message, long senderID);
     }
 }

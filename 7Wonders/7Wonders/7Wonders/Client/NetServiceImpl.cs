@@ -15,15 +15,14 @@ namespace _7Wonders.Client
         private String tag;
         private int port;
         private long discoveryWait;
-        private NetEventHandlerService eventHandler;
+        private EventHandlerService eventHandler;
         private NetClient client;
         private NetPeerConfiguration config;
         private NetOutgoingMessage outMessage;
         private NetConnection connection;
 
-        public NetServiceImpl(NetEventHandlerService eventHandler)
+        public NetServiceImpl()
         {
-            this.eventHandler = eventHandler;
             JObject constants = JObject.Parse(File.ReadAllText("Content/Json/constants-networking.json"));
             tag = constants.Value<String>("tag");
             port = constants.Value<int>("port");
@@ -34,6 +33,11 @@ namespace _7Wonders.Client
             client = new NetClient(config);
             client.Start();
             outMessage = client.CreateMessage();
+        }
+
+        public void setEventHandler(EventHandlerService eventHandler)
+        {
+            this.eventHandler = eventHandler;
         }
 
         public int joinHost()

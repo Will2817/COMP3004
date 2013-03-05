@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Newtonsoft.Json.Linq;
 
-namespace _7Wonders.Host
+namespace _7Wonders.Client
 {
     class GameManager
     {
@@ -12,9 +11,10 @@ namespace _7Wonders.Host
         MessageSerializerService messageSerializer;
         NetService netService;
 
-        public GameManager()
+        public GameManager(Player thisPlayer)
         {
             gameState = new GameState();
+            gameState.addPlayer(thisPlayer);
         }
 
         public void setMessageSerializer(MessageSerializerService messageSerializer)
@@ -30,12 +30,6 @@ namespace _7Wonders.Host
         public void addPlayer(Player _player)
         {
             gameState.addPlayer(_player);
-            if (gameState.getPlayers().Count() == Game1.MAXPLAYER)
-            {
-                netService.blockConnections();
-            }
-            messageSerializer.notifyPlayerJoined(_player);
         }
-
     }
 }

@@ -3,6 +3,7 @@ using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using Lidgren.Network;
 using Newtonsoft.Json.Linq;
 
@@ -19,9 +20,8 @@ namespace _7Wonders.Host
         private Dictionary<long, NetConnection> connections;
         private Boolean acceptingClients;
 
-        public NetServiceImpl(EventHandlerService eventHandler)
+        public NetServiceImpl()
         {
-            this.eventHandler = eventHandler;
             JObject constants = JObject.Parse(File.ReadAllText("Content/Json/constants-networking.json"));
             tag = constants.Value<String>("tag");
             port = constants.Value<int>("port");
@@ -33,11 +33,18 @@ namespace _7Wonders.Host
             outMessage = server.CreateMessage();
             connections = new Dictionary<long, NetConnection>();
             acceptingClients = true;
+            Thread messageListener = new Thread(new ThreadStart(listenMessages));
+            messageListener.Start();
+        }
 
+        public void setEventHandler(EventHandlerService eventHandler)
+        {
+            this.eventHandler = eventHandler;
         }
 
         private void listenMessages()
         {
+            while (eventHandler == null);
             //should probably have some sort of thread pool
             NetIncomingMessage inMessage;
             while (true)

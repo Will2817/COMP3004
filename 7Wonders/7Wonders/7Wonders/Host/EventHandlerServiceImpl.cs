@@ -9,7 +9,7 @@ namespace _7Wonders.Host
     {
         private GameManager gameManager;
 
-        public EventHandlerServiceImpl(GameManager gameManager)
+        public void setGameManager(GameManager gameManager)
         {
             this.gameManager = gameManager;
         }
