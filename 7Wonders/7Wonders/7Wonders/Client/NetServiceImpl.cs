@@ -113,6 +113,9 @@ namespace _7Wonders.Client
                             if (status == NetConnectionStatus.Disconnecting || status == NetConnectionStatus.Disconnected)
                                 eventHandler.handleDisconnect();
                             break;
+                        case NetIncomingMessageType.WarningMessage:
+                            Console.WriteLine(inMessage.ReadString());
+                            break;
                         default:
                             break;
                     }

@@ -47,7 +47,7 @@ namespace _7Wonders.Host
 
         private void listenMessages()
         {
-            Console.WriteLine("Server listening");
+            Console.WriteLine("SERVER: Server listening");
             //should probably have some sort of thread pool
             NetIncomingMessage inMessage;
             while (true)
@@ -58,7 +58,7 @@ namespace _7Wonders.Host
                     switch (inMessage.MessageType)
                     {
                         case NetIncomingMessageType.ConnectionApproval:
-                            Console.WriteLine("Approve a connection");
+                            Console.WriteLine("SERVER: Approve a connection");
                             if (acceptingClients)
                             {
                                 inMessage.SenderConnection.Approve();
@@ -71,19 +71,19 @@ namespace _7Wonders.Host
                                 inMessage.SenderConnection.Deny();
                             break;
                         case NetIncomingMessageType.DiscoveryRequest:
-                            Console.WriteLine("DiscoveryRequest!");
+                            Console.WriteLine("SERVER: DiscoveryRequest!");
                             outMessage.Write(acceptingClients);
                             server.SendDiscoveryResponse(outMessage, inMessage.SenderEndPoint);
                             break;
                         case NetIncomingMessageType.Data:
-                            Console.WriteLine("I got Data");
+                            Console.WriteLine("SERVER: I got Data");
                             String message = inMessage.ReadString();
                             int type = inMessage.ReadInt32();
                             long senderID = inMessage.SenderConnection.RemoteUniqueIdentifier;
                             eventHandler.handleMessage(message, type, senderID);
                             break;
                         case NetIncomingMessageType.StatusChanged:
-                            Console.WriteLine("I got a status change");
+                            Console.WriteLine("SERVER: I got a status change");
                             NetConnectionStatus status = (NetConnectionStatus)inMessage.ReadByte();
                             if (status == NetConnectionStatus.Disconnecting || status == NetConnectionStatus.Disconnected)
                             {
@@ -122,6 +122,7 @@ namespace _7Wonders.Host
         {
             foreach (NetConnection connection in server.Connections)
             {
+                Console.WriteLine("SERVER: BroadCasting");
                 outMessage.Write(message);
                 outMessage.Write(type);
                 NetDeliveryMethod method = NetDeliveryMethod.ReliableUnordered;
