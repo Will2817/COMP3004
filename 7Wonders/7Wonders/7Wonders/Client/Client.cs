@@ -33,5 +33,9 @@ namespace _7Wonders.Client
             int i = netService.joinHost(false);
             Console.WriteLine("Over here:" + i);
         }
+
+        public GameState getState(){
+            return gameManager.getGameState();
+        }
     }
 }

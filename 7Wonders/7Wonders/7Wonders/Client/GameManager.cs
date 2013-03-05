@@ -31,5 +31,10 @@ namespace _7Wonders.Client
         {
             gameState.addPlayer(_player);
         }
+
+        public GameState getGameState()
+        {
+            return gameState;
+        }
     }
 }

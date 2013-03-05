@@ -84,6 +84,11 @@ namespace _7Wonders
             return text;
         }
 
+        public void setSelected(string _text)
+        {
+            selected.setString(_text);
+        }
+
         public DropDown resetRequest()
         {
             dropButton.reset();

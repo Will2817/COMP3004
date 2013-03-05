@@ -57,7 +57,7 @@ namespace _7Wonders
             visuals1.Add("Divider2", new Visual(game, new Vector2(0, SEC1HEIGHT - 1), Game1.WIDTH, DIVIDERWIDTH, "line", Color.Silver));
 
             dropDowns = new List<Visual>();
-            dropDowns.Add((new DropDown(game, new Vector2(MARGIN, MARGIN), DROPDOWNWIDTH, DROPDOWNHEIGHT, new List<string>() { System.Environment.MachineName })).setEnabled(false));
+            dropDowns.Add((new DropDown(game, new Vector2(MARGIN, MARGIN), DROPDOWNWIDTH, DROPDOWNHEIGHT, new List<string>() { "Host" })).setEnabled(false));
 
             for (int i = 1; i < NUMPLAYERS; i++)
             {
@@ -150,6 +150,13 @@ namespace _7Wonders
                     else
                         visuals1["selected"].setTexture(w.getName() + "_A");
                 }
+            }
+            int count = 0;
+            //if (Game1.client.getState().getPlayers().Values.Count > 2) Console.WriteLine("More Players");
+            foreach (Player p in Game1.client.getState().getPlayers().Values)
+            {
+                ((DropDown)dropDowns[count]).setSelected(p.getName());
+                count++;
             }
         }
 

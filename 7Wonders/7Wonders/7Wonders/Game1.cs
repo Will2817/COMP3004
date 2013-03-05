@@ -23,7 +23,6 @@ namespace _7Wonders
         public static Dictionary<String, SpriteFont> fonts;
         public static Dictionary<String, Interface> interfaces;
         public static Dictionary<String, Wonder> wonders;
-        public static GameState gameState;
 
         public static int MAXPLAYER = 7;
 
@@ -50,7 +49,6 @@ namespace _7Wonders
             Content.RootDirectory = "Content";
             textures = new Dictionary<String, Texture2D>();
             fonts = new Dictionary<String, SpriteFont>();
-            gameState = new GameState();
             client = new Client.Client();
 
             wonders = new Dictionary<String, Wonder>();
