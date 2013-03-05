@@ -8,24 +8,24 @@ namespace _7Wonders
 {
     public class GameState
     {
-        private Dictionary<String, Player> players;
+        private Dictionary<long, Player> players;
 
         public GameState()
         {
-            players = new Dictionary<string, Player>();
+            players = new Dictionary<long, Player>();
         }
 
         public void addPlayer(Player _player)
         {
-            players.Add(_player.getName(), _player);
+            players.Add(_player.getID(), _player);
         }
 
-        public void removePlayer(string _name)
+        public void removePlayer(long _id)
         {
-            players.Remove(_name);
+            players.Remove(_id);
         }
 
-        public Dictionary<String, Player> getPlayers()
+        public Dictionary<long, Player> getPlayers()
         {
             return players;
         }
@@ -40,6 +40,16 @@ namespace _7Wonders
                             select new JObject(p.toJObject()))));
 
             return jplayers.ToString();
+        }
+
+        public void playersFromJson(string json)
+        {
+            JObject jplayers = JObject.Parse(json);
+            players.Clear();
+            foreach (JObject j in jplayers["players"])
+            {
+                players.Add((long)j["id"], new Player(j));
+            }
         }
     }
 }
