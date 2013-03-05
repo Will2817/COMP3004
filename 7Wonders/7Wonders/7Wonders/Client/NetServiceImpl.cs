@@ -66,6 +66,7 @@ namespace _7Wonders.Client
                             if (inMessage.ReadBoolean())
                             {
                                 outMessage.Write(client.UniqueIdentifier);
+                                outMessage.Write(System.Environment.MachineName);
                                 connection = client.Connect(inMessage.SenderEndPoint, outMessage);
                                 outMessage = client.CreateMessage();
                                 return 0;

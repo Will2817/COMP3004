@@ -51,8 +51,9 @@ namespace _7Wonders.Host
                             {
                                 inMessage.SenderConnection.Approve();
                                 long clientID = inMessage.ReadInt64();
+                                string clientName = inMessage.ReadString();
                                 connections.Add(clientID, inMessage.SenderConnection);
-                                eventHandler.handleNewClient(clientID);
+                                eventHandler.handleNewClient(clientID, clientName);
                             }
                             else
                                 inMessage.SenderConnection.Deny();

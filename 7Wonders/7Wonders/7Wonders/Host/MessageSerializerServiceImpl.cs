@@ -8,20 +8,7 @@ namespace _7Wonders.Host
     class MessageSerializerServiceImpl// : MessageSerializerService
     {
         private NetService netService;
-
-        void notifyPlayerJoined(Player player)
-        {
-
-        }
-
-        void notifyPlayerDropped(Player player)
-        {
-
-        }
-
-        void notifyGameStarted()
-        {
-
-        }
+        
+        
     }
 }

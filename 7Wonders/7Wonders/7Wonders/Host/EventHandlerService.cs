@@ -7,7 +7,7 @@ namespace _7Wonders.Host
 {
     interface EventHandlerService
     {
-        void handleNewClient(long clientID);
+        void handleNewClient(long clientID, string name);
         void handleClientDrop(long clientID);
         void handleMessage(String message, int type, long clientID);
     }

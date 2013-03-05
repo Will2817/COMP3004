@@ -15,7 +15,7 @@ namespace _7Wonders
         protected List<Card> played;
 
         // Players Score
-        // Victory Points, Army, Coins, Defeat tokens
+        // Victory Points, Army, Coins, Conflict tokens
         // Sciences: tablet, compass, gear
         protected Dictionary<Score, int> score;        
 
@@ -25,10 +25,10 @@ namespace _7Wonders
 
         
         // Default Player Constructor
-        public Player(long _id)
+        public Player(long _id, string _name)
         {
             id          = _id;
-            name        = null;
+            name        = _name;
             board       = null;            
             hand        = null;
             played      = null;
@@ -36,9 +36,9 @@ namespace _7Wonders
             // Setting the Players Score Dictionary
             score = new Dictionary<Score, int>();
             score.Add(Score.VICTORY, 0);    // Victory Points
-            score.Add(Score.ARMY, 0);       // Military Score
+            score.Add(Score.ARMY, 0);       // Military Score (shields)
             score.Add(Score.COIN, 0);       // Coins
-            score.Add(Score.DEFEAT, 0);     // Defeat Token
+            score.Add(Score.CONFLICT, 0);     //Conflict points
             score.Add(Score.TABLET, 0);     // Science - Tablet
             score.Add(Score.COMPASS, 0);    // Science - Compass
             score.Add(Score.GEAR, 0);       // Science - Gear

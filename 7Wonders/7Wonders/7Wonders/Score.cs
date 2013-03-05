@@ -10,7 +10,7 @@ namespace _7Wonders
         VICTORY,
         ARMY,
         COIN,
-        DEFEAT,
+        CONFLICT,
         TABLET,
         COMPASS,
         GEAR

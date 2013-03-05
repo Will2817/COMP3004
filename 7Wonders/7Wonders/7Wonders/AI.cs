@@ -9,7 +9,7 @@ namespace _7Wonders
     {
 
         public AI()
-            :base (0)
+            :base (0, "")
         {
         }
 

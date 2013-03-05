@@ -14,9 +14,9 @@ namespace _7Wonders.Host
             this.gameManager = gameManager;
         }
 
-        public void handleNewClient(long clientID)
+        public void handleNewClient(long clientID, string name)
         {
-            Player newPlayer = new Player(clientID);
+            Player newPlayer = new Player(clientID, name);
             gameManager.addPlayer(newPlayer);
         }
 
