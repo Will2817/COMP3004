@@ -2,7 +2,7 @@
     "cards": [
         {
             "name": "Lumber Yard",
-            "image": "01",
+            "image": "/Age1/lumberYard_1_3",
             "players": 3,
             "age": 1,
             "guild": "brown",
@@ -18,8 +18,25 @@
             ]
         },
         {
+            "name": "Lumber Yard",
+            "image": "/Age1/lumberYard_1_4",
+            "players": 4,
+            "age": 1,
+            "guild": "brown",
+            "cost": {},
+            "effects": [
+                {
+                    "type": "w",
+                    "amount": 1
+                }
+            ],
+            "chains": [
+                null
+            ]
+        },
+        {
             "name": "Stone Pit",
-            "image": "02",
+            "image": "/Age1/stonePit_1_3",
             "players": 3,
             "age": 1,
             "guild": "brown",
@@ -35,8 +52,25 @@
             ]
         },
         {
+            "name": "Stone Pit",
+            "image": "/Age1/stonePit_1_5",
+            "players": 5,
+            "age": 1,
+            "guild": "brown",
+            "cost": {},
+            "effects": [
+                {
+                    "type": "s",
+                    "amount": 1
+                }
+            ],
+            "chains": [
+                null
+            ]
+        },
+        {
             "name": "Clay Pool",
-            "image": "03",
+            "image": "/Age1/clayPool_1_3",
             "players": 3,
             "age": 1,
             "guild": "brown",
@@ -52,8 +86,25 @@
             ]
         },
         {
+            "name": "Clay Pool",
+            "image": "/Age1/clayPool_1_5",
+            "players": 5,
+            "age": 1,
+            "guild": "brown",
+            "cost": {},
+            "effects": [
+                {
+                    "type": "c",
+                    "amount": 1
+                }
+            ],
+            "chains": [
+                null
+            ]
+        },
+        {
             "name": "Ore Vein",
-            "image": "04",
+            "image": "/Age1/oreVein_1_3",
             "players": 3,
             "age": 1,
             "guild": "brown",
@@ -69,8 +120,25 @@
             ]
         },
         {
+            "name": "Ore Vein",
+            "image": "/Age1/oreVein_1_4",
+            "players": 4,
+            "age": 1,
+            "guild": "brown",
+            "cost": {},
+            "effects": [
+                {
+                    "type": "o",
+                    "amount": 1
+                }
+            ],
+            "chains": [
+                null
+            ]
+        },
+        {
             "name": "Tree Farm",
-            "image": "05",
+            "image": "/Age1/treeFarm_1_6",
             "players": 6,
             "age": 1,
             "guild": "brown",
@@ -92,7 +160,7 @@
         },
         {
             "name": "Excavation",
-            "image": "06",
+            "image": "/Age1/excavation_1_4",
             "players": 4,
             "age": 1,
             "guild": "brown",
@@ -114,7 +182,7 @@
         },
         {
             "name": "Clay Pit",
-            "image": "07",
+            "image": "/Age1/clayPit_1_3",
             "players": 3,
             "age": 1,
             "guild": "brown",
@@ -136,7 +204,7 @@
         },
         {
             "name": "Timber Yard",
-            "image": "08",
+            "image": "/Age1/timberYard_1_3",
             "players": 3,
             "age": 1,
             "guild": "brown",
@@ -158,8 +226,8 @@
         },
         {
             "name": "Forest Cave",
-            "image": "09",
-            "players": 3,
+            "image": "/Age1/forestCave_1_5",
+            "players": 5,
             "age": 1,
             "guild": "brown",
             "cost": {
@@ -180,7 +248,7 @@
         },
         {
             "name": "Mine",
-            "image": "10",
+            "image": "/Age1/mine_1_6",
             "players": 6,
             "age": 1,
             "guild": "brown",
@@ -202,7 +270,7 @@
         },
         {
             "name": "Sawmill",
-            "image": "11",
+            "image": "/Age2/sawmill_2_3",
             "players": 3,
             "age": 2,
             "guild": "brown",
@@ -220,8 +288,27 @@
             ]
         },
         {
+            "name": "Sawmill",
+            "image": "/Age2/sawmill_2_4",
+            "players": 4,
+            "age": 2,
+            "guild": "brown",
+            "cost": {
+                "coin": 1
+            },
+            "effects": [
+                {
+                    "type": "w",
+                    "amount": 2
+                }
+            ],
+            "chains": [
+                null
+            ]
+        },
+        {
             "name": "Quarry",
-            "image": "12",
+            "image": "/Age2/quarry_2_3",
             "players": 3,
             "age": 2,
             "guild": "brown",
@@ -239,9 +326,47 @@
             ]
         },
         {
+            "name": "Quarry",
+            "image": "/Age2/quarry_2_4",
+            "players": 4,
+            "age": 2,
+            "guild": "brown",
+            "cost": {
+                "coin": 1
+            },
+            "effects": [
+                {
+                    "type": "s",
+                    "amount": 2
+                }
+            ],
+            "chains": [
+                null
+            ]
+        },
+        {
             "name": "Brickyard",
-            "image": "13",
-            "players": 2,
+            "image": "/Age2/brickyard_2_3",
+            "players": 3,
+            "age": 2,
+            "guild": "brown",
+            "cost": {
+                "coin": 1
+            },
+            "effects": [
+                {
+                    "type": "c",
+                    "amount": 2
+                }
+            ],
+            "chains": [
+                null
+            ]
+        },
+        {
+            "name": "Brickyard",
+            "image": "/Age2/brickyard_2_4",
+            "players": 4,
             "age": 2,
             "guild": "brown",
             "cost": {
@@ -259,7 +384,7 @@
         },
         {
             "name": "Foundry",
-            "image": "14",
+            "image": "/Age2/foundry_2_3",
             "players": 3,
             "age": 2,
             "guild": "brown",
@@ -277,8 +402,27 @@
             ]
         },
         {
+            "name": "Foundry",
+            "image": "/Age2/foundry_2_4",
+            "players": 4,
+            "age": 2,
+            "guild": "brown",
+            "cost": {
+                "coin": 1
+            },
+            "effects": [
+                {
+                    "type": "o",
+                    "amount": 2
+                }
+            ],
+            "chains": [
+                null
+            ]
+        },
+        {
             "name": "Loom",
-            "image": "15",
+            "image": "/Age1/loom_1_3",
             "players": 3,
             "age": 1,
             "guild": "gray",
@@ -294,8 +438,59 @@
             ]
         },
         {
+            "name": "Loom",
+            "image": "/Age1/loom_1_6",
+            "players": 6,
+            "age": 1,
+            "guild": "gray",
+            "cost": {},
+            "effects": [
+                {
+                    "type": "l",
+                    "amount": 1
+                }
+            ],
+            "chains": [
+                null
+            ]
+        },
+        {
+            "name": "Loom",
+            "image": "/Age1/loom_2_3",
+            "players": 3,
+            "age": 2,
+            "guild": "gray",
+            "cost": {},
+            "effects": [
+                {
+                    "type": "l",
+                    "amount": 1
+                }
+            ],
+            "chains": [
+                null
+            ]
+        },
+        {
+            "name": "Loom",
+            "image": "/Age1/loom_2_5",
+            "players": 5,
+            "age": 2,
+            "guild": "gray",
+            "cost": {},
+            "effects": [
+                {
+                    "type": "l",
+                    "amount": 1
+                }
+            ],
+            "chains": [
+                null
+            ]
+        },
+        {
             "name": "Glassworks",
-            "image": "16",
+            "image": "/Age1/glassworks_1_3",
             "players": 2,
             "age": 1,
             "guild": "gray",
@@ -311,8 +506,59 @@
             ]
         },
         {
+            "name": "Glassworks",
+            "image": "/Age1/glassworks_1_6",
+            "players": 6,
+            "age": 1,
+            "guild": "gray",
+            "cost": {},
+            "effects": [
+                {
+                    "type": "g",
+                    "amount": 1
+                }
+            ],
+            "chains": [
+                null
+            ]
+        },
+        {
+            "name": "Glassworks",
+            "image": "/Age1/glassworks_2_3",
+            "players": 3,
+            "age": 2,
+            "guild": "gray",
+            "cost": {},
+            "effects": [
+                {
+                    "type": "g",
+                    "amount": 1
+                }
+            ],
+            "chains": [
+                null
+            ]
+        },
+        {
+            "name": "Glassworks",
+            "image": "/Age1/glassworks_2_5",
+            "players": 5,
+            "age": 2,
+            "guild": "gray",
+            "cost": {},
+            "effects": [
+                {
+                    "type": "g",
+                    "amount": 1
+                }
+            ],
+            "chains": [
+                null
+            ]
+        },
+        {
             "name": "Press",
-            "image": "17",
+            "image": "/Age1/press_1_3",
             "players": 3,
             "age": 1,
             "guild": "gray",
@@ -328,8 +574,59 @@
             ]
         },
         {
+            "name": "Press",
+            "image": "/Age1/press_1_6",
+            "players": 6,
+            "age": 1,
+            "guild": "gray",
+            "cost": {},
+            "effects": [
+                {
+                    "type": "p",
+                    "amount": 1
+                }
+            ],
+            "chains": [
+                null
+            ]
+        },
+        {
+            "name": "Press",
+            "image": "/Age1/press_2_3",
+            "players": 3,
+            "age": 2,
+            "guild": "gray",
+            "cost": {},
+            "effects": [
+                {
+                    "type": "p",
+                    "amount": 1
+                }
+            ],
+            "chains": [
+                null
+            ]
+        },
+        {
+            "name": "Press",
+            "image": "/Age1/press_2_5",
+            "players": 5,
+            "age": 2,
+            "guild": "gray",
+            "cost": {},
+            "effects": [
+                {
+                    "type": "p",
+                    "amount": 1
+                }
+            ],
+            "chains": [
+                null
+            ]
+        },
+        {
             "name": "Workers Guild",
-            "image": "18",
+            "image": "/Age3/workersGuild_3_0",
             "players": 0,
             "age": 3,
             "guild": "purple",
@@ -354,7 +651,7 @@
         },
         {
             "name": "Craftsmens Guild",
-            "image": "19",
+            "image": "/Age3/craftsmensGuild_3_0",
             "players": 0,
             "age": 3,
             "guild": "purple",
@@ -376,7 +673,7 @@
         },
         {
             "name": "Traders Guild",
-            "image": "20",
+            "image": "/Age3/tradersGuild_3_0",
             "players": 0,
             "age": 3,
             "guild": "purple",
@@ -399,7 +696,7 @@
         },
         {
             "name": "Philosophers Guild",
-            "image": "21",
+            "image": "/Age3/philosophersGuild_3_0",
             "players": 0,
             "age": 3,
             "guild": "purple",
@@ -422,7 +719,7 @@
         },
         {
             "name": "Spies Guild",
-            "image": "22",
+            "image": "/Age3/spiesGuild_3_0",
             "players": 0,
             "age": 3,
             "guild": "purple",
@@ -444,7 +741,7 @@
         },
         {
             "name": "Strategists Guild",
-            "image": "23",
+            "image": "/Age3/strategistsGuild_3_0",
             "players": 0,
             "age": 3,
             "guild": "purple",
@@ -467,7 +764,7 @@
         },
         {
             "name": "Shipowners Guild",
-            "image": "24",
+            "image": "/Age3/shipownersGuild_3_0",
             "players": 0,
             "age": 3,
             "guild": "purple",
@@ -502,7 +799,7 @@
         },
         {
             "name": "Scientists Guild",
-            "image": "25",
+            "image": "/Age3/scientistsGuild_3_0",
             "players": 0,
             "age": 3,
             "guild": "purple",
@@ -527,7 +824,7 @@
         },
         {
             "name": "Magistrates Guild",
-            "image": "26",
+            "image": "/Age3/magistratesGuild_3_0",
             "players": 0,
             "age": 3,
             "guild": "purple",
@@ -550,7 +847,7 @@
         },
         {
             "name": "Builders Guild",
-            "image": "27",
+            "image": "/Age3/buildersGuild_3_0",
             "players": 0,
             "age": 3,
             "guild": "purple",
@@ -573,7 +870,7 @@
         },
         {
             "name": "Pawnshop",
-            "image": "28",
+            "image": "/Age1/pawnshop_1_4",
             "players": 4,
             "age": 1,
             "guild": "blue",
@@ -591,8 +888,27 @@
             ]
         },
         {
+            "name": "Pawnshop",
+            "image": "/Age1/pawnshop_1_7",
+            "players": 7,
+            "age": 1,
+            "guild": "blue",
+            "cost": {},
+            "effects": [
+                {
+                    "type": "victory",
+                    "amount": 3,
+                    "from": "none",
+                    "basis": "none"
+                }
+            ],
+            "chains": [
+                null
+            ]
+        },
+        {
             "name": "Baths",
-            "image": "29",
+            "image": "/Age1/baths_1_3",
             "players": 3,
             "age": 1,
             "guild": "blue",
@@ -612,8 +928,67 @@
             ]
         },
         {
+            "name": "Baths",
+            "image": "/Age1/baths_1_7",
+            "players": 7,
+            "age": 1,
+            "guild": "blue",
+            "cost": {
+                "s": 1
+            },
+            "effects": [
+                {
+                    "type": "victory",
+                    "amount": 3,
+                    "from": "none",
+                    "basis": "none"
+                }
+            ],
+            "chains": [
+                null
+            ]
+        },
+        {
             "name": "Altar",
-            "image": "30",
+            "image": "/Age1/_1_3",
+            "players": 3,
+            "age": 1,
+            "guild": "blue",
+            "cost": {},
+            "effects": [
+                {
+                    "type": "victory",
+                    "amount": 2,
+                    "from": "none",
+                    "basis": "none"
+                }
+            ],
+            "chains": [
+                null
+            ]
+        },
+        {
+            "name": "Altar",
+            "image": "/Age1/_1_5",
+            "players": 5,
+            "age": 1,
+            "guild": "blue",
+            "cost": {},
+            "effects": [
+                {
+                    "type": "victory",
+                    "amount": 2,
+                    "from": "none",
+                    "basis": "none"
+                }
+            ],
+            "chains": [
+                null
+            ]
+        },
+        {
+            "name": "Theater",
+            "image": "/Age1/theater_1_3",
             "players": 3,
             "age": 1,
             "guild": "blue",
@@ -632,8 +1007,8 @@
         },
         {
             "name": "Theater",
-            "image": "31",
-            "players": 3,
+            "image": "/Age1/theater_1_6",
+            "players": 6,
             "age": 1,
             "guild": "blue",
             "cost": {},
@@ -651,7 +1026,7 @@
         },
         {
             "name": "Aqueduct",
-            "image": "32",
+            "image": "/Age2/aqueduct_2_3",
             "players": 3,
             "age": 2,
             "guild": "blue",
@@ -671,8 +1046,29 @@
             ]
         },
         {
+            "name": "Aqueduct",
+            "image": "/Age2/aqueduct_2_7",
+            "players": 7,
+            "age": 2,
+            "guild": "blue",
+            "cost": {
+                "s": 3
+            },
+            "effects": [
+                {
+                    "type": "victory",
+                    "amount": 5,
+                    "from": "none",
+                    "basis": "none"
+                }
+            ],
+            "chains": [
+                "Baths"
+            ]
+        },
+        {
             "name": "Temple",
-            "image": "33",
+            "image": "/Age2/temple_2_3",
             "players": 3,
             "age": 2,
             "guild": "blue",
@@ -694,8 +1090,31 @@
             ]
         },
         {
+            "name": "Temple",
+            "image": "/Age2/temple_2_6",
+            "players": 6,
+            "age": 2,
+            "guild": "blue",
+            "cost": {
+                "w": 1,
+                "c": 1,
+                "g": 1
+            },
+            "effects": [
+                {
+                    "type": "victory",
+                    "amount": 3,
+                    "from": "none",
+                    "basis": "none"
+                }
+            ],
+            "chains": [
+                "Altar"
+            ]
+        },
+        {
             "name": "Statue",
-            "image": "34",
+            "image": "/Age2/statue_2_3",
             "players": 3,
             "age": 2,
             "guild": "blue",
@@ -716,8 +1135,30 @@
             ]
         },
         {
+            "name": "Statue",
+            "image": "/Age2/statue_2_7",
+            "players": 7,
+            "age": 2,
+            "guild": "blue",
+            "cost": {
+                "o": 2,
+                "w": 1
+            },
+            "effects": [
+                {
+                    "type": "victory",
+                    "amount": 4,
+                    "from": "none",
+                    "basis": "none"
+                }
+            ],
+            "chains": [
+                "Theater"
+            ]
+        },
+        {
             "name": "Pantheon",
-            "image": "35",
+            "image": "/Age3/pantheon_3_3",
             "players": 3,
             "age": 3,
             "guild": "blue",
@@ -741,8 +1182,33 @@
             ]
         },
         {
+            "name": "Pantheon",
+            "image": "/Age3/pantheon_3_6",
+            "players": 6,
+            "age": 3,
+            "guild": "blue",
+            "cost": {
+                "c": 2,
+                "o": 1,
+                "g": 1,
+                "p": 1,
+                "l": 1
+            },
+            "effects": [
+                {
+                    "type": "victory",
+                    "amount": 7,
+                    "from": "none",
+                    "basis": "none"
+                }
+            ],
+            "chains": [
+                "Temple"
+            ]
+        },
+        {
             "name": "Gardens",
-            "image": "36",
+            "image": "/Age3/gardens_3_3",
             "players": 3,
             "age": 3,
             "guild": "blue",
@@ -763,8 +1229,30 @@
             ]
         },
         {
+            "name": "Gardens",
+            "image": "/Age3/gardens_3_4",
+            "players": 4,
+            "age": 3,
+            "guild": "blue",
+            "cost": {
+                "c": 2,
+                "w": 1
+            },
+            "effects": [
+                {
+                    "type": "victory",
+                    "amount": 5,
+                    "from": "none",
+                    "basis": "none"
+                }
+            ],
+            "chains": [
+                "Statue"
+            ]
+        },
+        {
             "name": "Town Hall",
-            "image": "37",
+            "image": "/Age3/townHall_3_3",
             "players": 3,
             "age": 3,
             "guild": "blue",
@@ -786,8 +1274,54 @@
             ]
         },
         {
+            "name": "Town Hall",
+            "image": "/Age3/townHall_3_5",
+            "players": 5,
+            "age": 3,
+            "guild": "blue",
+            "cost": {
+                "s": 2,
+                "o": 1,
+                "g": 1
+            },
+            "effects": [
+                {
+                    "type": "victory",
+                    "amount": 6,
+                    "from": "none",
+                    "basis": "none"
+                }
+            ],
+            "chains": [
+                null
+            ]
+        },
+        {
+            "name": "Town Hall",
+            "image": "/Age3/townHall_3_6",
+            "players": 6,
+            "age": 3,
+            "guild": "blue",
+            "cost": {
+                "s": 2,
+                "o": 1,
+                "g": 1
+            },
+            "effects": [
+                {
+                    "type": "victory",
+                    "amount": 6,
+                    "from": "none",
+                    "basis": "none"
+                }
+            ],
+            "chains": [
+                null
+            ]
+        },
+        {
             "name": "Palace",
-            "image": "38",
+            "image": "/Age3/palace_3_3",
             "players": 3,
             "age": 3,
             "guild": "blue",
@@ -814,7 +1348,7 @@
         },
         {
             "name": "Courthouse",
-            "image": "39",
+            "image": "/Age2/courthouse_2_3",
             "players": 3,
             "age": 2,
             "guild": "blue",
@@ -835,8 +1369,30 @@
             ]
         },
         {
+            "name": "Courthouse",
+            "image": "/Age2/courthouse_2_5",
+            "players": 5,
+            "age": 2,
+            "guild": "blue",
+            "cost": {
+                "c": 2,
+                "l": 1
+            },
+            "effects": [
+                {
+                    "type": "victory",
+                    "amount": 4,
+                    "from": "none",
+                    "basis": "none"
+                }
+            ],
+            "chains": [
+                "Scriptorium"
+            ]
+        },
+        {
             "name": "Senate",
-            "image": "40",
+            "image": "/Age3/senate_3_3",
             "players": 3,
             "age": 3,
             "guild": "blue",
@@ -858,8 +1414,31 @@
             ]
         },
         {
+            "name": "Senate",
+            "image": "/Age3/senate_3_5",
+            "players": 5,
+            "age": 3,
+            "guild": "blue",
+            "cost": {
+                "w": 2,
+                "s": 1,
+                "o": 1
+            },
+            "effects": [
+                {
+                    "type": "victory",
+                    "amount": 6,
+                    "from": "none",
+                    "basis": "none"
+                }
+            ],
+            "chains": [
+                "Library"
+            ]
+        },
+        {
             "name": "Stockade",
-            "image": "41",
+            "image": "/Age1/stockade_1_3",
             "players": 3,
             "age": 1,
             "guild": "red",
@@ -877,8 +1456,27 @@
             ]
         },
         {
+            "name": "Stockade",
+            "image": "/Age1/stockade_1_7",
+            "players": 7,
+            "age": 1,
+            "guild": "red",
+            "cost": {
+                "w": 1
+            },
+            "effects": [
+                {
+                    "type": "army",
+                    "amount": 1
+                }
+            ],
+            "chains": [
+                null
+            ]
+        },
+        {
             "name": "Barracks",
-            "image": "42",
+            "image": "/Age1/barracks_1_3",
             "players": 3,
             "age": 1,
             "guild": "red",
@@ -896,8 +1494,27 @@
             ]
         },
         {
+            "name": "Barracks",
+            "image": "/Age1/barracks_1_5",
+            "players": 5,
+            "age": 1,
+            "guild": "red",
+            "cost": {
+                "o": 1
+            },
+            "effects": [
+                {
+                    "type": "army",
+                    "amount": 1
+                }
+            ],
+            "chains": [
+                null
+            ]
+        },
+        {
             "name": "Guard Tower",
-            "image": "43",
+            "image": "/Age1/guardTower_1_3",
             "players": 3,
             "age": 1,
             "guild": "red",
@@ -915,8 +1532,27 @@
             ]
         },
         {
+            "name": "Guard Tower",
+            "image": "/Age1/guardTower_1_4",
+            "players": 4,
+            "age": 1,
+            "guild": "red",
+            "cost": {
+                "c": 1
+            },
+            "effects": [
+                {
+                    "type": "army",
+                    "amount": 1
+                }
+            ],
+            "chains": [
+                null
+            ]
+        },
+        {
             "name": "Walls",
-            "image": "44",
+            "image": "/Age2/walls_2_3",
             "players": 3,
             "age": 2,
             "guild": "red",
@@ -934,8 +1570,27 @@
             ]
         },
         {
+            "name": "Walls",
+            "image": "/Age2/walls_2_7",
+            "players": 7,
+            "age": 2,
+            "guild": "red",
+            "cost": {
+                "s": 3
+            },
+            "effects": [
+                {
+                    "type": "army",
+                    "amount": 2
+                }
+            ],
+            "chains": [
+                null
+            ]
+        },
+        {
             "name": "Training Ground",
-            "image": "45",
+            "image": "/Age2/trainingGround_2_4",
             "players": 4,
             "age": 2,
             "guild": "red",
@@ -954,8 +1609,48 @@
             ]
         },
         {
+            "name": "Training Ground",
+            "image": "/Age2/trainingGround_2_6",
+            "players": 6,
+            "age": 2,
+            "guild": "red",
+            "cost": {
+                "o": 2,
+                "w": 1
+            },
+            "effects": [
+                {
+                    "type": "army",
+                    "amount": 1
+                }
+            ],
+            "chains": [
+                null
+            ]
+        },
+        {
+            "name": "Training Ground",
+            "image": "/Age2/trainingGround_2_7",
+            "players": 7,
+            "age": 2,
+            "guild": "red",
+            "cost": {
+                "o": 2,
+                "w": 1
+            },
+            "effects": [
+                {
+                    "type": "army",
+                    "amount": 1
+                }
+            ],
+            "chains": [
+                null
+            ]
+        },
+        {
             "name": "Fortifications",
-            "image": "46",
+            "image": "/Age3/fortifications_3_3",
             "players": 3,
             "age": 3,
             "guild": "red",
@@ -975,7 +1670,7 @@
         },
         {
             "name": "Circus",
-            "image": "47",
+            "image": "/Age3/circus_3_4",
             "players": 4,
             "age": 3,
             "guild": "red",
@@ -994,8 +1689,48 @@
             ]
         },
         {
+            "name": "Circus",
+            "image": "/Age3/circus_3_5",
+            "players": 5,
+            "age": 3,
+            "guild": "red",
+            "cost": {
+                "s": 3,
+                "o": 1
+            },
+            "effects": [
+                {
+                    "type": "army",
+                    "amount": 3
+                }
+            ],
+            "chains": [
+                "Training Ground"
+            ]
+        },
+        {
+            "name": "Circus",
+            "image": "/Age3/circus_3_6",
+            "players": 6,
+            "age": 3,
+            "guild": "red",
+            "cost": {
+                "s": 3,
+                "o": 1
+            },
+            "effects": [
+                {
+                    "type": "army",
+                    "amount": 3
+                }
+            ],
+            "chains": [
+                "Training Ground"
+            ]
+        },
+        {
             "name": "Arsenal",
-            "image": "48",
+            "image": "/Age3/arsenal_3_3",
             "players": 3,
             "age": 3,
             "guild": "red",
@@ -1015,8 +1750,29 @@
             ]
         },
         {
+            "name": "Arsenal",
+            "image": "/Age3/arsenal_3_4",
+            "players": 4,
+            "age": 3,
+            "guild": "red",
+            "cost": {
+                "w": 2,
+                "o": 1,
+                "l": 1
+            },
+            "effects": [
+                {
+                    "type": "army",
+                    "amount": 3
+                }
+            ],
+            "chains": [
+                null
+            ]
+        },
+        {
             "name": "Stables",
-            "image": "49",
+            "image": "/Age2/stables_2_3",
             "players": 3,
             "age": 2,
             "guild": "red",
@@ -1036,8 +1792,29 @@
             ]
         },
         {
+            "name": "Stables",
+            "image": "/Age2/stables_2_5",
+            "players": 5,
+            "age": 2,
+            "guild": "red",
+            "cost": {
+                "c": 1,
+                "w": 1,
+                "o": 1
+            },
+            "effects": [
+                {
+                    "type": "army",
+                    "amount": 2
+                }
+            ],
+            "chains": [
+                "Apothecary"
+            ]
+        },
+        {
             "name": "Archery Range",
-            "image": "50",
+            "image": "/Age2/archeryRange_2_3",
             "players": 3,
             "age": 2,
             "guild": "red",
@@ -1056,8 +1833,28 @@
             ]
         },
         {
+            "name": "Archery Range",
+            "image": "/Age2/archeryRange_2_6",
+            "players": 6,
+            "age": 2,
+            "guild": "red",
+            "cost": {
+                "w": 2,
+                "o": 1
+            },
+            "effects": [
+                {
+                    "type": "army",
+                    "amount": 2
+                }
+            ],
+            "chains": [
+                "Workshop"
+            ]
+        },
+        {
             "name": "Siege Workshop",
-            "image": "51",
+            "image": "/Age3/siegeWorkshop_3_3",
             "players": 3,
             "age": 3,
             "guild": "red",
@@ -1076,8 +1873,28 @@
             ]
         },
         {
+            "name": "Siege Workshop",
+            "image": "/Age3/siegeWorkshop_3_5",
+            "players": 5,
+            "age": 3,
+            "guild": "red",
+            "cost": {
+                "c": 3,
+                "w": 1
+            },
+            "effects": [
+                {
+                    "type": "army",
+                    "amount": 3
+                }
+            ],
+            "chains": [
+                "Laboratory"
+            ]
+        },
+        {
             "name": "Tavern",
-            "image": "52",
+            "image": "/Age1/tavern_1_4",
             "players": 4,
             "age": 1,
             "guild": "yellow",
@@ -1093,8 +1910,42 @@
             ]
         },
         {
+            "name": "Tavern",
+            "image": "/Age1/tavern_1_5",
+            "players": 5,
+            "age": 1,
+            "guild": "yellow",
+            "cost": {},
+            "effects": [
+                {
+                    "type": "coin",
+                    "amount": 5
+                }
+            ],
+            "chains": [
+                null
+            ]
+        },
+        {
+            "name": "Tavern",
+            "image": "/Age1/tavern_1_7",
+            "players": 7,
+            "age": 1,
+            "guild": "yellow",
+            "cost": {},
+            "effects": [
+                {
+                    "type": "coin",
+                    "amount": 5
+                }
+            ],
+            "chains": [
+                null
+            ]
+        },
+        {
             "name": "East Trading Post",
-            "image": "53",
+            "image": "/Age1/eastTradingPost_1_3",
             "players": 3,
             "age": 1,
             "guild": "yellow",
@@ -1110,8 +1961,25 @@
             ]
         },
         {
+            "name": "East Trading Post",
+            "image": "/Age1/eastTradingPost_1_7",
+            "players": 7,
+            "age": 1,
+            "guild": "yellow",
+            "cost": {},
+            "effects": [
+                {
+                    "type": "rcostEast",
+                    "amount": 1
+                }
+            ],
+            "chains": [
+                null
+            ]
+        },
+        {
             "name": "West Trading Post",
-            "image": "54",
+            "image": "/Age1/westTradingPost_1_3",
             "players": 3,
             "age": 1,
             "guild": "yellow",
@@ -1127,8 +1995,25 @@
             ]
         },
         {
+            "name": "West Trading Post",
+            "image": "/Age1/westTradingPost_1_7",
+            "players": 7,
+            "age": 1,
+            "guild": "yellow",
+            "cost": {},
+            "effects": [
+                {
+                    "type": "rcostWest",
+                    "amount": 1
+                }
+            ],
+            "chains": [
+                null
+            ]
+        },
+        {
             "name": "Marketplace",
-            "image": "55",
+            "image": "marketplace_1_3",
             "players": 3,
             "age": 1,
             "guild": "yellow",
@@ -1148,8 +2033,29 @@
             ]
         },
         {
+            "name": "Marketplace",
+            "image": "marketplace_1_6",
+            "players": 6,
+            "age": 1,
+            "guild": "yellow",
+            "cost": {},
+            "effects": [
+                {
+                    "type": "mcostEast",
+                    "amount": 1
+                },
+                {
+                    "type": "mcostWest",
+                    "amount": 1
+                }
+            ],
+            "chains": [
+                null
+            ]
+        },
+        {
             "name": "Forum",
-            "image": "56",
+            "image": "/Age2/forum_2_3",
             "players": 3,
             "age": 2,
             "guild": "yellow",
@@ -1172,8 +2078,56 @@
             ]
         },
         {
+            "name": "Forum",
+            "image": "/Age2/forum_2_6",
+            "players": 6,
+            "age": 2,
+            "guild": "yellow",
+            "cost": {
+                "c": 2
+            },
+            "effects": [
+                {
+                    "type": "rchoice",
+                    "list": [
+                        "g",
+                        "l",
+                        "p"
+                    ]
+                }
+            ],
+            "chains": [
+                "East Trading Post",
+                "West Trading Post"
+            ]
+        },
+        {
+            "name": "Forum",
+            "image": "/Age2/forum_2_7",
+            "players": 7,
+            "age": 2,
+            "guild": "yellow",
+            "cost": {
+                "c": 2
+            },
+            "effects": [
+                {
+                    "type": "rchoice",
+                    "list": [
+                        "g",
+                        "l",
+                        "p"
+                    ]
+                }
+            ],
+            "chains": [
+                "East Trading Post",
+                "West Trading Post"
+            ]
+        },
+        {
             "name": "Caravansery",
-            "image": "57",
+            "image": "/Age2/caravansery_2_3",
             "players": 3,
             "age": 2,
             "guild": "yellow",
@@ -1196,8 +2150,56 @@
             ]
         },
         {
+            "name": "Caravansery",
+            "image": "/Age2/caravansery_2_5",
+            "players": 5,
+            "age": 2,
+            "guild": "yellow",
+            "cost": {
+                "w": 2
+            },
+            "effects": [
+                {
+                    "type": "rchoice",
+                    "list": [
+                        "c",
+                        "s",
+                        "o",
+                        "w"
+                    ]
+                }
+            ],
+            "chains": [
+                "Marketplace"
+            ]
+        },
+        {
+            "name": "Caravansery",
+            "image": "/Age2/caravansery_2_6",
+            "players": 6,
+            "age": 2,
+            "guild": "yellow",
+            "cost": {
+                "w": 2
+            },
+            "effects": [
+                {
+                    "type": "rchoice",
+                    "list": [
+                        "c",
+                        "s",
+                        "o",
+                        "w"
+                    ]
+                }
+            ],
+            "chains": [
+                "Marketplace"
+            ]
+        },
+        {
             "name": "Vineyard",
-            "image": "58",
+            "image": "/Age2/vineyard_2_3",
             "players": 3,
             "age": 2,
             "guild": "yellow",
@@ -1215,8 +2217,27 @@
             ]
         },
         {
+            "name": "Vineyard",
+            "image": "/Age2/vineyard_2_6",
+            "players": 6,
+            "age": 2,
+            "guild": "yellow",
+            "cost": {},
+            "effects": [
+                {
+                    "type": "coin",
+                    "amount": 1,
+                    "from": "all",
+                    "basis": "brown"
+                }
+            ],
+            "chains": [
+                null
+            ]
+        },
+        {
             "name": "Bazar",
-            "image": "59",
+            "image": "/Age2/bazar_2_4",
             "players": 4,
             "age": 2,
             "guild": "yellow",
@@ -1234,8 +2255,27 @@
             ]
         },
         {
+            "name": "Bazar",
+            "image": "/Age2/bazar_2_7",
+            "players": 7,
+            "age": 2,
+            "guild": "yellow",
+            "cost": {},
+            "effects": [
+                {
+                    "type": "coin",
+                    "amount": 2,
+                    "from": "all",
+                    "basis": "gray"
+                }
+            ],
+            "chains": [
+                null
+            ]
+        },
+        {
             "name": "Haven",
-            "image": "60",
+            "image": "/Age3/haven_3_3",
             "players": 3,
             "age": 3,
             "guild": "yellow",
@@ -1263,8 +2303,37 @@
             ]
         },
         {
+            "name": "Haven",
+            "image": "/Age3/haven_3_4",
+            "players": 4,
+            "age": 3,
+            "guild": "yellow",
+            "cost": {
+                "w": 1,
+                "o": 1,
+                "l": 1
+            },
+            "effects": [
+                {
+                    "type": "victory",
+                    "amount": 1,
+                    "from": "player",
+                    "basis": "brown"
+                },
+                {
+                    "type": "coin",
+                    "amount": 1,
+                    "from": "player",
+                    "basis": "brown"
+                }
+            ],
+            "chains": [
+                "Forum"
+            ]
+        },
+        {
             "name": "Lighthouse",
-            "image": "61",
+            "image": "/Age3/lighthouse_3_3",
             "players": 3,
             "age": 3,
             "guild": "yellow",
@@ -1291,8 +2360,36 @@
             ]
         },
         {
+            "name": "Lighthouse",
+            "image": "/Age3/lighthouse_3_6",
+            "players": 6,
+            "age": 3,
+            "guild": "yellow",
+            "cost": {
+                "s": 1,
+                "g": 1
+            },
+            "effects": [
+                {
+                    "type": "victory",
+                    "amount": 1,
+                    "from": "player",
+                    "basis": "yellow"
+                },
+                {
+                    "type": "coin",
+                    "amount": 1,
+                    "from": "player",
+                    "basis": "yellow"
+                }
+            ],
+            "chains": [
+                "Caravansery"
+            ]
+        },
+        {
             "name": "Chamber of Commerce",
-            "image": "62",
+            "image": "/Age3/chamberOfCommerce_3_4",
             "players": 4,
             "age": 3,
             "guild": "yellow",
@@ -1319,8 +2416,36 @@
             ]
         },
         {
+            "name": "Chamber of Commerce",
+            "image": "/Age3/chamberOfCommerce_3_6",
+            "players": 6,
+            "age": 3,
+            "guild": "yellow",
+            "cost": {
+                "c": 2,
+                "p": 1
+            },
+            "effects": [
+                {
+                    "type": "victory",
+                    "amount": 1,
+                    "from": "player",
+                    "basis": "gray"
+                },
+                {
+                    "type": "coin",
+                    "amount": 1,
+                    "from": "player",
+                    "basis": "gray"
+                }
+            ],
+            "chains": [
+                null
+            ]
+        },
+        {
             "name": "Arena",
-            "image": "63",
+            "image": "/Age3/arena_3_3",
             "players": 3,
             "age": 3,
             "guild": "yellow",
@@ -1347,8 +2472,36 @@
             ]
         },
         {
+            "name": "Arena",
+            "image": "/Age3/arena_3_5",
+            "players": 5,
+            "age": 3,
+            "guild": "yellow",
+            "cost": {
+                "s": 2,
+                "o": 1
+            },
+            "effects": [
+                {
+                    "type": "victory",
+                    "amount": 1,
+                    "from": "player",
+                    "basis": "wonderstages"
+                },
+                {
+                    "type": "coin",
+                    "amount": 3,
+                    "from": "player",
+                    "basis": "wonderstages"
+                }
+            ],
+            "chains": [
+                "Dispensary"
+            ]
+        },
+        {
             "name": "Apothecary",
-            "image": "64",
+            "image": "/Age1/apothecary_1_3",
             "players": 3,
             "age": 1,
             "guild": "green",
@@ -1370,8 +2523,31 @@
             ]
         },
         {
+            "name": "Apothecary",
+            "image": "/Age1/apothecary_1_5",
+            "players": 5,
+            "age": 1,
+            "guild": "green",
+            "cost": {
+                "l": 1
+            },
+            "effects": [
+                {
+                    "type": "schoice",
+                    "list": [
+                        "tab",
+                        "comp",
+                        "gear"
+                    ]
+                }
+            ],
+            "chains": [
+                null
+            ]
+        },
+        {
             "name": "Workshop",
-            "image": "65",
+            "image": "/Age1/workshop_1_3",
             "players": 3,
             "age": 1,
             "guild": "green",
@@ -1389,8 +2565,27 @@
             ]
         },
         {
+            "name": "Workshop",
+            "image": "/Age1/workshop_1_7",
+            "players": 7,
+            "age": 1,
+            "guild": "green",
+            "cost": {
+                "g": 1
+            },
+            "effects": [
+                {
+                    "type": "comp",
+                    "amount": 1
+                }
+            ],
+            "chains": [
+                null
+            ]
+        },
+        {
             "name": "Scriptorium",
-            "image": "66",
+            "image": "/Age1/scriptorium_1_3",
             "players": 3,
             "age": 1,
             "guild": "green",
@@ -1408,8 +2603,27 @@
             ]
         },
         {
+            "name": "Scriptorium",
+            "image": "/Age1/scriptorium_1_4",
+            "players": 4,
+            "age": 1,
+            "guild": "green",
+            "cost": {
+                "p": 1
+            },
+            "effects": [
+                {
+                    "type": "tab",
+                    "amount": 1
+                }
+            ],
+            "chains": [
+                null
+            ]
+        },
+        {
             "name": "Dispensary",
-            "image": "67",
+            "image": "/Age2/dispensary_2_3",
             "players": 3,
             "age": 2,
             "guild": "green",
@@ -1428,8 +2642,28 @@
             ]
         },
         {
+            "name": "Dispensary",
+            "image": "/Age2/dispensary_2_4",
+            "players": 4,
+            "age": 2,
+            "guild": "green",
+            "cost": {
+                "o": 2,
+                "g": 1
+            },
+            "effects": [
+                {
+                    "type": "comp",
+                    "amount": 1
+                }
+            ],
+            "chains": [
+                "Apothecary"
+            ]
+        },
+        {
             "name": "Laboratory",
-            "image": "68",
+            "image": "/Age2/laboratory_2_3",
             "players": 3,
             "age": 2,
             "guild": "green",
@@ -1448,8 +2682,28 @@
             ]
         },
         {
+            "name": "Laboratory",
+            "image": "/Age2/laboratory_2_5",
+            "players": 5,
+            "age": 2,
+            "guild": "green",
+            "cost": {
+                "c": 2,
+                "p": 1
+            },
+            "effects": [
+                {
+                    "type": "gear",
+                    "amount": 1
+                }
+            ],
+            "chains": [
+                "Workshop"
+            ]
+        },
+        {
             "name": "Library",
-            "image": "69",
+            "image": "/Age2/library_2_3",
             "players": 3,
             "age": 2,
             "guild": "green",
@@ -1468,8 +2722,28 @@
             ]
         },
         {
+            "name": "Library",
+            "image": "/Age2/library_2_6",
+            "players": 6,
+            "age": 2,
+            "guild": "green",
+            "cost": {
+                "s": 2,
+                "l": 1
+            },
+            "effects": [
+                {
+                    "type": "tab",
+                    "amount": 1
+                }
+            ],
+            "chains": [
+                "Scriptorium"
+            ]
+        },
+        {
             "name": "School",
-            "image": "70",
+            "image": "/Age2/school_2_3",
             "players": 3,
             "age": 2,
             "guild": "green",
@@ -1488,8 +2762,28 @@
             ]
         },
         {
+            "name": "School",
+            "image": "/Age2/school_2_7",
+            "players": 7,
+            "age": 2,
+            "guild": "green",
+            "cost": {
+                "w": 1,
+                "p": 1
+            },
+            "effects": [
+                {
+                    "type": "tab",
+                    "amount": 1
+                }
+            ],
+            "chains": [
+                null
+            ]
+        },
+        {
             "name": "Lodge",
-            "image": "71",
+            "image": "/Age3/lodge_3_3",
             "players": 3,
             "age": 3,
             "guild": "green",
@@ -1509,8 +2803,29 @@
             ]
         },
         {
+            "name": "Lodge",
+            "image": "/Age3/lodge_3_6",
+            "players": 6,
+            "age": 3,
+            "guild": "green",
+            "cost": {
+                "c": 2,
+                "p": 1,
+                "l": 1
+            },
+            "effects": [
+                {
+                    "type": "comp",
+                    "amount": 1
+                }
+            ],
+            "chains": [
+                "Dispensary"
+            ]
+        },
+        {
             "name": "Observatory",
-            "image": "72",
+            "image": "/Age3/observatory_3_3",
             "players": 3,
             "age": 3,
             "guild": "green",
@@ -1531,7 +2846,7 @@
         },
         {
             "name": "University",
-            "image": "73",
+            "image": "/Age3/university_3_3",
             "players": 3,
             "age": 3,
             "guild": "green",
@@ -1551,8 +2866,29 @@
             ]
         },
         {
+            "name": "University",
+            "image": "/Age3/university_3_4",
+            "players": 4,
+            "age": 3,
+            "guild": "green",
+            "cost": {
+                "w": 2,
+                "p": 1,
+                "g": 1
+            },
+            "effects": [
+                {
+                    "type": "tab",
+                    "amount": 1
+                }
+            ],
+            "chains": [
+                "Library"
+            ]
+        },
+        {
             "name": "Academy",
-            "image": "74",
+            "image": "/Age3/academy_3_3",
             "players": 3,
             "age": 3,
             "guild": "green",
@@ -1572,8 +2908,29 @@
         },
         {
             "name": "Study",
-            "image": "75",
+            "image": "/Age3/study_3_3",
             "players": 3,
+            "age": 3,
+            "guild": "green",
+            "cost": {
+                "w": 2,
+                "p": 1,
+                "l": 1
+            },
+            "effects": [
+                {
+                    "type": "gear",
+                    "amount": 1
+                }
+            ],
+            "chains": [
+                "School"
+            ]
+        },
+        {
+            "name": "Study",
+            "image": "/Age3/study_3_5",
+            "players": 5,
             "age": 3,
             "guild": "green",
             "cost": {
