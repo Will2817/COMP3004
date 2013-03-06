@@ -31,6 +31,7 @@ namespace _7Wonders.Client
         {
             //Console.WriteLine("Start Test");
             int i = netService.joinHost(host);
+            gameManager.setConnected();
             //Console.WriteLine("Over here:" + i);
         }
 

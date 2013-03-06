@@ -40,7 +40,7 @@ namespace _7Wonders
         Interface activeInterface;
         JObject wondersJson = JObject.Parse(File.ReadAllText("Content/Json/wonderlist.json"));
         public static Client.Client client;
-        Host.Host host;
+        public static Host.Host host;
 
         
 
@@ -159,9 +159,17 @@ namespace _7Wonders
 
             activeInterface.Update(gameTime, Mouse.GetState());
 
-            Dictionary<string, string> message;
+            Dictionary<string, string> message = new Dictionary<string,string>();
 
-            if ((message = activeInterface.isFinished()) != null)
+            if (!client.isConnected() && (activeInterface != interfaces["mainmenu"]))
+            {
+                activeInterface.reset();
+                activeInterface = interfaces["mainmenu"];
+                message.Add("connection", "Lost Connection");
+                activeInterface.receiveMessage(message);
+            }
+
+            else if ((message = activeInterface.isFinished()) != null)
             {
                 if (message["nextInterface"] == "hostlobby")
                 {
@@ -188,12 +196,6 @@ namespace _7Wonders
                 activeInterface.reset();
                 activeInterface = interfaces[message["nextInterface"]];
                 activeInterface.receiveMessage(message);
-            }
-
-            if (!client.isConnected() && (activeInterface != interfaces["mainmenu"]))
-            {
-                activeInterface.reset();
-                activeInterface = interfaces["mainmenu"];
             }
 
             ProcessKeyboard();

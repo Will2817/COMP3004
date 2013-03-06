@@ -59,5 +59,10 @@ namespace _7Wonders.Client
         {
             connected = false;
         }
+
+        public void setConnected()
+        {
+            connected = true;
+        }
     }
 }

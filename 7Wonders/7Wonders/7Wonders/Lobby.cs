@@ -181,8 +181,24 @@ namespace _7Wonders
             List<Player> players = Game1.client.getState().getPlayers().Values.ToList<Player>();
             foreach (DropDown dd in dropDowns)
             {
-                if (count < players.Count) dd.setSelected(players[count].getName());
-                else if (! playerTypes.Contains(dd.getSelected())) dd.setSelected("Open");
+                if (count < players.Count)
+                {
+                    dd.setSelected(players[count].getName());
+                    if (Game1.host != null) dd.setEnabled(false);
+                    if (players[count].getName() == System.Environment.MachineName)
+                        readyCBs[count].setEnabled(true);
+                    else readyCBs[count].setEnabled(false);
+                }
+                else if (!playerTypes.Contains(dd.getSelected()))
+                {
+                    dd.setSelected("Open");
+                    if (Game1.host != null)
+                    {
+                        dd.setEnabled(true);
+                        readyCBs[count].setEnabled(true);
+                    }
+                    else readyCBs[count].setEnabled(false);
+                }
                 count++;
             }
         }
