@@ -83,10 +83,15 @@ namespace _7Wonders.Host
                             break;
                         case NetIncomingMessageType.StatusChanged:
                             NetConnectionStatus status = (NetConnectionStatus)inMessage.ReadByte();
-                            if (status == NetConnectionStatus.Disconnecting || status == NetConnectionStatus.Disconnected)
+                            if (status == NetConnectionStatus.Disconnected || status == NetConnectionStatus.None)
                             {
+                                Console.WriteLine("(HOST)client disconnecting: ");
                                 long clientID = inMessage.SenderConnection.RemoteUniqueIdentifier;
-                                eventHandler.handleClientDrop(clientID);
+                                Console.WriteLine("id: " + clientID);
+                                Console.WriteLine("name: " + names[clientID]);
+                                connections.Remove(clientID);
+                                names.Remove(clientID);
+                                Thread t = new Thread(() => eventHandler.handleClientDrop(clientID));
                             }
                             if (status == NetConnectionStatus.Connected)
                             {

@@ -132,7 +132,6 @@ namespace _7Wonders.Client
         public int disconnect()
         {
             connection.Disconnect(null);
-            while (connection.Status != NetConnectionStatus.Disconnected);
             return 0;
         }
     }
