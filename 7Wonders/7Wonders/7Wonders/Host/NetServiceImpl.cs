@@ -148,6 +148,7 @@ namespace _7Wonders.Host
 
         public void shutdown()
         {
+            Console.WriteLine("Server Shutting down...");
             server.Shutdown("");
         }
     }

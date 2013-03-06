@@ -131,6 +131,7 @@ namespace _7Wonders.Client
 
         public int disconnect()
         {
+            Console.WriteLine("Client Shutting down...");
             connection.Disconnect("");
             return 0;
         }

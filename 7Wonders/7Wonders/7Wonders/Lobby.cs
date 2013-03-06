@@ -182,7 +182,7 @@ namespace _7Wonders
             foreach (DropDown dd in dropDowns)
             {
                 if (count < players.Count - 1) dd.setSelected(players[count].getName());
-                else dd.setSelected("Open");
+                else if (! playerTypes.Contains(dd.getSelected())) dd.setSelected("Open");
                 count++;
             }
         }
