@@ -5,7 +5,7 @@ using System.Text;
 
 namespace _7Wonders.Host
 {
-    class Host
+    public class Host
     {
         private GameManager gameManager;
         private EventHandlerServiceImpl eventHandlerService;
