@@ -40,7 +40,7 @@ namespace _7Wonders
         Interface activeInterface;
         JObject wondersJson = JObject.Parse(File.ReadAllText("Content/Json/wonderlist.json"));
         public static Client.Client client;
-        public Host.Host host;
+        Host.Host host;
 
         
 
@@ -177,6 +177,7 @@ namespace _7Wonders
                 }
                 if ((message["nextInterface"] == "mainmenu"))
                 {
+                    if (host != null) host.shutdown();
                     client.disconnect();
                 }
                 activeInterface.reset();
@@ -288,6 +289,17 @@ namespace _7Wonders
            // spriteBatch.Draw(textures[image], new Rectangle(0, 0, 100, 40), Color.White);
             spriteBatch.End();
             base.Draw(gameTime);
+        }
+
+        protected override void OnExiting(Object sender, EventArgs args)
+        {
+            base.OnExiting(sender, args);
+
+            if (host != null) host.shutdown();
+            client.disconnect();
+
+            Exit();
+            // Stop the threads
         }
     }
 }
