@@ -65,8 +65,6 @@ namespace _7Wonders.Host
                                 string clientName = inMessage.ReadString();
                                 connections.Add(clientID, inMessage.SenderConnection);
                                 names.Add(clientID, clientName);
-                                //Thread t = new Thread(() => eventHandler.handleNewClient(clientID, clientName));
-                                //t.Start();
                             }
                             else
                                 inMessage.SenderConnection.Deny();
@@ -86,20 +84,17 @@ namespace _7Wonders.Host
                             NetConnectionStatus status = (NetConnectionStatus)inMessage.ReadByte();
                             if (status == NetConnectionStatus.Disconnected || status == NetConnectionStatus.None)
                             {
-                                Console.WriteLine("(HOST)client disconnecting: ");
                                 long clientID = inMessage.SenderConnection.RemoteUniqueIdentifier;
-                                Console.WriteLine("id: " + clientID);
-                                Console.WriteLine("name: " + names[clientID]);
                                 connections.Remove(clientID);
                                 names.Remove(clientID);
                                 Thread t = new Thread(() => eventHandler.handleClientDrop(clientID));
+                                t.Start();
                             }
                             if (status == NetConnectionStatus.Connected)
                             {
                                 long id = inMessage.SenderConnection.RemoteUniqueIdentifier;
                                 if (names.ContainsKey(id))
                                 {
-                                    names.Remove(id);
                                     Thread t = new Thread(() => eventHandler.handleNewClient(id, names[id]));
                                     t.Start();
                                 }

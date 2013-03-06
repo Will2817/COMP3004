@@ -23,7 +23,6 @@ namespace _7Wonders.Client
                     gameManager.updatePlayers(message);
                     break;
                 case HostMessageType.PLAYER_DROPPED:
-                    Console.WriteLine("(CLIENT)Received player drop notification");
                     gameManager.updatePlayers(message);
                     break;
                 default:

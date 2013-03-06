@@ -48,7 +48,6 @@ namespace _7Wonders.Host
             if (!gameState.isGameInProgress())
             {
                 gameState.removePlayer(id);
-                Console.WriteLine("(HOST)Removed player, notifying other players");
                 messageSerializer.notifyPlayerDropped(gameState.playersToJson());
             }
         }
