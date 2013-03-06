@@ -77,7 +77,6 @@ namespace _7Wonders
                         existsADrop = false;
                     }
                 }
-                updatePlayers();
             }
         }
 

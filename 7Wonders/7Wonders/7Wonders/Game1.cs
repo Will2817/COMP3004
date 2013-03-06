@@ -185,6 +185,12 @@ namespace _7Wonders
                 activeInterface.receiveMessage(message);
             }
 
+            if (!client.isConnected() && (activeInterface != interfaces["mainmenu"]))
+            {
+                activeInterface.reset();
+                activeInterface = interfaces[message["mainmenu"]];
+            }
+
             ProcessKeyboard();
             prevState = Keyboard.GetState();
 

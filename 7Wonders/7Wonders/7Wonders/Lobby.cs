@@ -151,7 +151,7 @@ namespace _7Wonders
                         visuals1["selected"].setTexture(w.getName() + "_A");
                 }
             }
-            updatePlayers();
+            if (Game1.client.isUpdateAvailable()) updatePlayers();
         }
 
         public override Dictionary<string, string> isFinished()
