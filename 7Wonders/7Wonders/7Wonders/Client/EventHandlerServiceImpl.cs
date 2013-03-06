@@ -32,7 +32,7 @@ namespace _7Wonders.Client
 
         public void handleDisconnect()
         {
-            //stuff
+            gameManager.disconnected();
         }
     }
 }

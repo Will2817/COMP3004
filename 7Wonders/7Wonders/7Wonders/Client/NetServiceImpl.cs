@@ -110,7 +110,10 @@ namespace _7Wonders.Client
                         case NetIncomingMessageType.StatusChanged:
                             NetConnectionStatus status = (NetConnectionStatus) inMessage.ReadByte();
                             if (status == NetConnectionStatus.Disconnecting || status == NetConnectionStatus.Disconnected)
+                            {
+                                disconnect();
                                 eventHandler.handleDisconnect();
+                            }
                             break;
                         default:
                             break;
@@ -132,7 +135,7 @@ namespace _7Wonders.Client
         public int disconnect()
         {
             Console.WriteLine("Client Shutting down...");
-            connection.Disconnect("");
+            client.Shutdown("");
             return 0;
         }
     }

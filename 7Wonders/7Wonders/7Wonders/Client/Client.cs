@@ -40,7 +40,18 @@ namespace _7Wonders.Client
         }
 
         public GameState getState(){
+            gameManager.setUpdateChecked();
             return gameManager.getGameState();
+        }
+
+        public bool isUpdateAvailable()
+        {
+            return gameManager.isUpdateAvailable();
+        }
+
+        public bool isConnected()
+        {
+            return gameManager.isConnected();
         }
     }
 }
