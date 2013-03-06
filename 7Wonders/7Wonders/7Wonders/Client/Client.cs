@@ -34,6 +34,11 @@ namespace _7Wonders.Client
             //Console.WriteLine("Over here:" + i);
         }
 
+        public void disconnect()
+        {
+            netService.disconnect();
+        }
+
         public GameState getState(){
             return gameManager.getGameState();
         }
