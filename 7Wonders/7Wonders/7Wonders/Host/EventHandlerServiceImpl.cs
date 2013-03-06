@@ -22,6 +22,7 @@ namespace _7Wonders.Host
 
         public void handleClientDrop(long clientID)
         {
+            Console("(HOST)Handling player drop event");
             gameManager.removePlayer(clientID);
         }
 

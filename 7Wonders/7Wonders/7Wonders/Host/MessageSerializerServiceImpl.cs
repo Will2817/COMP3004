@@ -23,6 +23,7 @@ namespace _7Wonders.Host
 
         public void notifyPlayerDropped(string players)
         {
+            Console.WriteLine("(HOST)Notifying players that a player dropped");
             netService.broadcastMessage(players, (int)HostMessageType.PLAYER_DROPPED);
         }
 

@@ -29,6 +29,7 @@ namespace _7Wonders.Host
             port = constants.Value<int>("port");
             clientport = constants.Value<int>("clientport");
             config = new NetPeerConfiguration(tag);
+            config.ConnectionTimeout = 5;
             config.EnableMessageType(NetIncomingMessageType.DiscoveryRequest);
             config.EnableMessageType(NetIncomingMessageType.ConnectionApproval);
             config.Port = port;
@@ -98,6 +99,7 @@ namespace _7Wonders.Host
                                 long id = inMessage.SenderConnection.RemoteUniqueIdentifier;
                                 if (names.ContainsKey(id))
                                 {
+                                    names.Remove(id);
                                     Thread t = new Thread(() => eventHandler.handleNewClient(id, names[id]));
                                     t.Start();
                                 }
@@ -151,7 +153,7 @@ namespace _7Wonders.Host
 
         public void shutdown()
         {
-            //TODO
+            server.Shutdown("");
         }
     }
 }
