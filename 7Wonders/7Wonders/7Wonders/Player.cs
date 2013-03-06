@@ -13,6 +13,7 @@ namespace _7Wonders
         protected Wonder board;
         protected List<Card> hand;
         protected List<Card> played;
+        protected bool ready;
 
         // Players Score
         // Victory Points, Army, Coins, Conflict tokens
@@ -32,6 +33,7 @@ namespace _7Wonders
             board       = null;            
             hand        = null;
             played      = null;
+            ready       = false;
 
             // Setting the Players Score Dictionary
             score = new Dictionary<Score, int>();
@@ -97,6 +99,7 @@ namespace _7Wonders
         public Wonder getBoard()        {   return board;   }
         public List<Card> getHand()     {   return hand;    }
         public List<Card> getPlayed()   {   return played;  }
+        public bool getReady()          {   return ready;   }
             
         // Returns the dicitonary object of Score & Resources
         public Dictionary<Score, int> getScore()           { return score;     }
@@ -156,7 +159,8 @@ namespace _7Wonders
                     new JProperty("player",
                     new JObject(
                         new JProperty("name", name),
-                        new JProperty("id", id))));
+                        new JProperty("id", id),
+                        new JProperty("ready", ready))));
             return player.ToString();
         }
         public JObject toJObject()
@@ -164,7 +168,8 @@ namespace _7Wonders
             JObject player =
                 new JObject(
                     new JProperty("name", name),
-                    new JProperty("id", id));
+                    new JProperty("id", id),
+                    new JProperty("ready",ready));
             return player;
         }
 
@@ -203,6 +208,5 @@ namespace _7Wonders
             else
                 Console.WriteLine("Error: Add Resource failed, no such resource " + r);
         }
-
     }
 }

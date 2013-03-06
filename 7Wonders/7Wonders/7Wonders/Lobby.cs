@@ -25,7 +25,7 @@ namespace _7Wonders
         protected int DROPDOWNHEIGHT = (Game1.HEIGHT*2/3 - (Game1.MAXPLAYER + 1) * MARGIN) / Game1.MAXPLAYER;        
 
         protected Dictionary<String, Visual> visuals1;
-        protected List<Visual> readyCBs;
+        protected List<Checkbox> readyCBs;
         protected Dictionary<String, Visual> wonders;
         protected List<string> playerTypes = new List<string>() { "Open", "AIType1", "AIType2", "AIType3" };
         protected List<Visual> dropDowns;
@@ -44,7 +44,7 @@ namespace _7Wonders
             sideButton = new Button(game, new Vector2(Game1.WIDTH - 140, Game1.HEIGHT - 140), 140, 40, "Toggle Side", "Font1");
             backButton = new Button(game, new Vector2(10, Game1.HEIGHT - 100), 75, 40, "Back", "Font1");
 
-            readyCBs = new List<Visual>();
+            readyCBs = new List<Checkbox>();
             for (int i = 0; i < NUMPLAYERS; i++)
             {
                 readyCBs.Add(new Checkbox(game, new Vector2(50 + DROPDOWNWIDTH, 20 + (MARGIN + DROPDOWNHEIGHT) * i), CHECKBOXDIM, CHECKBOXDIM));
@@ -188,17 +188,15 @@ namespace _7Wonders
                     if (players[count].getName() == System.Environment.MachineName)
                         readyCBs[count].setEnabled(true);
                     else readyCBs[count].setEnabled(false);
+                    readyCBs[count].setSelected(players[count].getReady());
                 }
                 else if (!playerTypes.Contains(dd.getSelected()))
                 {
                     dd.setSelected("Open");
-                    if (Game1.host != null)
-                    {
-                        dd.setEnabled(true);
-                        readyCBs[count].setEnabled(true);
-                    }
-                    else readyCBs[count].setEnabled(false);
+                    if (Game1.host != null) dd.setEnabled(true);
+                    readyCBs[count].setEnabled(false);
                 }
+                else readyCBs[count].setEnabled(false);
                 count++;
             }
         }
