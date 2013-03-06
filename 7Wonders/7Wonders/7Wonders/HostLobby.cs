@@ -77,6 +77,7 @@ namespace _7Wonders
                         existsADrop = false;
                     }
                 }
+                updatePlayers();
             }
         }
 
@@ -108,7 +109,7 @@ namespace _7Wonders
             foreach (DropDown dd in dropDowns)
             {
                 if (count < players.Count) dd.setSelected(players[count].getName()).setEnabled(false);
-                else if (! playerTypes.Contains(dd.getSelected())) dd.setSelected("Open").setEnabled(true);
+                else if (!playerTypes.Contains(dd.getSelected())) dd.setSelected("Open").setEnabled(true);
                 count++;
             }
         }

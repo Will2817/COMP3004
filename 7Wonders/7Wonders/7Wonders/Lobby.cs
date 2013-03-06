@@ -181,7 +181,7 @@ namespace _7Wonders
             List<Player> players = Game1.client.getState().getPlayers().Values.ToList<Player>();
             foreach (DropDown dd in dropDowns)
             {
-                if (count < players.Count - 1) dd.setSelected(players[count].getName());
+                if (count < players.Count) dd.setSelected(players[count].getName());
                 else if (! playerTypes.Contains(dd.getSelected())) dd.setSelected("Open");
                 count++;
             }

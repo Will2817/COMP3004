@@ -296,7 +296,7 @@ namespace _7Wonders
             base.OnExiting(sender, args);
 
             if (host != null) host.shutdown();
-            client.disconnect();
+            else client.disconnect();
 
             Exit();
             // Stop the threads

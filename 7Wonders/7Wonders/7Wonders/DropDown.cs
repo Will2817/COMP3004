@@ -81,7 +81,7 @@ namespace _7Wonders
 
         public string getSelected()
         {
-            return text;
+            return selected.getString();
         }
 
         public DropDown setSelected(string _text)
