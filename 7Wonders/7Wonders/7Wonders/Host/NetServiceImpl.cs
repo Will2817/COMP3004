@@ -100,6 +100,9 @@ namespace _7Wonders.Host
                                 }
                             }
                             break;
+                        case NetIncomingMessageType.WarningMessage:
+                            Console.WriteLine(inMessage.ReadString());
+                            break;
                         default:
                             break;
                     }

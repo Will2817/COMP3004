@@ -16,7 +16,7 @@ namespace _7Wonders.Client
         public GameManager()
         {
             gameState = new GameState();
-            connected = true;
+            connected = false;
         }
 
         public void setMessageSerializer(MessageSerializerService messageSerializer)
