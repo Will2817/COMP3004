@@ -17,11 +17,14 @@ namespace _7Wonders
         protected static Dictionary<String, Visual> visuals1;
         protected static Dictionary<String, Visual> visuals2;
         protected static Dictionary<String, Visual> visuals3;
+        protected static Dictionary<String, Visual> connectDia;
 
         protected static Button HGame;
         protected static Button JGame;
         protected static Button CRoom;
         protected static Button backButton;
+        protected static Button OK;
+
         protected static Textbox ip1;
         protected static Textbox ip2;
         protected static Textbox ip3;
@@ -38,6 +41,7 @@ namespace _7Wonders
             visuals1 = new Dictionary<String, Visual>();
             visuals2 = new Dictionary<String, Visual>();
             visuals3 = new Dictionary<String, Visual>();
+            connectDia = new Dictionary<string, Visual>();
 
             HGame = new Button(game, new Vector2(150, 450), 200, 50, "Host Game", "Font1");
             JGame = new Button(game, new Vector2(450, 450), 200, 50, "Join Game", "Font1");
@@ -75,6 +79,11 @@ namespace _7Wonders
             visuals3.Add("ip4", ip4);
             visuals3.Add("backButton", backButton);
 
+            connectDia.Add("connectBox", new Visual(game, new Vector2(250, 200), 300, 125, "line", Color.Silver));
+            connectDia.Add("message", new Visual(game, new Vector2(280, 215), "", "Font1", Color.White));
+            OK = new Button(game, new Vector2(280, 250), 120, 50, "Okay", "Font1");
+            connectDia.Add("ok", OK);
+
             activeVisuals = visuals1;
         }
 
@@ -90,6 +99,10 @@ namespace _7Wonders
                 v.LoadContent();
             }
             foreach (Visual v in visuals3.Values)
+            {
+                v.LoadContent();
+            }
+            foreach (Visual v in connectDia.Values)
             {
                 v.LoadContent();
             }
@@ -121,6 +134,18 @@ namespace _7Wonders
                 backButton.reset();
                 activeVisuals = visuals1;
             }
+
+            if (OK.isClicked())
+            {
+                OK.reset();
+                foreach (string key in connectDia.Keys)
+                {
+                    if (activeVisuals.ContainsKey(key))
+                        activeVisuals.Remove(key);
+                }
+                HGame.setEnabled(true);
+                JGame.setEnabled(true);
+            }
         }
 
         public override Dictionary<string, string> isFinished()
@@ -141,6 +166,20 @@ namespace _7Wonders
                 {
                     {"nextInterface", "mainmenu"},
                 };
+        }
+
+        public override void receiveMessage(Dictionary<string, string> message)
+        {
+            if (message.ContainsKey("connection"))
+            {
+                connectDia["message"].setString(message["connection"]);
+                foreach (KeyValuePair<string, Visual> kp in connectDia)
+                {
+                    activeVisuals.Add(kp.Key, kp.Value);
+                }
+                HGame.setEnabled(false);
+                JGame.setEnabled(false);
+            }
         }
     }
 }

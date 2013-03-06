@@ -170,15 +170,20 @@ namespace _7Wonders
                     Console.WriteLine("StartClient");
                     client.joinHost(true);
                 }
-                if ((message["nextInterface"] == "lobby"))
-                {
-                    Console.WriteLine("StartClient");
-                    client.joinHost(false);
-                }
                 if ((message["nextInterface"] == "mainmenu"))
                 {
                     if (host != null) host.shutdown();
                     client.disconnect();
+                }
+                if ((message["nextInterface"] == "lobby"))
+                {
+                    Console.WriteLine("Join StartClient");
+                    client.joinHost(false);
+                    if (!client.isConnected())
+                    {
+                        message["nextInterface"] = "mainmenu";
+                        message["connection"] = "Failed to Connect";
+                    }
                 }
                 activeInterface.reset();
                 activeInterface = interfaces[message["nextInterface"]];
