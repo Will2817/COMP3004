@@ -142,7 +142,7 @@ namespace _7Wonders.Host
             outMessage = server.CreateMessage();
             outMessage.Write(type);
             outMessage.Write(message);
-            NetDeliveryMethod method = NetDeliveryMethod.ReliableUnordered;
+            NetDeliveryMethod method = NetDeliveryMethod.ReliableOrdered;
             server.SendMessage(outMessage, connections[clientID], method);
         }
 

@@ -25,6 +25,9 @@ namespace _7Wonders.Client
                 case HostMessageType.PLAYER_DROPPED:
                     gameManager.updatePlayers(message);
                     break;
+                case HostMessageType.READY_CHANGED:
+                    gameManager.updatePlayers(message);
+                    break;
                 default:
                     break;
             }

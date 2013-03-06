@@ -29,6 +29,9 @@ namespace _7Wonders.Host
         {
             switch ((ClientMessageType)type)
             {
+                case ClientMessageType.READY_CHANGED:
+                    gameManager.setPlayerReady(clientID, Boolean.Parse(message));
+                    break;
                 case ClientMessageType.BOARD_SELECTION:
                     //stuff
                     break;

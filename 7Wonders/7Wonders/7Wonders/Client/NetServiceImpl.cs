@@ -127,7 +127,7 @@ namespace _7Wonders.Client
             outMessage = client.CreateMessage();
             outMessage.Write(type);
             outMessage.Write(message);
-            NetDeliveryMethod method = NetDeliveryMethod.ReliableUnordered;
+            NetDeliveryMethod method = NetDeliveryMethod.ReliableOrdered;
             client.SendMessage(outMessage, connection, method);
             return 0;
         }

@@ -13,6 +13,7 @@ namespace _7Wonders
         protected Wonder board;
         protected List<Card> hand;
         protected List<Card> played;
+        protected bool ready;
 
         // Players Score
         // Victory Points, Army, Coins, Conflict tokens
@@ -97,6 +98,7 @@ namespace _7Wonders
         public Wonder getBoard()        {   return board;   }
         public List<Card> getHand()     {   return hand;    }
         public List<Card> getPlayed()   {   return played;  }
+        public bool isReady()           { return ready; }
             
         // Returns the dicitonary object of Score & Resources
         public Dictionary<Score, int> getScore()           { return score;     }
@@ -137,6 +139,7 @@ namespace _7Wonders
         public void setNameID(string n)         {   name = n;   }
         public void setHand(List<Card> h)       {   hand = new List<Card>(h);   }
         public void setPlayed(List<Card> p)     {   played = new List<Card>(p); }
+        public void setReady(bool ready) { this.ready = ready; }
 
         public void addPlayed(Card c)             
         {

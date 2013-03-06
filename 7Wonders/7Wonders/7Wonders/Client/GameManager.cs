@@ -12,13 +12,11 @@ namespace _7Wonders.Client
         NetService netService;
         bool updateAvailable;
         bool connected;
-        bool ready;
 
         public GameManager()
         {
             gameState = new GameState();
             connected = true;
-            ready = false;
         }
 
         public void setMessageSerializer(MessageSerializerService messageSerializer)
@@ -64,7 +62,6 @@ namespace _7Wonders.Client
 
         public void setReady(bool ready)
         {
-            this.ready = ready;
             messageSerializer.notifyReadyChanged(ready);
         }
     }
