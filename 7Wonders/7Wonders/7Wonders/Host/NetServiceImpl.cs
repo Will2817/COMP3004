@@ -50,7 +50,7 @@ namespace _7Wonders.Host
         private void listenMessages()
         {
             NetIncomingMessage inMessage;
-            while (true)
+            while (server.Socket != null)
             {
                 if ((inMessage = server.ReadMessage()) != null)
                 {

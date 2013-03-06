@@ -93,7 +93,7 @@ namespace _7Wonders.Client
         private void listenMessages()
         {
             NetIncomingMessage inMessage;
-            while (true)
+            while (client.Socket != null)
             {
                 if ((inMessage = client.ReadMessage()) != null)
                 {
