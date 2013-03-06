@@ -53,5 +53,10 @@ namespace _7Wonders.Client
         {
             return gameManager.isConnected();
         }
+
+        public void setReady(bool ready)
+        {
+            gameManager.setReady(ready);
+        }
     }
 }

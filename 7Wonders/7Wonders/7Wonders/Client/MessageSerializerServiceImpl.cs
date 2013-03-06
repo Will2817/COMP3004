@@ -14,6 +14,11 @@ namespace _7Wonders.Client
             this.netService = netService;
         }
 
+        public void notifyReadyChanged(bool ready)
+        {
+            netService.sendMessage(ready.ToString(), (int)ClientMessageType.READY_CHANGED);
+        }
+
         public void sendChatMessage(String message)
         {
             //stuff

@@ -188,7 +188,7 @@ namespace _7Wonders
             if (!client.isConnected() && (activeInterface != interfaces["mainmenu"]))
             {
                 activeInterface.reset();
-                activeInterface = interfaces[message["mainmenu"]];
+                activeInterface = interfaces["mainmenu"];
             }
 
             ProcessKeyboard();

@@ -7,6 +7,7 @@ namespace _7Wonders.Client
 {
     interface MessageSerializerService
     {
+        void notifyReadyChanged(bool ready);
         void sendChatMessage(String message);
     }
 }
