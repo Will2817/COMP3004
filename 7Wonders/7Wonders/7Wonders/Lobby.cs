@@ -151,13 +151,7 @@ namespace _7Wonders
                         visuals1["selected"].setTexture(w.getName() + "_A");
                 }
             }
-            int count = 0;
-            //if (Game1.client.getState().getPlayers().Values.Count > 2) Console.WriteLine("More Players");
-            foreach (Player p in Game1.client.getState().getPlayers().Values)
-            {
-                ((DropDown)dropDowns[count]).setSelected(p.getName());
-                count++;
-            }
+            updatePlayers();
         }
 
         public override Dictionary<string, string> isFinished()
@@ -179,6 +173,18 @@ namespace _7Wonders
                     {"random", random.ToString()},
                     {"onlyA", onlyA.ToString()}
                 };
+        }
+
+        public virtual void updatePlayers()
+        {
+            int count = 0;
+            List<Player> players = Game1.client.getState().getPlayers().Values.ToList<Player>();
+            foreach (DropDown dd in dropDowns)
+            {
+                if (count < players.Count - 1) dd.setSelected(players[count].getName());
+                else dd.setSelected("Open");
+                count++;
+            }
         }
     }
 }

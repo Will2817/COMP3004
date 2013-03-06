@@ -84,9 +84,10 @@ namespace _7Wonders
             return text;
         }
 
-        public void setSelected(string _text)
+        public DropDown setSelected(string _text)
         {
             selected.setString(_text);
+            return this;
         }
 
         public DropDown resetRequest()

@@ -100,5 +100,17 @@ namespace _7Wonders
                     {"onlyA", onlyA.ToString()}
                 };
         }
+
+        public override void updatePlayers()
+        {
+            int count = 0;
+            List<Player> players = Game1.client.getState().getPlayers().Values.ToList<Player>();
+            foreach (DropDown dd in dropDowns)
+            {
+                if (count < players.Count - 1) dd.setSelected(players[count].getName()).setEnabled(false);
+                else dd.setSelected("Open").setEnabled(true);
+                count++;
+            }
+        }
     }
 }
