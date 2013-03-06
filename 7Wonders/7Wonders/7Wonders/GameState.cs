@@ -9,11 +9,15 @@ namespace _7Wonders
     public class GameState
     {
         private Dictionary<long, Player> players;
+        private bool gameInProgress;
 
         public GameState()
         {
             players = new Dictionary<long, Player>();
+            gameInProgress = false;
         }
+
+        public bool isGameInProgress() { return gameInProgress; }
 
         public void addPlayer(Player _player)
         {

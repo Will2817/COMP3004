@@ -43,5 +43,14 @@ namespace _7Wonders.Host
             Console.WriteLine("End Players...");
         }
 
+        public void removePlayer(long id)
+        {
+            if (!gameState.isGameInProgress())
+            {
+                gameState.removePlayer(id);
+                messageSerializer.notifyPlayerDropped(gameState.playersToJson());
+            }
+        }
+
     }
 }

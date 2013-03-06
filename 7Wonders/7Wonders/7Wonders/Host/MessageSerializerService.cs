@@ -8,7 +8,7 @@ namespace _7Wonders.Host
     interface MessageSerializerService
     {
         void notifyPlayerJoined(string players);//send a player (all)
-        void notifyPlayerDropped(Player player);//send a player (all)
+        void notifyPlayerDropped(string players);//send a player (all)
         /*void notifyPlayerReady(Player player);//(all)
         void notifyPlayerNotReady(Player player);//(all)
         void notifyAIAdded();//needed?

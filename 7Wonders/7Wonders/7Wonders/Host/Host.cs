@@ -7,18 +7,27 @@ namespace _7Wonders.Host
 {
     class Host
     {
+        private GameManager gameManager;
+        private EventHandlerServiceImpl eventHandlerService;
+        private MessageSerializerServiceImpl messageSerializerService;
+        private NetServiceImpl netService;
 
         public Host()
         {
-            GameManager gameManager = new GameManager();
-            EventHandlerServiceImpl eventHandlerService = new EventHandlerServiceImpl();
-            MessageSerializerServiceImpl messageSerializerService = new MessageSerializerServiceImpl();
-            NetServiceImpl netService = new NetServiceImpl();
+            gameManager = new GameManager();
+            eventHandlerService = new EventHandlerServiceImpl();
+            messageSerializerService = new MessageSerializerServiceImpl();
+            netService = new NetServiceImpl();
             netService.setEventHandler(eventHandlerService);
             eventHandlerService.setGameManager(gameManager);
             gameManager.setNetService(netService);
             gameManager.setMessageSerializer(messageSerializerService);
             messageSerializerService.setNetService(netService);
+        }
+
+        public void shutdown()
+        {
+            netService.shutdown();
         }
     }
 }

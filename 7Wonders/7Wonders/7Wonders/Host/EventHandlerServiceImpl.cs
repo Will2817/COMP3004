@@ -22,7 +22,7 @@ namespace _7Wonders.Host
 
         public void handleClientDrop(long clientID)
         {
-            //stuff
+            gameManager.removePlayer(clientID);
         }
 
         public void handleMessage(String message, int type, long clientID)
