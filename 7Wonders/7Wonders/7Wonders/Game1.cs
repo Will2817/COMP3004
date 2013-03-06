@@ -40,6 +40,7 @@ namespace _7Wonders
         Interface activeInterface;
         JObject wondersJson = JObject.Parse(File.ReadAllText("Content/Json/wonderlist.json"));
         public static Client.Client client;
+        public Host.Host host;
 
         
 
@@ -165,7 +166,7 @@ namespace _7Wonders
                 if (message["nextInterface"] == "hostlobby")
                 {
                     Console.WriteLine("StartHost");
-                    new Host.Host();
+                    host = new Host.Host();
                     Console.WriteLine("StartClient");
                     client.joinHost(true);
                 }
@@ -173,6 +174,10 @@ namespace _7Wonders
                 {
                     Console.WriteLine("StartClient");
                     client.joinHost(false);
+                }
+                if ((message["nextInterface"] == "mainmenu"))
+                {
+                    client.disconnect();
                 }
                 activeInterface.reset();
                 activeInterface = interfaces[message["nextInterface"]];
