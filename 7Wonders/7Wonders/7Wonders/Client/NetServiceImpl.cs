@@ -36,6 +36,11 @@ namespace _7Wonders.Client
             client.Start();
         }
 
+        public long getID()
+        {
+            return client.UniqueIdentifier;
+        }
+
         public void setEventHandler(EventHandlerService eventHandler)
         {
             this.eventHandler = eventHandler;

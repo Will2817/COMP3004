@@ -27,6 +27,16 @@ namespace _7Wonders.Client
 
         }
 
+        public long getId()
+        {
+            return netService.getID();
+        }
+
+        public Player getSelf()
+        {
+            return gameManager.getGameState().getPlayers()[getId()];
+        }
+
         public void joinHost(bool host)
         {
             //Console.WriteLine("Start Test");

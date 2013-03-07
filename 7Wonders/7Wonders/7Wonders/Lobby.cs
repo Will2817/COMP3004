@@ -154,18 +154,11 @@ namespace _7Wonders
 
             if (Game1.client.isUpdateAvailable()) updatePlayers();
 
-            int count = 0;
-            foreach (Player p in Game1.client.getState().getPlayers().Values)
+            Player self = Game1.client.getSelf();
+            if (readyCBs[self.getSeat()].hasChanged())
             {
-                if (p.getName() == System.Environment.MachineName)
-                {
-                    if (readyCBs[count].hasChanged())
-                    {
-                        p.setReady(readyCBs[count].isSelected());
-                        Game1.client.setReady(true);
-                    }
-                }
-                count++;
+                self.setReady(readyCBs[self.getSeat()].isSelected());
+                Game1.client.setReady(true);
             }
         }
 
@@ -200,7 +193,7 @@ namespace _7Wonders
                 {
                     dd.setSelected(players[count].getName());
                     if (Game1.host != null) dd.setEnabled(false);
-                    if (players[count].getName() == System.Environment.MachineName)
+                    if (players[count].getID() == Game1.client.getId())
                         readyCBs[count].setEnabled(true);
                     else readyCBs[count].setEnabled(false);
                     readyCBs[count].setSelected(players[count].getReady());
