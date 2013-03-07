@@ -25,6 +25,11 @@ namespace _7Wonders.Host
             messageSerializerService.setNetService(netService);
         }
 
+        public void setOptions(bool _onlySideA, bool _assign)
+        {
+            gameManager.setOptions(_onlySideA, _assign);
+        }
+
         public void shutdown()
         {
             netService.shutdown();

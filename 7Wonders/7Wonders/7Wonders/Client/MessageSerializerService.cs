@@ -20,14 +20,6 @@ namespace _7Wonders.Client
             netService.sendMessage(ready.ToString(), (int)ClientMessageType.READY_CHANGED);
         }
 
-        public void notifyOptionChange(bool onlySideA, bool assign)
-        {
-            JObject j = new JObject(
-                                    new JProperty("onlySideA", onlySideA.ToString()),
-                                    new JProperty("assign", assign.ToString()));
-            netService.sendMessage(j.ToString(), (int)ClientMessageType.OPTIONS_CHANGED);
-        }
-
         public void sendChatMessage(String message)
         {
             //stuff

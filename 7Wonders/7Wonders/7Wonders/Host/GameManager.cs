@@ -16,6 +16,11 @@ namespace _7Wonders.Host
             gameState = new GameState();
         }
 
+        public GameState getState()
+        {
+            return gameState;
+        }
+
         public void setMessageSerializer(MessageSerializerService messageSerializer)
         {
             this.messageSerializer = messageSerializer;

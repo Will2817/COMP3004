@@ -81,10 +81,5 @@ namespace _7Wonders.Client
         {
             messageSerializer.notifyReadyChanged(ready);
         }
-
-        public void setOptions(bool side, bool assign)
-        {
-            messageSerializer.notifyOptionChange(side,assign);
-        }
     }
 }

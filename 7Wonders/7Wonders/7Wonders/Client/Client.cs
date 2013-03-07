@@ -71,11 +71,5 @@ namespace _7Wonders.Client
         {
             gameManager.setReady(ready);
         }
-
-        public void setOption(bool onlySideA, bool assign)
-        {
-            Console.WriteLine("Setting side in gamestate");
-            gameManager.setOptions(onlySideA, assign);
-        }
     }
 }

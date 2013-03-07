@@ -33,10 +33,6 @@ namespace _7Wonders.Host
                 case ClientMessageType.READY_CHANGED:
                     gameManager.setPlayerReady(clientID, Boolean.Parse(message));
                     break;
-                case ClientMessageType.OPTIONS_CHANGED:
-                    JObject j = JObject.Parse(message);
-                    gameManager.setOptions((bool)j["onlySideA"], (bool)j["assign"]);
-                    break;
                 case ClientMessageType.BOARD_SELECTION:
                     //stuff
                     break;

@@ -106,7 +106,7 @@ namespace _7Wonders
 
         public override void receiveMessage(Dictionary<string, string> message)
         {
-            if (Game1.host != null) Game1.client.setOption(Boolean.Parse(message["onlyA"]), Boolean.Parse(message["random"]));
+            if (Game1.host != null) Game1.host.setOptions(Boolean.Parse(message["onlyA"]), Boolean.Parse(message["random"]));
         }
 
         public override void Update(GameTime gameTime, MouseState mouseState)
