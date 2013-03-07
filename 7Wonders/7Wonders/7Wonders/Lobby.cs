@@ -160,7 +160,10 @@ namespace _7Wonders
                 if (p.getName() == System.Environment.MachineName)
                 {
                     if (readyCBs[count].hasChanged())
+                    {
                         p.setReady(readyCBs[count].isSelected());
+                        Game1.client.setReady(true);
+                    }
                 }
                 count++;
             }
