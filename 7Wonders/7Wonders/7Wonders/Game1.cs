@@ -159,14 +159,16 @@ namespace _7Wonders
 
             activeInterface.Update(gameTime, Mouse.GetState());
 
-            Dictionary<string, string> message = new Dictionary<string,string>();
+            Dictionary<string, string> message;
 
             if (!client.isConnected() && (activeInterface != interfaces["mainmenu"]))
             {
                 activeInterface.reset();
                 activeInterface = interfaces["mainmenu"];
+                message = new Dictionary<string, string>();
                 message.Add("connection", "Lost Connection");
                 activeInterface.receiveMessage(message);
+                client = new Client.Client();
             }
 
             else if ((message = activeInterface.isFinished()) != null)
@@ -182,6 +184,7 @@ namespace _7Wonders
                 {
                     if (host != null) host.shutdown();
                     client.disconnect();
+                    client = new Client.Client();
                 }
                 if ((message["nextInterface"] == "lobby"))
                 {

@@ -41,7 +41,7 @@ namespace _7Wonders
             visuals1 = new Dictionary<String, Visual>();
             visuals2 = new Dictionary<String, Visual>();
             visuals3 = new Dictionary<String, Visual>();
-            connectDia = new Dictionary<string, Visual>();
+            connectDia = new Dictionary<String, Visual>();
 
             HGame = new Button(game, new Vector2(150, 450), 200, 50, "Host Game", "Font1");
             JGame = new Button(game, new Vector2(450, 450), 200, 50, "Join Game", "Font1");
@@ -138,7 +138,7 @@ namespace _7Wonders
             if (OK.isClicked())
             {
                 OK.reset();
-                foreach (string key in connectDia.Keys)
+                foreach (string key in connectDia.Keys.Reverse())
                 {
                     if (activeVisuals.ContainsKey(key))
                         activeVisuals.Remove(key);
@@ -173,9 +173,9 @@ namespace _7Wonders
             if (message.ContainsKey("connection"))
             {
                 connectDia["message"].setString(message["connection"]);
-                foreach (KeyValuePair<string, Visual> kp in connectDia)
+                foreach (string s in connectDia.Keys)
                 {
-                    activeVisuals.Add(kp.Key, kp.Value);
+                    activeVisuals.Add(s, connectDia[s]);
                 }
                 HGame.setEnabled(false);
                 JGame.setEnabled(false);
