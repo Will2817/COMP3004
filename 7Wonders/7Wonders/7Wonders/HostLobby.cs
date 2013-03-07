@@ -72,6 +72,12 @@ namespace _7Wonders
             }
         }
 
+        public override void updateHelper(int i)
+        {
+            dropDowns[i].setEnabled(true);
+            base.updateHelper(i);
+        }
+
         public override Dictionary<string, string> isFinished()
         {
             if (finished)
@@ -80,6 +86,11 @@ namespace _7Wonders
             }
 
             return null;
+        }
+
+        public override void receiveMessage(Dictionary<string, string> message)
+        {
+            Game1.host.setOptions(Boolean.Parse(message["onlyA"]), Boolean.Parse(message["random"]));
         }
 
         public static Dictionary<string, string> createMessage(bool random, bool onlyA)

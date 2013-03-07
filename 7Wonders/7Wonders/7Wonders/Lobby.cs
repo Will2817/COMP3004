@@ -104,11 +104,6 @@ namespace _7Wonders
             }
         }
 
-        public override void receiveMessage(Dictionary<string, string> message)
-        {
-            if (Game1.host != null) Game1.host.setOptions(Boolean.Parse(message["onlyA"]), Boolean.Parse(message["random"]));
-        }
-
         public override void Update(GameTime gameTime, MouseState mouseState)
         {
             base.Update(gameTime, mouseState);
@@ -166,14 +161,12 @@ namespace _7Wonders
             return null;
         }
 
-        public static Dictionary<string, string> createMessage(bool random, bool onlyA)
+        public static Dictionary<string, string> createMessage()
         {
             return new Dictionary<string, string>()
                 {
                     {"nextInterface", "lobby"},
-                    {"role" , "join"},
-                    {"random", random.ToString()},
-                    {"onlyA", onlyA.ToString()}
+                    {"role" , "join"}
                 };
         }
 
@@ -183,10 +176,7 @@ namespace _7Wonders
             //int count = 0;
             for (int i = 0; i < NUMPLAYERS; i++)
             {
-                if (Game1.host != null) dropDowns[i].setEnabled(true);
-                if (!playerTypes.Contains(dropDowns[i].getSelected())) dropDowns[i].setSelected("Open");
-                readyCBs[i].setEnabled(false);
-                readyCBs[i].setSelected(false);
+                updateHelper(i);
             }
             foreach (Player p in Game1.client.getState().getPlayers().Values)
             {
@@ -203,6 +193,13 @@ namespace _7Wonders
                 sideButton.setVisible(false);
             }
             else sideButton.setVisible(true);
+        }
+
+        public virtual void updateHelper(int i)
+        {
+            if (!playerTypes.Contains(dropDowns[i].getSelected())) dropDowns[i].setSelected("Open");
+            readyCBs[i].setEnabled(false);
+            readyCBs[i].setSelected(false);
         }
     }
 }
