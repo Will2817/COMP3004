@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Newtonsoft.Json.Linq;
 
 namespace _7Wonders.Host
 {
@@ -67,10 +66,10 @@ namespace _7Wonders.Host
             messageSerializer.notifyReadyChanged(gameState.playersToJson());
         }
 
-        public void setSide(bool side)
+        public void setOptions(bool onlySideA, bool assign)
         {
-            gameState.setSide(side);
-            messageSerializer.notifySideChanged(gameState.getOnlySideA().ToString());
+            gameState.setOptions(onlySideA, assign);
+            messageSerializer.notifyOptionsChanged(gameState.optionsToJson());
         }
 
     }

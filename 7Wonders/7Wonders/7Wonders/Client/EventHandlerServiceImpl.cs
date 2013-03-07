@@ -28,8 +28,8 @@ namespace _7Wonders.Client
                 case HostMessageType.READY_CHANGED:
                     gameManager.updatePlayers(message);
                     break;
-                case HostMessageType.SIDE_CHANGED:
-                    gameManager.updateSide(message);
+                case HostMessageType.OPTIONS_CHANGED:
+                    gameManager.updateOptions(message);
                     break;
                 default:
                     break;

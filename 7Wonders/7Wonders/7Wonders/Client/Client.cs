@@ -10,14 +10,14 @@ namespace _7Wonders.Client
 
         GameManager gameManager;
         EventHandlerServiceImpl eventHandlerService;
-        MessageSerializerServiceImpl messageSerializerService;
+        MessageSerializerService messageSerializerService;
         NetServiceImpl netService;
 
         public Client()
         {
             gameManager = new GameManager();
             eventHandlerService = new EventHandlerServiceImpl();
-            messageSerializerService = new MessageSerializerServiceImpl();
+            messageSerializerService = new MessageSerializerService();
             netService = new NetServiceImpl();
             netService.setEventHandler(eventHandlerService);
             eventHandlerService.setGameManager(gameManager);
@@ -72,10 +72,10 @@ namespace _7Wonders.Client
             gameManager.setReady(ready);
         }
 
-        public void setSide(bool side)
+        public void setOption(bool onlySideA, bool assign)
         {
             Console.WriteLine("Setting side in gamestate");
-            gameManager.setSide(side);
+            gameManager.setOptions(onlySideA, assign);
         }
     }
 }

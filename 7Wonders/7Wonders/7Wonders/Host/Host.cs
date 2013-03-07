@@ -9,14 +9,14 @@ namespace _7Wonders.Host
     {
         private GameManager gameManager;
         private EventHandlerServiceImpl eventHandlerService;
-        private MessageSerializerServiceImpl messageSerializerService;
+        private MessageSerializerService messageSerializerService;
         private NetServiceImpl netService;
 
         public Host()
         {
             gameManager = new GameManager();
             eventHandlerService = new EventHandlerServiceImpl();
-            messageSerializerService = new MessageSerializerServiceImpl();
+            messageSerializerService = new MessageSerializerService();
             netService = new NetServiceImpl();
             netService.setEventHandler(eventHandlerService);
             eventHandlerService.setGameManager(gameManager);

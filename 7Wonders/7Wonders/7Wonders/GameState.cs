@@ -11,20 +11,20 @@ namespace _7Wonders
         private Dictionary<long, Player> players;
         private bool gameInProgress;
         private bool onlySideA;
-        private bool assigned;
+        private bool assign;
 
         public GameState()
         {
             players = new Dictionary<long, Player>();
             gameInProgress = false;
             onlySideA = false;
-            assigned = false;
+            assign = false;
         }
 
         public bool isGameInProgress() { return gameInProgress; }
         public bool getOnlySideA() { return onlySideA; }
-        public bool getAssigned() { return assigned; }
-        public void setSide(bool side) { onlySideA = side; } 
+        public bool getAssign() { return assign; }
+        public void setOptions(bool _onlySideA, bool _assign) { onlySideA = _onlySideA; assign = _assign;} 
 
         public void addPlayer(Player _player)
         {
@@ -62,7 +62,8 @@ namespace _7Wonders
                         new JArray(
                             from p in players.Values
                             select new JObject(p.toJObject()))),
-                    new JProperty("side",onlySideA));
+                    new JProperty("onlySideA",onlySideA),
+                    new JProperty("assign",assign));
 
             return jlobby.ToString();
         }
@@ -85,7 +86,23 @@ namespace _7Wonders
             {
                 players.Add((long)j["id"], new Player(j));
             }
-            onlySideA = bool.Parse((string)jlobby["side"]);
+            onlySideA = bool.Parse((string)jlobby["onlySideA"]);
+            assign = bool.Parse((string)jlobby["assign"]);
+        }
+
+        public string optionsToJson()
+        {
+            JObject j = new JObject(
+                new JProperty("onlySideA", onlySideA.ToString()),
+                new JProperty("assign", assign.ToString()));
+            return j.ToString();
+        }
+
+        public void optionsFromJson(string json)
+        {
+            JObject joptions = JObject.Parse(json);
+            onlySideA = bool.Parse((string)joptions["onlySideA"]);
+            assign = bool.Parse((string)joptions["assign"]);
         }
     }
 }

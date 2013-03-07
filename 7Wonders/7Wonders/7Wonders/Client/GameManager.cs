@@ -41,9 +41,9 @@ namespace _7Wonders.Client
             updateAvailable = true;
         }
 
-        public void updateSide(string side)
+        public void updateOptions(string options)
         {
-            gameState.setSide(bool.Parse(side));
+            gameState.optionsFromJson(options);
             updateAvailable = true;
         }
 
@@ -82,9 +82,9 @@ namespace _7Wonders.Client
             messageSerializer.notifyReadyChanged(ready);
         }
 
-        public void setSide(bool side)
+        public void setOptions(bool side, bool assign)
         {
-            messageSerializer.notifyOnlySideA(side);
+            messageSerializer.notifyOptionChange(side,assign);
         }
     }
 }

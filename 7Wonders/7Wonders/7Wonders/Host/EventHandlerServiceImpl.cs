@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Newtonsoft.Json.Linq;
 
 namespace _7Wonders.Host
 {
@@ -32,8 +33,9 @@ namespace _7Wonders.Host
                 case ClientMessageType.READY_CHANGED:
                     gameManager.setPlayerReady(clientID, Boolean.Parse(message));
                     break;
-                case ClientMessageType.SIDE_CHANGED:
-                    gameManager.setSide(Boolean.Parse(message));
+                case ClientMessageType.OPTIONS_CHANGED:
+                    JObject j = JObject.Parse(message);
+                    gameManager.setOptions((bool)j["onlySideA"], (bool)j["assign"]);
                     break;
                 case ClientMessageType.BOARD_SELECTION:
                     //stuff

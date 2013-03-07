@@ -34,7 +34,6 @@ namespace _7Wonders
         protected Button backButton;
 
         protected const int NUMPLAYERS = 7;
-        protected bool random = false;
         protected bool viewSideB = false;
         
         public Lobby(Game1 theGame)
@@ -107,8 +106,7 @@ namespace _7Wonders
 
         public override void receiveMessage(Dictionary<string, string> message)
         {
-            random = Boolean.Parse(message["random"]);
-            Game1.client.setSide(Boolean.Parse(message["onlyA"]));
+            if (Game1.host != null) Game1.client.setOption(Boolean.Parse(message["onlyA"]), Boolean.Parse(message["random"]));
         }
 
         public override void Update(GameTime gameTime, MouseState mouseState)
