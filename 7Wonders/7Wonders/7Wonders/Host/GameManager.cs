@@ -29,6 +29,7 @@ namespace _7Wonders.Host
 
         public void addPlayer(Player _player)
         {
+            _player.setSeat(gameState.getPlayers().Count);//seat #ing starts at 0
             gameState.addPlayer(_player);
             if (gameState.getPlayers().Count() == Game1.MAXPLAYER)
             {
@@ -47,7 +48,15 @@ namespace _7Wonders.Host
         {
             if (!gameState.isGameInProgress())
             {
+                int emptySeat = gameState.getPlayers()[id].getSeat();
                 gameState.removePlayer(id);
+                foreach (Player p in gameState.getPlayers().Values)
+                {
+                    if (p.getSeat() > emptySeat)
+                    {
+                        p.setSeat(p.getSeat() - 1);
+                    }
+                }
                 messageSerializer.notifyPlayerDropped(gameState.playersToJson());
             }
         }
