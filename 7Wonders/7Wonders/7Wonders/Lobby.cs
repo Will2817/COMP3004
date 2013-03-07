@@ -196,31 +196,11 @@ namespace _7Wonders
             foreach (Player p in Game1.client.getState().getPlayers().Values)
             {
                 int seat = p.getSeat();
-                if (Game1.host != null) dropDowns[seat].setEnabled(true);
+                dropDowns[seat].setEnabled(false);
+                dropDowns[seat].setSelected(p.getName());
                 if (p.getID() == Game1.client.getId()) readyCBs[seat].setEnabled(true);
                 readyCBs[seat].setSelected(p.getReady());
             }
-
- /*           foreach (DropDown dd in dropDowns)
-            {
-                if (count < players.Count)
-                {
-                    dd.setSelected(players[count].getName());
-                    if (Game1.host != null) dd.setEnabled(false);
-                    if (players[count].getID() == Game1.client.getId())
-                        readyCBs[count].setEnabled(true);
-                    else readyCBs[count].setEnabled(false);
-                    readyCBs[count].setSelected(players[count].getReady());
-                }
-                else if (!playerTypes.Contains(dd.getSelected()))
-                {
-                    dd.setSelected("Open");
-                    if (Game1.host != null) dd.setEnabled(true);
-                    readyCBs[count].setEnabled(false);
-                }
-                else readyCBs[count].setEnabled(false);
-                count++;
-            }*/
         }
     }
 }
