@@ -124,6 +124,8 @@ namespace _7Wonders.Client
 
         public int sendMessage(String message, int type)
         {
+            Console.WriteLine("Client Sending...");
+            Console.WriteLine(message);
             outMessage = client.CreateMessage();
             outMessage.Write(type);
             outMessage.Write(message);

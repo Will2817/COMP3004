@@ -151,7 +151,19 @@ namespace _7Wonders
                         visuals1["selected"].setTexture(w.getName() + "_A");
                 }
             }
+
             if (Game1.client.isUpdateAvailable()) updatePlayers();
+
+            int count = 0;
+            foreach (Player p in Game1.client.getState().getPlayers().Values)
+            {
+                if (p.getName() == System.Environment.MachineName)
+                {
+                    if (readyCBs[count].hasChanged())
+                        p.setReady(readyCBs[count].isSelected());
+                }
+                count++;
+            }
         }
 
         public override Dictionary<string, string> isFinished()

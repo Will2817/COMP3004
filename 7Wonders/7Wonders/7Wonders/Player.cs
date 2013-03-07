@@ -60,6 +60,7 @@ namespace _7Wonders
         {
             id = (long)j["id"];
             name = (string)j["name"];
+            ready = bool.Parse((string)j["ready"]);
         }
 
 
@@ -140,6 +141,7 @@ namespace _7Wonders
         public void setNameID(string n)         {   name = n;   }
         public void setHand(List<Card> h)       {   hand = new List<Card>(h);   }
         public void setPlayed(List<Card> p)     {   played = new List<Card>(p); }
+        public void setReady(bool _ready)       {   ready = _ready; }
 
         public void addPlayed(Card c)             
         {
