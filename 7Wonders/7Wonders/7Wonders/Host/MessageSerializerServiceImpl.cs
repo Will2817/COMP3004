@@ -25,6 +25,11 @@ namespace _7Wonders.Host
             netService.broadcastMessage(players, (int)HostMessageType.PLAYER_DROPPED);
         }
 
+        public void notifyReadyChanged(string players)
+        {
+            netService.broadcastMessage(players, (int)HostMessageType.READY_CHANGED);
+        }
+
         public void broadcastChatMessage(String message, long senderID)
         {
             //broadcast message

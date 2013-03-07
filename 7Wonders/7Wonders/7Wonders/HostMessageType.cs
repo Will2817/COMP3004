@@ -9,8 +9,7 @@ namespace _7Wonders
     {
         PLAYER_JOINED,
         PLAYER_DROPPED,
-        PLAYER_READY,
-        PLAYER_NOT_READY,
+        READY_CHANGED,
         GAME_STARTED,
         ASSIGN_WONDER,
         RESERVE_WONDER,

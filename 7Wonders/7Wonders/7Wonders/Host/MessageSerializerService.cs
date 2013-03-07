@@ -9,9 +9,8 @@ namespace _7Wonders.Host
     {
         void notifyPlayerJoined(string players);//send a player (all)
         void notifyPlayerDropped(string players);//send a player (all)
-        /*void notifyPlayerReady(Player player);//(all)
-        void notifyPlayerNotReady(Player player);//(all)
-        void notifyAIAdded();//needed?
+        void notifyReadyChanged(string players);//(all)
+        /*void notifyAIAdded();//needed?
         void notifyAIDropped();//needed?
         void notifyGameStarted();//no message? (all)
         void assignWonder(Wonder wonder, Player player);//wonder (one)

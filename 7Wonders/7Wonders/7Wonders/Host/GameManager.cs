@@ -52,5 +52,11 @@ namespace _7Wonders.Host
             }
         }
 
+        public void setPlayerReady(long id, bool ready)
+        {
+            gameState.getPlayers()[id].setReady(ready);
+            messageSerializer.notifyReadyChanged(gameState.playersToJson());
+        }
+
     }
 }

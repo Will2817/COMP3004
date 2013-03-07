@@ -64,5 +64,10 @@ namespace _7Wonders.Client
         {
             connected = true;
         }
+
+        public void setReady(bool ready)
+        {
+            messageSerializer.notifyReadyChanged(ready);
+        }
     }
 }
