@@ -31,14 +31,6 @@ namespace _7Wonders
 
             visuals1.Add("startButton", startButton);
         }
-        
-        public override void receiveMessage(Dictionary<string, string> message)
-        {
-            random = Boolean.Parse(message["random"]);
-            onlyA = Boolean.Parse(message["onlyA"]);
-            if (onlyA) sideButton.setVisible(false);
-            else sideButton.setVisible(true);
-        }
 
         public override void Update(GameTime gameTime, MouseState mouseState)
         {
