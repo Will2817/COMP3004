@@ -176,6 +176,7 @@ namespace _7Wonders
                 if (message["nextInterface"] == "hostlobby")
                 {
                     Console.WriteLine("StartHost");
+                    if (host != null) host.shutdown();
                     host = new Host.Host();
                     Console.WriteLine("StartClient");
                     client.joinHost(true);

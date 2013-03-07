@@ -143,7 +143,7 @@ namespace _7Wonders
 
         // MUTATORS
         public void setNameID(string n)         {   name = n;   }
-        public void setSeat(int s) { seatNumber = s; }
+        public void setSeat(int s)              { seatNumber = s; }
         public void setHand(List<Card> h)       {   hand = new List<Card>(h);   }
         public void setPlayed(List<Card> p)     {   played = new List<Card>(p); }
         public void setReady(bool _ready)       {   ready = _ready; }

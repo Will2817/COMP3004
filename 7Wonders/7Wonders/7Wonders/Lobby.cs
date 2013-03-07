@@ -157,8 +157,7 @@ namespace _7Wonders
             Player self = Game1.client.getSelf();
             if ((self!= null) && readyCBs[self.getSeat()].hasChanged())
             {
-                self.setReady(readyCBs[self.getSeat()].isSelected());
-                Game1.client.setReady(true);
+                Game1.client.setReady(readyCBs[self.getSeat()].isSelected());
             }
         }
 
