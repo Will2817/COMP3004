@@ -35,7 +35,6 @@ namespace _7Wonders
 
         protected const int NUMPLAYERS = 7;
         protected bool random = false;
-        protected bool onlyA = false;
         protected bool viewSideB = false;
         
         public Lobby(Game1 theGame)
@@ -109,9 +108,7 @@ namespace _7Wonders
         public override void receiveMessage(Dictionary<string, string> message)
         {
             random = Boolean.Parse(message["random"]);
-            onlyA = Boolean.Parse(message["onlyA"]);
-            if (onlyA) sideButton.setVisible(false);
-            else sideButton.setVisible(true);
+            Game1.client.setSide(Boolean.Parse(message["onlyA"]));
         }
 
         public override void Update(GameTime gameTime, MouseState mouseState)
@@ -201,6 +198,12 @@ namespace _7Wonders
                 if (p.getID() == Game1.client.getId()) readyCBs[seat].setEnabled(true);
                 readyCBs[seat].setSelected(p.getReady());
             }
+            if (Game1.client.getState().getOnlySideA())
+            {
+                viewSideB = false;
+                sideButton.setEnabled(false);
+            }
+            else sideButton.setEnabled(true);
         }
     }
 }

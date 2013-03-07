@@ -8,6 +8,7 @@ namespace _7Wonders
     public enum ClientMessageType
     {
         READY_CHANGED,
+        SIDE_CHANGED,
         BOARD_SELECTION,
         TURN_ACTION,
         CHAT_MESSAGE

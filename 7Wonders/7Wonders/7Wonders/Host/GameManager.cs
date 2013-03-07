@@ -67,5 +67,11 @@ namespace _7Wonders.Host
             messageSerializer.notifyReadyChanged(gameState.playersToJson());
         }
 
+        public void setSide(bool side)
+        {
+            gameState.setSide(side);
+            messageSerializer.notifySideChanged(gameState.getOnlySideA().ToString());
+        }
+
     }
 }

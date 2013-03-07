@@ -30,6 +30,11 @@ namespace _7Wonders.Host
             netService.broadcastMessage(players, (int)HostMessageType.READY_CHANGED);
         }
 
+        public void notifySideChanged(string side)
+        {
+            netService.broadcastMessage(side, (int)HostMessageType.SIDE_CHANGED);
+        }
+
         public void broadcastChatMessage(String message, long senderID)
         {
             //broadcast message

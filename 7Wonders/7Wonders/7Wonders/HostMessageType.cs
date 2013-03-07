@@ -10,6 +10,7 @@ namespace _7Wonders
         PLAYER_JOINED,
         PLAYER_DROPPED,
         READY_CHANGED,
+        SIDE_CHANGED,
         GAME_STARTED,
         ASSIGN_WONDER,
         RESERVE_WONDER,

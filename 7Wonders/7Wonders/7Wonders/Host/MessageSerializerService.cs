@@ -10,6 +10,7 @@ namespace _7Wonders.Host
         void notifyPlayerJoined(string players);//send a player (all)
         void notifyPlayerDropped(string players);//send a player (all)
         void notifyReadyChanged(string players);//(all)
+        void notifySideChanged(string side)//(all)
         /*void notifyAIAdded();//needed?
         void notifyAIDropped();//needed?
         void notifyGameStarted();//no message? (all)

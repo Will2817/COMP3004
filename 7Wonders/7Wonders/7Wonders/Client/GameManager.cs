@@ -35,6 +35,12 @@ namespace _7Wonders.Client
             updateAvailable = true;
         }
 
+        public void updateSide(string side)
+        {
+            gameState.setSide(bool.Parse(side));
+            updateAvailable = true;
+        }
+
         public GameState getGameState()
         {
             return gameState;
@@ -68,6 +74,11 @@ namespace _7Wonders.Client
         public void setReady(bool ready)
         {
             messageSerializer.notifyReadyChanged(ready);
+        }
+
+        public void setSide(bool side)
+        {
+            messageSerializer.notifyOnlySideA(side);
         }
     }
 }

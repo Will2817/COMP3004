@@ -19,6 +19,11 @@ namespace _7Wonders.Client
             netService.sendMessage(ready.ToString(), (int)ClientMessageType.READY_CHANGED);
         }
 
+        public void notifyOnlySideA(bool onlyside)
+        {
+            netService.sendMessage(onlyside.ToString(), (int)ClientMessageType.SIDE_CHANGED);
+        }
+
         public void sendChatMessage(String message)
         {
             //stuff

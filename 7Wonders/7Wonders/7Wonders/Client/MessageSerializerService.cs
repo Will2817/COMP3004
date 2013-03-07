@@ -8,6 +8,7 @@ namespace _7Wonders.Client
     interface MessageSerializerService
     {
         void notifyReadyChanged(bool ready);
+        void notifyOnlySideA(bool onlyside);
         void sendChatMessage(String message);
     }
 }

@@ -10,14 +10,21 @@ namespace _7Wonders
     {
         private Dictionary<long, Player> players;
         private bool gameInProgress;
+        private bool onlySideA;
+        private bool assigned;
 
         public GameState()
         {
             players = new Dictionary<long, Player>();
             gameInProgress = false;
+            onlySideA = false;
+            assigned = false;
         }
 
         public bool isGameInProgress() { return gameInProgress; }
+        public bool getOnlySideA() { return onlySideA; }
+        public bool getAssigned() { return assigned; }
+        public void setSide(bool side) { onlySideA = side; } 
 
         public void addPlayer(Player _player)
         {

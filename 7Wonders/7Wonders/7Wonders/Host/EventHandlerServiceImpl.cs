@@ -32,6 +32,9 @@ namespace _7Wonders.Host
                 case ClientMessageType.READY_CHANGED:
                     gameManager.setPlayerReady(clientID, Boolean.Parse(message));
                     break;
+                case ClientMessageType.SIDE_CHANGED:
+                    gameManager.setSide(Boolean.Parse(message));
+                    break;
                 case ClientMessageType.BOARD_SELECTION:
                     //stuff
                     break;

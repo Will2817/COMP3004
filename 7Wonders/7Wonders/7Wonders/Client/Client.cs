@@ -71,5 +71,10 @@ namespace _7Wonders.Client
         {
             gameManager.setReady(ready);
         }
+
+        public void setSide(bool side)
+        {
+            gameManager.setSide(side);
+        }
     }
 }
