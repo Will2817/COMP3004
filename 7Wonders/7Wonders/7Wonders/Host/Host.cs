@@ -30,6 +30,11 @@ namespace _7Wonders.Host
             gameManager.setOptions(_onlySideA, _assign);
         }
 
+        public void addAIPlayer(AIType type)
+        {
+            gameManager.addAI(type);
+        }
+
         public void shutdown()
         {
             netService.shutdown();

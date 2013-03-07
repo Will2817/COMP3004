@@ -8,12 +8,14 @@ namespace _7Wonders.Host
     class GameManager
     {
         GameState gameState;
+        List<AIPlayer> aiPlayers;
         MessageSerializerService messageSerializer;
         NetService netService;
 
         public GameManager()
         {
             gameState = new GameState();
+            aiPlayers = new List<AIPlayer>();
         }
 
         public GameState getState()
@@ -40,12 +42,42 @@ namespace _7Wonders.Host
                 netService.blockConnections();
             }
             messageSerializer.notifyPlayerJoined(gameState.lobbyToJson());
+            updateAIs();
             Console.WriteLine("Start Players:");
             foreach (Player p in gameState.getPlayers().Values)
             {
                 Console.WriteLine(p.getName() + ", " + p.getID());
             }
             Console.WriteLine("End Players...");
+        }
+
+        public void addAI(AIType type)
+        {
+            string name;
+            switch(type)
+            {
+                case AIType.CIVILIAN:
+                    name = "Civilian AI";
+                    break;
+                case AIType.COMMERCE:
+                    name = "Commerce AI";
+                    break;
+                case AIType.MILITARY:
+                    name = "Military AI";
+                    break;
+                case AIType.RANDOM:
+                    name = "Random AI";
+                    break;
+                case AIType.SCIENCE:
+                    name = "Science AI";
+                    break;
+                default:
+                    name = "AI Player";
+                    break;
+            }
+            Player newAI = new Player(Convert.ToInt64(System.DateTime.UtcNow), name);
+            aiPlayers.Add(new AIPlayer(type));
+            addPlayer(newAI);
         }
 
         public void removePlayer(long id)
@@ -62,6 +94,7 @@ namespace _7Wonders.Host
                     }
                 }
                 messageSerializer.notifyPlayerDropped(gameState.playersToJson());
+                updateAIs();
             }
         }
 
@@ -69,12 +102,22 @@ namespace _7Wonders.Host
         {
             gameState.getPlayers()[id].setReady(ready);
             messageSerializer.notifyReadyChanged(gameState.playersToJson());
+            updateAIs();
         }
 
         public void setOptions(bool onlySideA, bool assign)
         {
             gameState.setOptions(onlySideA, assign);
             messageSerializer.notifyOptionsChanged(gameState.optionsToJson());
+            updateAIs();
+        }
+
+        private void updateAIs()
+        {
+            foreach (AIPlayer ai in aiPlayers)
+            {
+                ai.updateGameState(gameState);
+            }
         }
 
     }
