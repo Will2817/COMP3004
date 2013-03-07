@@ -22,7 +22,7 @@ namespace _7Wonders
         protected int WONDERWIDTH = Game1.WIDTH / 3 - 10;
         protected int SEC1HEIGHT = Game1.HEIGHT * 2/3;
         protected int DROPDOWNWIDTH = (Game1.WIDTH / 3) - 100;
-        protected int DROPDOWNHEIGHT = (Game1.HEIGHT*2/3 - (Game1.MAXPLAYER + 1) * MARGIN) / Game1.MAXPLAYER;        
+        protected int DROPDOWNHEIGHT = (Game1.HEIGHT/2 - (Game1.MAXPLAYER + 1) * MARGIN) / Game1.MAXPLAYER;        
 
         protected Dictionary<String, Visual> visuals1;
         protected List<Checkbox> readyCBs;
