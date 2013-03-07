@@ -206,7 +206,6 @@ namespace _7Wonders
                     readyCBs[count].setEnabled(false);
                 }
                 else readyCBs[count].setEnabled(false);
-                readyCBs[count].setSelected(true);
                 count++;
             }
         }
