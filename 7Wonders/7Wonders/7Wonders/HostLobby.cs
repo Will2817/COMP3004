@@ -65,6 +65,7 @@ namespace _7Wonders
                 {
                     if (!dd.getDown())
                     {
+                        if (dd.getSelected() != "Open") Game1.host.addAIPlayer(dd.getSelected());
                         dropped = null;
                         existsADrop = false;
                     }

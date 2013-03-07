@@ -27,7 +27,7 @@ namespace _7Wonders
         protected Dictionary<String, Visual> visuals1;
         protected List<Checkbox> readyCBs;
         protected Dictionary<String, Visual> wonders;
-        protected List<string> playerTypes = new List<string>() { "Open", "AIType1", "AIType2", "AIType3" };
+        protected List<string> playerTypes;
         protected List<DropDown> dropDowns;
 
         protected Button sideButton;
@@ -39,6 +39,12 @@ namespace _7Wonders
         public Lobby(Game1 theGame)
             : base(theGame, "title", 0.4f)
         {
+            playerTypes = new List<string>() { "Open"};
+            foreach (string type in Host.AIPlayer.aiTypes.Keys)
+            {
+                playerTypes.Add(type);
+            }
+
             sideButton = new Button(game, new Vector2(Game1.WIDTH - 140, Game1.HEIGHT - 140), 140, 40, "Toggle Side", "Font1");
             backButton = new Button(game, new Vector2(10, Game1.HEIGHT - 100), 75, 40, "Back", "Font1");
 

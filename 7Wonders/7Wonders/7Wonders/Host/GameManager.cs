@@ -53,7 +53,7 @@ namespace _7Wonders.Host
 
         public void addAI(string type)
         {
-            Player newAI = new Player(Convert.ToInt64(System.DateTime.UtcNow), type);
+            Player newAI = new Player(System.DateTime.UtcNow.Ticks, type);
             aiPlayers.Add(new AIPlayer(type));
             addPlayer(newAI);
         }
