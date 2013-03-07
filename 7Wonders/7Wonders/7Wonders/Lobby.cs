@@ -28,7 +28,7 @@ namespace _7Wonders
         protected List<Checkbox> readyCBs;
         protected Dictionary<String, Visual> wonders;
         protected List<string> playerTypes = new List<string>() { "Open", "AIType1", "AIType2", "AIType3" };
-        protected List<Visual> dropDowns;
+        protected List<DropDown> dropDowns;
 
         protected Button sideButton;
         protected Button backButton;
@@ -56,12 +56,12 @@ namespace _7Wonders
             visuals1.Add("Divider1", new Visual(game, new Vector2(SEC1WIDTH - 1, 0), DIVIDERWIDTH, Game1.HEIGHT, "line", Color.Silver));
             visuals1.Add("Divider2", new Visual(game, new Vector2(0, SEC1HEIGHT - 1), Game1.WIDTH, DIVIDERWIDTH, "line", Color.Silver));
 
-            dropDowns = new List<Visual>();
-            dropDowns.Add((new DropDown(game, new Vector2(MARGIN, MARGIN), DROPDOWNWIDTH, DROPDOWNHEIGHT, new List<string>() { "Host" })).setEnabled(false));
+            dropDowns = new List<DropDown>();
+            dropDowns.Add(new DropDown(game, new Vector2(MARGIN, MARGIN), DROPDOWNWIDTH, DROPDOWNHEIGHT, new List<string>() { "Host" }));
 
             for (int i = 1; i < NUMPLAYERS; i++)
             {
-                dropDowns.Add(new DropDown(game, new Vector2(MARGIN, MARGIN + (MARGIN + DROPDOWNHEIGHT) * i), DROPDOWNWIDTH, DROPDOWNHEIGHT, playerTypes).setEnabled(false));
+                dropDowns.Add(new DropDown(game, new Vector2(MARGIN, MARGIN + (MARGIN + DROPDOWNHEIGHT) * i), DROPDOWNWIDTH, DROPDOWNHEIGHT, playerTypes));
             }
 
             for (int i = dropDowns.Count; i > 0; i--)
@@ -185,9 +185,23 @@ namespace _7Wonders
         public virtual void updatePlayers()
         {
             Console.WriteLine("updating lobby...");
-            int count = 0;
-            List<Player> players = Game1.client.getState().getPlayers().Values.ToList<Player>();
-            foreach (DropDown dd in dropDowns)
+            //int count = 0;
+            for (int i = 0; i < NUMPLAYERS; i++)
+            {
+                if (Game1.host != null) dropDowns[i].setEnabled(true);
+                if (!playerTypes.Contains(dropDowns[i].getSelected())) dropDowns[i].setSelected("Open");
+                readyCBs[i].setEnabled(false);
+                readyCBs[i].setSelected(false);
+            }
+            foreach (Player p in Game1.client.getState().getPlayers().Values)
+            {
+                int seat = p.getSeat();
+                if (Game1.host != null) dropDowns[seat].setEnabled(true);
+                if (p.getID() == Game1.client.getId()) readyCBs[seat].setEnabled(true);
+                readyCBs[seat].setSelected(p.getReady());
+            }
+
+ /*           foreach (DropDown dd in dropDowns)
             {
                 if (count < players.Count)
                 {
@@ -206,7 +220,7 @@ namespace _7Wonders
                 }
                 else readyCBs[count].setEnabled(false);
                 count++;
-            }
+            }*/
         }
     }
 }
