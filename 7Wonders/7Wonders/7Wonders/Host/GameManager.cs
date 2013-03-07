@@ -51,31 +51,9 @@ namespace _7Wonders.Host
             Console.WriteLine("End Players...");
         }
 
-        public void addAI(AIType type)
+        public void addAI(string type)
         {
-            string name;
-            switch(type)
-            {
-                case AIType.CIVILIAN:
-                    name = "Civilian AI";
-                    break;
-                case AIType.COMMERCE:
-                    name = "Commerce AI";
-                    break;
-                case AIType.MILITARY:
-                    name = "Military AI";
-                    break;
-                case AIType.RANDOM:
-                    name = "Random AI";
-                    break;
-                case AIType.SCIENCE:
-                    name = "Science AI";
-                    break;
-                default:
-                    name = "AI Player";
-                    break;
-            }
-            Player newAI = new Player(Convert.ToInt64(System.DateTime.UtcNow), name);
+            Player newAI = new Player(Convert.ToInt64(System.DateTime.UtcNow), type);
             aiPlayers.Add(new AIPlayer(type));
             addPlayer(newAI);
         }

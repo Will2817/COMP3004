@@ -30,7 +30,7 @@ namespace _7Wonders.Host
             gameManager.setOptions(_onlySideA, _assign);
         }
 
-        public void addAIPlayer(AIType type)
+        public void addAIPlayer(string type)
         {
             gameManager.addAI(type);
         }
