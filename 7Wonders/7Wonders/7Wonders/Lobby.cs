@@ -155,7 +155,7 @@ namespace _7Wonders
             if (Game1.client.isUpdateAvailable()) updatePlayers();
 
             Player self = Game1.client.getSelf();
-            if (readyCBs[self.getSeat()].hasChanged())
+            if ((self!= null) && readyCBs[self.getSeat()].hasChanged())
             {
                 self.setReady(readyCBs[self.getSeat()].isSelected());
                 Game1.client.setReady(true);

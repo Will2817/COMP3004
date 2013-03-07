@@ -34,7 +34,9 @@ namespace _7Wonders.Client
 
         public Player getSelf()
         {
-            return gameManager.getGameState().getPlayers()[getId()];
+            if (gameManager.getGameState().getPlayers().ContainsKey(getId()))
+                return gameManager.getGameState().getPlayers()[getId()];
+            return null;
         }
 
         public void joinHost(bool host)
