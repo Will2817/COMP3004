@@ -185,6 +185,7 @@ namespace _7Wonders
 
         public virtual void updatePlayers()
         {
+            Console.WriteLine("updating lobby...");
             int count = 0;
             List<Player> players = Game1.client.getState().getPlayers().Values.ToList<Player>();
             foreach (DropDown dd in dropDowns)
@@ -205,6 +206,7 @@ namespace _7Wonders
                     readyCBs[count].setEnabled(false);
                 }
                 else readyCBs[count].setEnabled(false);
+                readyCBs[count].setSelected(true);
                 count++;
             }
         }

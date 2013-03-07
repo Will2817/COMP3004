@@ -38,8 +38,7 @@ namespace _7Wonders
             {
                 changed = true;
                 selected = !selected;
-                if (selected) textureColor = new Color(Color.Green.R, Color.Green.G, Color.Green.B, opacity);
-                else textureColor = new Color(255, 255, 255, opacity);
+                swapColours();
                 reset();
             }
         }
@@ -53,6 +52,12 @@ namespace _7Wonders
 
         public bool hasChanged() { return changed; }
         public bool isSelected() { changed = false; return selected; }
-        public Checkbox setSelected(bool _selected) { selected = _selected; return this; }
+        public Checkbox setSelected(bool _selected) { selected = _selected; swapColours(); return this; }
+
+        private void swapColours()
+        {
+            if (selected) textureColor = new Color(Color.Green.R, Color.Green.G, Color.Green.B, opacity);
+            else textureColor = new Color(255, 255, 255, opacity);
+        }
     }
 }
