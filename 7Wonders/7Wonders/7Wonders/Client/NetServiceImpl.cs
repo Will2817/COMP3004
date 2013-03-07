@@ -64,6 +64,7 @@ namespace _7Wonders.Client
             Thread messageListenerThread = new Thread(new ThreadStart(listenMessages));
             messageListenerThread.Start();
             while (!messageListenerThread.IsAlive);
+            while (client.ConnectionStatus != NetConnectionStatus.Connected) ;
             return 0;
         }
 

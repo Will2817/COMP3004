@@ -20,7 +20,7 @@ namespace _7Wonders.Client
             switch ((HostMessageType)type)
             {
                 case HostMessageType.PLAYER_JOINED:
-                    gameManager.updatePlayers(message);
+                    gameManager.updateLobby(message);
                     break;
                 case HostMessageType.PLAYER_DROPPED:
                     gameManager.updatePlayers(message);

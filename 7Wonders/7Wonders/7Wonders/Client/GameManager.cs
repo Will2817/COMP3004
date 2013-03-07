@@ -29,6 +29,12 @@ namespace _7Wonders.Client
             this.netService = netService;
         }
 
+        public void updateLobby(string lobby)
+        {
+            gameState.lobbyFromJson(lobby);
+            updateAvailable = true;
+        }
+
         public void updatePlayers(string players)
         {
             gameState.playersFromJson(players);

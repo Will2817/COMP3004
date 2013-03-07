@@ -35,7 +35,7 @@ namespace _7Wonders.Host
             {
                 netService.blockConnections();
             }
-            messageSerializer.notifyPlayerJoined(gameState.playersToJson());
+            messageSerializer.notifyPlayerJoined(gameState.lobbyToJson());
             Console.WriteLine("Start Players:");
             foreach (Player p in gameState.getPlayers().Values)
             {

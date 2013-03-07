@@ -198,12 +198,13 @@ namespace _7Wonders
                 if (p.getID() == Game1.client.getId()) readyCBs[seat].setEnabled(true);
                 readyCBs[seat].setSelected(p.getReady());
             }
+            Console.WriteLine("Update side:" + Game1.client.getState().getOnlySideA());
             if (Game1.client.getState().getOnlySideA())
             {
                 viewSideB = false;
-                sideButton.setEnabled(false);
+                sideButton.setVisible(false);
             }
-            else sideButton.setEnabled(true);
+            else sideButton.setVisible(true);
         }
     }
 }

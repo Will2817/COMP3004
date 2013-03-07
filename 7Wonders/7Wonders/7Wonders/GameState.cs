@@ -53,6 +53,20 @@ namespace _7Wonders
             return jplayers.ToString();
         }
 
+        public string lobbyToJson()
+        {
+
+            JObject jlobby =
+                new JObject(
+                    new JProperty("players",
+                        new JArray(
+                            from p in players.Values
+                            select new JObject(p.toJObject()))),
+                    new JProperty("side",onlySideA));
+
+            return jlobby.ToString();
+        }
+
         public void playersFromJson(string json)
         {
             JObject jplayers = JObject.Parse(json);
@@ -61,6 +75,17 @@ namespace _7Wonders
             {
                 players.Add((long)j["id"], new Player(j));
             }
+        }
+
+        public void lobbyFromJson(string json)
+        {
+            JObject jlobby = JObject.Parse(json);
+            players.Clear();
+            foreach (JObject j in jlobby["players"])
+            {
+                players.Add((long)j["id"], new Player(j));
+            }
+            onlySideA = bool.Parse((string)jlobby["side"]);
         }
     }
 }

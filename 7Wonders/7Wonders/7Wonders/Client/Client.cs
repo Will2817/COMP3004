@@ -74,6 +74,7 @@ namespace _7Wonders.Client
 
         public void setSide(bool side)
         {
+            Console.WriteLine("Setting side in gamestate");
             gameManager.setSide(side);
         }
     }
