@@ -76,6 +76,9 @@ namespace _7Wonders
         public override void updateHelper(int i)
         {
             dropDowns[i].setEnabled(true);
+            if (dropped != null) dropped.drop();
+            dropped = null;
+            existsADrop = false;
             base.updateHelper(i);
         }
 
