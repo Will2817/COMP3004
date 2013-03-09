@@ -3,19 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace _7Wonders.Host
+namespace _7Wonders.Server
 {
     class GameManager
     {
         GameState gameState;
-        List<AIPlayer> aiPlayers;
+        Dictionary<long, AIPlayer> aiPlayers;
         MessageSerializerService messageSerializer;
         NetService netService;
 
         public GameManager()
         {
             gameState = new GameState();
-            aiPlayers = new List<AIPlayer>();
+            aiPlayers = new Dictionary<long, AIPlayer>();
         }
 
         public GameState getState()
@@ -54,7 +54,7 @@ namespace _7Wonders.Host
         public void addAI(string type)
         {
             Player newAI = new Player(System.DateTime.UtcNow.Ticks, type);
-            aiPlayers.Add(new AIPlayer(type));
+            aiPlayers.Add(newAI.getID(), new AIPlayer(type));
             addPlayer(newAI);
         }
 
@@ -64,16 +64,37 @@ namespace _7Wonders.Host
             {
                 int emptySeat = gameState.getPlayers()[id].getSeat();
                 gameState.removePlayer(id);
-                foreach (Player p in gameState.getPlayers().Values)
-                {
-                    if (p.getSeat() > emptySeat)
-                    {
-                        p.setSeat(p.getSeat() - 1);
-                    }
-                }
-                messageSerializer.notifyPlayerDropped(gameState.playersToJson());
-                updateAIs();
+                adjustSeats(emptySeat);
             }
+        }
+
+        public void bootPlayerInSeat(int seatNumber)
+        {
+            long id = 0;
+            foreach (Player p in gameState.getPlayers().Values)
+            {
+                if (p.getSeat() == seatNumber)
+                {
+                    id = p.getID();
+                    break;
+                }
+            }
+            gameState.removePlayer(id);
+            if (aiPlayers.ContainsKey(id)) aiPlayers.Remove(id);
+            adjustSeats(seatNumber);
+        }
+
+        private void adjustSeats(int seatNumber)
+        {
+            foreach (Player p in gameState.getPlayers().Values)
+            {
+                if (p.getSeat() > seatNumber)
+                {
+                    p.setSeat(p.getSeat() - 1);
+                }
+            }
+            messageSerializer.notifyPlayerDropped(gameState.playersToJson());
+            updateAIs();
         }
 
         public void setPlayerReady(long id, bool ready)
@@ -92,7 +113,7 @@ namespace _7Wonders.Host
 
         private void updateAIs()
         {
-            foreach (AIPlayer ai in aiPlayers)
+            foreach (AIPlayer ai in aiPlayers.Values)
             {
                 ai.updateGameState(gameState);
             }

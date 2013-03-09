@@ -17,18 +17,18 @@ namespace _7Wonders.Client
 
         public void handleMessage(String message, int type)
         {
-            switch ((HostMessageType)type)
+            switch ((ServerMessageType)type)
             {
-                case HostMessageType.PLAYER_JOINED:
+                case ServerMessageType.PLAYER_JOINED:
                     gameManager.updateLobby(message);
                     break;
-                case HostMessageType.PLAYER_DROPPED:
+                case ServerMessageType.PLAYER_DROPPED:
                     gameManager.updatePlayers(message);
                     break;
-                case HostMessageType.READY_CHANGED:
+                case ServerMessageType.READY_CHANGED:
                     gameManager.updatePlayers(message);
                     break;
-                case HostMessageType.OPTIONS_CHANGED:
+                case ServerMessageType.OPTIONS_CHANGED:
                     gameManager.updateOptions(message);
                     break;
                 default:

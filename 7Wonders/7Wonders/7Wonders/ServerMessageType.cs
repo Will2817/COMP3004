@@ -5,7 +5,7 @@ using System.Text;
 
 namespace _7Wonders
 {
-    public enum HostMessageType
+    public enum ServerMessageType
     {
         PLAYER_JOINED,
         PLAYER_DROPPED,
