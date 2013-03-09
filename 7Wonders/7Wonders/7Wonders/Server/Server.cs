@@ -40,6 +40,11 @@ namespace _7Wonders.Server
             gameManager.bootPlayerInSeat(seatNumber);
         }
 
+        public void startGame()
+        {
+            gameManager.startGame();
+        }
+
         public void shutdown()
         {
             netService.shutdown();

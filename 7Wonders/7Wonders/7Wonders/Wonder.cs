@@ -18,16 +18,16 @@ namespace _7Wonders
         protected string name;
         protected Side sideA;
         protected Side sideB;
-        protected Side activeSide;
-        protected Visual image;
+        protected bool activeSide;//true=A,false=B
+        protected bool inUse;
 
-        public Wonder(Game1 theGame,JObject _json)
+        public Wonder(JObject _json)
         {
             name = (string)_json["name"];
-            sideA = new Side(theGame, (JObject)_json["a"]);
-            sideB = new Side(theGame, (JObject)_json["b"]);
-            activeSide = sideA;
-            image = new Visual(theGame, new Vector2(0, 0), 0, 0, activeSide.getTexture());
+            sideA = new Side((JObject)_json["a"]);
+            sideB = new Side((JObject)_json["b"]);
+            activeSide = true;
+            inUse = false;
         }
 
         public string getName()
@@ -37,24 +37,35 @@ namespace _7Wonders
 
         public Side getSide()
         {
-            return activeSide;
+            if (activeSide) return sideA;
+            else return sideB;
         }
 
         public void setSideA()
         {
-            activeSide = sideA;
-            image.setTexture(activeSide.getTexture());
+            activeSide = true;
         }
 
         public void setSideB()
         {
-            activeSide = sideB;
-            image.setTexture(activeSide.getTexture());
+            activeSide = false;
         }
 
-        public Visual getVisual()
+        public void setInUse(bool inUse)
         {
-            return image;
+            this.inUse = inUse;
+        }
+
+        public bool isInUse()
+        {
+            return inUse;
+        }
+
+        public JObject toJObject()
+        {
+            return new JObject(
+                    new JProperty("name", name),
+                    new JProperty("activeSide", activeSide));
         }
     }
 }

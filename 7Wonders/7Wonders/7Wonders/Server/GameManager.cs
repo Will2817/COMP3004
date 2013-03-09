@@ -7,30 +7,15 @@ namespace _7Wonders.Server
 {
     class GameManager
     {
-        GameState gameState;
-        Dictionary<long, AIPlayer> aiPlayers;
-        MessageSerializerService messageSerializer;
-        NetService netService;
+        protected GameState gameState;
+        protected Dictionary<long, AIPlayer> aiPlayers;
+        protected MessageSerializerService messageSerializer;
+        protected NetService netService;
 
         public GameManager()
         {
             gameState = new GameState();
             aiPlayers = new Dictionary<long, AIPlayer>();
-        }
-
-        public GameState getState()
-        {
-            return gameState;
-        }
-
-        public void setMessageSerializer(MessageSerializerService messageSerializer)
-        {
-            this.messageSerializer = messageSerializer;
-        }
-
-        public void setNetService(NetService netService)
-        {
-            this.netService = netService;
         }
 
         public void addPlayer(Player _player)
@@ -43,22 +28,17 @@ namespace _7Wonders.Server
             }
             messageSerializer.notifyPlayerJoined(gameState.lobbyToJson());
             updateAIs();
-            Console.WriteLine("Start Players:");
-            foreach (Player p in gameState.getPlayers().Values)
-            {
-                Console.WriteLine(p.getName() + ", " + p.getID());
-            }
-            Console.WriteLine("End Players...");
         }
 
         public void addAI(string type)
         {
             Player newAI = new Player(System.DateTime.UtcNow.Ticks, type);
+            newAI.setReady(true);
             aiPlayers.Add(newAI.getID(), new AIPlayer(type));
             addPlayer(newAI);
         }
 
-        public void removePlayer(long id)
+        public void playerDropped(long id)
         {
             if (!gameState.isGameInProgress())
             {
@@ -66,19 +46,21 @@ namespace _7Wonders.Server
                 gameState.removePlayer(id);
                 adjustSeats(emptySeat);
             }
+            else
+            {
+                //Handle in-game player drop here
+            }
         }
 
         public void bootPlayerInSeat(int seatNumber)
         {
             long id = 0;
             foreach (Player p in gameState.getPlayers().Values)
-            {
                 if (p.getSeat() == seatNumber)
                 {
                     id = p.getID();
                     break;
                 }
-            }
             gameState.removePlayer(id);
             if (aiPlayers.ContainsKey(id)) aiPlayers.Remove(id);
             adjustSeats(seatNumber);
@@ -87,12 +69,7 @@ namespace _7Wonders.Server
         private void adjustSeats(int seatNumber)
         {
             foreach (Player p in gameState.getPlayers().Values)
-            {
-                if (p.getSeat() > seatNumber)
-                {
-                    p.setSeat(p.getSeat() - 1);
-                }
-            }
+                if (p.getSeat() > seatNumber) p.setSeat(p.getSeat() - 1);
             messageSerializer.notifyPlayerDropped(gameState.playersToJson());
             updateAIs();
         }
@@ -111,13 +88,24 @@ namespace _7Wonders.Server
             updateAIs();
         }
 
+        public void startGame()
+        {
+            //start game
+        }
+
         private void updateAIs()
         {
-            foreach (AIPlayer ai in aiPlayers.Values)
-            {
-                ai.updateGameState(gameState);
-            }
+            foreach (AIPlayer ai in aiPlayers.Values) ai.updateGameState(gameState);
         }
+
+        public GameState getGameState() { return gameState; }
+
+        public void setMessageSerializer(MessageSerializerService messageSerializer)
+        {
+            this.messageSerializer = messageSerializer;
+        }
+
+        public void setNetService(NetService netService) { this.netService = netService; }
 
     }
 }

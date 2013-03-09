@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using Newtonsoft.Json.Linq;
@@ -9,6 +10,7 @@ namespace _7Wonders
     public class GameState
     {
         private Dictionary<long, Player> players;
+        private Dictionary<string, Wonder> wonders;
         private bool gameInProgress;
         private bool onlySideA;
         private bool assign;
@@ -19,6 +21,11 @@ namespace _7Wonders
             gameInProgress = false;
             onlySideA = false;
             assign = false;
+            JObject wondersJson = JObject.Parse(File.ReadAllText("Content/Json/wonderlist.json"));
+            foreach (JObject j in (JArray)wondersJson["wonders"])
+            {
+                wonders.Add((string)j["name"], new Wonder(j));
+            }
         }
 
         public bool isGameInProgress() { return gameInProgress; }
@@ -62,6 +69,10 @@ namespace _7Wonders
                         new JArray(
                             from p in players.Values
                             select new JObject(p.toJObject()))),
+                    new JProperty("wonders",
+                        new JArray(
+                            from w in wonders.Values
+                            select new JObject(w.toJObject()))),
                     new JProperty("onlySideA",onlySideA),
                     new JProperty("assign",assign));
 
