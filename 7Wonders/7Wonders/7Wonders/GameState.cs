@@ -22,6 +22,7 @@ namespace _7Wonders
             onlySideA = false;
             assign = false;
             JObject wondersJson = JObject.Parse(File.ReadAllText("Content/Json/wonderlist.json"));
+            wonders = new Dictionary<string, Wonder>();
             foreach (JObject j in (JArray)wondersJson["wonders"])
             {
                 wonders.Add((string)j["name"], new Wonder(j));

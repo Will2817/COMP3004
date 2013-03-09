@@ -22,6 +22,7 @@ namespace _7Wonders
         public static Dictionary<String, Texture2D> textures;
         public static Dictionary<String, SpriteFont> fonts;
         public static Dictionary<String, Interface> interfaces;
+        public static Dictionary<String, Visual> wonders;
 
         public static int MAXPLAYER = 7;
 
@@ -50,6 +51,12 @@ namespace _7Wonders
             textures = new Dictionary<String, Texture2D>();
             fonts = new Dictionary<String, SpriteFont>();
             client = new Client.Client();
+
+            wonders = new Dictionary<String, Visual>();
+            foreach (JObject j in (JArray)wondersJson["wonders"])
+            {
+                wonders.Add((string)j["name"], new Visual(this, new Vector2(0, 0), 0, 0, (string)j["a"]["image"]));
+            }
 
             interfaces = new Dictionary<String, Interface>();
             interfaces.Add("mainmenu", new MainMenu(this));

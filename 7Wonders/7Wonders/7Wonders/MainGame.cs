@@ -47,9 +47,9 @@ namespace _7Wonders
         private void Initialize()
         {
             player = Game1.client.getSelf();
-            player.setBoard(Game1.wonders.Values.ElementAt(player.getSeat()));
-            player.getBoard().getVisual().setPosition(new Vector2(5 + SEC1WIDTH, 5 + SEC1HEIGHT)).setWidth(WONDERWIDTH * 2 + 10).setHeight(WONDERHEIGHT * 2);
-            visuals1.Add("wonder", player.getBoard().getVisual());
+    //        player.setBoard(Game1.wonders.Values.ElementAt(player.getSeat()));
+    //        player.getBoard().getVisual().setPosition(new Vector2(5 + SEC1WIDTH, 5 + SEC1HEIGHT)).setWidth(WONDERWIDTH * 2 + 10).setHeight(WONDERHEIGHT * 2);
+    //        visuals1.Add("wonder", player.getBoard().getVisual());
         }
 
         public override void LoadContent()

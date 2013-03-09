@@ -82,10 +82,10 @@ namespace _7Wonders
             int count = 0;
             int count2 = 1;
             //need to work on this so that it adapts better to number of wonders
-            foreach (Wonder w in Game1.wonders.Values)
+            foreach (KeyValuePair<string, Visual> kvp in Game1.wonders)
             {
-                w.getVisual().setPosition(new Vector2(5 + SEC1WIDTH * count2, 5 + WONDERHEIGHT * count)).setWidth(WONDERWIDTH).setHeight(WONDERHEIGHT);
-                visuals1.Add(w.getName(), w.getVisual());
+                kvp.Value.setPosition(new Vector2(5 + SEC1WIDTH * count2, 5 + WONDERHEIGHT * count)).setWidth(WONDERWIDTH).setHeight(WONDERHEIGHT);
+                visuals1.Add(kvp.Key, kvp.Value);
                 count++;
 
                 if (count>3)
@@ -96,7 +96,7 @@ namespace _7Wonders
                 
             }
 
-            visuals1.Add("selected", new Visual(game, new Vector2(5 + SEC1WIDTH, 5 + SEC1HEIGHT), WONDERWIDTH * 2 + 10, WONDERHEIGHT * 2, Game1.wonders.Values.First().getVisual().getTexture()));
+            visuals1.Add("selected", new Visual(game, new Vector2(5 + SEC1WIDTH, 5 + SEC1HEIGHT), WONDERWIDTH * 2 + 10, WONDERHEIGHT * 2, Game1.wonders.Values.First().getTexture()));
             visuals1.Add("toggleButton", sideButton);
             visuals1.Add("backButton", backButton);
             activeVisuals = visuals1;
@@ -117,12 +117,12 @@ namespace _7Wonders
             if (sideButton.isClicked())
             {
                 viewSideB = !viewSideB;
-                foreach (Wonder w in Game1.wonders.Values)
+                foreach (KeyValuePair<string, Visual> kvp in Game1.wonders)
                 {
                     if (viewSideB)
-                        w.setSideB();
+                        kvp.Value.setTexture(kvp.Key + "_B");
                     else
-                        w.setSideA();
+                        kvp.Value.setTexture(kvp.Key + "_A");
                 }
                 string image = visuals1["selected"].getTexture();
                 if (viewSideB)
@@ -139,14 +139,14 @@ namespace _7Wonders
                 backButton.reset();
             }
 
-            foreach (Wonder w in Game1.wonders.Values)
+            foreach (string key in Game1.wonders.Keys)
             {
-                if (visuals1[w.getName()].isClicked())
+                if (visuals1[key].isClicked())
                 {
                     if (viewSideB)
-                        visuals1["selected"].setTexture(w.getName() + "_B");
+                        visuals1["selected"].setTexture(key + "_B");
                     else
-                        visuals1["selected"].setTexture(w.getName() + "_A");
+                        visuals1["selected"].setTexture(key + "_A");
                 }
             }
 
