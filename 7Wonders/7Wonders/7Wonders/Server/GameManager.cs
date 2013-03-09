@@ -88,9 +88,35 @@ namespace _7Wonders.Server
             updateAIs();
         }
 
-        public void startGame()
+        public int startGame()
         {
-            //start game
+            foreach (Player p in gameState.getPlayers().Values)
+                if (!p.getReady()) return -1;
+            if (gameState.getAssign())
+            {
+                foreach (Player p in gameState.getPlayers().Values)
+                {
+                    List<Wonder> wonders = new List<Wonder>();
+                    wonders.AddRange(gameState.getWonders().Values);
+                    Random rand = new Random();
+                    int i;
+                    do 
+                    {
+                        i = rand.Next(wonders.Count);
+                    } 
+                    while (wonders[i].isInUse());
+                    wonders[i].setInUse(true);
+                    p.setBoard(wonders[i]);
+                }
+                //broadcast
+                updateAIs();
+                return 0;
+            }
+            else
+            {
+                //handle board picking
+                return 0;
+            }
         }
 
         private void updateAIs()

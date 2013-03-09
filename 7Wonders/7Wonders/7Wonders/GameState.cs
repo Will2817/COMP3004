@@ -48,6 +48,11 @@ namespace _7Wonders
             return players;
         }
 
+        public Dictionary<string, Wonder> getWonders()
+        {
+            return wonders;
+        }
+
         public string playersToJson()
         {
             JObject jplayers =
@@ -69,10 +74,6 @@ namespace _7Wonders
                         new JArray(
                             from p in players.Values
                             select new JObject(p.toJObject()))),
-                    new JProperty("wonders",
-                        new JArray(
-                            from w in wonders.Values
-                            select new JObject(w.toJObject()))),
                     new JProperty("onlySideA",onlySideA),
                     new JProperty("assign",assign));
 
