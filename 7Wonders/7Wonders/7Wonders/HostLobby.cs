@@ -46,6 +46,7 @@ namespace _7Wonders
 
             for (int i=dropDowns.Count; i >0; i--)
             {
+
                 DropDown dd = (DropDown) dropDowns[i-1];
                 if (dd.RequestDrop())
                 {
@@ -70,6 +71,18 @@ namespace _7Wonders
                         existsADrop = false;
                     }
                 }
+                if (startButton.isClicked())
+                {
+                    startButton.reset();
+                    if (Game1.client.getState().getPlayers().Count > 2)
+                    {
+                        backToMenu = false;
+                        finished = true;
+                        //Start game <-- will need to deal with picking wonders
+                    }
+                    else { }//error message
+                }
+                
             }
         }
 
@@ -80,16 +93,6 @@ namespace _7Wonders
             dropped = null;
             existsADrop = false;
             base.updateHelper(i);
-        }
-
-        public override Dictionary<string, string> isFinished()
-        {
-            if (finished)
-            {
-                return MainMenu.createMessage();
-            }
-
-            return null;
         }
 
         public override void receiveMessage(Dictionary<string, string> message)

@@ -100,7 +100,7 @@ namespace _7Wonders
         // ACCESSORS
         public string getName()         {   return name;    }        
         public long getID()             {   return id;      }
-        public int getSeat() { return seatNumber; }
+        public int getSeat()            {   return seatNumber; }
         public Wonder getBoard()        {   return board;   }
         public List<Card> getHand()     {   return hand;    }
         public List<Card> getPlayed()   {   return played;  }
@@ -147,6 +147,7 @@ namespace _7Wonders
         public void setHand(List<Card> h)       {   hand = new List<Card>(h);   }
         public void setPlayed(List<Card> p)     {   played = new List<Card>(p); }
         public void setReady(bool _ready)       {   ready = _ready; }
+        public void setBoard(Wonder w)          {   board = w; }
 
         public void addPlayed(Card c)             
         {

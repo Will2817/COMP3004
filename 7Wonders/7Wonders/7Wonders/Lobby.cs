@@ -33,6 +33,7 @@ namespace _7Wonders
         protected Button sideButton;
         protected Button backButton;
 
+        protected bool backToMenu = true;
         protected const int NUMPLAYERS = 7;
         protected bool viewSideB = false;
         
@@ -134,6 +135,7 @@ namespace _7Wonders
             if (backButton.isClicked())
             {
                 finished = true;
+                backToMenu = true;
                 backButton.reset();
             }
 
@@ -161,7 +163,9 @@ namespace _7Wonders
         {
             if (finished)
             {
-                return MainMenu.createMessage();
+                Console.WriteLine("Lobby finishing with:" + backToMenu);
+                if (backToMenu) return MainMenu.createMessage();
+                else return MainGame.createMessage();
             }
 
             return null;
