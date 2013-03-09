@@ -3,16 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace _7Wonders.Host
+namespace _7Wonders.Server
 {
-    public class Host
+    public class Server
     {
         private GameManager gameManager;
         private EventHandlerServiceImpl eventHandlerService;
         private MessageSerializerService messageSerializerService;
         private NetServiceImpl netService;
 
-        public Host()
+        public Server()
         {
             gameManager = new GameManager();
             eventHandlerService = new EventHandlerServiceImpl();
@@ -33,6 +33,11 @@ namespace _7Wonders.Host
         public void addAIPlayer(string type)
         {
             gameManager.addAI(type);
+        }
+
+        public void bootPlayer(int seatNumber)
+        {
+            gameManager.bootPlayerInSeat(seatNumber);
         }
 
         public void shutdown()

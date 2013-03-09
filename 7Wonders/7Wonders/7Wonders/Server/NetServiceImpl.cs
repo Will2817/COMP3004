@@ -7,7 +7,7 @@ using System.Threading;
 using Lidgren.Network;
 using Newtonsoft.Json.Linq;
 
-namespace _7Wonders.Host
+namespace _7Wonders.Server
 {
     class NetServiceImpl : NetService
     {

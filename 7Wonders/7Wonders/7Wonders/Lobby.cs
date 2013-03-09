@@ -41,7 +41,7 @@ namespace _7Wonders
             : base(theGame, "title", 0.4f)
         {
             playerTypes = new List<string>() { "Open"};
-            foreach (string type in Host.AIPlayer.aiTypes.Keys)
+            foreach (string type in Server.AIPlayer.aiTypes.Keys)
             {
                 playerTypes.Add(type);
             }
