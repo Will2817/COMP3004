@@ -10,9 +10,11 @@ namespace _7Wonders
     {
         protected string name;        
         protected long id;
+        protected int seatNumber;
         protected Wonder board;
         protected List<Card> hand;
         protected List<Card> played;
+        protected bool ready;
 
         // Players Score
         // Victory Points, Army, Coins, Conflict tokens
@@ -29,9 +31,11 @@ namespace _7Wonders
         {
             id          = _id;
             name        = _name;
+            seatNumber = -1;
             board       = null;            
             hand        = null;
             played      = null;
+            ready       = false;
 
             // Setting the Players Score Dictionary
             score = new Dictionary<Score, int>();
@@ -58,6 +62,8 @@ namespace _7Wonders
         {
             id = (long)j["id"];
             name = (string)j["name"];
+            seatNumber = (int)j["seat"];
+            ready = bool.Parse((string)j["ready"]);
         }
 
 
@@ -94,9 +100,11 @@ namespace _7Wonders
         // ACCESSORS
         public string getName()         {   return name;    }        
         public long getID()             {   return id;      }
+        public int getSeat()            {   return seatNumber; }
         public Wonder getBoard()        {   return board;   }
         public List<Card> getHand()     {   return hand;    }
         public List<Card> getPlayed()   {   return played;  }
+        public bool getReady()          {   return ready;   }
             
         // Returns the dicitonary object of Score & Resources
         public Dictionary<Score, int> getScore()           { return score;     }
@@ -135,8 +143,11 @@ namespace _7Wonders
 
         // MUTATORS
         public void setNameID(string n)         {   name = n;   }
+        public void setSeat(int s)              { seatNumber = s; }
         public void setHand(List<Card> h)       {   hand = new List<Card>(h);   }
         public void setPlayed(List<Card> p)     {   played = new List<Card>(p); }
+        public void setReady(bool _ready)       {   ready = _ready; }
+        public void setBoard(Wonder w)          {   board = w; }
 
         public void addPlayed(Card c)             
         {
@@ -153,10 +164,7 @@ namespace _7Wonders
         {
             JObject player = 
                 new JObject (
-                    new JProperty("player",
-                    new JObject(
-                        new JProperty("name", name),
-                        new JProperty("id", id))));
+                    new JProperty("player", toJObject()));
             return player.ToString();
         }
         public JObject toJObject()
@@ -164,7 +172,9 @@ namespace _7Wonders
             JObject player =
                 new JObject(
                     new JProperty("name", name),
-                    new JProperty("id", id));
+                    new JProperty("id", id),
+                    new JProperty("seat", seatNumber),
+                    new JProperty("ready",ready));
             return player;
         }
 
@@ -203,6 +213,5 @@ namespace _7Wonders
             else
                 Console.WriteLine("Error: Add Resource failed, no such resource " + r);
         }
-
     }
 }

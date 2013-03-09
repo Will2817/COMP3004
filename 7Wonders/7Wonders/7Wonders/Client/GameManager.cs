@@ -16,7 +16,7 @@ namespace _7Wonders.Client
         public GameManager()
         {
             gameState = new GameState();
-            connected = true;
+            connected = false;
         }
 
         public void setMessageSerializer(MessageSerializerService messageSerializer)
@@ -29,9 +29,21 @@ namespace _7Wonders.Client
             this.netService = netService;
         }
 
+        public void updateLobby(string lobby)
+        {
+            gameState.lobbyFromJson(lobby);
+            updateAvailable = true;
+        }
+
         public void updatePlayers(string players)
         {
             gameState.playersFromJson(players);
+            updateAvailable = true;
+        }
+
+        public void updateOptions(string options)
+        {
+            gameState.optionsFromJson(options);
             updateAvailable = true;
         }
 
@@ -58,6 +70,16 @@ namespace _7Wonders.Client
         public void disconnected()
         {
             connected = false;
+        }
+
+        public void setConnected()
+        {
+            connected = true;
+        }
+
+        public void setReady(bool ready)
+        {
+            messageSerializer.notifyReadyChanged(ready);
         }
     }
 }

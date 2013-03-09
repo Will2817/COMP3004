@@ -22,7 +22,7 @@ namespace _7Wonders
         public static Dictionary<String, Texture2D> textures;
         public static Dictionary<String, SpriteFont> fonts;
         public static Dictionary<String, Interface> interfaces;
-        public static Dictionary<String, Wonder> wonders;
+        public static Dictionary<String, Visual> wonders;
 
         public static int MAXPLAYER = 7;
 
@@ -41,7 +41,7 @@ namespace _7Wonders
         JObject wondersJson = JObject.Parse(File.ReadAllText("Content/Json/wonderlist.json"));
         JObject cardsJson = JObject.Parse(File.ReadAllText("Content/Json/cards.json"));
         public static Client.Client client;
-        Host.Host host;
+        public static Server.Server host;
 
         
 
@@ -53,10 +53,10 @@ namespace _7Wonders
             fonts = new Dictionary<String, SpriteFont>();
             client = new Client.Client();
 
-            wonders = new Dictionary<String, Wonder>();
+            wonders = new Dictionary<String, Visual>();
             foreach (JObject j in (JArray)wondersJson["wonders"])
             {
-                wonders.Add((string)j["name"], new Wonder(this, j));
+                wonders.Add((string)j["name"], new Visual(this, new Vector2(0, 0), 0, 0, (string)j["a"]["image"]));
             }
 
             interfaces = new Dictionary<String, Interface>();
@@ -162,34 +162,45 @@ namespace _7Wonders
 
             Dictionary<string, string> message;
 
-            if ((message = activeInterface.isFinished()) != null)
+            if (!client.isConnected() && (activeInterface != interfaces["mainmenu"]))
+            {
+                activeInterface.reset();
+                activeInterface = interfaces["mainmenu"];
+                message = new Dictionary<string, string>();
+                message.Add("connection", "Lost Connection");
+                activeInterface.receiveMessage(message);
+                client = new Client.Client();
+            }
+
+            else if ((message = activeInterface.isFinished()) != null)
             {
                 if (message["nextInterface"] == "hostlobby")
                 {
                     Console.WriteLine("StartHost");
-                    host = new Host.Host();
+                    if (host != null) host.shutdown();
+                    host = new Server.Server();
                     Console.WriteLine("StartClient");
                     client.joinHost(true);
-                }
-                if ((message["nextInterface"] == "lobby"))
-                {
-                    Console.WriteLine("StartClient");
-                    client.joinHost(false);
                 }
                 if ((message["nextInterface"] == "mainmenu"))
                 {
                     if (host != null) host.shutdown();
                     client.disconnect();
+                    client = new Client.Client();
+                }
+                if ((message["nextInterface"] == "lobby"))
+                {
+                    Console.WriteLine("Join StartClient");
+                    client.joinHost(false);
+                    if (!client.isConnected())
+                    {
+                        message["nextInterface"] = "mainmenu";
+                        message["connection"] = "Failed to Connect";
+                    }
                 }
                 activeInterface.reset();
                 activeInterface = interfaces[message["nextInterface"]];
                 activeInterface.receiveMessage(message);
-            }
-
-            if (!client.isConnected() && (activeInterface != interfaces["mainmenu"]))
-            {
-                activeInterface.reset();
-                activeInterface = interfaces[message["mainmenu"]];
             }
 
             ProcessKeyboard();

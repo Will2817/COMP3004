@@ -7,7 +7,7 @@ using System.Threading;
 using Lidgren.Network;
 using Newtonsoft.Json.Linq;
 
-namespace _7Wonders.Host
+namespace _7Wonders.Server
 {
     class NetServiceImpl : NetService
     {
@@ -17,7 +17,6 @@ namespace _7Wonders.Host
         private EventHandlerService eventHandler;
         private NetServer server;
         private NetPeerConfiguration config;
-        private NetOutgoingMessage outMessage;
         private Dictionary<long, NetConnection> connections;
         private Dictionary<long, string> names;
         private Boolean acceptingClients;
@@ -70,6 +69,7 @@ namespace _7Wonders.Host
                                 inMessage.SenderConnection.Deny();
                             break;
                         case NetIncomingMessageType.DiscoveryRequest:
+                            NetOutgoingMessage outMessage;
                             outMessage = server.CreateMessage();
                             outMessage.Write(acceptingClients);
                             server.SendDiscoveryResponse(outMessage, inMessage.SenderEndPoint);
@@ -87,18 +87,19 @@ namespace _7Wonders.Host
                                 long clientID = inMessage.SenderConnection.RemoteUniqueIdentifier;
                                 connections.Remove(clientID);
                                 names.Remove(clientID);
-                                Thread t = new Thread(() => eventHandler.handleClientDrop(clientID));
-                                t.Start();
+                                eventHandler.handleClientDrop(clientID);
                             }
                             if (status == NetConnectionStatus.Connected)
                             {
                                 long id = inMessage.SenderConnection.RemoteUniqueIdentifier;
                                 if (names.ContainsKey(id))
                                 {
-                                    Thread t = new Thread(() => eventHandler.handleNewClient(id, names[id]));
-                                    t.Start();
+                                    eventHandler.handleNewClient(id, names[id]);
                                 }
                             }
+                            break;
+                        case NetIncomingMessageType.WarningMessage:
+                            Console.WriteLine(inMessage.ReadString());
                             break;
                         default:
                             break;
@@ -129,20 +130,22 @@ namespace _7Wonders.Host
 
         public void broadcastMessage(String message, int type)
         {
+            NetOutgoingMessage outMessage;
             Console.WriteLine("BroadCasting all");
-            foreach (long id in connections.Keys)
-            {
-                Console.WriteLine(id);
-                sendMessage(message, type, id);
-            }
+            outMessage = server.CreateMessage();
+            outMessage.Write(type);
+            outMessage.Write(message);
+            NetDeliveryMethod method = NetDeliveryMethod.ReliableOrdered;
+            server.SendToAll(outMessage, method);
         }
 
         public void sendMessage(String message, int type, long clientID)
         {
+            NetOutgoingMessage outMessage;
             outMessage = server.CreateMessage();
             outMessage.Write(type);
             outMessage.Write(message);
-            NetDeliveryMethod method = NetDeliveryMethod.ReliableUnordered;
+            NetDeliveryMethod method = NetDeliveryMethod.ReliableOrdered;
             server.SendMessage(outMessage, connections[clientID], method);
         }
 

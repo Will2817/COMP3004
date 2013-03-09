@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace _7Wonders.Host
+namespace _7Wonders.Server
 {
-    class MessageSerializerServiceImpl : MessageSerializerService
+    class MessageSerializerService
     {
         private NetService netService;
 
@@ -17,12 +17,22 @@ namespace _7Wonders.Host
         public void notifyPlayerJoined(string players)
         {
             string message = players;
-            netService.broadcastMessage(message, (int) HostMessageType.PLAYER_JOINED);
+            netService.broadcastMessage(message, (int) ServerMessageType.PLAYER_JOINED);
         }
 
         public void notifyPlayerDropped(string players)
         {
-            netService.broadcastMessage(players, (int)HostMessageType.PLAYER_DROPPED);
+            netService.broadcastMessage(players, (int)ServerMessageType.PLAYER_DROPPED);
+        }
+
+        public void notifyReadyChanged(string players)
+        {
+            netService.broadcastMessage(players, (int)ServerMessageType.READY_CHANGED);
+        }
+
+        public void notifyOptionsChanged(string options)
+        {
+            netService.broadcastMessage(options, (int)ServerMessageType.OPTIONS_CHANGED);
         }
 
         public void broadcastChatMessage(String message, long senderID)

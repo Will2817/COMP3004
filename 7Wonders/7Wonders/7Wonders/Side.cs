@@ -16,24 +16,14 @@ namespace _7Wonders
     public class Side
     {
         List<Structure> stages;
-        string texture;
 
-        public Side(Game1 theGame, JObject j)
+        public Side(JObject j)
         {
-
-            texture = (string)j["image"];
-
             stages = new List<Structure>();
-
             foreach (JObject stage in j["stages"])
             {
                 //stages.Add(new Structure((JObject)stage["cost"], (JObject)stage["effects"]));
             }
-        }
-
-        public string getTexture()
-        {
-            return texture;
         }
     }
 }

@@ -10,14 +10,14 @@ namespace _7Wonders.Client
 
         GameManager gameManager;
         EventHandlerServiceImpl eventHandlerService;
-        MessageSerializerServiceImpl messageSerializerService;
+        MessageSerializerService messageSerializerService;
         NetServiceImpl netService;
 
         public Client()
         {
             gameManager = new GameManager();
             eventHandlerService = new EventHandlerServiceImpl();
-            messageSerializerService = new MessageSerializerServiceImpl();
+            messageSerializerService = new MessageSerializerService();
             netService = new NetServiceImpl();
             netService.setEventHandler(eventHandlerService);
             eventHandlerService.setGameManager(gameManager);
@@ -27,10 +27,23 @@ namespace _7Wonders.Client
 
         }
 
+        public long getId()
+        {
+            return netService.getID();
+        }
+
+        public Player getSelf()
+        {
+            if (gameManager.getGameState().getPlayers().ContainsKey(getId()))
+                return gameManager.getGameState().getPlayers()[getId()];
+            return null;
+        }
+
         public void joinHost(bool host)
         {
             //Console.WriteLine("Start Test");
             int i = netService.joinHost(host);
+            if (i == 0) gameManager.setConnected();
             //Console.WriteLine("Over here:" + i);
         }
 
@@ -52,6 +65,11 @@ namespace _7Wonders.Client
         public bool isConnected()
         {
             return gameManager.isConnected();
+        }
+
+        public void setReady(bool ready)
+        {
+            gameManager.setReady(ready);
         }
     }
 }

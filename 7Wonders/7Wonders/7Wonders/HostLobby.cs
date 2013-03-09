@@ -31,14 +31,6 @@ namespace _7Wonders
 
             visuals1.Add("startButton", startButton);
         }
-        
-        public override void receiveMessage(Dictionary<string, string> message)
-        {
-            random = Boolean.Parse(message["random"]);
-            onlyA = Boolean.Parse(message["onlyA"]);
-            if (onlyA) sideButton.setVisible(false);
-            else sideButton.setVisible(true);
-        }
 
         public override void Update(GameTime gameTime, MouseState mouseState)
         {
@@ -54,6 +46,7 @@ namespace _7Wonders
 
             for (int i=dropDowns.Count; i >0; i--)
             {
+
                 DropDown dd = (DropDown) dropDowns[i-1];
                 if (dd.RequestDrop())
                 {
@@ -73,21 +66,38 @@ namespace _7Wonders
                 {
                     if (!dd.getDown())
                     {
+                        if (dd.getSelected() != "Open") Game1.host.addAIPlayer(dd.getSelected());
                         dropped = null;
                         existsADrop = false;
                     }
                 }
+                if (startButton.isClicked())
+                {
+                    startButton.reset();
+                    if (Game1.client.getState().getPlayers().Count > 2)
+                    {
+                        backToMenu = false;
+                        finished = true;
+                        //Start game <-- will need to deal with picking wonders
+                    }
+                    else { }//error message
+                }
+                
             }
         }
 
-        public override Dictionary<string, string> isFinished()
+        public override void updateHelper(int i)
         {
-            if (finished)
-            {
-                return MainMenu.createMessage();
-            }
+            dropDowns[i].setEnabled(true);
+            if (dropped != null) dropped.drop();
+            dropped = null;
+            existsADrop = false;
+            base.updateHelper(i);
+        }
 
-            return null;
+        public override void receiveMessage(Dictionary<string, string> message)
+        {
+            Game1.host.setOptions(Boolean.Parse(message["onlyA"]), Boolean.Parse(message["random"]));
         }
 
         public static Dictionary<string, string> createMessage(bool random, bool onlyA)
@@ -99,18 +109,6 @@ namespace _7Wonders
                     {"random", random.ToString()},
                     {"onlyA", onlyA.ToString()}
                 };
-        }
-
-        public override void updatePlayers()
-        {
-            int count = 0;
-            List<Player> players = Game1.client.getState().getPlayers().Values.ToList<Player>();
-            foreach (DropDown dd in dropDowns)
-            {
-                if (count < players.Count) dd.setSelected(players[count].getName()).setEnabled(false);
-                else if (!playerTypes.Contains(dd.getSelected())) dd.setSelected("Open").setEnabled(true);
-                count++;
-            }
         }
     }
 }

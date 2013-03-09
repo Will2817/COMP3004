@@ -15,6 +15,7 @@ namespace _7Wonders
     class Checkbox : Visual
     {
         protected bool selected = false;
+        protected bool changed = false;
 
         // Checkbox constructor - Virtual
         public Checkbox(Game1 theGame, Vector2 _pos, int _w, int _h)
@@ -35,9 +36,9 @@ namespace _7Wonders
             base.Update(gameTime, mState);
             if (isClicked())
             {
+                changed = true;
                 selected = !selected;
-                if (selected) textureColor = new Color(Color.Green.R, Color.Green.G, Color.Green.B, opacity);
-                else textureColor = new Color(255, 255, 255, opacity);
+                swapColours();
                 reset();
             }
         }
@@ -49,7 +50,14 @@ namespace _7Wonders
             spriteBatch.Draw(texture, new Rectangle((int)position.X, (int)position.Y, width, height), textureColor);
         }
 
-        public bool isSelected() { return selected; }
-        public Checkbox setSelected(bool _selected) { selected = _selected; return this; }
+        public bool hasChanged() { return changed; }
+        public bool isSelected() { changed = false; return selected; }
+        public Checkbox setSelected(bool _selected) { selected = _selected; swapColours(); return this; }
+
+        private void swapColours()
+        {
+            if (selected) textureColor = new Color(Color.Green.R, Color.Green.G, Color.Green.B, opacity);
+            else textureColor = new Color(255, 255, 255, opacity);
+        }
     }
 }

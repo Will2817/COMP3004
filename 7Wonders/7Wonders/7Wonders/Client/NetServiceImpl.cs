@@ -36,6 +36,11 @@ namespace _7Wonders.Client
             client.Start();
         }
 
+        public long getID()
+        {
+            return client.UniqueIdentifier;
+        }
+
         public void setEventHandler(EventHandlerService eventHandler)
         {
             this.eventHandler = eventHandler;
@@ -59,6 +64,7 @@ namespace _7Wonders.Client
             Thread messageListenerThread = new Thread(new ThreadStart(listenMessages));
             messageListenerThread.Start();
             while (!messageListenerThread.IsAlive);
+            while (client.ConnectionStatus != NetConnectionStatus.Connected) ;
             return 0;
         }
 
@@ -124,10 +130,12 @@ namespace _7Wonders.Client
 
         public int sendMessage(String message, int type)
         {
+            Console.WriteLine("Client Sending...");
+            Console.WriteLine(message);
             outMessage = client.CreateMessage();
             outMessage.Write(type);
             outMessage.Write(message);
-            NetDeliveryMethod method = NetDeliveryMethod.ReliableUnordered;
+            NetDeliveryMethod method = NetDeliveryMethod.ReliableOrdered;
             client.SendMessage(outMessage, connection, method);
             return 0;
         }

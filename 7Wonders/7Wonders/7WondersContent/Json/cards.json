@@ -1347,6 +1347,33 @@
             ]
         },
         {
+            "name": "Palace",
+            "image": "/Age3/palace_3_7",
+            "players": 7,
+            "age": 3,
+            "guild": "blue",
+            "cost": {
+                "s": 1,
+                "o": 1,
+                "w": 1,
+                "c": 1,
+                "g": 1,
+                "p": 1,
+                "l": 1
+            },
+            "effects": [
+                {
+                    "type": "victory",
+                    "amount": 8,
+                    "from": "none",
+                    "basis": "none"
+                }
+            ],
+            "chains": [
+                null
+            ]
+        },
+        {
             "name": "Courthouse",
             "image": "/Age2/courthouse_2_3",
             "players": 3,
@@ -1669,6 +1696,26 @@
             ]
         },
         {
+            "name": "Fortifications",
+            "image": "/Age3/fortifications_3_7",
+            "players": 7,
+            "age": 3,
+            "guild": "red",
+            "cost": {
+                "o": 3,
+                "s": 1
+            },
+            "effects": [
+                {
+                    "type": "army",
+                    "amount": 3
+                }
+            ],
+            "chains": [
+                "Walls"
+            ]
+        },
+        {
             "name": "Circus",
             "image": "/Age3/circus_3_4",
             "players": 4,
@@ -1753,6 +1800,27 @@
             "name": "Arsenal",
             "image": "/Age3/arsenal_3_4",
             "players": 4,
+            "age": 3,
+            "guild": "red",
+            "cost": {
+                "w": 2,
+                "o": 1,
+                "l": 1
+            },
+            "effects": [
+                {
+                    "type": "army",
+                    "amount": 3
+                }
+            ],
+            "chains": [
+                null
+            ]
+        },
+        {
+            "name": "Arsenal",
+            "image": "/Age3/arsenal_3_7",
+            "players": 7,
             "age": 3,
             "guild": "red",
             "cost": {
@@ -2500,6 +2568,34 @@
             ]
         },
         {
+            "name": "Arena",
+            "image": "/Age3/arena_3_7",
+            "players": 7,
+            "age": 3,
+            "guild": "yellow",
+            "cost": {
+                "s": 2,
+                "o": 1
+            },
+            "effects": [
+                {
+                    "type": "victory",
+                    "amount": 1,
+                    "from": "player",
+                    "basis": "wonderstages"
+                },
+                {
+                    "type": "coin",
+                    "amount": 3,
+                    "from": "player",
+                    "basis": "wonderstages"
+                }
+            ],
+            "chains": [
+                "Dispensary"
+            ]
+        },
+        {
             "name": "Apothecary",
             "image": "/Age1/apothecary_1_3",
             "players": 3,
@@ -2845,6 +2941,27 @@
             ]
         },
         {
+            "name": "Observatory",
+            "image": "/Age3/observatory_3_7",
+            "players": 7,
+            "age": 3,
+            "guild": "green",
+            "cost": {
+                "o": 2,
+                "g": 1,
+                "l": 1
+            },
+            "effects": [
+                {
+                    "type": "gear",
+                    "amount": 1
+                }
+            ],
+            "chains": [
+                "Laboratory"
+            ]
+        },
+        {
             "name": "University",
             "image": "/Age3/university_3_3",
             "players": 3,
@@ -2890,6 +3007,26 @@
             "name": "Academy",
             "image": "/Age3/academy_3_3",
             "players": 3,
+            "age": 3,
+            "guild": "green",
+            "cost": {
+                "s": 3,
+                "g": 1
+            },
+            "effects": [
+                {
+                    "type": "comp",
+                    "amount": 1
+                }
+            ],
+            "chains": [
+                "School"
+            ]
+        },
+        {
+            "name": "Academy",
+            "image": "/Age3/academy_3_7",
+            "players": 7,
             "age": 3,
             "guild": "green",
             "cost": {

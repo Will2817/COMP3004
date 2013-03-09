@@ -5,12 +5,12 @@ using System.Text;
 
 namespace _7Wonders
 {
-    public enum HostMessageType
+    public enum ServerMessageType
     {
         PLAYER_JOINED,
         PLAYER_DROPPED,
-        PLAYER_READY,
-        PLAYER_NOT_READY,
+        READY_CHANGED,
+        OPTIONS_CHANGED,
         GAME_STARTED,
         ASSIGN_WONDER,
         RESERVE_WONDER,

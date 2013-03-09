@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Newtonsoft.Json.Linq;
 
-namespace _7Wonders.Host
+namespace _7Wonders.Server
 {
     class EventHandlerServiceImpl : EventHandlerService
     {
@@ -22,13 +23,16 @@ namespace _7Wonders.Host
 
         public void handleClientDrop(long clientID)
         {
-            gameManager.removePlayer(clientID);
+            gameManager.playerDropped(clientID);
         }
 
         public void handleMessage(String message, int type, long clientID)
         {
             switch ((ClientMessageType)type)
             {
+                case ClientMessageType.READY_CHANGED:
+                    gameManager.setPlayerReady(clientID, Boolean.Parse(message));
+                    break;
                 case ClientMessageType.BOARD_SELECTION:
                     //stuff
                     break;
