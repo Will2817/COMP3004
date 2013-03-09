@@ -40,6 +40,7 @@ namespace _7Wonders
         Boolean rightkeylock = false;
         Interface activeInterface;
         JObject wondersJson = JObject.Parse(File.ReadAllText("Content/Json/wonderlist.json"));
+        JObject cardsJson = JObject.Parse(File.ReadAllText("Content/Json/cards.json"));
         public static Client.Client client;
         public static Server.Server host;
 
@@ -75,7 +76,7 @@ namespace _7Wonders
         /// related content.  Calling base.Initialize will enumerate through any components
         /// and initialize them as well.
         /// </summary>
-        protected override void Initialize()
+       /* protected override void Initialize()
         {
             // TODO: Add your initialization logic here
             IsMouseVisible = true;
@@ -320,6 +321,6 @@ namespace _7Wonders
 
             Exit();
             // Stop the threads
-        }
+        }*/
     }
 }

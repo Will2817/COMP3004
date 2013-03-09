@@ -15,14 +15,14 @@ namespace _7Wonders
 {
     public class Card
     {
-        // Protected Variables
-        protected string name;
-        protected Visual image;
-        protected int players;
-        protected int age;
-        protected string colour;
-        protected Structure structure;
-        protected List<string> chains;
+        // Auto-Implementing Properites of Cards
+        public string name { get; set; }
+        public Visual image { get; set; }
+        public int players { get; set; }
+        public int age { get; set; }
+        public CardColour colour { get; set; }
+        public Structure structure { get; set; }
+        public List<string> chains { get; set; }
 
         // Card Constructure
         public Card(Game1 theGame, JObject _json)
@@ -32,53 +32,50 @@ namespace _7Wonders
             image = new Visual(theGame, Vector2.Zero, 0, 0, (string)_json["image"]);
             players = (int)_json["players"];
             age = (int)_json["age"];
-            colour = (string)_json["guild"];
-            
-            // Need to go into chains and copy each value
+            colour = getGuildType((string)_json["guild"]);
+
+
         }
 
-        // Accessors
-        public string getName()         {   return name; }
-        public Visual getVisual()       {   return image; }
-        public int getPlayers()         {   return players; }
-        public int getAge()             {   return age; }
-        public string getColour()       {   return colour; }
-        public List<string> getCost()   { return structure.getCosts(); }
-        public List<string> getEffects(){ return structure.getEffects(); }
-
         // Gets the full name of the Guild - used for display
-        public string getGuildType(string colour)
+        public CardColour getGuildType(string _colour)
         {
-            string c = colour;
-
-            switch (colour)
+            CardColour c = 0;
+            switch (_colour)
             {
-                case "brown": 
-                    c = "Raw Materials Structure";
+                case "brown":
+                    c = CardColour.BROWN;
+                    Console.WriteLine("brown card");
                     break;
-                case "gray": 
-                    c = "Manufactured Goods Structure";
+                case "gray":
+                    c = CardColour.GRAY;
+                    Console.WriteLine("gray card");
                     break;
                 case "purple":
-                    c = "Guilds Structure";
+                    c = CardColour.PURPLE;
+                    Console.WriteLine("purple card");
                     break;
                 case "blue":
-                    c = "Civilian Structure";
+                    c = CardColour.BLUE;
+                    Console.WriteLine("blue card");
                     break;
                 case "red":
-                    c = "Military Structure";
+                    c = CardColour.RED;
+                    Console.WriteLine("red card");
                     break;
                 case "yellow":
-                    c = "Commercial Structure";
+                    c = CardColour.YELLOW;
+                    Console.WriteLine("yellow card");
                     break;
                 case "green":
-                    c = "Scientific Structure";
+                    c = CardColour.GREEN;
+                    Console.WriteLine("green card");
                     break;
                 default:
-                    Console.WriteLine("Error: Invalid Guild Colour, getGuildType(" + c + ")");
+                    Console.WriteLine("Error: Invalid Guild Colour, getGuildType(" + colour + ")");
                     break;
             }
             return c;
-        }        
+        }
     }
 }
