@@ -11,8 +11,6 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using Newtonsoft.Json.Linq;
 
-// Used for JSON Arrays
-
 namespace _7Wonders
 {
     using Game_Cards;
@@ -51,6 +49,13 @@ namespace _7Wonders
                 if (s != null)
                     chains.Add(s);
             }
+
+            // Adding the effects for the cards into a List of Effects
+            foreach (JObject e in (JArray)_json["effects"])
+            {
+
+            }
+
             printCardInfo();
 
                 
