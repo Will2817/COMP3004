@@ -34,14 +34,13 @@ namespace _7Wonders
         {
             // Initializing Variables
             name = (string)_json["name"];
+            image = (string)_json["image"];
             players = (int)_json["players"];
             age = (int)_json["age"];
-            colour = getGuildType((string)_json["guild"]);
+            guild = (string)_json["guild"];
+            colour = getGuildType(guild);
 
-      
-            Console.WriteLine("asdf" + name);
-
-
+            // Set card effects and chains
         }
 
         // Gets the full name of the Guild - used for display
@@ -54,30 +53,37 @@ namespace _7Wonders
                     c = CardColour.BROWN;
                     Console.WriteLine("brown card");
                     break;
+
                 case "gray":
                     c = CardColour.GRAY;
                     Console.WriteLine("gray card");
                     break;
+
                 case "purple":
                     c = CardColour.PURPLE;
                     Console.WriteLine("purple card");
                     break;
+
                 case "blue":
                     c = CardColour.BLUE;
                     Console.WriteLine("blue card");
                     break;
+
                 case "red":
                     c = CardColour.RED;
                     Console.WriteLine("red card");
                     break;
+
                 case "yellow":
                     c = CardColour.YELLOW;
                     Console.WriteLine("yellow card");
                     break;
+
                 case "green":
                     c = CardColour.GREEN;
                     Console.WriteLine("green card");
                     break;
+
                 default:
                     Console.WriteLine("Error: Invalid Guild Colour, getGuildType(" + colour + ")");
                     break;
