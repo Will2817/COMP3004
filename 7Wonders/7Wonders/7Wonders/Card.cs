@@ -13,26 +13,33 @@ using Newtonsoft.Json.Linq;
 
 namespace _7Wonders
 {
+    using Game_Cards;
+
     public class Card
     {
         // Auto-Implementing Properites of Cards
-        public string name { get; set; }
-        public Visual image { get; set; }
-        public int players { get; set; }
-        public int age { get; set; }
-        public CardColour colour { get; set; }
-        public Structure structure { get; set; }
-        public List<string> chains { get; set; }
+        public string name          { get; set; }
+        public string image         { get; set; }
+        public int players          { get; set; }
+        public int age              { get; set; }
+        public string guild         { get; set; }
+        public Cost cost            { get; set; }
+        public List<Effect> effects { get; set; }
+        public List<string> chains  { get; set; }
+        public CardColour colour    { get; set; }
+        
 
         // Card Constructure
-        public Card(Game1 theGame, JObject _json)
+        public Card(JObject _json)
         {
             // Initializing Variables
             name = (string)_json["name"];
-            image = new Visual(theGame, Vector2.Zero, 0, 0, (string)_json["image"]);
             players = (int)_json["players"];
             age = (int)_json["age"];
             colour = getGuildType((string)_json["guild"]);
+
+      
+            Console.WriteLine("asdf" + name);
 
 
         }
