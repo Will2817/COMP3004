@@ -199,7 +199,7 @@ namespace _7Wonders
                     }
                 }
                 if ((message["nextInterface"] == "maingame"))
-                    if (!client.isUpdateAvailable()) Thread.Sleep(1000);
+                    //if (!client.isUpdateAvailable()) Thread.Sleep(100);
                 activeInterface.reset();
                 activeInterface = interfaces[message["nextInterface"]];
                 activeInterface.receiveMessage(message);

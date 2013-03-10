@@ -77,7 +77,6 @@ namespace _7Wonders
                     if (Game1.client.getState().getPlayers().Count > 2)
                     {
                         backToMenu = false;
-                        finished = true;
                         Game1.host.startGame();
                         //Start game <-- will need to deal with picking wonders
                     }

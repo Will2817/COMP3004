@@ -183,7 +183,12 @@ namespace _7Wonders
         public virtual void updatePlayers()
         {
             Console.WriteLine("updating lobby...");
-            //int count = 0;
+            if (Game1.client.getState().isGameInProgress())
+            {
+                backToMenu = false;
+                finished = true;
+            }
+
             for (int i = 0; i < NUMPLAYERS; i++)
             {
                 updateHelper(i);
