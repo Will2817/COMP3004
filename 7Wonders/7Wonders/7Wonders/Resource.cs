@@ -13,6 +13,7 @@ namespace _7Wonders
         CLAY,
         GLASS,
         PAPYRUS,
-        LOOM
+        LOOM,
+        COIN // Added this because it should be counted as a resource.. [Danny]
     }
 }

@@ -15,7 +15,6 @@ namespace _7Wonders
 {
     using Game_Cards;
 
-
     public class Card
     {
         // Auto-Implementing Properites of Cards
@@ -26,12 +25,12 @@ namespace _7Wonders
         public string guild         { get; set; }
         public CardColour colour    { get; set; }
 
-        public Cost cost            { get; set; }
+        public Dictionary<Resource, int> cost;
         public List<Effect> effects { get; set; }
         public List<string> chains  { get; set; }        
         
 
-        // Card Constructure
+        // Card Constructor
         public Card(JObject _json)
         {
             // Initializing Variables
@@ -42,9 +41,18 @@ namespace _7Wonders
             guild = (string)_json["guild"];
             colour = getGuildType(guild);
 
-            cost = new Cost();
+            cost = new Dictionary<Resource, int>();
+            cost = (new Cost((JObject)_json["cost"])).getCost(); // Setting up the cost
+
             effects = new List<Effect>();
             chains = new List<string>();
+
+            // Adding the effects for the cards into a List of Effects
+            foreach (JObject e in (JArray)_json["effects"])
+            {
+                Effect effect = new Effect(e);
+                effects.Add(effect);
+            }
 
             // Adding in chains to the chains List of Strings
             foreach (string s in (JArray)_json["chains"])
@@ -53,21 +61,8 @@ namespace _7Wonders
                     chains.Add(s);
             }
 
-            // Adding the effects for the cards into a List of Effects
-            foreach (JObject e in (JArray)_json["effects"])
-            {
-
-            }
-
+            // Used to output the variables of Card
             //printCardInfo();
-
-                
-            
-            //chains = new (JArray))_json["chains"].List<string>();
-            //foreach (J _chain in (JArray)_json["chains"])
-            {
-              //  Console.WriteLine(_chain);
-            }
         }
 
         // Gets the full name of the Guild - used for display
@@ -79,31 +74,24 @@ namespace _7Wonders
                 case "brown":
                     c = CardColour.BROWN;
                     break;
-
                 case "gray":
                     c = CardColour.GRAY;
                     break;
-
                 case "purple":
                     c = CardColour.PURPLE;
                     break;
-
                 case "blue":
                     c = CardColour.BLUE;
                     break;
-
                 case "red":
                     c = CardColour.RED;
                     break;
-
                 case "yellow":
                     c = CardColour.YELLOW;
                     break;
-
                 case "green":
                     c = CardColour.GREEN;
                     break;
-
                 default:
                     Console.WriteLine("Error: Invalid Guild Colour, getGuildType(" + colour + ")");
                     break;
@@ -118,17 +106,25 @@ namespace _7Wonders
             Console.WriteLine("Players: " + players);
             Console.WriteLine("Age: " + age);
             Console.WriteLine("Guild: " + guild + "\t Colour: " +  colour);
+            
             Console.Write("ChainCount: " + chains.Count() + " Chains: ");
             for (int i = 0; i < chains.Count(); i++)
             {
                 Console.Write("[" + chains[i] + "] ");
             }
-            Console.WriteLine("\n");
+            Console.WriteLine("\nEffects:");
+            for (int i = 0; i < effects.Count; i++)
+                effects[i].PrintEffect();
+
+            Console.WriteLine();
+
+            
         }
 
         public JObject toJObject()
         {
             return new JObject(new JProperty("card", name + "_" + age + "_" + players));
+
         }
     }
 }
