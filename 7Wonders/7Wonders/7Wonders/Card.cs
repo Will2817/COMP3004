@@ -11,12 +11,9 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using Newtonsoft.Json.Linq;
 
-// Used for JSON Arrays
-
 namespace _7Wonders
 {
     using Game_Cards;
-
 
     public class Card
     {
@@ -28,12 +25,12 @@ namespace _7Wonders
         public string guild         { get; set; }
         public CardColour colour    { get; set; }
 
-        public Cost cost            { get; set; }
+        public Dictionary<Resource, int> cost;
         public List<Effect> effects { get; set; }
         public List<string> chains  { get; set; }        
         
 
-        // Card Constructure
+        // Card Constructor
         public Card(JObject _json)
         {
             // Initializing Variables
@@ -43,7 +40,19 @@ namespace _7Wonders
             age = (int)_json["age"];
             guild = (string)_json["guild"];
             colour = getGuildType(guild);
+
+            cost = new Dictionary<Resource, int>();
+            cost = (new Cost((JObject)_json["cost"])).getCost(); // Setting up the cost
+
+            effects = new List<Effect>();
             chains = new List<string>();
+
+            // Adding the effects for the cards into a List of Effects
+            foreach (JObject e in (JArray)_json["effects"])
+            {
+                Effect effect = new Effect(e);
+                effects.Add(effect);
+            }
 
             // Adding in chains to the chains List of Strings
             foreach (string s in (JArray)_json["chains"])
@@ -51,8 +60,9 @@ namespace _7Wonders
                 if (s != null)
                     chains.Add(s);
             }
-            printCardInfo();
 
+            printCardInfo();
+            
                 
             
             //chains = new (JArray))_json["chains"].List<string>();

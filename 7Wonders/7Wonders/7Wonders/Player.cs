@@ -41,8 +41,8 @@ namespace _7Wonders
             score = new Dictionary<Score, int>();
             score.Add(Score.VICTORY, 0);    // Victory Points
             score.Add(Score.ARMY, 0);       // Military Score (shields)
-            score.Add(Score.COIN, 0);       // Coins
-            score.Add(Score.CONFLICT, 0);     //Conflict points
+            score.Add(Score.COIN, 0);       // Coins - this will be totaled at the end
+            score.Add(Score.CONFLICT, 0);   //Conflict points
             score.Add(Score.TABLET, 0);     // Science - Tablet
             score.Add(Score.COMPASS, 0);    // Science - Compass
             score.Add(Score.GEAR, 0);       // Science - Gear
@@ -56,6 +56,7 @@ namespace _7Wonders
             resources.Add(Resource.GLASS, 0);   // Glass
             resources.Add(Resource.LOOM, 0);    // Loom
             resources.Add(Resource.PAPYRUS, 0); // Papyrus
+            resources.Add(Resource.COIN, 0);    // Coin
         }
 
         public Player(JObject j)

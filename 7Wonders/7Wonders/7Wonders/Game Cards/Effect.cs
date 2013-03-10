@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Newtonsoft.Json.Linq;
 
 namespace _7Wonders.Game_Cards
 {
@@ -15,7 +16,7 @@ namespace _7Wonders.Game_Cards
         public string from          { get; set; }
         public string basis         { get; set; }
 
-        public Effect()
+        public Effect(JObject _json)
         {
 
         }
