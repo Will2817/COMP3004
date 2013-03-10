@@ -152,6 +152,7 @@ namespace _7Wonders
                 if ((string)w["side"] == "A") players[(long)w["player"]].getBoard().setSideA();
                 else players[(long)w["player"]].getBoard().setSideB();
             }
+            gameInProgress = true;
         }
     }
 }
