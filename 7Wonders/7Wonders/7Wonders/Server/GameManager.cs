@@ -108,7 +108,7 @@ namespace _7Wonders.Server
                     wonders[i].setInUse(true);
                     p.setBoard(wonders[i]);
                 }
-                //broadcast
+                messageSerializer.notifyWonderAssign(gameState.wonderAssignToJson());
                 updateAIs();
                 return 0;
             }

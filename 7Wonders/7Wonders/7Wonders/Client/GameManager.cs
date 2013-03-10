@@ -47,6 +47,12 @@ namespace _7Wonders.Client
             updateAvailable = true;
         }
 
+        public void assignWonders(string json)
+        {
+            gameState.assignWonders(json);
+            updateAvailable = true;
+        }
+
         public GameState getGameState()
         {
             return gameState;

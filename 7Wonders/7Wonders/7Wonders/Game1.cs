@@ -11,6 +11,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using Newtonsoft.Json.Linq;
+using System.Threading;
 
 namespace _7Wonders
 {
@@ -197,6 +198,8 @@ namespace _7Wonders
                         message["connection"] = "Failed to Connect";
                     }
                 }
+                if ((message["nextInterface"] == "maingame"))
+                    if (!client.isUpdateAvailable()) Thread.Sleep(1000);
                 activeInterface.reset();
                 activeInterface = interfaces[message["nextInterface"]];
                 activeInterface.receiveMessage(message);

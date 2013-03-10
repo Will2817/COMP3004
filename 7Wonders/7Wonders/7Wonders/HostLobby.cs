@@ -78,6 +78,7 @@ namespace _7Wonders
                     {
                         backToMenu = false;
                         finished = true;
+                        Game1.host.startGame();
                         //Start game <-- will need to deal with picking wonders
                     }
                     else { }//error message

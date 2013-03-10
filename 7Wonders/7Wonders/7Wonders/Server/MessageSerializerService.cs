@@ -35,6 +35,11 @@ namespace _7Wonders.Server
             netService.broadcastMessage(options, (int)ServerMessageType.OPTIONS_CHANGED);
         }
 
+        public void notifyWonderAssign(string json)
+        {
+            netService.broadcastMessage(json, (int)ServerMessageType.CONFIRM_WONDER);
+        }
+
         public void broadcastChatMessage(String message, long senderID)
         {
             //broadcast message

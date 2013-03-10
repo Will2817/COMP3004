@@ -18,7 +18,7 @@ namespace _7Wonders
         protected string name;
         protected Side sideA;
         protected Side sideB;
-        protected bool activeSide;//true=A,false=B
+        protected bool usingA;//true=A,false=B
         protected bool inUse;
 
         public Wonder(JObject _json)
@@ -26,7 +26,7 @@ namespace _7Wonders
             name = (string)_json["name"];
             sideA = new Side((JObject)_json["a"]);
             sideB = new Side((JObject)_json["b"]);
-            activeSide = true;
+            usingA = true;
             inUse = false;
         }
 
@@ -37,18 +37,24 @@ namespace _7Wonders
 
         public Side getSide()
         {
-            if (activeSide) return sideA;
+            if (usingA) return sideA;
             else return sideB;
+        }
+
+        public string getSideName()
+        {
+            if (usingA) return "A";
+            return "B";
         }
 
         public void setSideA()
         {
-            activeSide = true;
+            usingA = true;
         }
 
         public void setSideB()
         {
-            activeSide = false;
+            usingA = false;
         }
 
         public void setInUse(bool inUse)
@@ -65,7 +71,13 @@ namespace _7Wonders
         {
             return new JObject(
                     new JProperty("name", name),
-                    new JProperty("activeSide", activeSide));
+                    new JProperty("activeSide", usingA));
+        }
+
+        public string getImageName()
+        {
+            if (usingA) return name + "_A";
+            return name + "_B";
         }
     }
 }

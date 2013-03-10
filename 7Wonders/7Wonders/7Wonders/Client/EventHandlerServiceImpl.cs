@@ -31,6 +31,9 @@ namespace _7Wonders.Client
                 case ServerMessageType.OPTIONS_CHANGED:
                     gameManager.updateOptions(message);
                     break;
+                case ServerMessageType.CONFIRM_WONDER:
+                    gameManager.assignWonders(message);
+                    break;
                 default:
                     break;
             }

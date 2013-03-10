@@ -174,7 +174,7 @@ namespace _7Wonders
                     new JProperty("name", name),
                     new JProperty("id", id),
                     new JProperty("seat", seatNumber),
-                    new JProperty("ready",ready));
+                    new JProperty("ready", ready));
             return player;
         }
 

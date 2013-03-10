@@ -47,9 +47,13 @@ namespace _7Wonders
         private void Initialize()
         {
             player = Game1.client.getSelf();
-    //        player.setBoard(Game1.wonders.Values.ElementAt(player.getSeat()));
-    //        player.getBoard().getVisual().setPosition(new Vector2(5 + SEC1WIDTH, 5 + SEC1HEIGHT)).setWidth(WONDERWIDTH * 2 + 10).setHeight(WONDERHEIGHT * 2);
-    //        visuals1.Add("wonder", player.getBoard().getVisual());
+            foreach (Player p in Game1.client.getState().getPlayers().Values)
+            {
+                Game1.wonders[p.getBoard().getName()].setPosition(new Vector2(5 + SEC1WIDTH, 5 + SEC1HEIGHT)).setWidth(WONDERWIDTH * 2 + 10).setHeight(WONDERHEIGHT * 2).setTexture(p.getBoard().getImageName());
+                seatVisuals.Add(p.getSeat(), new Dictionary<string, Visual>(){{p.getBoard().getImageName(), Game1.wonders[p.getBoard().getName()]}});
+            }
+            activeVisuals = seatVisuals[player.getSeat()];
+            //        visuals1.Add("wonder", player.getBoard().getVisual());
         }
 
         public override void LoadContent()

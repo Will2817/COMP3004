@@ -66,6 +66,18 @@ namespace _7Wonders
             return jplayers.ToString();
         }
 
+ /*       public string wondersToJson()
+        {
+            JObject jwonders =
+                new JObject(
+                    new JProperty("wonders",
+                        new JArray(
+                            from w in wonders.Values
+                            select new JObject(w.toJObject()))));
+
+            return jwonders.ToString();
+        }*/
+
         public string lobbyToJson()
         {
 
@@ -116,6 +128,30 @@ namespace _7Wonders
             JObject joptions = JObject.Parse(json);
             onlySideA = bool.Parse((string)joptions["onlySideA"]);
             assign = bool.Parse((string)joptions["assign"]);
+        }
+
+        public string wonderAssignToJson()
+        {
+            JArray j = new JArray();
+            foreach (Player p in players.Values)
+            {
+                j.Add(new JObject(
+                    new JProperty("wonder", p.getBoard().getName()),
+                    new JProperty("player", p.getID()),
+                    new JProperty("side", p.getBoard().getSideName())));
+            }
+            return j.ToString();
+        }
+
+        public void assignWonders(string json)
+        {
+            JArray o = JArray.Parse(json);
+            foreach (JObject w in o)
+            {
+                players[(long) w["player"]].setBoard(wonders[(string)w["wonder"]]);
+                if ((string)w["side"] == "A") players[(long)w["player"]].getBoard().setSideA();
+                else players[(long)w["player"]].getBoard().setSideB();
+            }
         }
     }
 }
