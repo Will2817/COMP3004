@@ -20,11 +20,11 @@ namespace _7Wonders
 
         public Deck(JObject _json, int numPlayers)
         {
-
             age1 = new List<Card>();
             age2 = new List<Card>();
             age3 = new List<Card>();
             guilds = new List<Card>();
+            r = 0;
 
             // Loops through the cards.json array and gets the cards
             // one by one and check to see if it meets the number of players
@@ -48,18 +48,13 @@ namespace _7Wonders
                             break;
                         case 3:
                             if ((int)c["players"] == 0)
-                            {
                                 guilds.Add(card);
-                            }
                             else
-                            {
                                 age3.Add(card);
-                            }
                             break;
                     }
                 }
             }
-
             addGuilds(numPlayers);
         }
 

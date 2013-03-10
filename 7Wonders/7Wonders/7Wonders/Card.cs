@@ -11,9 +11,12 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using Newtonsoft.Json.Linq;
 
+// Used for JSON Arrays
+
 namespace _7Wonders
 {
     using Game_Cards;
+
 
     public class Card
     {
@@ -23,10 +26,11 @@ namespace _7Wonders
         public int players          { get; set; }
         public int age              { get; set; }
         public string guild         { get; set; }
+        public CardColour colour    { get; set; }
+
         public Cost cost            { get; set; }
         public List<Effect> effects { get; set; }
-        public List<string> chains  { get; set; }
-        public CardColour colour    { get; set; }
+        public List<string> chains  { get; set; }        
         
 
         // Card Constructure
@@ -39,8 +43,23 @@ namespace _7Wonders
             age = (int)_json["age"];
             guild = (string)_json["guild"];
             colour = getGuildType(guild);
+            chains = new List<string>();
 
-            // Set card effects and chains
+            // Adding in chains to the chains List of Strings
+            foreach (string s in (JArray)_json["chains"])
+            {
+                if (s != null)
+                    chains.Add(s);
+            }
+            printCardInfo();
+
+                
+            
+            //chains = new (JArray))_json["chains"].List<string>();
+            //foreach (J _chain in (JArray)_json["chains"])
+            {
+              //  Console.WriteLine(_chain);
+            }
         }
 
         // Gets the full name of the Guild - used for display
@@ -51,37 +70,30 @@ namespace _7Wonders
             {
                 case "brown":
                     c = CardColour.BROWN;
-                    Console.WriteLine("brown card");
                     break;
 
                 case "gray":
                     c = CardColour.GRAY;
-                    Console.WriteLine("gray card");
                     break;
 
                 case "purple":
                     c = CardColour.PURPLE;
-                    Console.WriteLine("purple card");
                     break;
 
                 case "blue":
                     c = CardColour.BLUE;
-                    Console.WriteLine("blue card");
                     break;
 
                 case "red":
                     c = CardColour.RED;
-                    Console.WriteLine("red card");
                     break;
 
                 case "yellow":
                     c = CardColour.YELLOW;
-                    Console.WriteLine("yellow card");
                     break;
 
                 case "green":
                     c = CardColour.GREEN;
-                    Console.WriteLine("green card");
                     break;
 
                 default:
@@ -89,6 +101,21 @@ namespace _7Wonders
                     break;
             }
             return c;
+        }
+
+        public void printCardInfo()
+        {
+            Console.WriteLine("Name: " + name);
+            Console.WriteLine("Image:" + image);
+            Console.WriteLine("Players: " + players);
+            Console.WriteLine("Age: " + age);
+            Console.WriteLine("Guild: " + guild + "\t Colour: " +  colour);
+            Console.Write("ChainCount: " + chains.Count() + " Chains: ");
+            for (int i = 0; i < chains.Count(); i++)
+            {
+                Console.Write("[" + chains[i] + "] ");
+            }
+            Console.WriteLine("\n");
         }
     }
 }
