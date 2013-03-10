@@ -21,6 +21,9 @@ namespace _7Wonders
         protected bool activeSide;//true=A,false=B
         protected bool inUse;
 
+        // Cost and Effect of the Wonder Board
+
+
         public Wonder(JObject _json)
         {
             name = (string)_json["name"];
