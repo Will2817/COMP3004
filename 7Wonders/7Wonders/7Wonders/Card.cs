@@ -59,7 +59,7 @@ namespace _7Wonders
 
             }
 
-            printCardInfo();
+            //printCardInfo();
 
                 
             
@@ -124,6 +124,11 @@ namespace _7Wonders
                 Console.Write("[" + chains[i] + "] ");
             }
             Console.WriteLine("\n");
+        }
+
+        public JObject toJObject()
+        {
+            return new JObject(new JProperty("card", name + "_" + age + "_" + players));
         }
     }
 }

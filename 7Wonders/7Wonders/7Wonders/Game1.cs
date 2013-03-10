@@ -41,7 +41,6 @@ namespace _7Wonders
         Boolean rightkeylock = false;
         Interface activeInterface;
         JObject wondersJson = JObject.Parse(File.ReadAllText("Content/Json/wonderlist.json"));
-        JObject cardsJson = JObject.Parse(File.ReadAllText("Content/Json/cards.json"));
         public static Client.Client client;
         public static Server.Server host;
 
@@ -61,10 +60,6 @@ namespace _7Wonders
             {
                 wonders.Add((string)j["name"], new Visual(this, new Vector2(0, 0), 0, 0, (string)j["a"]["image"]));
             }
-
-            // Deck Object - takes two parameters
-            // (cards.json, number of players)
-            Deck deck = new Deck(cardsJson, 3);
 
             interfaces = new Dictionary<String, Interface>();
             interfaces.Add("mainmenu", new MainMenu(this));

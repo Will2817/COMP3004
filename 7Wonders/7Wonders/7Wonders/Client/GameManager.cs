@@ -10,11 +10,13 @@ namespace _7Wonders.Client
         GameState gameState;
         MessageSerializerService messageSerializer;
         NetService netService;
+        CardLibrary cardLibrary;
         bool updateAvailable;
         bool connected;
 
         public GameManager()
         {
+            cardLibrary = new CardLibrary();
             gameState = new GameState();
             connected = false;
         }
@@ -86,6 +88,11 @@ namespace _7Wonders.Client
         public void setReady(bool ready)
         {
             messageSerializer.notifyReadyChanged(ready);
+        }
+
+        public void assignHand(string message)
+        {
+            gameState.setHand(cardLibrary, netService.getID(), message);
         }
     }
 }

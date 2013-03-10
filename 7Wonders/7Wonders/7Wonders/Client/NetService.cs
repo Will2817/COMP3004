@@ -10,6 +10,7 @@ namespace _7Wonders.Client
         int joinHost(bool local);//discovers and joins a host
         int disconnect();//disconnects from the server
         int sendMessage(String message, int type);//send a message to the server
+        long getID();
         //note: need to create an enum to track different message types
     }
 }
