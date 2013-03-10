@@ -23,6 +23,7 @@ namespace _7Wonders
         public static Dictionary<String, SpriteFont> fonts;
         public static Dictionary<String, Interface> interfaces;
         public static Dictionary<String, Visual> wonders;
+        public static Dictionary<String, Visual> cards;
 
         public static int MAXPLAYER = 7;
 
@@ -53,11 +54,16 @@ namespace _7Wonders
             fonts = new Dictionary<String, SpriteFont>();
             client = new Client.Client();
 
+            // Adding Wonders Visual
             wonders = new Dictionary<String, Visual>();
             foreach (JObject j in (JArray)wondersJson["wonders"])
             {
                 wonders.Add((string)j["name"], new Visual(this, new Vector2(0, 0), 0, 0, (string)j["a"]["image"]));
             }
+
+            // Deck Object - takes two parameters
+            // (cards.json, number of players)
+            Deck deck = new Deck(cardsJson, 3);
 
             interfaces = new Dictionary<String, Interface>();
             interfaces.Add("mainmenu", new MainMenu(this));
@@ -66,7 +72,8 @@ namespace _7Wonders
             interfaces.Add("maingame", new MainGame(this));
             activeInterface = interfaces["mainmenu"];
 
-            //image = (string) cards[0]["image"];
+            
+
         }
 
         /// <summary>
@@ -75,7 +82,7 @@ namespace _7Wonders
         /// related content.  Calling base.Initialize will enumerate through any components
         /// and initialize them as well.
         /// </summary>
-       /* protected override void Initialize()
+        protected override void Initialize()
         {
             // TODO: Add your initialization logic here
             IsMouseVisible = true;
@@ -318,6 +325,6 @@ namespace _7Wonders
 
             Exit();
             // Stop the threads
-        }*/
+        }
     }
 }

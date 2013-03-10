@@ -10,10 +10,13 @@ namespace _7Wonders
         /// </summary>
         static void Main(string[] args)
         {
+            
             using (Game1 game = new Game1())
             {
                 game.Run();
             }
+
+            //Testing cards
         }
     }
 #endif
