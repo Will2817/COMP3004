@@ -74,10 +74,10 @@ namespace _7Wonders
                 if (startButton.isClicked())
                 {
                     startButton.reset();
-                    if (Game1.client.getState().getPlayers().Count > 2)
+                    if ((Game1.client.getState().getPlayers().Count > 2) && Game1.host.playersReady())
                     {
                         backToMenu = false;
-                        finished = true;
+                        Game1.host.startGame();
                         //Start game <-- will need to deal with picking wonders
                     }
                     else { }//error message

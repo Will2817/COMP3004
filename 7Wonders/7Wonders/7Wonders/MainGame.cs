@@ -21,14 +21,16 @@ namespace _7Wonders
         private int WONDERHEIGHT = (Game1.HEIGHT - 10) / 6;
         private int WONDERWIDTH = Game1.WIDTH / 3 - 10;
         private int SEC1HEIGHT = Game1.HEIGHT * 2 / 3;
-        private int DROPDOWNWIDTH = (Game1.WIDTH / 3) - 100;
-        private int DROPDOWNHEIGHT = (Game1.HEIGHT * 2 / 3 - (Game1.MAXPLAYER + 1) * MARGIN) / Game1.MAXPLAYER;
+        private int DROPDOWNWIDTH = (Game1.WIDTH / 3) - 125;
+        private int DROPDOWNHEIGHT = (Game1.HEIGHT / 2 - (Game1.MAXPLAYER + 1) * MARGIN) / Game1.MAXPLAYER;
+        private const int LABELHEIGHT = 35;
+        private const int LABELWIDTH = 100;
 
         protected Dictionary<int, Dictionary<string, Visual>> seatVisuals;
+        protected Dictionary<string, Visual> baseVisuals;
+        protected int seatViewed = 0;
         protected Player player;
         protected Visual wonder;
-
-        protected static Dictionary<String, Visual> visuals1;
 
         public MainGame(Game1 theGame)
             : base(theGame, "title", 0.4f)
@@ -36,26 +38,32 @@ namespace _7Wonders
             player = null;
             wonder = null;
             seatVisuals = new Dictionary<int, Dictionary<string, Visual>>();
-            visuals1 = new Dictionary<String, Visual>();
- 
-            visuals1.Add("Divider1", new Visual(game, new Vector2(SEC1WIDTH - 1, 0), DIVIDERWIDTH, Game1.HEIGHT, "line", Color.Silver));
-            visuals1.Add("Divider2", new Visual(game, new Vector2(0, SEC1HEIGHT - 1), Game1.WIDTH, DIVIDERWIDTH, "line", Color.Silver));
-
-            activeVisuals = visuals1;
+            baseVisuals = new Dictionary<String, Visual>();
+            baseVisuals.Add("Label1", new Visual(game, new Vector2(MARGIN, MARGIN), DROPDOWNWIDTH, LABELHEIGHT, "Players", "Font1"));
+            baseVisuals.Add("Label2", new Visual(game, new Vector2(MARGIN * 2 + DROPDOWNWIDTH, MARGIN), LABELWIDTH, LABELHEIGHT, "Score", "Font1"));
+            baseVisuals.Add("Divider1", new Visual(game, new Vector2(SEC1WIDTH - 1, 0), DIVIDERWIDTH, Game1.HEIGHT, "line", Color.Silver));
+            baseVisuals.Add("Divider2", new Visual(game, new Vector2(0, SEC1HEIGHT - 1), Game1.WIDTH, DIVIDERWIDTH, "line", Color.Silver));
         }
 
         private void Initialize()
         {
             player = Game1.client.getSelf();
-    //        player.setBoard(Game1.wonders.Values.ElementAt(player.getSeat()));
-    //        player.getBoard().getVisual().setPosition(new Vector2(5 + SEC1WIDTH, 5 + SEC1HEIGHT)).setWidth(WONDERWIDTH * 2 + 10).setHeight(WONDERHEIGHT * 2);
-    //        visuals1.Add("wonder", player.getBoard().getVisual());
+            foreach (Player p in Game1.client.getState().getPlayers().Values)
+            {
+                Game1.wonders[p.getBoard().getName()].setPosition(new Vector2(5 + SEC1WIDTH, 5 + SEC1HEIGHT)).setWidth(WONDERWIDTH * 2 + 10).setHeight(WONDERHEIGHT * 2).setTexture(p.getBoard().getImageName());
+                seatVisuals.Add(p.getSeat(), new Dictionary<string, Visual>(){{p.getBoard().getImageName(), Game1.wonders[p.getBoard().getName()]}});
+                baseVisuals.Add("player" + p.getSeat(), new Visual(game, new Vector2(MARGIN, MARGIN * 2 + LABELHEIGHT + (MARGIN + DROPDOWNHEIGHT) * p.getSeat()), DROPDOWNWIDTH, DROPDOWNHEIGHT, 
+                                                                p.getName(), "Font1", Color.White, (p.getSeat() == player.getSeat())? Color.Orange : Color.Gray));
+            }
+            seatViewed = player.getSeat();
+            activeVisuals = seatVisuals[seatViewed];
+            LoadContent();
         }
 
         public override void LoadContent()
         {
             base.LoadContent();
-            foreach (Visual v in visuals1.Values)
+            foreach (Visual v in baseVisuals.Values)
             {
                 v.LoadContent();
             }
@@ -69,7 +77,76 @@ namespace _7Wonders
         public override void Update(GameTime gameTime, MouseState mouseState)
         {
             base.Update(gameTime, mouseState);
+            foreach (Visual v in baseVisuals.Values)
+            {
+                v.Update(gameTime, mouseState);
+            }
             if (Game1.client.isUpdateAvailable()) networkUpdates();
+
+            int storeSeat = seatViewed;
+
+            switch (game.recordedPresses)
+            {
+                case "1":
+                    seatViewed = 0;
+                    activeVisuals = seatVisuals[0];
+                    break;
+                case "2":
+                    seatViewed = 1;
+                    activeVisuals = seatVisuals[1];
+                    break;
+                case "3":
+                    seatViewed = 2;
+                    activeVisuals = seatVisuals[2];
+                    break;
+                case "4":
+                    if (seatVisuals.Count > 3)
+                    {
+                        seatViewed = 3;
+                        activeVisuals = seatVisuals[3];
+                    }
+                    break;
+                case "5":
+                    if (seatVisuals.Count > 4)
+                    {
+                        seatViewed = 4;
+                        activeVisuals = seatVisuals[4];
+                    }
+                    break;
+                case "6":
+                    if (seatVisuals.Count > 5)
+                    {
+                        seatViewed = 5;
+                        activeVisuals = seatVisuals[5];
+                    }
+                    break;
+                case "7":
+                    if (seatVisuals.Count > 6)
+                    {
+                        seatViewed = 6;
+                        activeVisuals = seatVisuals[6];
+                    }
+                    break;
+                default:
+                    break;
+            }
+            game.recordedPresses = "";
+
+            if (storeSeat != seatViewed)
+            {
+                baseVisuals["player" + storeSeat].setColor(Color.Gray);
+                baseVisuals["player" + seatViewed].setColor(Color.Orange);
+            }
+
+        }
+
+        public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+        {
+            base.Draw(gameTime, spriteBatch);
+            foreach (Visual v in baseVisuals.Values)
+            {
+                v.Draw(gameTime, spriteBatch);
+            }
         }
 
         public override Dictionary<string, string> isFinished()

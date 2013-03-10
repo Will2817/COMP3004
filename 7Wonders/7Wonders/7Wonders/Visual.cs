@@ -77,13 +77,13 @@ namespace _7Wonders
             text = _text;
         }
 
-        public Visual(Game1 theGame, Vector2 _pos, int _w, int _h, string _text, string _fontName, Color _stringColor, Color ?_textureColor=null)
+        public Visual(Game1 theGame, Vector2 _pos, int _w, int _h, string _text, string _fontName, Color? _stringColor = null, Color? _textureColor = null)
         {
             game = theGame;
             position = _pos;
             width = _w;
             height = _h;
-            stringColor = _stringColor * opacity;
+            stringColor = ((_stringColor.HasValue) ? _stringColor.Value : stringColor) * opacity;
             textureColor = ((_textureColor.HasValue) ? _textureColor.Value : textureColor) * opacity;            
             fontName = _fontName;
             text = _text;

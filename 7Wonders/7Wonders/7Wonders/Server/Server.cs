@@ -45,6 +45,11 @@ namespace _7Wonders.Server
             gameManager.startGame();
         }
 
+        public bool playersReady()
+        {
+            return gameManager.playersReady();
+        }
+
         public void shutdown()
         {
             netService.shutdown();

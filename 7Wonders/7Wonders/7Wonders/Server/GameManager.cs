@@ -90,10 +90,8 @@ namespace _7Wonders.Server
 
         public int startGame()
         {
-            foreach (Player p in gameState.getPlayers().Values)
-                if (!p.getReady()) return -1;
-            if (gameState.getAssign())
-            {
+      //      if (gameState.getAssign()) //uncomment these sections when ready to implement selecting a board;
+      //      {
                 foreach (Player p in gameState.getPlayers().Values)
                 {
                     List<Wonder> wonders = new List<Wonder>();
@@ -108,15 +106,22 @@ namespace _7Wonders.Server
                     wonders[i].setInUse(true);
                     p.setBoard(wonders[i]);
                 }
-                //broadcast
+                messageSerializer.notifyWonderAssign(gameState.wonderAssignToJson());
                 updateAIs();
                 return 0;
-            }
+     /*       }
             else
             {
                 //handle board picking
                 return 0;
-            }
+            }*/
+        }
+
+        public bool playersReady()
+        {
+            foreach (Player p in gameState.getPlayers().Values)
+                if (!p.getReady()) return false;
+            return true;
         }
 
         private void updateAIs()
