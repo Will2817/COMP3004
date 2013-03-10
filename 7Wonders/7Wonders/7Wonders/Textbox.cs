@@ -54,7 +54,8 @@ namespace _7Wonders
             }
 
 
-        }
+        }
+
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {

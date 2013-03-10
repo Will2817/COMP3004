@@ -74,7 +74,7 @@ namespace _7Wonders
                 if (startButton.isClicked())
                 {
                     startButton.reset();
-                    if (Game1.client.getState().getPlayers().Count > 2)
+                    if ((Game1.client.getState().getPlayers().Count > 2) && Game1.host.playersReady())
                     {
                         backToMenu = false;
                         Game1.host.startGame();
