@@ -41,6 +41,9 @@ namespace _7Wonders
             age = (int)_json["age"];
             guild = (string)_json["guild"];
             colour = getGuildType(guild);
+
+            cost = new Cost();
+            effects = new List<Effect>();
             chains = new List<string>();
 
             // Adding in chains to the chains List of Strings
