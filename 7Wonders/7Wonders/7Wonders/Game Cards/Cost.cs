@@ -9,7 +9,7 @@ namespace _7Wonders.Game_Cards
     public class Cost
     {
         // Used for returning the total cost
-        private static Dictionary<Resource, int> cost;
+        private Dictionary<Resource, int> cost;
     
         public Cost(JObject _json)
         {
@@ -44,7 +44,6 @@ namespace _7Wonders.Game_Cards
                     case "coin":
                         cost.Add(Resource.COIN, (int)token.Value);
                         break;
-
                     default:
                         Console.WriteLine("ERROR: Cost " + token.Key + " not recognized!");
                         break;

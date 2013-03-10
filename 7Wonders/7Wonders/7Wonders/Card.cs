@@ -61,15 +61,8 @@ namespace _7Wonders
                     chains.Add(s);
             }
 
+            // Used to output the variables of Card
             printCardInfo();
-            
-                
-            
-            //chains = new (JArray))_json["chains"].List<string>();
-            //foreach (J _chain in (JArray)_json["chains"])
-            {
-              //  Console.WriteLine(_chain);
-            }
         }
 
         // Gets the full name of the Guild - used for display
@@ -81,31 +74,24 @@ namespace _7Wonders
                 case "brown":
                     c = CardColour.BROWN;
                     break;
-
                 case "gray":
                     c = CardColour.GRAY;
                     break;
-
                 case "purple":
                     c = CardColour.PURPLE;
                     break;
-
                 case "blue":
                     c = CardColour.BLUE;
                     break;
-
                 case "red":
                     c = CardColour.RED;
                     break;
-
                 case "yellow":
                     c = CardColour.YELLOW;
                     break;
-
                 case "green":
                     c = CardColour.GREEN;
                     break;
-
                 default:
                     Console.WriteLine("Error: Invalid Guild Colour, getGuildType(" + colour + ")");
                     break;
@@ -120,12 +106,18 @@ namespace _7Wonders
             Console.WriteLine("Players: " + players);
             Console.WriteLine("Age: " + age);
             Console.WriteLine("Guild: " + guild + "\t Colour: " +  colour);
+            
             Console.Write("ChainCount: " + chains.Count() + " Chains: ");
             for (int i = 0; i < chains.Count(); i++)
             {
                 Console.Write("[" + chains[i] + "] ");
             }
-            Console.WriteLine("\n");
+            
+            Console.WriteLine("\nEffects:");
+            for (int i = 0; i < effects.Count; i++)
+                effects[i].PrintEffect();
+
+            Console.WriteLine();
         }
     }
 }
