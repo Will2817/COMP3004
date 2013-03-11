@@ -10,10 +10,10 @@ namespace _7Wonders
     public class Deck
     {
         // List of cards for all Ages + guilds
-        public static List<Card> age1;
-        public static List<Card> age2;
-        public static List<Card> age3;
-        public static List<Card> guilds;
+        private static List<Card> age1;
+        private static List<Card> age2;
+        private static List<Card> age3;
+        private static List<Card> guilds;
 
         // Random Variables
         private static Random rnd = new Random();
