@@ -13,6 +13,7 @@ namespace _7Wonders
         CONFLICT,
         TABLET,
         COMPASS,
-        GEAR
+        GEAR,
+        VICTORY_BLUE
     }
 }

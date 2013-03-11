@@ -21,10 +21,11 @@ namespace _7Wonders
         private int WONDERHEIGHT = (Game1.HEIGHT - 10) / 6;
         private int WONDERWIDTH = Game1.WIDTH / 3 - 10;
         private int SEC1HEIGHT = Game1.HEIGHT * 2 / 3;
-        private int DROPDOWNWIDTH = (Game1.WIDTH / 3) - 125;
+        private int DROPDOWNWIDTH = (Game1.WIDTH / 3) - 135;
+        //private int DROPDOWNWIDTH = SEC1WIDTH
         private int DROPDOWNHEIGHT = (Game1.HEIGHT / 2 - (Game1.MAXPLAYER + 1) * MARGIN) / Game1.MAXPLAYER;
-        private const int LABELHEIGHT = 35;
-        private const int LABELWIDTH = 100;
+        private const int LABELHEIGHT = 40;
+        private int LABELWIDTH;
 
         protected Dictionary<int, Dictionary<string, Visual>> seatVisuals;
         protected Dictionary<string, Visual> baseVisuals;
@@ -35,12 +36,13 @@ namespace _7Wonders
         public MainGame(Game1 theGame)
             : base(theGame, "title", 0.4f)
         {
+            LABELWIDTH = SEC1WIDTH / 2 - MARGIN;
             player = null;
             wonder = null;
             seatVisuals = new Dictionary<int, Dictionary<string, Visual>>();
             baseVisuals = new Dictionary<String, Visual>();
-            baseVisuals.Add("Label1", new Visual(game, new Vector2(MARGIN, MARGIN), DROPDOWNWIDTH, LABELHEIGHT, "Players", "Font1"));
-            baseVisuals.Add("Label2", new Visual(game, new Vector2(MARGIN * 2 + DROPDOWNWIDTH, MARGIN), LABELWIDTH, LABELHEIGHT, "Score", "Font1"));
+            baseVisuals.Add("Label1", new Visual(game, new Vector2(MARGIN, MARGIN), LABELWIDTH, LABELHEIGHT, "Players", "Font1"));
+            baseVisuals.Add("Label2", new Visual(game, new Vector2(MARGIN+ LABELWIDTH, MARGIN), LABELWIDTH, LABELHEIGHT, "icons"));
             baseVisuals.Add("Divider1", new Visual(game, new Vector2(SEC1WIDTH - 1, 0), DIVIDERWIDTH, Game1.HEIGHT, "line", Color.Silver));
             baseVisuals.Add("Divider2", new Visual(game, new Vector2(0, SEC1HEIGHT - 1), Game1.WIDTH, DIVIDERWIDTH, "line", Color.Silver));
         }
@@ -52,8 +54,16 @@ namespace _7Wonders
             {
                 Game1.wonders[p.getBoard().getName()].setPosition(new Vector2(5 + SEC1WIDTH, 5 + SEC1HEIGHT)).setWidth(WONDERWIDTH * 2 + 10).setHeight(WONDERHEIGHT * 2).setTexture(p.getBoard().getImageName());
                 seatVisuals.Add(p.getSeat(), new Dictionary<string, Visual>(){{p.getBoard().getImageName(), Game1.wonders[p.getBoard().getName()]}});
-                baseVisuals.Add("player" + p.getSeat(), new Visual(game, new Vector2(MARGIN, MARGIN * 2 + LABELHEIGHT + (MARGIN + DROPDOWNHEIGHT) * p.getSeat()), DROPDOWNWIDTH, DROPDOWNHEIGHT, 
+                baseVisuals.Add("player" + p.getSeat(), new Visual(game, new Vector2(MARGIN, MARGIN * 2 + (MARGIN + LABELHEIGHT) * (p.getSeat() + 1)), DROPDOWNWIDTH, LABELHEIGHT, 
                                                                 p.getName(), "Font1", Color.White, (p.getSeat() == player.getSeat())? Color.Orange : Color.Gray));
+                baseVisuals.Add("status" + p.getSeat(), new Visual(game, new Vector2(MARGIN + LABELWIDTH, MARGIN * 2 + (MARGIN + LABELHEIGHT) * (p.getSeat() + 1)), LABELWIDTH, LABELHEIGHT, "blank"));
+                baseVisuals.Add("gear" + p.getSeat(), new Visual(game, new Vector2(MARGIN + LABELWIDTH + (LABELWIDTH * 1 / 24), MARGIN * 2 + (MARGIN + LABELHEIGHT) * (p.getSeat() + 1)), p.getScoreNum(Score.GEAR).ToString(), "Font1"));
+                baseVisuals.Add("tablet" + p.getSeat(), new Visual(game, new Vector2(MARGIN + LABELWIDTH + (LABELWIDTH * 5 / 24), MARGIN * 2 + (MARGIN + LABELHEIGHT) * (p.getSeat() + 1)), p.getScoreNum(Score.TABLET).ToString(), "Font1"));
+                baseVisuals.Add("compas" + p.getSeat(), new Visual(game, new Vector2(MARGIN + LABELWIDTH + (LABELWIDTH * 9 / 24), MARGIN * 2 + (MARGIN + LABELHEIGHT) * (p.getSeat() + 1)), p.getScoreNum(Score.COMPASS).ToString(), "Font1"));
+                int i;
+                baseVisuals.Add("victory" + p.getSeat(), new Visual(game, new Vector2(MARGIN + LABELWIDTH + (LABELWIDTH * 13 / 24), MARGIN * 2 + (MARGIN + LABELHEIGHT) * (p.getSeat() + 1)), ((i = p.getScoreNum(Score.VICTORY_BLUE)) < 10)?  "0" + i : i.ToString(), "Font1"));
+                baseVisuals.Add("army" + p.getSeat(), new Visual(game, new Vector2(MARGIN + LABELWIDTH + (LABELWIDTH * 19 / 24), MARGIN * 2 + (MARGIN + LABELHEIGHT) * (p.getSeat() + 1)), ((i = p.getScoreNum(Score.ARMY)) < 10) ? "0" + i : i.ToString(), "Font1"));
+
             }
             seatViewed = player.getSeat();
             activeVisuals = seatVisuals[seatViewed];

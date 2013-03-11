@@ -36,7 +36,20 @@ namespace _7Wonders
             hand        = null;
             played      = null;
             ready       = false;
+            Initializer();
+        }
 
+        public Player(JObject j)
+        {
+            id = (long)j["id"];
+            name = (string)j["name"];
+            seatNumber = (int)j["seat"];
+            ready = bool.Parse((string)j["ready"]);
+            Initializer();
+        }
+
+        private void Initializer()
+        {
             // Setting the Players Score Dictionary
             score = new Dictionary<Score, int>();
             score.Add(Score.VICTORY, 0);    // Victory Points
@@ -46,6 +59,7 @@ namespace _7Wonders
             score.Add(Score.TABLET, 0);     // Science - Tablet
             score.Add(Score.COMPASS, 0);    // Science - Compass
             score.Add(Score.GEAR, 0);       // Science - Gear
+            score.Add(Score.VICTORY_BLUE, 0);
 
             // Setting the  resource dictionary
             resources = new Dictionary<Resource, int>();
@@ -58,15 +72,6 @@ namespace _7Wonders
             resources.Add(Resource.PAPYRUS, 0); // Papyrus
             resources.Add(Resource.COIN, 0);    // Coin
         }
-
-        public Player(JObject j)
-        {
-            id = (long)j["id"];
-            name = (string)j["name"];
-            seatNumber = (int)j["seat"];
-            ready = bool.Parse((string)j["ready"]);
-        }
-
 
        /* This is no longer needed, we will have hte player join the lobby or host
         *  the game and once the game starts will we assign the board and cards to the player
