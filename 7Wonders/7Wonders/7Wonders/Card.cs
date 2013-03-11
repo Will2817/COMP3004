@@ -62,7 +62,7 @@ namespace _7Wonders
             }
 
             // Used to output the variables of Card
-            printCardInfo();
+            //printCardInfo();
         }
 
         // Gets the full name of the Guild - used for display
