@@ -154,5 +154,26 @@ namespace _7Wonders
             }
             gameInProgress = true;
         }
+
+        public string handToJson(long id)
+        {
+            JArray j = new JArray();
+            foreach (Card c in players[id].getHand())
+            {
+                j.Add(c.toJObject());
+            }
+            return j.ToString();
+        }
+
+        public void setHand(CardLibrary cardLibrary, long id, string message)
+        {
+            List<Card> hand = new List<Card>();
+            JArray j = JArray.Parse(message);
+            foreach (JObject c in j)
+            {
+                hand.Add(cardLibrary.getCard((string)c["card"]));
+            }
+            players[id].setHand(hand);
+        }
     }
 }

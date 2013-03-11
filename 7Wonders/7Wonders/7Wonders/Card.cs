@@ -112,12 +112,19 @@ namespace _7Wonders
             {
                 Console.Write("[" + chains[i] + "] ");
             }
-            
             Console.WriteLine("\nEffects:");
             for (int i = 0; i < effects.Count; i++)
                 effects[i].PrintEffect();
 
             Console.WriteLine();
+
+            
+        }
+
+        public JObject toJObject()
+        {
+            return new JObject(new JProperty("card", name + "_" + age + "_" + players));
+
         }
     }
 }

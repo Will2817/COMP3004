@@ -11,6 +11,7 @@ namespace _7Wonders.Server
         protected Dictionary<long, AIPlayer> aiPlayers;
         protected MessageSerializerService messageSerializer;
         protected NetService netService;
+        protected Deck deck;
 
         public GameManager()
         {
@@ -92,8 +93,10 @@ namespace _7Wonders.Server
         {
       //      if (gameState.getAssign()) //uncomment these sections when ready to implement selecting a board;
       //      {
+                deck = new Deck(gameState.getPlayers().Count);
                 foreach (Player p in gameState.getPlayers().Values)
                 {
+                    p.setHand(deck.dealCards(1));
                     List<Wonder> wonders = new List<Wonder>();
                     wonders.AddRange(gameState.getWonders().Values);
                     Random rand = new Random();
@@ -108,6 +111,8 @@ namespace _7Wonders.Server
                 }
                 messageSerializer.notifyWonderAssign(gameState.wonderAssignToJson());
                 updateAIs();
+                sendHands();
+                
                 return 0;
      /*       }
             else
@@ -138,5 +143,13 @@ namespace _7Wonders.Server
 
         public void setNetService(NetService netService) { this.netService = netService; }
 
+        public void sendHands()
+        {
+            foreach (long id in gameState.getPlayers().Keys)
+            {
+                if (!aiPlayers.ContainsKey(id))
+                    messageSerializer.notifyHand(id, gameState.handToJson(id));
+            }
+        }
     }
 }

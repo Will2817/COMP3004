@@ -40,6 +40,11 @@ namespace _7Wonders.Server
             netService.broadcastMessage(json, (int)ServerMessageType.CONFIRM_WONDER);
         }
 
+        public void notifyHand(long id, string message)
+        {
+            netService.sendMessage(message, (int)ServerMessageType.HAND, id);
+        }
+
         public void broadcastChatMessage(String message, long senderID)
         {
             //broadcast message

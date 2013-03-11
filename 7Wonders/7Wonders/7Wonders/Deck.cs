@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,8 +19,9 @@ namespace _7Wonders
         private static Random rnd = new Random();
         private int r;
 
-        public Deck(JObject _json, int numPlayers)
+        public Deck(int numPlayers)
         {
+            JObject _json = JObject.Parse(File.ReadAllText("Content/Json/cards.json"));
             age1 = new List<Card>();
             age2 = new List<Card>();
             age3 = new List<Card>();
