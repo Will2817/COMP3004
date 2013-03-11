@@ -13,17 +13,22 @@ using Newtonsoft.Json.Linq;
 
 namespace _7Wonders
 {
+    using Game_Cards;
+
     public class Side
     {
-        List<Structure> stages;
+        int numStages { get; set; }
+        Stage []  stages;
 
-        public Side(JObject j)
+        public Side(JObject _json)
         {
-            stages = new List<Structure>();
-            foreach (JObject stage in j["stages"])
+            numStages = ((JArray)_json["stages"]).Count();
+
+            /*foreach (JObject stage in (JArray)_json["stages"])
             {
-                //stages.Add(new Structure((JObject)stage["cost"], (JObject)stage["effects"]));
-            }
+                stages[]
+            }*/
+            Console.WriteLine("Number of Stages = " + numStages);
         }
     }
 }

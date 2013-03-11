@@ -26,11 +26,13 @@ namespace _7Wonders
 
         public Wonder(JObject _json)
         {
+            Console.WriteLine((string)_json["name"]);
             name = (string)_json["name"];
             sideA = new Side((JObject)_json["a"]);
             sideB = new Side((JObject)_json["b"]);
             usingA = true;
             inUse = false;
+            Console.WriteLine();
         }
 
         public string getName()
