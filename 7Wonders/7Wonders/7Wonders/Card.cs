@@ -121,6 +121,11 @@ namespace _7Wonders
             
         }
 
+        public string getImageId()
+        {
+            return name + "_" + age + "_" + players;
+        }
+
         public JObject toJObject()
         {
             return new JObject(new JProperty("card", name + "_" + age + "_" + players));

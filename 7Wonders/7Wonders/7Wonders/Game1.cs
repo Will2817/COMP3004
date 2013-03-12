@@ -41,6 +41,7 @@ namespace _7Wonders
         Boolean rightkeylock = false;
         Interface activeInterface;
         JObject wondersJson = JObject.Parse(File.ReadAllText("Content/Json/wonderlist.json"));
+        JObject cardsJson = JObject.Parse(File.ReadAllText("Content/Json/cards.json"));
         public static Client.Client client;
         public static Server.Server host;
 
@@ -104,11 +105,29 @@ namespace _7Wonders
             textures.Add("line", Content.Load<Texture2D>("Images/line"));
             textures.Add("drop", Content.Load<Texture2D>("Images/down"));
             textures.Add("button", Content.Load<Texture2D>("Images/button"));
+            textures.Add("left", Content.Load<Texture2D>("Images/left"));
+            textures.Add("right", Content.Load<Texture2D>("Images/right"));
+            textures.Add("icons", Content.Load<Texture2D>("Images/icons"));
+            textures.Add("blank", Content.Load<Texture2D>("Images/blank"));
+            textures.Add("background", Content.Load<Texture2D>("Images/background"));
+            textures.Add("grayback", Content.Load<Texture2D>("Images/grayback"));
+            textures.Add("age1", Content.Load<Texture2D>("Images/age1"));
+            textures.Add("age2", Content.Load<Texture2D>("Images/age2"));
+            textures.Add("age3", Content.Load<Texture2D>("Images/age3"));
+            textures.Add("resourceBar", Content.Load<Texture2D>("Images/resourceBar"));
+            textures.Add("emptyResourceBar", Content.Load<Texture2D>("Images/emptyResourceBar"));
+            textures.Add("paperleft", Content.Load<Texture2D>("Images/paper_left"));
+            textures.Add("papermiddle", Content.Load<Texture2D>("Images/paper_middle"));
 
             foreach (JObject j in (JArray)wondersJson["wonders"])
             {
                 textures.Add((string)j["a"]["image"], Content.Load<Texture2D>("Images/Wonders/" + j["a"]["image"]));
                 textures.Add((string)j["b"]["image"], Content.Load<Texture2D>("Images/Wonders/" + j["b"]["image"]));
+            }
+
+            foreach (JObject j in (JArray)cardsJson["cards"])
+            {
+                textures.Add((string)j["name"]+"_"+j["age"]+"_"+j["players"], Content.Load<Texture2D>("Images/Cards" + j["image"])); 
             }
 
             fonts.Add("Font1", Content.Load<SpriteFont>("Fonts/Font1"));

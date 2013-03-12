@@ -67,17 +67,17 @@ namespace _7Wonders
             stringColor *= opacity;
         }
 
-        public Visual(Game1 theGame, Vector2 _pos, string _text, string _fontName, Color _color)
+        public Visual(Game1 theGame, Vector2 _pos, string _text, string _fontName, Color? _color = null)
         {
             game = theGame;
             position = _pos;
             textureColor *= opacity;
-            stringColor = _color * opacity;
+            stringColor = ((_color.HasValue) ? _color.Value : Color.White) * opacity;
             fontName = _fontName;
             text = _text;
         }
 
-        public Visual(Game1 theGame, Vector2 _pos, int _w, int _h, string _text, string _fontName, Color? _stringColor = null, Color? _textureColor = null)
+        public Visual(Game1 theGame, Vector2 _pos, int _w, int _h, string _text, string _fontName, Color? _stringColor = null, Color? _textureColor = null, string _textureName = "line")
         {
             game = theGame;
             position = _pos;
@@ -87,7 +87,7 @@ namespace _7Wonders
             textureColor = ((_textureColor.HasValue) ? _textureColor.Value : textureColor) * opacity;            
             fontName = _fontName;
             text = _text;
-            textureName = "line";
+            textureName = _textureName;
         }
 
         public virtual void LoadContent()
