@@ -85,7 +85,7 @@ namespace _7Wonders
             device = graphics.GraphicsDevice;
             graphics.PreferredBackBufferWidth = WIDTH;
             graphics.PreferredBackBufferHeight = HEIGHT;
-            graphics.IsFullScreen = true;
+            graphics.IsFullScreen = false;
             graphics.ApplyChanges();
             Window.Title = "7 Wonders";
             base.Initialize();
@@ -106,6 +106,14 @@ namespace _7Wonders
             textures.Add("button", Content.Load<Texture2D>("Images/button"));
             textures.Add("icons", Content.Load<Texture2D>("Images/icons"));
             textures.Add("blank", Content.Load<Texture2D>("Images/blank"));
+            textures.Add("background", Content.Load<Texture2D>("Images/background"));
+            textures.Add("grayback", Content.Load<Texture2D>("Images/grayback"));
+            textures.Add("age1", Content.Load<Texture2D>("Images/age1"));
+            textures.Add("age2", Content.Load<Texture2D>("Images/age2"));
+            textures.Add("age3", Content.Load<Texture2D>("Images/age3"));
+            textures.Add("resourceBar", Content.Load<Texture2D>("Images/resourceBar"));
+            textures.Add("emptyResourceBar", Content.Load<Texture2D>("Images/emptyResourceBar"));
+
 
             foreach (JObject j in (JArray)wondersJson["wonders"])
             {
