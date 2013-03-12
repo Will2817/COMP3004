@@ -14,6 +14,7 @@ namespace _7Wonders
         private bool gameInProgress;
         private bool onlySideA;
         private bool assign;
+        private int age;
 
         public GameState()
         {
@@ -23,12 +24,14 @@ namespace _7Wonders
             assign = false;
             JObject wondersJson = JObject.Parse(File.ReadAllText("Content/Json/wonderlist.json"));
             wonders = new Dictionary<string, Wonder>();
+            age = 1;
             foreach (JObject j in (JArray)wondersJson["wonders"])
             {
                 wonders.Add((string)j["name"], new Wonder(j));
             }
         }
 
+        public int getAge() { return age; }
         public bool isGameInProgress() { return gameInProgress; }
         public bool getOnlySideA() { return onlySideA; }
         public bool getAssign() { return assign; }

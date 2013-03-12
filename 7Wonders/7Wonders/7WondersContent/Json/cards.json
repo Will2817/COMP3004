@@ -456,7 +456,7 @@
         },
         {
             "name": "Loom",
-            "image": "/Age1/loom_2_3",
+            "image": "/Age2/loom_2_3",
             "players": 3,
             "age": 2,
             "guild": "gray",
@@ -473,7 +473,7 @@
         },
         {
             "name": "Loom",
-            "image": "/Age1/loom_2_5",
+            "image": "/Age2/loom_2_5",
             "players": 5,
             "age": 2,
             "guild": "gray",
@@ -524,7 +524,7 @@
         },
         {
             "name": "Glassworks",
-            "image": "/Age1/glassworks_2_3",
+            "image": "/Age2/glassworks_2_3",
             "players": 3,
             "age": 2,
             "guild": "gray",
@@ -541,7 +541,7 @@
         },
         {
             "name": "Glassworks",
-            "image": "/Age1/glassworks_2_5",
+            "image": "/Age2/glassworks_2_5",
             "players": 5,
             "age": 2,
             "guild": "gray",
@@ -592,7 +592,7 @@
         },
         {
             "name": "Press",
-            "image": "/Age1/press_2_3",
+            "image": "/Age2/press_2_3",
             "players": 3,
             "age": 2,
             "guild": "gray",
@@ -609,7 +609,7 @@
         },
         {
             "name": "Press",
-            "image": "/Age1/press_2_5",
+            "image": "/Age2/press_2_5",
             "players": 5,
             "age": 2,
             "guild": "gray",
@@ -950,7 +950,7 @@
         },
         {
             "name": "Altar",
-            "image": "/Age1/_1_3",
+            "image": "/Age1/altar_1_3",
             "players": 3,
             "age": 1,
             "guild": "blue",
@@ -969,7 +969,7 @@
         },
         {
             "name": "Altar",
-            "image": "/Age1/_1_5",
+            "image": "/Age1/altar_1_5",
             "players": 5,
             "age": 1,
             "guild": "blue",
@@ -2081,7 +2081,7 @@
         },
         {
             "name": "Marketplace",
-            "image": "marketplace_1_3",
+            "image": "/Age1/marketplace_1_3",
             "players": 3,
             "age": 1,
             "guild": "yellow",
@@ -2102,7 +2102,7 @@
         },
         {
             "name": "Marketplace",
-            "image": "marketplace_1_6",
+            "image": "/Age1/marketplace_1_6",
             "players": 6,
             "age": 1,
             "guild": "yellow",

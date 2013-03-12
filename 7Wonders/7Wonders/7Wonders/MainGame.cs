@@ -17,6 +17,9 @@ namespace _7Wonders
         private const int MARGIN = 5;
         private const int CHECKBOXDIM = 15;
         private const int DIVIDERWIDTH = 2;
+        private const int MAXHANDSIZE = 7;
+        private int CARDWIDTH;
+        private int CARDHEIGHT; 
         private int SEC1WIDTH = Game1.WIDTH / 3;
         private int WONDERHEIGHT = (Game1.HEIGHT - 10) / 6;
         private int WONDERWIDTH = Game1.WIDTH / 3 - 10;
@@ -24,27 +27,38 @@ namespace _7Wonders
         private int DROPDOWNWIDTH = (Game1.WIDTH / 3) - 135;
         //private int DROPDOWNWIDTH = SEC1WIDTH
         private int DROPDOWNHEIGHT = (Game1.HEIGHT / 2 - (Game1.MAXPLAYER + 1) * MARGIN) / Game1.MAXPLAYER;
-        private const int LABELHEIGHT = 40;
+        private const int LABELHEIGHT = 35;
         private int LABELWIDTH;
 
         protected Dictionary<int, Dictionary<string, Visual>> seatVisuals;
         protected Dictionary<string, Visual> baseVisuals;
+        protected Dictionary<string, Visual> hand;
+        protected bool showhand = false;
         protected int seatViewed = 0;
         protected Player player;
         protected Visual wonder;
+        protected Button leftButton;
 
         public MainGame(Game1 theGame)
             : base(theGame, "background", 1.0f)
         {
             LABELWIDTH = SEC1WIDTH / 2 - MARGIN;
+            CARDWIDTH = (Game1.WIDTH - 8 * MARGIN - 30) / MAXHANDSIZE;
+            CARDHEIGHT = (int) (CARDWIDTH * 1.612);
             player = null;
             wonder = null;
+            hand = new Dictionary<string, Visual>();
+            leftButton = new Button(game, new Vector2(Game1.WIDTH - 27, 200 + CARDHEIGHT / 2 - 7), 15, 15, "", "Font1", "left");
+            hand.Add("paperleft", new Visual(game, new Vector2(Game1.WIDTH - 30, 185), 30, CARDHEIGHT + 30, "paperleft"));
+            hand.Add("leftButton", leftButton);
+
             seatVisuals = new Dictionary<int, Dictionary<string, Visual>>();
             baseVisuals = new Dictionary<String, Visual>();
             baseVisuals.Add("Label1", new Visual(game, new Vector2(MARGIN, MARGIN), LABELWIDTH, LABELHEIGHT, "Players", "Font1", null, Color.Gray, "grayback"));
             baseVisuals.Add("Label2", new Visual(game, new Vector2(MARGIN+ LABELWIDTH, MARGIN), LABELWIDTH, LABELHEIGHT, "icons"));
             baseVisuals.Add("Divider1", new Visual(game, new Vector2(SEC1WIDTH - 1, 0), DIVIDERWIDTH, Game1.HEIGHT, "line", Color.Silver));
             baseVisuals.Add("Divider2", new Visual(game, new Vector2(0, SEC1HEIGHT - 1), Game1.WIDTH, DIVIDERWIDTH, "line", Color.Silver));
+            baseVisuals.Add("Age", new Visual(game, new Vector2(Game1.WIDTH - MARGIN - 75, MARGIN), 75, 75, "age1"));
         }
 
         private void Initialize()
@@ -99,6 +113,11 @@ namespace _7Wonders
             baseVisuals.Add("west7", new Visual(game, new Vector2(LABELLENGTH + MARGIN + RESOURCELENGTH * 6 / 8 + 5, RESOURCEHEIGHT + LABELHEIGHT + MARGIN), west.getResourceNum(Resource.LOOM) + "", "Font1"));
             baseVisuals.Add("west8", new Visual(game, new Vector2(LABELLENGTH + MARGIN + RESOURCELENGTH * 7 / 8 + 5, RESOURCEHEIGHT + LABELHEIGHT + MARGIN), west.getScoreNum(Score.COIN) + "", "Font1"));
 
+            hand.Add("papermiddle", new Visual(game, new Vector2(MARGIN + 30 + (CARDWIDTH / 2 + MARGIN) * (7 - player.getHand().Count) + 1, 190), Game1.WIDTH - (MARGIN + 30 + (CARDWIDTH / 2 + MARGIN) * (7 - player.getHand().Count)), CARDHEIGHT+35, "papermiddle"));
+
+            updateHands();
+            
+
             seatViewed = player.getSeat();
             activeVisuals = seatVisuals[seatViewed];
             LoadContent();
@@ -108,6 +127,10 @@ namespace _7Wonders
         {
             base.LoadContent();
             foreach (Visual v in baseVisuals.Values)
+            {
+                v.LoadContent();
+            }
+            foreach (Visual v in hand.Values)
             {
                 v.LoadContent();
             }
@@ -181,6 +204,25 @@ namespace _7Wonders
                 baseVisuals["player" + storeSeat].setColor(Color.Gray);
                 baseVisuals["player" + seatViewed].setColor(Color.Orange);
             }
+            leftButton.Update(gameTime, mouseState);
+            if (leftButton.isClicked())
+            {
+                leftButton.reset();
+                showhand = !showhand;
+                if (showhand)
+                {
+                    leftButton.setTexture("right");
+                    leftButton.setPosition(new Vector2(MARGIN + (CARDWIDTH / 2 + MARGIN) * (7 - player.getHand().Count), 200 + CARDHEIGHT / 2 - 7));
+                    hand["paperleft"].setPosition(new Vector2(MARGIN + (CARDWIDTH / 2 + MARGIN) * (7 - player.getHand().Count), 185));
+                }
+                else
+                {
+                    leftButton.setTexture("left");
+                    leftButton.setPosition(new Vector2(Game1.WIDTH - 30, 200 + CARDHEIGHT / 2 - 7));
+                    hand["paperleft"].setPosition(new Vector2(Game1.WIDTH - 30, 185));
+                }
+                updateHands();
+            }
 
         }
 
@@ -188,6 +230,10 @@ namespace _7Wonders
         {
             base.Draw(gameTime, spriteBatch);
             foreach (Visual v in baseVisuals.Values)
+            {
+                v.Draw(gameTime, spriteBatch);
+            }
+            foreach (Visual v in hand.Values)
             {
                 v.Draw(gameTime, spriteBatch);
             }
@@ -213,6 +259,38 @@ namespace _7Wonders
 
         private void networkUpdates()
         {
+
+        }
+
+        private void updateHands()
+        {
+            hand["papermiddle"].setVisible(false);
+            int k = 0;
+            foreach (Card c in player.getHand())
+            {
+                if (!hand.ContainsKey("hand" + k)) hand.Add("hand" + k, new Visual(game, new Vector2(MARGIN + 30 + (CARDWIDTH + MARGIN) * k + (CARDWIDTH / 2 + MARGIN) * (7 - player.getHand().Count), 205),//this shouldn't be fixed
+                        CARDWIDTH, CARDHEIGHT, c.getImageId()));
+                k++;
+            }
+            for (int j = 0; j < MAXHANDSIZE; j++)
+            {
+                if (hand.ContainsKey("hand" + j)) hand["hand" + j].setVisible(false);
+            }
+
+            if (showhand)
+            {
+                hand["papermiddle"].setVisible(true);
+
+                
+                int i = 0;
+                foreach (Card c in player.getHand())
+                {
+                    if (!hand.ContainsKey("hand" + i)) hand.Add("hand" + i, new Visual(game, new Vector2(MARGIN + 30 + (CARDWIDTH + MARGIN) * i + (CARDWIDTH / 2 + MARGIN) * (7 - player.getHand().Count), 200),//this shouldn't be fixed
+                            CARDWIDTH, CARDHEIGHT, c.getImageId()));
+                    if (hand.ContainsKey("hand" + i)) hand["hand" + i].setVisible(true);
+                    i++;
+                }
+            }            
 
         }
     }
