@@ -153,7 +153,7 @@ namespace _7Wonders
         public void setHand(List<Card> h)       {   hand = new List<Card>(h);   }
         public void setPlayed(List<Card> p)     {   played = new List<Card>(p); }
         public void setReady(bool _ready)       {   ready = _ready; }
-        public void setBoard(Wonder w)          {   board = w; }
+        public void setBoard(Wonder w)          { board = w; setResourceNum(board.getSide().getIntialResource(), 1); }
 
         public void addPlayed(Card c)             
         {

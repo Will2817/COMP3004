@@ -74,8 +74,8 @@ namespace _7Wonders
             baseVisuals.Add("eastresources", new Visual(game, new Vector2(LABELLENGTH + MARGIN, SEC1HEIGHT + LABELHEIGHT + MARGIN * 3), RESOURCELENGTH, LABELHEIGHT, "emptyResourceBar"));
             baseVisuals.Add("westresources", new Visual(game, new Vector2(LABELLENGTH + MARGIN, SEC1HEIGHT + LABELHEIGHT * 2 + MARGIN * 4), RESOURCELENGTH, LABELHEIGHT, "emptyResourceBar"));
 
-            int eastSeat = (player.getSeat() - 1 < 0) ? Game1.client.getState().getPlayers().Count - 1 : player.getSeat() - 1;
-            int westSeat = (player.getSeat() + 1 > Game1.client.getState().getPlayers().Count - 1) ? 0 : player.getSeat() + 1;
+            int westSeat = (player.getSeat() - 1 < 0) ? Game1.client.getState().getPlayers().Count - 1 : player.getSeat() - 1;
+            int eastSeat = (player.getSeat() + 1 > Game1.client.getState().getPlayers().Count - 1) ? 0 : player.getSeat() + 1;
             Player east = Game1.client.getState().getPlayers().Values.ElementAt(eastSeat);
             Player west = Game1.client.getState().getPlayers().Values.ElementAt(westSeat);
 
