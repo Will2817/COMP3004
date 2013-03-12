@@ -106,6 +106,9 @@ namespace _7Wonders.Server
                         i = rand.Next(wonders.Count);
                     } 
                     while (wonders[i].isInUse());
+                    int side = rand.Next(2);
+                    if (gameState.getOnlySideA() || side == 0) wonders[i].setSideA();
+                    else wonders[i].setSideB();
                     wonders[i].setInUse(true);
                     p.setBoard(wonders[i]);
                 }
