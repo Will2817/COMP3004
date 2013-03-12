@@ -25,6 +25,9 @@ namespace _7Wonders
         // Clay, Ore, Stone, Wood, Glass, Loom, Papyrus including coin
         protected Dictionary<Resource, int> resources;
 
+        // Used for players selecting a temp resource to use
+        protected Dictionary<Resource, int> choiceResources;
+
         
         // Default Player Constructor
         public Player(long _id, string _name)
@@ -59,7 +62,7 @@ namespace _7Wonders
             score.Add(Score.TABLET, 0);     // Science - Tablet
             score.Add(Score.COMPASS, 0);    // Science - Compass
             score.Add(Score.GEAR, 0);       // Science - Gear
-            score.Add(Score.VICTORY_BLUE, 0);
+            score.Add(Score.VICTORY_BLUE, 0); // Victory - Counting the number of blue cards
 
             // Setting the  resource dictionary
             resources = new Dictionary<Resource, int>();
@@ -71,6 +74,15 @@ namespace _7Wonders
             resources.Add(Resource.LOOM, 0);    // Loom
             resources.Add(Resource.PAPYRUS, 0); // Papyrus
             resources.Add(Resource.COIN, 0);    // Coin
+
+            choiceResources = new Dictionary<Resource,int>();
+            choiceResources.Add(Resource.CLAY, 0);    // Clay
+            choiceResources.Add(Resource.ORE, 0);     // Ore
+            choiceResources.Add(Resource.STONE, 0);   // Stone
+            choiceResources.Add(Resource.WOOD, 0);    // Wood
+            choiceResources.Add(Resource.GLASS, 0);   // Glass
+            choiceResources.Add(Resource.LOOM, 0);    // Loom
+            choiceResources.Add(Resource.PAPYRUS, 0); // Papyrus - Choice Resource never gets coin
         }
 
        /* This is no longer needed, we will have hte player join the lobby or host
@@ -115,6 +127,51 @@ namespace _7Wonders
         // Returns the dicitonary object of Score & Resources
         public Dictionary<Score, int> getScore()           { return score;     }
         public Dictionary<Resource, int> getResources()     { return resources; }
+        public Dictionary<Resource, int> getChoiceResources() { return choiceResources; }
+
+        // Returns the players total number of resources a player has after
+        // they hae decided on what choice they want
+        public Dictionary<Resource, int> getTotalResources()
+        {
+            Dictionary<Resource, int> temp = new Dictionary<Resource,int>();
+
+            if ((!choiceResources.Equals(null)) && choiceResources.ContainsKey(Resource.CLAY))
+            {
+                temp.Add(Resource.CLAY, (choiceResources[Resource.CLAY] + resources[Resource.CLAY]));
+            }
+
+            if ((!choiceResources.Equals(null)) && choiceResources.ContainsKey(Resource.GLASS)
+            {
+                temp.Add(Resource.GLASS, (choiceResources[Resource.GLASS] + resources[Resource.GLASS]));
+            }
+
+            if ((!choiceResources.Equals(null)) && choiceResources.ContainsKey(Resource.LOOM))
+            {
+                temp.Add(Resource.CLAY, (choiceResources[Resource.LOOM] + resources[Resource.LOOM]));
+            }
+
+            if ((!choiceResources.Equals(null)) && choiceResources.ContainsKey(Resource.ORE))
+            {
+                temp.Add(Resource.CLAY, (choiceResources[Resource.ORE] + resources[Resource.ORE]);
+            }
+
+            if ((!choiceResources.Equals(null)) && choiceResources.ContainsKey(Resource.PAPYRUS))
+            {
+                temp.Add(Resource.CLAY, (choiceResources[Resource.PAPYRUS] + resources[Resource.PAPYRUS]);
+            }
+
+            if ((!choiceResources.Equals(null)) && choiceResources.ContainsKey(Resource.STONE))
+            {
+                temp.Add(Resource.CLAY, (choiceResources[Resource.STONE] + resources[Resource.STONE]);
+            }
+
+            if ((!choiceResources.Equals(null)) && choiceResources.ContainsKey(Resource.WOOD))
+            {
+                temp.Add(Resource.CLAY, (choiceResources[Resource.WOOD] + resources[Resource.WOOD]);
+            }
+
+            return temp;
+        }
 
         // Returns a boolean value if that specific card has been played yet or not
         public bool cardPlayed(Card c) { return played.Contains(c); }
@@ -146,6 +203,21 @@ namespace _7Wonders
             
             return -1;
         }
+
+        // Get the temporary Resource number of a certain 'r'
+        public int getTotalResourceNum(Resource r)
+        {
+            if (choiceResources.ContainsKey(r))
+            {
+                Console.WriteLine("Resources " + r + ": " + choiceResources[r]);
+                return choiceResources[r];
+            }
+            else
+                Console.WriteLine("Error returning tempResource: " + r);
+
+            return -1;
+        }
+
 
         // MUTATORS
         public void setNameID(string n)         {   name = n;   }
