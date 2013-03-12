@@ -71,5 +71,10 @@ namespace _7Wonders.Client
         {
             gameManager.setReady(ready);
         }
+
+        public int constructCost(string cardID)
+        {
+            return gameManager.constructCost(cardID);
+        }
     }
 }
