@@ -15,26 +15,21 @@ namespace _7Wonders
         protected List<Card> hand;
         protected List<Card> played;
         protected bool ready;
+        protected ActionType action; // Players Action selected for the turn
 
-        // Trading values for raw resources and manufactured resources
+        // Trading Price - raw/manufacted resources
         int rcostEast;
         int rcostWest;
         int mcost;
 
-        // Players Score
-        // Victory Points, Army, Coins, Conflict tokens
-        // Sciences: tablet, compass, gear
-        protected Dictionary<Score, int> score;        
+        protected Dictionary<Score, int> score; // Players Score - Victory Points, Army, etc...
+        protected Dictionary<Resource, int> resources; // Resources - Clay, Ore, etc... that are also purchasable by other players
+        protected Dictionary<Resource, int> choiceResources; // Used for players selecting a temp resource to use
+        protected Dictionary<CardColour, int> cardColour; // Used to keep count the number of structures
 
-        // Resources
-        // Clay, Ore, Stone, Wood, Glass, Loom, Papyrus including coin
-        protected Dictionary<Resource, int> resources;
-
-        // Used for players selecting a temp resource to use
-        protected Dictionary<Resource, int> choiceResources;
-
-        // Used to keep count the number of structures they have for each colour [guild]
-        protected Dictionary<CardColour, int> cardColour;
+        // List of choices which are in lists
+        List<List<Resource>> choices;
+        List<List<Resource>> unpurchasable;
 
         
         // Default Player Constructor
@@ -61,6 +56,11 @@ namespace _7Wonders
 
         private void Initializer()
         {
+            //Initializing the trading cost 
+            rcostEast = 2;
+            rcostWest = 2;
+            mcost = 2;
+
             // Setting the Players Score Dictionary
             score = new Dictionary<Score, int>();
             score.Add(Score.VICTORY, 0);    // Victory Points
@@ -102,96 +102,70 @@ namespace _7Wonders
             cardColour.Add(CardColour.RED, 0);
             cardColour.Add(CardColour.PURPLE, 0);
 
-            // Initiating the trade costs
-            rcostEast = 2;
-            rcostWest = 2;
-            mcost = 2;
+            choices = new List<List<Resource>>();
+            unpurchasable = new List<List<Resource>>();
         }
 
-       /* This is no longer needed, we will have hte player join the lobby or host
-        *  the game and once the game starts will we assign the board and cards to the player
-        * public Player(string _name, Wonder _board, List<Card> _hand)
-        {
-            // Initialized through the constructor
-            name = _name;
-            board = _board;
-            hand = new List<Card>(_hand);
-
-            // Setting the Players Score Dictionary
-            score = new Dictionary<string, int>();
-            score.Add("victory", 0);    // Victory Points
-            score.Add("army", 0);
-            score.Add("coin", 0);
-            score.Add("defeat", 0);
-            score.Add("tablet", 0);
-            score.Add("compass", 0);
-            score.Add("gear", 0);
-
-            // Setting the  resource dictionary
-            resources = new Dictionary<string, int>();
-            resources.Add("c", 0);  // Clay
-            resources.Add("o", 0);  // Ore
-            resources.Add("s", 0);  // Stone
-            resources.Add("w", 0);  // Wood
-            resources.Add("g", 0);  // Glass
-            resources.Add("l", 0);  // Loom
-            resources.Add("p", 0);  // Papyrus
-        }*/
-
         // ACCESSORS
-        public string getName()         {   return name;    }        
-        public long getID()             {   return id;      }
-        public int getSeat()            {   return seatNumber; }
-        public Wonder getBoard()        {   return board;   }
-        public List<Card> getHand()     {   return hand;    }
-        public List<Card> getPlayed()   {   return played;  }
-        public bool getReady()          {   return ready;   }
+        public string getName()                     {   return name;    }        
+        public long getID()                         {   return id;      }
+        public int getSeat()                        {   return seatNumber; }
+        public Wonder getBoard()                    {   return board;   }
+        public List<Card> getHand()                 {   return hand;    }
+        public List<Card> getPlayed()               {   return played;  }
+        public bool getReady()                      {   return ready;   }
             
-        // Returns the dicitonary object of Score & Resources
-        public Dictionary<Score, int> getScore()                { return score;     }
+        // Returns the dicitonary object of Score & Resources 
+        //  along with List of choices and unpurchasable resources
+        public Dictionary<Score, int> getScore()                { return score;}
         public int getSpecificScore(Score s)                    { return score[s]; }
         public Dictionary<Resource, int> getResources()         { return resources; }
         public Dictionary<Resource, int> getChoiceResources()   { return choiceResources; }
+        public List<List<Resource>> getChoices()                { return choices; }
+        public List<List<Resource>> getUnpurchaseable()         { return unpurchasable; }
+        public Dictionary<CardColour, int> getCardColours()     { return cardColour; }
 
         // Returns the players total number of resources a player has after
         // they hae decided on what choice they want
         public Dictionary<Resource, int> getTotalResources()
         {
             Dictionary<Resource, int> temp = new Dictionary<Resource,int>();
-
-            if ((!choiceResources.Equals(null)) && choiceResources.ContainsKey(Resource.CLAY))
+            if (!choiceResources.Equals(null) && (!resources.Equals(null)))
             {
-                temp.Add(Resource.CLAY, (choiceResources[Resource.CLAY] + resources[Resource.CLAY]));
-            }
+                if (choiceResources.ContainsKey(Resource.CLAY))
+                {
+                    temp.Add(Resource.CLAY, (choiceResources[Resource.CLAY] + resources[Resource.CLAY]));
+                }
 
-            if ((!choiceResources.Equals(null)) && choiceResources.ContainsKey(Resource.GLASS))
-            {
-                temp.Add(Resource.GLASS, (choiceResources[Resource.GLASS] + resources[Resource.GLASS]));
-            }
+                if (choiceResources.ContainsKey(Resource.GLASS))
+                {
+                    temp.Add(Resource.GLASS, (choiceResources[Resource.GLASS] + resources[Resource.GLASS]));
+                }
 
-            if ((!choiceResources.Equals(null)) && choiceResources.ContainsKey(Resource.LOOM))
-            {
-                temp.Add(Resource.CLAY, (choiceResources[Resource.LOOM] + resources[Resource.LOOM]));
-            }
+                if (choiceResources.ContainsKey(Resource.LOOM))
+                {
+                    temp.Add(Resource.CLAY, (choiceResources[Resource.LOOM] + resources[Resource.LOOM]));
+                }
 
-            if ((!choiceResources.Equals(null)) && choiceResources.ContainsKey(Resource.ORE))
-            {
-                temp.Add(Resource.CLAY, (choiceResources[Resource.ORE] + resources[Resource.ORE]));
-            }
+                if (choiceResources.ContainsKey(Resource.ORE))
+                {
+                    temp.Add(Resource.CLAY, (choiceResources[Resource.ORE] + resources[Resource.ORE]));
+                }
 
-            if ((!choiceResources.Equals(null)) && choiceResources.ContainsKey(Resource.PAPYRUS))
-            {
-                temp.Add(Resource.CLAY, (choiceResources[Resource.PAPYRUS] + resources[Resource.PAPYRUS]));
-            }
+                if (choiceResources.ContainsKey(Resource.PAPYRUS))
+                {
+                    temp.Add(Resource.CLAY, (choiceResources[Resource.PAPYRUS] + resources[Resource.PAPYRUS]));
+                }
 
-            if ((!choiceResources.Equals(null)) && choiceResources.ContainsKey(Resource.STONE))
-            {
-                temp.Add(Resource.CLAY, (choiceResources[Resource.STONE] + resources[Resource.STONE]));
-            }
+                if (choiceResources.ContainsKey(Resource.STONE))
+                {
+                    temp.Add(Resource.CLAY, (choiceResources[Resource.STONE] + resources[Resource.STONE]));
+                }
 
-            if ((!choiceResources.Equals(null)) && choiceResources.ContainsKey(Resource.WOOD))
-            {
-                temp.Add(Resource.CLAY, (choiceResources[Resource.WOOD] + resources[Resource.WOOD]));
+                if (choiceResources.ContainsKey(Resource.WOOD))
+                {
+                    temp.Add(Resource.CLAY, (choiceResources[Resource.WOOD] + resources[Resource.WOOD]));
+                }
             }
             return temp;
         }
@@ -209,13 +183,11 @@ namespace _7Wonders
             choiceResources.Add(Resource.PAPYRUS, 0); // Papyrus - Choice Resource never gets coin
         }
 
-        public Dictionary<CardColour, int> getCardColours() { return cardColour; }
-
         public int getCardColourCount(CardColour c)
         {
             if (cardColour.ContainsKey(c))
             {
-                Console.WriteLine("Returing " + c + ": " + cardColour[c]);
+                Console.WriteLine("Returning " + c + ": " + cardColour[c]);
                 return cardColour[c];
             }
             else
@@ -277,6 +249,8 @@ namespace _7Wonders
         public void setPlayed(List<Card> p)     {   played = new List<Card>(p); }
         public void setReady(bool _ready)       {   ready = _ready; }
         public void setBoard(Wonder w)          { board = w; setResourceNum(board.getSide().getIntialResource(), 1); }
+        public void addChoices(List<Resource> r) { choices.Add(r); }
+        public void addUnpurchasable(List<Resource> r) { unpurchasable.Add(r); }
 
         public void addPlayed(Card c)             
         {

@@ -5,7 +5,10 @@ using System.Text;
 
 namespace _7Wonders
 {
-
+    /* EffectHandler Class
+     * This class will be used to control the effects 
+     * of cards along with the effects of Wonders
+     */
     public class EffectHandler
     {
         // Add a certain number of x Resource r to Player p
@@ -15,6 +18,9 @@ namespace _7Wonders
             int resourceNum = p.getResourceNum(r) + x;
             p.setResourceNum(r, resourceNum);
         }
+
+        public static void AddResourceChoice(Player p, List<Resource> r) {  p.addChoices(r); }
+        public static void AddResourceUnPurchaseable(Player p, List<Resource> r) {  p.addUnpurchasable(r); }
 
         // Resource choice - "rchoice" in json
         // Adds a temporary Resource r to the players choice Resource Dictionary
@@ -28,11 +34,12 @@ namespace _7Wonders
         // NOTE: Should we have this as a max function? eg. Find max of gear, tablet, compass and just add 1?
         public static void AddScienceChoice(Player p, Score s) { p.addScore(s, 1); }
 
-        // Victory Points or Army
-        public static void addScore(Player p, Score s, int points) { p.addScore(s, points); }
+        // Victory Points or Army or any other score
+        // This could probably be used to replace alot of generic score functions
+        public static void AddScore(Player p, Score s, int points) { p.addScore(s, points); }
 
         // Coin gained
-        public static void addCoin(Player p, int amount) { p.addResosurce(Resource.COIN, amount); }
+        public static void AddCoin(Player p, int amount) { p.addResosurce(Resource.COIN, amount); }
 
         // Victory Points awarded from the number of specific structure colour each neighbours constructed
         public static void AddVictoryNeighboursColour(Player p, Player east, Player west, CardColour c, int amount)
