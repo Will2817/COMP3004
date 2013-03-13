@@ -28,6 +28,9 @@ namespace _7Wonders
         // Used for players selecting a temp resource to use
         protected Dictionary<Resource, int> choiceResources;
 
+        // Used to keep count the number of structures they have for each colour [guild]
+        protected Dictionary<CardColour, int> cardColour;
+
         
         // Default Player Constructor
         public Player(long _id, string _name)
@@ -83,6 +86,16 @@ namespace _7Wonders
             choiceResources.Add(Resource.GLASS, 0);   // Glass
             choiceResources.Add(Resource.LOOM, 0);    // Loom
             choiceResources.Add(Resource.PAPYRUS, 0); // Papyrus - Choice Resource never gets coin
+
+            // Card Colours
+            cardColour = new Dictionary<CardColour, int>();
+            cardColour.Add(CardColour.BROWN, 0);
+            cardColour.Add(CardColour.GRAY, 0);
+            cardColour.Add(CardColour.BLUE, 0);
+            cardColour.Add(CardColour.GREEN, 0);
+            cardColour.Add(CardColour.YELLOW, 0);
+            cardColour.Add(CardColour.RED, 0);
+            cardColour.Add(CardColour.PURPLE, 0);
         }
 
        /* This is no longer needed, we will have hte player join the lobby or host
@@ -140,7 +153,7 @@ namespace _7Wonders
                 temp.Add(Resource.CLAY, (choiceResources[Resource.CLAY] + resources[Resource.CLAY]));
             }
 
-            if ((!choiceResources.Equals(null)) && choiceResources.ContainsKey(Resource.GLASS)
+            if ((!choiceResources.Equals(null)) && choiceResources.ContainsKey(Resource.GLASS))
             {
                 temp.Add(Resource.GLASS, (choiceResources[Resource.GLASS] + resources[Resource.GLASS]));
             }
@@ -152,25 +165,52 @@ namespace _7Wonders
 
             if ((!choiceResources.Equals(null)) && choiceResources.ContainsKey(Resource.ORE))
             {
-                temp.Add(Resource.CLAY, (choiceResources[Resource.ORE] + resources[Resource.ORE]);
+                temp.Add(Resource.CLAY, (choiceResources[Resource.ORE] + resources[Resource.ORE]));
             }
 
             if ((!choiceResources.Equals(null)) && choiceResources.ContainsKey(Resource.PAPYRUS))
             {
-                temp.Add(Resource.CLAY, (choiceResources[Resource.PAPYRUS] + resources[Resource.PAPYRUS]);
+                temp.Add(Resource.CLAY, (choiceResources[Resource.PAPYRUS] + resources[Resource.PAPYRUS]));
             }
 
             if ((!choiceResources.Equals(null)) && choiceResources.ContainsKey(Resource.STONE))
             {
-                temp.Add(Resource.CLAY, (choiceResources[Resource.STONE] + resources[Resource.STONE]);
+                temp.Add(Resource.CLAY, (choiceResources[Resource.STONE] + resources[Resource.STONE]));
             }
 
             if ((!choiceResources.Equals(null)) && choiceResources.ContainsKey(Resource.WOOD))
             {
-                temp.Add(Resource.CLAY, (choiceResources[Resource.WOOD] + resources[Resource.WOOD]);
+                temp.Add(Resource.CLAY, (choiceResources[Resource.WOOD] + resources[Resource.WOOD]));
             }
-
             return temp;
+        }
+
+        // Resets the Players choice on their resources for the next turn
+        public void resetChoiceResources()
+        {
+            // Resetting all choices so players can again, choose which resource to gain
+            choiceResources.Add(Resource.CLAY, 0);    // Clay
+            choiceResources.Add(Resource.ORE, 0);     // Ore
+            choiceResources.Add(Resource.STONE, 0);   // Stone
+            choiceResources.Add(Resource.WOOD, 0);    // Wood
+            choiceResources.Add(Resource.GLASS, 0);   // Glass
+            choiceResources.Add(Resource.LOOM, 0);    // Loom
+            choiceResources.Add(Resource.PAPYRUS, 0); // Papyrus - Choice Resource never gets coin
+        }
+
+        public Dictionary<CardColour, int> getCardColours() { return cardColour; }
+
+        public int getCardColourCount(CardColour c)
+        {
+            if (cardColour.ContainsKey(c))
+            {
+                Console.WriteLine("Returing " + c + ": " + cardColour[c]);
+                return cardColour[c];
+            }
+            else
+                Console.WriteLine("Error returning cardColour: " + c);
+
+            return -1;
         }
 
         // Returns a boolean value if that specific card has been played yet or not
@@ -190,7 +230,7 @@ namespace _7Wonders
             return -1;
         }
 
-        // Get the Resource number of a certain 'r'
+        // Get the players Resource number of a certain 'r'
         public int getResourceNum(Resource r) 
         {
             if (resources.ContainsKey(r))
@@ -204,8 +244,8 @@ namespace _7Wonders
             return -1;
         }
 
-        // Get the temporary Resource number of a certain 'r'
-        public int getTotalResourceNum(Resource r)
+        // Get the choice Resource number of a certain 'r'
+        public int getChoiceResourceNum(Resource r)
         {
             if (choiceResources.ContainsKey(r))
             {
@@ -213,7 +253,7 @@ namespace _7Wonders
                 return choiceResources[r];
             }
             else
-                Console.WriteLine("Error returning tempResource: " + r);
+                Console.WriteLine("Error returning choiceResource: " + r);
 
             return -1;
         }
@@ -233,10 +273,7 @@ namespace _7Wonders
                 played.Add(c);
             else
                 Console.WriteLine("Card '" + c + "' has been played already!");
-        }
-
-
-        
+        }        
 
         public string toJString()
         {
@@ -290,6 +327,32 @@ namespace _7Wonders
                 resources[r] += x;
             else
                 Console.WriteLine("Error: Add Resource failed, no such resource " + r);
+        }
+
+        // Sets the Resource of a certain 'r'
+        public void setChoiceResourceNum(Resource r, int x)
+        {
+            if (choiceResources.ContainsKey(r))
+                choiceResources[r] = x;
+            else
+                Console.WriteLine("Error: Set Resource failed, no such resource " + r);
+        }
+
+        //Adds to the Resource of a certain 'r'
+        public void addChoiceResosurce(Resource r, int x)
+        {
+            if (choiceResources.ContainsKey(r))
+                choiceResources[r] += x;
+            else
+                Console.WriteLine("Error: Add Resource failed, no such resource " + r);
+        }
+
+        public void addCardColour(CardColour c, int x)
+        {
+            if (cardColour.ContainsKey(c))
+                cardColour[c] += x;
+            else
+                Console.WriteLine("Error: Adding to cardColour failed, no such card colour " + c);
         }
     }
 }
