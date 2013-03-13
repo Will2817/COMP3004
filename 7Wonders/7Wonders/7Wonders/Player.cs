@@ -16,6 +16,9 @@ namespace _7Wonders
         protected List<Card> played;
         protected bool ready;
 
+        protected List<string> lastCardsPlayed;
+        protected List<ActionType> lastActions;
+
         // Trading values for raw resources and manufactured resources
         int rcostEast;
         int rcostWest;
@@ -101,6 +104,9 @@ namespace _7Wonders
             cardColour.Add(CardColour.YELLOW, 0);
             cardColour.Add(CardColour.RED, 0);
             cardColour.Add(CardColour.PURPLE, 0);
+
+            lastCardsPlayed = new List<string>();
+            lastActions = new List<ActionType>();
         }
 
        /* This is no longer needed, we will have hte player join the lobby or host
@@ -141,6 +147,8 @@ namespace _7Wonders
         public List<Card> getHand()     {   return hand;    }
         public List<Card> getPlayed()   {   return played;  }
         public bool getReady()          {   return ready;   }
+        public List<string> getLastCardsPlayed() { return lastCardsPlayed; }
+        public List<ActionType> getLastActions() { return lastActions; }
             
         // Returns the dicitonary object of Score & Resources
         public Dictionary<Score, int> getScore()                { return score;     }
@@ -272,6 +280,8 @@ namespace _7Wonders
         public void setPlayed(List<Card> p)     {   played = new List<Card>(p); }
         public void setReady(bool _ready)       {   ready = _ready; }
         public void setBoard(Wonder w)          { board = w; }
+        public void setLastCardsPlayed(List<string> _cards) { lastCardsPlayed = _cards; }
+        public void setLastActions(List<ActionType> _actions) { lastActions = _actions; }
 
         public void addPlayed(Card c)             
         {
@@ -359,6 +369,42 @@ namespace _7Wonders
                 cardColour[c] += x;
             else
                 Console.WriteLine("Error: Adding to cardColour failed, no such card colour " + c);
+        }
+
+        public JObject superJson()
+        {
+            JObject resource = new JObject();
+            foreach (Resource r in Enum.GetValues(typeof(Resource)))
+            {
+                resource.Add(new JProperty(((int) r).ToString(), resources[r]));
+            }
+
+            JObject actions = new JObject();
+            JArray cards = new JArray();
+            foreach (string s in lastCardsPlayed)
+            {
+                cards.Add(s);
+            }
+
+            foreach (ActionType a in lastActions)
+            {
+                cards.Add(((int) a).ToString());
+            }
+
+            JObject j = new JObject(
+                new JProperty("id", id),
+                new JProperty("score",
+                    new JObject(
+                        new JProperty(((int) Score.ARMY).ToString(), score[Score.ARMY]),
+                        new JProperty(((int) Score.CONFLICT).ToString(), score[Score.CONFLICT]),
+                        new JProperty(((int) Score.TABLET).ToString(), score[Score.TABLET]),
+                        new JProperty(((int) Score.COMPASS).ToString(), score[Score.COMPASS]),
+                        new JProperty(((int) Score.GEAR).ToString(), score[Score.GEAR]),
+                        new JProperty(((int) Score.VICTORY_BLUE).ToString(), score[Score.VICTORY_BLUE]))),
+                new JProperty("resource",resource),
+                new JProperty("actions", actions),
+                new JProperty("cards", cards));
+            return j;
         }
     }
 }

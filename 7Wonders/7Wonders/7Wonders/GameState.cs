@@ -178,5 +178,15 @@ namespace _7Wonders
             }
             players[id].setHand(hand);
         }
+
+        public string superJson()
+        {
+            JObject super = new JObject();
+            foreach (Player p in players.Values)
+            {
+                super.Add(p.superJson());
+            }
+            return super.ToString();
+        }
     }
 }

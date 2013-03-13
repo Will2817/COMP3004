@@ -65,7 +65,7 @@ namespace _7Wonders
             cards = new Dictionary<string, Visual>();
             foreach (JObject j in (JArray)cardsJson["cards"])
             {
-                cards.Add((string)j["name"] + "_" + j["age"] + "_" + j["players"], new Visual(this, new Vector2(0, 0), 0, 0, (string)j["image"]));
+                cards.Add((string)j["name"] + "_" + j["age"] + "_" + j["players"], new Visual(this, new Vector2(0, 0), 0, 0, (string)j["name"] + "_" + j["age"] + "_" + j["players"]));
             }
 
             interfaces = new Dictionary<String, Interface>();
