@@ -111,10 +111,13 @@ namespace _7Wonders.Server
                     else wonders[i].setSideB();
                     wonders[i].setInUse(true);
                     p.setBoard(wonders[i]);
+                    p.addResource(wonders[i].getSide().getIntialResource(), 1);
+                    p.addResource(Resource.COIN, 3);
                 }
                 messageSerializer.notifyWonderAssign(gameState.wonderAssignToJson());
-                updateAIs();
+                //send player states (incl resources)
                 sendHands();
+                updateAIs();
                 
                 return 0;
      /*       }

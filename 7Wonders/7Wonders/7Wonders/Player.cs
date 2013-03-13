@@ -153,7 +153,7 @@ namespace _7Wonders
         public void setHand(List<Card> h)       {   hand = new List<Card>(h);   }
         public void setPlayed(List<Card> p)     {   played = new List<Card>(p); }
         public void setReady(bool _ready)       {   ready = _ready; }
-        public void setBoard(Wonder w)          { board = w; setResourceNum(board.getSide().getIntialResource(), 1); }
+        public void setBoard(Wonder w)          { board = w; }
 
         public void addPlayed(Card c)             
         {
@@ -212,7 +212,7 @@ namespace _7Wonders
         }
 
         //Adds to the Resource of a certain 'r'
-        public void addResosurce(Resource r, int x)
+        public void addResource(Resource r, int x)
         {
             if (resources.ContainsKey(r))
                 resources[r] += x;
