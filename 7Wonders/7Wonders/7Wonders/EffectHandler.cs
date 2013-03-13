@@ -10,7 +10,7 @@ namespace _7Wonders
      * This class will be used to control the effects 
      * of cards along with the effects of Wonders
      */
-    public class EffectHandler
+    public static class EffectHandler
     {
         // Add a certain number of x Resource r to Player p
         // "w", "o", "l", "p" etc
@@ -57,21 +57,28 @@ namespace _7Wonders
         public static void AddScore(Player p, Score s, int points) { p.addScore(s, points); }
 
         // Coin awarded with no "basis" expect the construction of the structure
-        public static void AddCoin(Player p, int amount) { p.addResource(Resource.COIN, amount); }
+        public static void AddCoin(Player p, int coin) { p.addResource(Resource.COIN, coin); }
+
+        // Coin awarded on the number of wonderstages a player has buit
+        public static void AddCoinWonder(Player p, int amount)
+        {
+            int coin = p.getBoard().getSide().stagesBuilt * amount;
+            p.addResource(Resource.COIN, coin);
+        }
 
         // Coin awarded with the basis of Card Colour the Player owns
         public static void AddCoinColour(Player p, CardColour c, int amount)
         {
-            int count = p.getCardColourCount(c) * amount;
-            p.setResourceNum(Resource.COIN, count);
+            int coin = p.getCardColourCount(c) * amount;
+            p.setResourceNum(Resource.COIN, coin);
         }
 
         // Coin awarded from the number of specific structure colour each neighbours have constructed
         public static void AddCoinAllColour(Player p, Player east, Player west, CardColour c, int amount)
         {
-            int count = p.getCardColourCount(c) + east.getCardColourCount(c) + west.getCardColourCount(c);
-            count *= amount;
-            p.addResource(Resource.COIN, count);
+            int coin = p.getCardColourCount(c) + east.getCardColourCount(c) + west.getCardColourCount(c);
+            coin *= amount;
+            p.addResource(Resource.COIN, coin);
         }
 
         // Victory Points awarded from the number of specific structure colour each neighbours constructed
@@ -81,7 +88,8 @@ namespace _7Wonders
             p.addScore(Score.VICTORY, points);
         }
 
-        // Victory Points awarded from the number of specific structure colour the player has constructed
+        // Victory Points awarded 
+        // Through the number of specific structure colour the player has constructed
         public static void AddVictoryColour(Player p, CardColour c, int amount)
         {
             int points = p.getCardColourCount(c) * amount;
@@ -104,6 +112,13 @@ namespace _7Wonders
 
             p.addScore(Score.VICTORY, points);
         }
+
+        // Trading Cost for East and West Raw Resources
+        public static void SetRawTradeEast(Player p) { p.rcostEast = 1; }
+        public static void SetRawTradeWest(Player p) { p.rcostWest = 1; }
+
+        // Trading Cost for East && West of manufactured Resources
+        public static void SetManufactedTrade(Player p) { p.mcost = 1; }
 
     }
 }
