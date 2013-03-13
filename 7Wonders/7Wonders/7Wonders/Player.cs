@@ -379,7 +379,7 @@ namespace _7Wonders
                 resource.Add(new JProperty(((int) r).ToString(), resources[r]));
             }
 
-            JObject actions = new JObject();
+            JArray actions = new JArray();
             JArray cards = new JArray();
             foreach (string s in lastCardsPlayed)
             {
@@ -388,7 +388,7 @@ namespace _7Wonders
 
             foreach (ActionType a in lastActions)
             {
-                cards.Add(((int) a).ToString());
+                actions.Add(((int) a).ToString());
             }
 
             JObject j = new JObject(
