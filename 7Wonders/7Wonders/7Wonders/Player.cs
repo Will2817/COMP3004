@@ -40,11 +40,12 @@ namespace _7Wonders
         {
             id          = _id;
             name        = _name;
-            seatNumber = -1;
-            board       = null;            
-            hand        = new List<Card>();
-            played      =  new List<Card>();
+            seatNumber  = -1;
+            board       = null;
+            hand        = null;
+            played      =  null;
             ready       = false;
+            action      = 0;
             Initializer();
         }
 
@@ -59,7 +60,11 @@ namespace _7Wonders
 
         private void Initializer()
         {
-            //Initializing the trading cost 
+            //Initializing Variables
+            hand = new List<Card>();
+            played = new List<Card>();
+            lastCardsPlayed = new List<string>();
+            lastActions = new List<ActionType>();
             rcostEast = 2;
             rcostWest = 2;
             mcost = 2;
@@ -104,36 +109,7 @@ namespace _7Wonders
             cardColour.Add(CardColour.YELLOW, 0);
             cardColour.Add(CardColour.RED, 0);
             cardColour.Add(CardColour.PURPLE, 0);
-
-            lastCardsPlayed = new List<string>();
-            lastActions = new List<ActionType>();
-            hand        = new List<Card>();
-            played      =  new List<Card>();
         }
-
-       /* This is no longer needed, we will have hte player join the lobby or host
-        *  the game and once the game starts will we assign the board and cards to the player
-        * public Player(string _name, Wonder _board, List<Card> _hand)
-        {
-            // Initialized through the constructor
-            name = _name;
-            board = _board;
-            hand = new List<Card>(_hand);
-
-            // Setting the Players Score Dictionary
-            score = new Dictionary<string, int>();
-            score.Add("victory", 0);    // Victory Points
-            score.Add("army", 0);
-            score.Add("coin", 0);
-            score.Add("defeat", 0);
-            score.Add("tablet", 0);
-            score.Add("compass", 0);
-            score.Add("gear", 0);
->>>>>>> origin/master
-
-            choices = new List<List<Resource>>();
-            unpurchasable = new List<List<Resource>>();
-        }*/
 
         // ACCESSORS
         public string getName()         {   return name;    }        
@@ -205,13 +181,13 @@ namespace _7Wonders
         public void resetChoiceResources()
         {
             // Resetting all choices so players can again, choose which resource to gain
-            choiceResources.Add(Resource.CLAY, 0);    // Clay
-            choiceResources.Add(Resource.ORE, 0);     // Ore
-            choiceResources.Add(Resource.STONE, 0);   // Stone
-            choiceResources.Add(Resource.WOOD, 0);    // Wood
-            choiceResources.Add(Resource.GLASS, 0);   // Glass
-            choiceResources.Add(Resource.LOOM, 0);    // Loom
-            choiceResources.Add(Resource.PAPYRUS, 0); // Papyrus - Choice Resource never gets coin
+            choiceResources[Resource.CLAY] = 0;    // Clay
+            choiceResources[Resource.ORE] =  0;     // Ore
+            choiceResources[Resource.STONE] = 0;   // Stone
+            choiceResources[Resource.WOOD] =  0;    // Wood
+            choiceResources[Resource.GLASS] =  0;   // Glass
+            choiceResources[Resource.LOOM] = 0;    // Loom
+            choiceResources[Resource.PAPYRUS] =  0; // Papyrus - Choice Resource never gets coin
         }
 
         public int getCardColourCount(CardColour c)
