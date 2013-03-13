@@ -38,6 +38,7 @@ namespace _7Wonders
         protected Player player;
         protected Visual wonder;
         protected Button leftButton;
+        protected Dictionary<string, Visual> played;
 
         public MainGame(Game1 theGame)
             : base(theGame, "background", 1.0f)
@@ -126,6 +127,7 @@ namespace _7Wonders
 
             hand.Add("papermiddle", new Visual(game, new Vector2(MARGIN + 30 + (CARDWIDTH / 2 + MARGIN) * (7 - player.getHand().Count) + 1, 190), Game1.WIDTH - (MARGIN + 30 + (CARDWIDTH / 2 + MARGIN) * (7 - player.getHand().Count)), CARDHEIGHT+35, "papermiddle"));
 
+            updatePlayed();
             updateHands();
             updateScroll();
             
@@ -184,11 +186,11 @@ namespace _7Wonders
                 }
                 if (hand["hand" + j].isMouseOver(mouseState))
                 {
-                    hand["hand" + j].setWidth(CARDWIDTH + 60).setHeight((int)((CARDWIDTH + 60) * 1.612));//.setRelativePosition(new Vector2(-15, (int)(-15 * 1.612)));
+                    hand["hand" + j].setWidth(CARDWIDTH + 60).setHeight((int)((CARDWIDTH + 60) * 1.612));//.setPosition(hand["hand" + j].getPosition() + new Vector2(-15, (int)(-15 * 1.612)));
                 }
                 else
                 {
-                    hand["hand" + j].setWidth(CARDWIDTH).setHeight(CARDHEIGHT);//.setRelativePosition(new Vector2(15, (int)(15 * 1.612)));
+                    hand["hand" + j].setWidth(CARDWIDTH).setHeight(CARDHEIGHT);//.setPosition(hand["hand" + j].getPosition() + new Vector2(15, (int)(15 * 1.612)));
                 }
             }
 
@@ -255,6 +257,7 @@ namespace _7Wonders
                 updateScroll();
             }
             if (Game1.client.isHandUpdated()) updateHands();
+            updatePlayed();
 
         }
 
@@ -334,6 +337,18 @@ namespace _7Wonders
             for (int j = 0; j < MAXHANDSIZE; j++)
             {
                 if (hand.ContainsKey("hand" + j)) hand["hand" + j].setVisible(showhand);
+            }
+        }
+
+        public void updatePlayed()
+        {
+            foreach (Player p in Game1.client.getState().getPlayers().Values)
+            {
+                foreach (Card c in p.getPlayed())
+                {
+                    if (!seatVisuals[p.getSeat()].ContainsKey(c.getImageId()))
+                        seatVisuals[p.getSeat()].Add(c.getImageId(), Game1.cards[c.getImageId()]);
+                }
             }
         }
     }

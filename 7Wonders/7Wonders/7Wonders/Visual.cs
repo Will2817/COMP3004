@@ -236,5 +236,10 @@ namespace _7Wonders
             height += _h;
             return this;
         }
+
+        public Vector2 getPosition()
+        {
+            return position;
+        }
     }
 }
