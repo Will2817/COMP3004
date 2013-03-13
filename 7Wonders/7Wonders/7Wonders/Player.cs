@@ -21,9 +21,9 @@ namespace _7Wonders
         protected List<ActionType> lastActions;
 
         // Trading values for raw resources and manufactured resources
-        int rcostEast;
-        int rcostWest;
-        int mcost;
+        public int rcostEast { get; set; }
+        public int rcostWest { get; set;}
+        public int mcost { get; set;}
 
         protected Dictionary<Score, int> score; // Players Score - Victory Points, Army, etc...
         protected Dictionary<Resource, int> resources; // Resources - Clay, Ore, etc... that are also purchasable by other players
@@ -90,7 +90,7 @@ namespace _7Wonders
             resources.Add(Resource.GLASS, 0);   // Glass
             resources.Add(Resource.LOOM, 0);    // Loom
             resources.Add(Resource.PAPYRUS, 0); // Papyrus
-            resources.Add(Resource.COIN, 3);    // Coin - Players start with 3 coins
+            resources.Add(Resource.COIN, 0);    // Coin - Players start with 3 coins
 
             choiceResources = new Dictionary<Resource, int>();
             choiceResources.Add(Resource.CLAY, 0);    // Clay
@@ -265,7 +265,10 @@ namespace _7Wonders
         public void addPlayed(Card c)
         {
             if (!cardPlayed(c))
+            {
                 played.Add(c);
+                cardColour[c.colour] += 1;
+            }
             else
                 Console.WriteLine("Card '" + c + "' has been played already!");
         }
@@ -334,10 +337,10 @@ namespace _7Wonders
         }
 
         //Adds to the Resource of a certain 'r'
-        public void addChoiceResosurce(Resource r, int x)
+        public void addChoiceResosurce(Resource r)
         {
             if (choiceResources.ContainsKey(r))
-                choiceResources[r] += x;
+                choiceResources[r] += 1;
             else
                 Console.WriteLine("Error: Add Resource failed, no such resource " + r);
         }

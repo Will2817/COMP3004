@@ -25,14 +25,35 @@ namespace _7Wonders
         // Resource choice - "rchoice" in json
         // Adds a temporary Resource r to the players choice Resource Dictionary
         // This might be a little moredifficult to implement... =(
-        public static void ChoiceResource(Player p, Resource r, int x)
-        {
-            p.addChoiceResosurce(r, x);
-        }
+        public static void ChoiceResource(Player p, Resource r, int x)   {   p.addChoiceResosurce(r);  }
 
         // Science Choice - player chooses which science to gain from the card at the end of the game
         // NOTE: Should we have this as a max function? eg. Find max of gear, tablet, compass and just add 1?
-        public static void AddScienceChoice(Player p, Score s) { p.addScore(s, 1); }
+        public static void AddScienceChoice(Player p) 
+        {
+            int gear = p.getScoreNum(Score.GEAR);
+            int compass = p.getScoreNum(Score.COMPASS);
+            int tablet = p.getScoreNum(Score.TABLET);
+
+            Score maxScience;
+
+            if (gear > compass)
+            {
+                maxScience = Score.GEAR;
+
+                if (tablet >= gear)
+                    maxScience = Score.TABLET;
+            }
+            else
+            {
+                maxScience = Score.COMPASS;
+
+                if (tablet >= compass)
+                    maxScience = Score.TABLET;
+            }
+
+            p.addScore(maxScience, 1);        
+        }
 
         // Victory Points or Army or any other score
         // This could probably be used to replace alot of generic score functions
@@ -40,6 +61,9 @@ namespace _7Wonders
 
         // Coin gained
         public static void AddCoin(Player p, int amount) { p.addResource(Resource.COIN, amount); }
+
+        // Coin gained from Card Colour
+        //public static void AddCoinColour()
 
         // Victory Points awarded from the number of specific structure colour each neighbours constructed
         public static void AddVictoryNeighboursColour(Player p, Player east, Player west, CardColour c, int amount)
