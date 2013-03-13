@@ -53,13 +53,32 @@ namespace _7Wonders.Client
         }
 
         public GameState getState(){
-            gameManager.setUpdateChecked();
             return gameManager.getGameState();
         }
 
         public bool isUpdateAvailable()
         {
             return gameManager.isUpdateAvailable();
+        }
+
+        public bool isHandUpdated()
+        {
+            return gameManager.isHandUpdated();
+        }
+
+        public void setHandChecked()
+        {
+            gameManager.setHandChecked();
+        }
+
+        public bool isPlayerUpdated()
+        {
+            return gameManager.isPlayerUpdated();
+        }
+
+        public void setPlayerChecked()
+        {
+            gameManager.setPlayerChecked();
         }
 
         public bool isConnected()

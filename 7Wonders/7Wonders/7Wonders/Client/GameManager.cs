@@ -11,8 +11,8 @@ namespace _7Wonders.Client
         MessageSerializerService messageSerializer;
         NetService netService;
         CardLibrary cardLibrary;
-        bool updateAvailable;
-        bool newHand;
+        bool handUpdated;
+        bool playerUpdated;
         bool connected;
 
         public GameManager()
@@ -20,7 +20,8 @@ namespace _7Wonders.Client
             cardLibrary = new CardLibrary();
             gameState = new GameState();
             connected = false;
-            newHand = false;
+            handUpdated = false;
+            playerUpdated = false;
         }
 
         public void setMessageSerializer(MessageSerializerService messageSerializer)
@@ -36,25 +37,25 @@ namespace _7Wonders.Client
         public void updateLobby(string lobby)
         {
             gameState.lobbyFromJson(lobby);
-            updateAvailable = true;
+            playerUpdated = true;
         }
 
         public void updatePlayers(string players)
         {
             gameState.playersFromJson(players);
-            updateAvailable = true;
+            playerUpdated = true;
         }
 
         public void updateOptions(string options)
         {
             gameState.optionsFromJson(options);
-            updateAvailable = true;
+            playerUpdated = true;
         }
 
         public void assignWonders(string json)
         {
             gameState.assignWonders(json);
-            updateAvailable = true;
+            playerUpdated = true;
         }
 
         public GameState getGameState()
@@ -64,12 +65,27 @@ namespace _7Wonders.Client
 
         public bool isUpdateAvailable()
         {
-            return updateAvailable;
+            return playerUpdated || handUpdated;
         }
 
-        public void setUpdateChecked()
+        public bool isHandUpdated()
         {
-            updateAvailable = false;
+            return handUpdated;
+        }
+
+        public bool isPlayerUpdated()
+        {
+            return playerUpdated;
+        }
+
+        public void setHandChecked()
+        {
+            handUpdated = false;
+        }
+
+        public void setPlayerChecked()
+        {
+            playerUpdated = false;
         }
 
         public bool isConnected()
@@ -95,7 +111,7 @@ namespace _7Wonders.Client
         public void assignHand(string message)
         {
             gameState.setHand(cardLibrary, netService.getID(), message);
-            newHand = true;
+            handUpdated = true;
         }
 
         //Returns the number of coins it would cost a player to build a card with cardID. -1 if the player cannot possibly build the
