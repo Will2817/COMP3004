@@ -58,6 +58,12 @@ namespace _7Wonders.Client
             playerUpdated = true;
         }
 
+        public void superUpdate(string json)
+        {
+            gameState.superParse(json);
+            playerUpdated = true;
+        }
+
         public GameState getGameState()
         {
             return gameState;

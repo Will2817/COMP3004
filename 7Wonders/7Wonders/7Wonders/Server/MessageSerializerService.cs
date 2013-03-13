@@ -45,6 +45,11 @@ namespace _7Wonders.Server
             netService.sendMessage(message, (int)ServerMessageType.HAND, id);
         }
 
+        public void broadcastSuperState(string superJSON)
+        {
+            netService.broadcastMessage(superJSON, (int)ServerMessageType.TURN_RESULT);
+        }
+
         public void broadcastChatMessage(String message, long senderID)
         {
             //broadcast message

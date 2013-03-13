@@ -115,7 +115,7 @@ namespace _7Wonders.Server
                     p.addResource(Resource.COIN, 3);
                 }
                 messageSerializer.notifyWonderAssign(gameState.wonderAssignToJson());
-                //send player states (incl resources)
+                messageSerializer.broadcastSuperState(gameState.superJson());
                 sendHands();
                 updateAIs();
                 
