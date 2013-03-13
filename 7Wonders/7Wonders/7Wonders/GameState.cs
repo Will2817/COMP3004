@@ -181,12 +181,21 @@ namespace _7Wonders
 
         public string superJson()
         {
-            JObject super = new JObject();
+            JArray super = new JArray();
             foreach (Player p in players.Values)
             {
                 super.Add(p.superJson());
             }
             return super.ToString();
+        }
+
+        public void superParse(string json)
+        {
+            JArray ja = JArray.Parse(json);
+            foreach (JObject jo in ja)
+            {
+                players[(long)jo["id"]].superParse(jo);
+            }
         }
     }
 }

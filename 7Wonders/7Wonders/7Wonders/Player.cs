@@ -406,5 +406,27 @@ namespace _7Wonders
                 new JProperty("cards", cards));
             return j;
         }
+
+        public void superParse(JObject j)
+        {
+            foreach (JProperty p in ((JObject) j["score"]).Properties())
+            {
+                score[((Score) int.Parse(p.Name))] = (int) p.Value;
+            }
+            foreach (JProperty p in ((JObject)j["resource"]).Properties())
+            {
+                resources[((Resource)int.Parse(p.Name))] = (int)p.Value;
+            }
+            lastActions.Clear();
+            foreach (string s in (JArray)j["actions"])
+            {
+                lastActions.Add((ActionType) int.Parse(s));
+            }
+            lastCardsPlayed.Clear();
+            foreach (string s in (JArray)j["cards"])
+            {
+                lastCardsPlayed.Add(s);
+            }
+        }
     }
 }
