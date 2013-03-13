@@ -39,7 +39,7 @@ namespace _7Wonders
         public static void AddScore(Player p, Score s, int points) { p.addScore(s, points); }
 
         // Coin gained
-        public static void AddCoin(Player p, int amount) { p.addResosurce(Resource.COIN, amount); }
+        public static void AddCoin(Player p, int amount) { p.addResource(Resource.COIN, amount); }
 
         // Victory Points awarded from the number of specific structure colour each neighbours constructed
         public static void AddVictoryNeighboursColour(Player p, Player east, Player west, CardColour c, int amount)

@@ -37,6 +37,9 @@ namespace _7Wonders.Client
                 case ServerMessageType.HAND:
                     gameManager.assignHand(message);
                     break;
+                case ServerMessageType.TURN_RESULT:
+                    gameManager.superUpdate(message);
+                    break;
                 default:
                     break;
             }

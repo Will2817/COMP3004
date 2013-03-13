@@ -37,6 +37,7 @@ namespace _7Wonders
         protected bool clicked = false;
         protected bool visible = true;
         protected bool enabled = true;
+        protected bool border = true;
 
         // Constructor with Visual as a parameter
         public Visual(Visual v)
@@ -122,7 +123,7 @@ namespace _7Wonders
             if (!visible) return;
             if (texture != null)
             {
-                spriteBatch.Draw(texture, new Rectangle((int)position.X - 1, (int)position.Y - 1, width + 2, height + 2), Color.Black * opacity);
+                if (border) spriteBatch.Draw(texture, new Rectangle((int)position.X - 1, (int)position.Y - 1, width + 2, height + 2), Color.Black * opacity);
                 spriteBatch.Draw(texture, new Rectangle((int)position.X, (int)position.Y, width, height), new Rectangle(0, 0, texture.Width, texture.Height), textureColor);
             }
             if (text != null)
@@ -209,6 +210,12 @@ namespace _7Wonders
         public virtual Visual setEnabled(bool _enable)
         {
             enabled = _enable;
+            return this;
+        }
+
+        public Visual setBorder(bool _border)
+        {
+            border = _border;
             return this;
         }
     }

@@ -62,6 +62,12 @@ namespace _7Wonders
                 wonders.Add((string)j["name"], new Visual(this, new Vector2(0, 0), 0, 0, (string)j["a"]["image"]));
             }
 
+            cards = new Dictionary<string, Visual>();
+            foreach (JObject j in (JArray)cardsJson["cards"])
+            {
+                cards.Add((string)j["name"] + "_" + j["age"] + "_" + j["players"], new Visual(this, new Vector2(0, 0), 0, 0, (string)j["name"] + "_" + j["age"] + "_" + j["players"]));
+            }
+
             interfaces = new Dictionary<String, Interface>();
             interfaces.Add("mainmenu", new MainMenu(this));
             interfaces.Add("lobby", new Lobby(this));

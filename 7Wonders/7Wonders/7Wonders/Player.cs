@@ -17,7 +17,10 @@ namespace _7Wonders
         protected bool ready;
         protected ActionType action; // Players Action selected for the turn
 
-        // Trading Price - raw/manufacted resources
+        protected List<string> lastCardsPlayed;
+        protected List<ActionType> lastActions;
+
+        // Trading values for raw resources and manufactured resources
         int rcostEast;
         int rcostWest;
         int mcost;
@@ -39,8 +42,8 @@ namespace _7Wonders
             name        = _name;
             seatNumber = -1;
             board       = null;            
-            hand        = null;
-            played      = null;
+            hand        = new List<Card>();
+            played      =  new List<Card>();
             ready       = false;
             Initializer();
         }
@@ -102,18 +105,46 @@ namespace _7Wonders
             cardColour.Add(CardColour.RED, 0);
             cardColour.Add(CardColour.PURPLE, 0);
 
-            choices = new List<List<Resource>>();
-            unpurchasable = new List<List<Resource>>();
+            lastCardsPlayed = new List<string>();
+            lastActions = new List<ActionType>();
+            hand        = new List<Card>();
+            played      =  new List<Card>();
         }
 
+       /* This is no longer needed, we will have hte player join the lobby or host
+        *  the game and once the game starts will we assign the board and cards to the player
+        * public Player(string _name, Wonder _board, List<Card> _hand)
+        {
+            // Initialized through the constructor
+            name = _name;
+            board = _board;
+            hand = new List<Card>(_hand);
+
+            // Setting the Players Score Dictionary
+            score = new Dictionary<string, int>();
+            score.Add("victory", 0);    // Victory Points
+            score.Add("army", 0);
+            score.Add("coin", 0);
+            score.Add("defeat", 0);
+            score.Add("tablet", 0);
+            score.Add("compass", 0);
+            score.Add("gear", 0);
+>>>>>>> origin/master
+
+            choices = new List<List<Resource>>();
+            unpurchasable = new List<List<Resource>>();
+        }*/
+
         // ACCESSORS
-        public string getName()                     {   return name;    }        
-        public long getID()                         {   return id;      }
-        public int getSeat()                        {   return seatNumber; }
-        public Wonder getBoard()                    {   return board;   }
-        public List<Card> getHand()                 {   return hand;    }
-        public List<Card> getPlayed()               {   return played;  }
-        public bool getReady()                      {   return ready;   }
+        public string getName()         {   return name;    }        
+        public long getID()             {   return id;      }
+        public int getSeat()            {   return seatNumber; }
+        public Wonder getBoard()        {   return board;   }
+        public List<Card> getHand()     {   return hand;    }
+        public List<Card> getPlayed()   {   return played;  }
+        public bool getReady()          {   return ready;   }
+        public List<string> getLastCardsPlayed() { return lastCardsPlayed; }
+        public List<ActionType> getLastActions() { return lastActions; }
             
         // Returns the dicitonary object of Score & Resources 
         //  along with List of choices and unpurchasable resources
@@ -248,9 +279,14 @@ namespace _7Wonders
         public void setHand(List<Card> h)       {   hand = new List<Card>(h);   }
         public void setPlayed(List<Card> p)     {   played = new List<Card>(p); }
         public void setReady(bool _ready)       {   ready = _ready; }
+
         public void setBoard(Wonder w)          { board = w; setResourceNum(board.getSide().getIntialResource(), 1); }
         public void addChoices(List<Resource> r) { choices.Add(r); }
         public void addUnpurchasable(List<Resource> r) { unpurchasable.Add(r); }
+
+        public void setLastCardsPlayed(List<string> _cards) { lastCardsPlayed = _cards; }
+        public void setLastActions(List<ActionType> _actions) { lastActions = _actions; }
+
 
         public void addPlayed(Card c)             
         {
@@ -306,7 +342,7 @@ namespace _7Wonders
         }
 
         //Adds to the Resource of a certain 'r'
-        public void addResosurce(Resource r, int x)
+        public void addResource(Resource r, int x)
         {
             if (resources.ContainsKey(r))
                 resources[r] += x;
@@ -338,6 +374,64 @@ namespace _7Wonders
                 cardColour[c] += x;
             else
                 Console.WriteLine("Error: Adding to cardColour failed, no such card colour " + c);
+        }
+
+        public JObject superJson()
+        {
+            JObject resource = new JObject();
+            foreach (Resource r in Enum.GetValues(typeof(Resource)))
+            {
+                resource.Add(new JProperty(((int) r).ToString(), resources[r]));
+            }
+
+            JArray actions = new JArray();
+            JArray cards = new JArray();
+            foreach (string s in lastCardsPlayed)
+            {
+                cards.Add(s);
+            }
+
+            foreach (ActionType a in lastActions)
+            {
+                actions.Add(((int) a).ToString());
+            }
+
+            JObject j = new JObject(
+                new JProperty("id", id),
+                new JProperty("score",
+                    new JObject(
+                        new JProperty(((int) Score.ARMY).ToString(), score[Score.ARMY]),
+                        new JProperty(((int) Score.CONFLICT).ToString(), score[Score.CONFLICT]),
+                        new JProperty(((int) Score.TABLET).ToString(), score[Score.TABLET]),
+                        new JProperty(((int) Score.COMPASS).ToString(), score[Score.COMPASS]),
+                        new JProperty(((int) Score.GEAR).ToString(), score[Score.GEAR]),
+                        new JProperty(((int) Score.VICTORY_BLUE).ToString(), score[Score.VICTORY_BLUE]))),
+                new JProperty("resource",resource),
+                new JProperty("actions", actions),
+                new JProperty("cards", cards));
+            return j;
+        }
+
+        public void superParse(JObject j)
+        {
+            foreach (JProperty p in ((JObject) j["score"]).Properties())
+            {
+                score[((Score) int.Parse(p.Name))] = (int) p.Value;
+            }
+            foreach (JProperty p in ((JObject)j["resource"]).Properties())
+            {
+                resources[((Resource)int.Parse(p.Name))] = (int)p.Value;
+            }
+            lastActions.Clear();
+            foreach (string s in (JArray)j["actions"])
+            {
+                lastActions.Add((ActionType) int.Parse(s));
+            }
+            lastCardsPlayed.Clear();
+            foreach (string s in (JArray)j["cards"])
+            {
+                lastCardsPlayed.Add(s);
+            }
         }
     }
 }

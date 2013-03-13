@@ -178,5 +178,24 @@ namespace _7Wonders
             }
             players[id].setHand(hand);
         }
+
+        public string superJson()
+        {
+            JArray super = new JArray();
+            foreach (Player p in players.Values)
+            {
+                super.Add(p.superJson());
+            }
+            return super.ToString();
+        }
+
+        public void superParse(string json)
+        {
+            JArray ja = JArray.Parse(json);
+            foreach (JObject jo in ja)
+            {
+                players[(long)jo["id"]].superParse(jo);
+            }
+        }
     }
 }
