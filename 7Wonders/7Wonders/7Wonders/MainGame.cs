@@ -50,7 +50,7 @@ namespace _7Wonders
             wonder = null;
             hand = new Dictionary<string, Visual>();
             leftButton = new Button(game, new Vector2(Game1.WIDTH - 27, 200 + CARDHEIGHT / 2 - 7), 15, 15, "", "Font1", "left");
-            hand.Add("paperleft", new Visual(game, new Vector2(Game1.WIDTH - 27, 185), 30, CARDHEIGHT + 30, "paperleft"));
+            hand.Add("paperleft", new Visual(game, new Vector2(Game1.WIDTH - 27, 190), 30, CARDHEIGHT + 30, "paperleft"));
             hand.Add("leftButton", leftButton.setBorder(false));
 
             seatVisuals = new Dictionary<int, Dictionary<string, Visual>>();
@@ -125,7 +125,7 @@ namespace _7Wonders
             baseVisuals.Add("self7", new Visual(game, new Vector2(LABELLENGTH + MARGIN + RESOURCELENGTH * 6 / 8 + 5, Game1.HEIGHT - (MARGIN + LABELHEIGHT)), player.getResourceNum(Resource.LOOM) + "", "Font1"));
             baseVisuals.Add("self8", new Visual(game, new Vector2(LABELLENGTH + MARGIN + RESOURCELENGTH * 7 / 8 + 5, Game1.HEIGHT - (MARGIN + LABELHEIGHT)), player.getResourceNum(Resource.COIN) + "", "Font1"));
 
-            hand.Add("papermiddle", new Visual(game, new Vector2(MARGIN + 30 + (CARDWIDTH / 2 + MARGIN) * (7 - player.getHand().Count) + 1, 190), Game1.WIDTH - (MARGIN + 30 + (CARDWIDTH / 2 + MARGIN) * (7 - player.getHand().Count)), CARDHEIGHT+35, "papermiddle"));
+            hand.Add("papermiddle", new Visual(game, new Vector2(MARGIN + 30 + (CARDWIDTH / 2 + MARGIN) * (7 - player.getHand().Count) + 1, 190), Game1.WIDTH - (MARGIN + 30 + (CARDWIDTH / 2 + MARGIN) * (7 - player.getHand().Count)), CARDHEIGHT+25, "papermiddle"));
 
             updatePlayed();
             updateHands();
@@ -172,18 +172,6 @@ namespace _7Wonders
             {
                 if (hand.ContainsKey("hand" + j))
                 {
-                    if (hand["hand" + j].isClicked())
-                    {
-                        Console.WriteLine("hand " + j + " was clicked");
-                        hand["hand" + j].reset();
-                        //HACKS
-                        Game1.client.getSelf().addPlayed(Game1.client.getSelf().getHand()[j]);
-                        Game1.client.getSelf().getHand().RemoveAt(j);                        
-                        //
-                        updateHands();
-                        updateScroll();
-                    }
-                
                     if (hand["hand" + j].isMouseOver(mouseState))
                     {
                         hand["hand" + j].setWidth(CARDWIDTH + 60).setHeight((int)((CARDWIDTH + 60) * 1.612));//.setPosition(hand["hand" + j].getPosition() + new Vector2(-15, (int)(-15 * 1.612)));
@@ -191,6 +179,17 @@ namespace _7Wonders
                     else
                     {
                         hand["hand" + j].setWidth(CARDWIDTH).setHeight(CARDHEIGHT);//.setPosition(hand["hand" + j].getPosition() + new Vector2(15, (int)(15 * 1.612)));
+                    }
+                    if (hand["hand" + j].isClicked())
+                    {
+                        Console.WriteLine("hand " + j + " was clicked");
+                        hand["hand" + j].reset();
+                        //HACKS
+                        Game1.client.getSelf().addPlayed(Game1.client.getSelf().getHand()[j]);
+                        Game1.client.getSelf().getHand().RemoveAt(j);
+                        //
+                        updateHands();
+                        updateScroll();
                     }
                 }
             }
@@ -310,7 +309,7 @@ namespace _7Wonders
             int k = 0;
             foreach (Card c in player.getHand())
             {
-                Game1.cards[c.getImageId()].setPosition(new Vector2(MARGIN + 30 + (CARDWIDTH + MARGIN * 2) * k + (CARDWIDTH / 2 + MARGIN) * (7 - player.getHand().Count), 205)).setWidth(CARDWIDTH).setHeight(CARDHEIGHT);
+                Game1.cards[c.getImageId()].setPosition(new Vector2(MARGIN + 40 + (CARDWIDTH + MARGIN * 2) * k + (CARDWIDTH / 2 + MARGIN) * (7 - player.getHand().Count), 205)).setWidth(CARDWIDTH).setHeight(CARDHEIGHT);
                 hand.Add("hand" + k, Game1.cards[c.getImageId()]);
                 k++;
             }
@@ -325,14 +324,14 @@ namespace _7Wonders
                 hand["papermiddle"].setVisible(true);
                 leftButton.setTexture("right");
                 leftButton.setPosition(new Vector2(MARGIN + (CARDWIDTH / 2 + MARGIN) * (7 - player.getHand().Count) + 5, 200 + CARDHEIGHT / 2 - 7));
-                hand["paperleft"].setPosition(new Vector2(MARGIN + (CARDWIDTH / 2 + MARGIN) * (7 - player.getHand().Count), 185));
+                hand["paperleft"].setPosition(new Vector2(MARGIN + (CARDWIDTH / 2 + MARGIN) * (7 - player.getHand().Count), 190));
             }
             else
             {
                 hand["papermiddle"].setVisible(false);
                 leftButton.setTexture("left");
                 leftButton.setPosition(new Vector2(Game1.WIDTH - 27, 200 + CARDHEIGHT / 2 - 7));
-                hand["paperleft"].setPosition(new Vector2(Game1.WIDTH - 30, 185));
+                hand["paperleft"].setPosition(new Vector2(Game1.WIDTH - 30, 190));
             }
 
             for (int j = 0; j < MAXHANDSIZE; j++)
