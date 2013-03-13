@@ -6,10 +6,11 @@ using System.Text;
 namespace _7Wonders
 {
     /* EffectHandler Class
+     * This Class has Global Functions!
      * This class will be used to control the effects 
      * of cards along with the effects of Wonders
      */
-    public class EffectHandler
+    public static class EffectHandler
     {
         // Add a certain number of x Resource r to Player p
         // "w", "o", "l", "p" etc
@@ -34,24 +35,20 @@ namespace _7Wonders
             int gear = p.getScoreNum(Score.GEAR);
             int compass = p.getScoreNum(Score.COMPASS);
             int tablet = p.getScoreNum(Score.TABLET);
-
             Score maxScience;
 
             if (gear > compass)
-            {
-                maxScience = Score.GEAR;
+            {   maxScience = Score.GEAR;
 
                 if (tablet >= gear)
                     maxScience = Score.TABLET;
             }
             else
-            {
-                maxScience = Score.COMPASS;
+            {   maxScience = Score.COMPASS;
 
                 if (tablet >= compass)
                     maxScience = Score.TABLET;
             }
-
             p.addScore(maxScience, 1);        
         }
 
@@ -59,11 +56,30 @@ namespace _7Wonders
         // This could probably be used to replace alot of generic score functions
         public static void AddScore(Player p, Score s, int points) { p.addScore(s, points); }
 
-        // Coin gained
-        public static void AddCoin(Player p, int amount) { p.addResource(Resource.COIN, amount); }
+        // Coin awarded with no "basis" expect the construction of the structure
+        public static void AddCoin(Player p, int coin) { p.addResource(Resource.COIN, coin); }
 
-        // Coin gained from Card Colour
-        //public static void AddCoinColour()
+        // Coin awarded on the number of wonderstages a player has buit
+        public static void AddCoinWonder(Player p, int amount)
+        {
+            int coin = p.getBoard().getSide().stagesBuilt * amount;
+            p.addResource(Resource.COIN, coin);
+        }
+
+        // Coin awarded with the basis of Card Colour the Player owns
+        public static void AddCoinColour(Player p, CardColour c, int amount)
+        {
+            int coin = p.getCardColourCount(c) * amount;
+            p.setResourceNum(Resource.COIN, coin);
+        }
+
+        // Coin awarded from the number of specific structure colour each neighbours have constructed
+        public static void AddCoinAllColour(Player p, Player east, Player west, CardColour c, int amount)
+        {
+            int coin = p.getCardColourCount(c) + east.getCardColourCount(c) + west.getCardColourCount(c);
+            coin *= amount;
+            p.addResource(Resource.COIN, coin);
+        }
 
         // Victory Points awarded from the number of specific structure colour each neighbours constructed
         public static void AddVictoryNeighboursColour(Player p, Player east, Player west, CardColour c, int amount)
@@ -72,7 +88,8 @@ namespace _7Wonders
             p.addScore(Score.VICTORY, points);
         }
 
-        // Victory Points awarded from the number of specific structure colour the player has constructed
+        // Victory Points awarded 
+        // Through the number of specific structure colour the player has constructed
         public static void AddVictoryColour(Player p, CardColour c, int amount)
         {
             int points = p.getCardColourCount(c) * amount;
@@ -87,7 +104,7 @@ namespace _7Wonders
         }
 
         // Victory Points awarded from the number of wonderstages built from each neighbour including the player
-        public static void addVictoryWonders(Player p, Player east, Player west)
+        public static void AddVictoryWonders(Player p, Player east, Player west)
         {
             int points = p.getBoard().getSide().stagesBuilt;
             points += east.getBoard().getSide().stagesBuilt;
@@ -95,6 +112,13 @@ namespace _7Wonders
 
             p.addScore(Score.VICTORY, points);
         }
+
+        // Trading Cost for East and West Raw Resources
+        public static void SetRawTradeEast(Player p) { p.rcostEast = 1; }
+        public static void SetRawTradeWest(Player p) { p.rcostWest = 1; }
+
+        // Trading Cost for East && West of manufactured Resources
+        public static void SetManufactedTrade(Player p) { p.mcost = 1; }
 
     }
 }

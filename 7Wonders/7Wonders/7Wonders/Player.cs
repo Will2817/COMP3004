@@ -16,7 +16,7 @@ namespace _7Wonders
         protected List<Card> played;
         protected bool ready;
         protected ActionType action; // Players Action selected for the turn
-
+        
         protected List<string> lastCardsPlayed;
         protected List<ActionType> lastActions;
 
