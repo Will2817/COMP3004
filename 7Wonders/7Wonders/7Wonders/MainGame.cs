@@ -182,15 +182,13 @@ namespace _7Wonders
                         updateScroll();
                     }
                 }
-                CARDWIDTH = (Game1.WIDTH - 8 * (MARGIN * 2) - 30) / MAXHANDSIZE;
-                CARDHEIGHT = (int)(CARDWIDTH * 1.612);
                 if (hand["hand" + j].isMouseOver(mouseState))
                 {
-                    hand["hand" + j].setWidth((Game1.WIDTH - 8 * (MARGIN * 2) - 30) / MAXHANDSIZE + 60).setHeight((int)(((Game1.WIDTH - 8 * (MARGIN * 2) - 30) / MAXHANDSIZE + 60)*1.1612));
+                    hand["hand" + j].setWidth(CARDWIDTH + 60).setHeight((int)((CARDWIDTH + 60) * 1.612));//.setRelativePosition(new Vector2(-15, (int)(-15 * 1.612)));
                 }
                 else
                 {
-                    hand["hand" + j].setWidth(CARDWIDTH).setHeight(CARDHEIGHT);
+                    hand["hand" + j].setWidth(CARDWIDTH).setHeight(CARDHEIGHT);//.setRelativePosition(new Vector2(15, (int)(15 * 1.612)));
                 }
             }
 

@@ -218,5 +218,23 @@ namespace _7Wonders
             border = _border;
             return this;
         }
+
+        public Visual setRelativePosition(Vector2 _vec)
+        {
+            position += _vec;
+            return this;
+        }
+
+        public Visual setRelativeWidth(int _w)
+        {
+            width += _w;
+            return this;
+        }
+
+        public Visual setRelativeHeight(int _h)
+        {
+            height += _h;
+            return this;
+        }
     }
 }
