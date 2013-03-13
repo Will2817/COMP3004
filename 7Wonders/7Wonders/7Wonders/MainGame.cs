@@ -49,8 +49,8 @@ namespace _7Wonders
             wonder = null;
             hand = new Dictionary<string, Visual>();
             leftButton = new Button(game, new Vector2(Game1.WIDTH - 27, 200 + CARDHEIGHT / 2 - 7), 15, 15, "", "Font1", "left");
-            hand.Add("paperleft", new Visual(game, new Vector2(Game1.WIDTH - 30, 185), 30, CARDHEIGHT + 30, "paperleft"));
-            hand.Add("leftButton", leftButton);
+            hand.Add("paperleft", new Visual(game, new Vector2(Game1.WIDTH - 27, 185), 30, CARDHEIGHT + 30, "paperleft"));
+            hand.Add("leftButton", leftButton.setBorder(false));
 
             seatVisuals = new Dictionary<int, Dictionary<string, Visual>>();
             baseVisuals = new Dictionary<String, Visual>();
@@ -212,13 +212,13 @@ namespace _7Wonders
                 if (showhand)
                 {
                     leftButton.setTexture("right");
-                    leftButton.setPosition(new Vector2(MARGIN + (CARDWIDTH / 2 + MARGIN) * (7 - player.getHand().Count), 200 + CARDHEIGHT / 2 - 7));
+                    leftButton.setPosition(new Vector2(MARGIN + (CARDWIDTH / 2 + MARGIN) * (7 - player.getHand().Count) + 5, 200 + CARDHEIGHT / 2 - 7));
                     hand["paperleft"].setPosition(new Vector2(MARGIN + (CARDWIDTH / 2 + MARGIN) * (7 - player.getHand().Count), 185));
                 }
                 else
                 {
                     leftButton.setTexture("left");
-                    leftButton.setPosition(new Vector2(Game1.WIDTH - 30, 200 + CARDHEIGHT / 2 - 7));
+                    leftButton.setPosition(new Vector2(Game1.WIDTH - 27, 200 + CARDHEIGHT / 2 - 7));
                     hand["paperleft"].setPosition(new Vector2(Game1.WIDTH - 30, 185));
                 }
                 updateHands();

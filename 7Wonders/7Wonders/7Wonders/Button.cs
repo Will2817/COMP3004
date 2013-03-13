@@ -39,7 +39,7 @@ namespace _7Wonders
             {
                 actual = new Color(Math.Max(textureColor.B + highlight, 0), Math.Max(textureColor.G + highlight, 0), Math.Max(textureColor.R + highlight, 0));
             }
-            spriteBatch.Draw(Game1.textures["line"], new Rectangle((int)position.X - 1, (int)position.Y - 1, width + 2, height + 2), Color.Black*opacity);
+            if (border) spriteBatch.Draw(Game1.textures["line"], new Rectangle((int)position.X - 1, (int)position.Y - 1, width + 2, height + 2), Color.Black*opacity);
             spriteBatch.Draw(texture, new Rectangle((int)position.X, (int)position.Y, width, height), actual);
             spriteBatch.DrawString(font, text, new Vector2(position.X + 11, position.Y + 7), stringColor);
         }

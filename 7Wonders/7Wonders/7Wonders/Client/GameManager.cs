@@ -12,6 +12,7 @@ namespace _7Wonders.Client
         NetService netService;
         CardLibrary cardLibrary;
         bool updateAvailable;
+        bool newHand;
         bool connected;
 
         public GameManager()
@@ -19,6 +20,7 @@ namespace _7Wonders.Client
             cardLibrary = new CardLibrary();
             gameState = new GameState();
             connected = false;
+            newHand = false;
         }
 
         public void setMessageSerializer(MessageSerializerService messageSerializer)
@@ -93,6 +95,7 @@ namespace _7Wonders.Client
         public void assignHand(string message)
         {
             gameState.setHand(cardLibrary, netService.getID(), message);
+            newHand = true;
         }
 
         //Returns the number of coins it would cost a player to build a card with cardID. -1 if the player cannot possibly build the
