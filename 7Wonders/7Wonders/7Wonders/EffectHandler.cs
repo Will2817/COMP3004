@@ -19,8 +19,8 @@ namespace _7Wonders
             p.setResourceNum(r, resourceNum);
         }
 
-        public static void AddResourceChoice(Player p, List<Resource> r) {  p.addChoices(r); }
-        public static void AddResourceUnPurchaseable(Player p, List<Resource> r) {  p.addUnpurchasable(r); }
+        public static void AddResourceChoice(Player p, List<Resource> r) { p.addChoices(r); }
+        public static void AddResourceUnPurchaseable(Player p, List<Resource> r) { p.addUnpurchasable(r); }
 
         // Resource choice - "rchoice" in json
         // Adds a temporary Resource r to the players choice Resource Dictionary

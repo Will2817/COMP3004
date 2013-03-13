@@ -8,7 +8,7 @@ namespace _7Wonders
 {
     public class Player
     {
-        protected string name;        
+        protected string name;
         protected long id;
         protected int seatNumber;
         protected Wonder board;
@@ -34,17 +34,17 @@ namespace _7Wonders
         List<List<Resource>> choices;
         List<List<Resource>> unpurchasable;
 
-        
+
         // Default Player Constructor
         public Player(long _id, string _name)
         {
-            id          = _id;
-            name        = _name;
+            id = _id;
+            name = _name;
             seatNumber = -1;
-            board       = null;            
-            hand        = new List<Card>();
-            played      =  new List<Card>();
-            ready       = false;
+            board = null;
+            hand = new List<Card>();
+            played = new List<Card>();
+            ready = false;
             Initializer();
         }
 
@@ -86,7 +86,7 @@ namespace _7Wonders
             resources.Add(Resource.PAPYRUS, 0); // Papyrus
             resources.Add(Resource.COIN, 3);    // Coin - Players start with 3 coins
 
-            choiceResources = new Dictionary<Resource,int>();
+            choiceResources = new Dictionary<Resource, int>();
             choiceResources.Add(Resource.CLAY, 0);    // Clay
             choiceResources.Add(Resource.ORE, 0);     // Ore
             choiceResources.Add(Resource.STONE, 0);   // Stone
@@ -107,60 +107,60 @@ namespace _7Wonders
 
             lastCardsPlayed = new List<string>();
             lastActions = new List<ActionType>();
-            hand        = new List<Card>();
-            played      =  new List<Card>();
+            hand = new List<Card>();
+            played = new List<Card>();
         }
 
-       /* This is no longer needed, we will have hte player join the lobby or host
-        *  the game and once the game starts will we assign the board and cards to the player
-        * public Player(string _name, Wonder _board, List<Card> _hand)
-        {
-            // Initialized through the constructor
-            name = _name;
-            board = _board;
-            hand = new List<Card>(_hand);
+        /* This is no longer needed, we will have hte player join the lobby or host
+         *  the game and once the game starts will we assign the board and cards to the player
+         * public Player(string _name, Wonder _board, List<Card> _hand)
+         {
+             // Initialized through the constructor
+             name = _name;
+             board = _board;
+             hand = new List<Card>(_hand);
 
-            // Setting the Players Score Dictionary
-            score = new Dictionary<string, int>();
-            score.Add("victory", 0);    // Victory Points
-            score.Add("army", 0);
-            score.Add("coin", 0);
-            score.Add("defeat", 0);
-            score.Add("tablet", 0);
-            score.Add("compass", 0);
-            score.Add("gear", 0);
->>>>>>> origin/master
+             // Setting the Players Score Dictionary
+             score = new Dictionary<string, int>();
+             score.Add("victory", 0);    // Victory Points
+             score.Add("army", 0);
+             score.Add("coin", 0);
+             score.Add("defeat", 0);
+             score.Add("tablet", 0);
+             score.Add("compass", 0);
+             score.Add("gear", 0);
+ >>>>>>> origin/master
 
-            choices = new List<List<Resource>>();
-            unpurchasable = new List<List<Resource>>();
-        }*/
+             choices = new List<List<Resource>>();
+             unpurchasable = new List<List<Resource>>();
+         }*/
 
         // ACCESSORS
-        public string getName()         {   return name;    }        
-        public long getID()             {   return id;      }
-        public int getSeat()            {   return seatNumber; }
-        public Wonder getBoard()        {   return board;   }
-        public List<Card> getHand()     {   return hand;    }
-        public List<Card> getPlayed()   {   return played;  }
-        public bool getReady()          {   return ready;   }
+        public string getName() { return name; }
+        public long getID() { return id; }
+        public int getSeat() { return seatNumber; }
+        public Wonder getBoard() { return board; }
+        public List<Card> getHand() { return hand; }
+        public List<Card> getPlayed() { return played; }
+        public bool getReady() { return ready; }
         public List<string> getLastCardsPlayed() { return lastCardsPlayed; }
         public List<ActionType> getLastActions() { return lastActions; }
-            
+
         // Returns the dicitonary object of Score & Resources 
         //  along with List of choices and unpurchasable resources
-        public Dictionary<Score, int> getScore()                { return score;}
-        public int getSpecificScore(Score s)                    { return score[s]; }
-        public Dictionary<Resource, int> getResources()         { return resources; }
-        public Dictionary<Resource, int> getChoiceResources()   { return choiceResources; }
-        public List<List<Resource>> getChoices()                { return choices; }
-        public List<List<Resource>> getUnpurchaseable()         { return unpurchasable; }
-        public Dictionary<CardColour, int> getCardColours()     { return cardColour; }
+        public Dictionary<Score, int> getScore() { return score; }
+        public int getSpecificScore(Score s) { return score[s]; }
+        public Dictionary<Resource, int> getResources() { return resources; }
+        public Dictionary<Resource, int> getChoiceResources() { return choiceResources; }
+        public List<List<Resource>> getChoices() { return choices; }
+        public List<List<Resource>> getUnpurchaseable() { return unpurchasable; }
+        public Dictionary<CardColour, int> getCardColours() { return cardColour; }
 
         // Returns the players total number of resources a player has after
         // they hae decided on what choice they want
         public Dictionary<Resource, int> getTotalResources()
         {
-            Dictionary<Resource, int> temp = new Dictionary<Resource,int>();
+            Dictionary<Resource, int> temp = new Dictionary<Resource, int>();
             if (!choiceResources.Equals(null) && (!resources.Equals(null)))
             {
                 if (choiceResources.ContainsKey(Resource.CLAY))
@@ -231,7 +231,7 @@ namespace _7Wonders
         public bool cardPlayed(Card c) { return played.Contains(c); }
 
         // Get the Score number of a certain 's'
-        public int getScoreNum(Score s) 
+        public int getScoreNum(Score s)
         {
             if (score.ContainsKey(s))
             {
@@ -240,12 +240,12 @@ namespace _7Wonders
             }
             else
                 Console.WriteLine("Error returning score: " + s);
-            
+
             return -1;
         }
 
         // Get the players Resource number of a certain 'r'
-        public int getResourceNum(Resource r) 
+        public int getResourceNum(Resource r)
         {
             if (resources.ContainsKey(r))
             {
@@ -254,7 +254,7 @@ namespace _7Wonders
             }
             else
                 Console.WriteLine("Error returning resource: " + r);
-            
+
             return -1;
         }
 
@@ -274,13 +274,13 @@ namespace _7Wonders
 
 
         // MUTATORS
-        public void setNameID(string n)         {   name = n;   }
-        public void setSeat(int s)              {   seatNumber = s; }
-        public void setHand(List<Card> h)       {   hand = new List<Card>(h);   }
-        public void setPlayed(List<Card> p)     {   played = new List<Card>(p); }
-        public void setReady(bool _ready)       {   ready = _ready; }
+        public void setNameID(string n) { name = n; }
+        public void setSeat(int s) { seatNumber = s; }
+        public void setHand(List<Card> h) { hand = new List<Card>(h); }
+        public void setPlayed(List<Card> p) { played = new List<Card>(p); }
+        public void setReady(bool _ready) { ready = _ready; }
 
-        public void setBoard(Wonder w)          { board = w; setResourceNum(board.getSide().getIntialResource(), 1); }
+        public void setBoard(Wonder w) { board = w; setResourceNum(board.getSide().getIntialResource(), 1); }
         public void addChoices(List<Resource> r) { choices.Add(r); }
         public void addUnpurchasable(List<Resource> r) { unpurchasable.Add(r); }
 
@@ -288,18 +288,18 @@ namespace _7Wonders
         public void setLastActions(List<ActionType> _actions) { lastActions = _actions; }
 
 
-        public void addPlayed(Card c)             
+        public void addPlayed(Card c)
         {
             if (!cardPlayed(c))
                 played.Add(c);
             else
                 Console.WriteLine("Card '" + c + "' has been played already!");
-        }        
+        }
 
         public string toJString()
         {
-            JObject player = 
-                new JObject (
+            JObject player =
+                new JObject(
                     new JProperty("player", toJObject()));
             return player.ToString();
         }
@@ -381,7 +381,7 @@ namespace _7Wonders
             JObject resource = new JObject();
             foreach (Resource r in Enum.GetValues(typeof(Resource)))
             {
-                resource.Add(new JProperty(((int) r).ToString(), resources[r]));
+                resource.Add(new JProperty(((int)r).ToString(), resources[r]));
             }
 
             JArray actions = new JArray();
@@ -393,20 +393,20 @@ namespace _7Wonders
 
             foreach (ActionType a in lastActions)
             {
-                actions.Add(((int) a).ToString());
+                actions.Add(((int)a).ToString());
             }
 
             JObject j = new JObject(
                 new JProperty("id", id),
                 new JProperty("score",
                     new JObject(
-                        new JProperty(((int) Score.ARMY).ToString(), score[Score.ARMY]),
-                        new JProperty(((int) Score.CONFLICT).ToString(), score[Score.CONFLICT]),
-                        new JProperty(((int) Score.TABLET).ToString(), score[Score.TABLET]),
-                        new JProperty(((int) Score.COMPASS).ToString(), score[Score.COMPASS]),
-                        new JProperty(((int) Score.GEAR).ToString(), score[Score.GEAR]),
-                        new JProperty(((int) Score.VICTORY_BLUE).ToString(), score[Score.VICTORY_BLUE]))),
-                new JProperty("resource",resource),
+                        new JProperty(((int)Score.ARMY).ToString(), score[Score.ARMY]),
+                        new JProperty(((int)Score.CONFLICT).ToString(), score[Score.CONFLICT]),
+                        new JProperty(((int)Score.TABLET).ToString(), score[Score.TABLET]),
+                        new JProperty(((int)Score.COMPASS).ToString(), score[Score.COMPASS]),
+                        new JProperty(((int)Score.GEAR).ToString(), score[Score.GEAR]),
+                        new JProperty(((int)Score.VICTORY_BLUE).ToString(), score[Score.VICTORY_BLUE]))),
+                new JProperty("resource", resource),
                 new JProperty("actions", actions),
                 new JProperty("cards", cards));
             return j;
@@ -414,9 +414,9 @@ namespace _7Wonders
 
         public void superParse(JObject j)
         {
-            foreach (JProperty p in ((JObject) j["score"]).Properties())
+            foreach (JProperty p in ((JObject)j["score"]).Properties())
             {
-                score[((Score) int.Parse(p.Name))] = (int) p.Value;
+                score[((Score)int.Parse(p.Name))] = (int)p.Value;
             }
             foreach (JProperty p in ((JObject)j["resource"]).Properties())
             {
@@ -425,7 +425,7 @@ namespace _7Wonders
             lastActions.Clear();
             foreach (string s in (JArray)j["actions"])
             {
-                lastActions.Add((ActionType) int.Parse(s));
+                lastActions.Add((ActionType)int.Parse(s));
             }
             lastCardsPlayed.Clear();
             foreach (string s in (JArray)j["cards"])
