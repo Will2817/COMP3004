@@ -21,6 +21,7 @@ namespace _7Wonders
         private List<Dictionary<Resource, int>> stageCosts;
         private List<List<Effect>> stageEffects;
         private int stageNum;
+        public int stagesBuilt { get; set; }
 
         // I don't think we need the stages antmore
         List<Structure> stages;
@@ -33,7 +34,7 @@ namespace _7Wonders
             // Initializing Variables
             stageCosts = new List<Dictionary<Resource, int>>();
             stageEffects = new List<List<Effect>>();
-
+            stagesBuilt = 0;
             stageNum = 0;
 
             // foreach loop - going through the JArray of stages

@@ -16,6 +16,11 @@ namespace _7Wonders
         protected List<Card> played;
         protected bool ready;
 
+        // Trading values for raw resources and manufactured resources
+        int rcostEast;
+        int rcostWest;
+        int mcost;
+
         // Players Score
         // Victory Points, Army, Coins, Conflict tokens
         // Sciences: tablet, compass, gear
@@ -138,9 +143,10 @@ namespace _7Wonders
         public bool getReady()          {   return ready;   }
             
         // Returns the dicitonary object of Score & Resources
-        public Dictionary<Score, int> getScore()           { return score;     }
-        public Dictionary<Resource, int> getResources()     { return resources; }
-        public Dictionary<Resource, int> getChoiceResources() { return choiceResources; }
+        public Dictionary<Score, int> getScore()                { return score;     }
+        public int getSpecificScore(Score s)                    { return score[s]; }
+        public Dictionary<Resource, int> getResources()         { return resources; }
+        public Dictionary<Resource, int> getChoiceResources()   { return choiceResources; }
 
         // Returns the players total number of resources a player has after
         // they hae decided on what choice they want

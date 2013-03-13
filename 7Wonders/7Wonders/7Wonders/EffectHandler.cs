@@ -18,18 +18,52 @@ namespace _7Wonders
 
         // Resource choice - "rchoice" in json
         // Adds a temporary Resource r to the players choice Resource Dictionary
+        // This might be a little moredifficult to implement... =(
         public static void ChoiceResource(Player p, Resource r, int x)
         {
             p.addChoiceResosurce(r, x);
         }
 
-        // Victory Points added from neighbours for card Colour
-        public static void addVictoryNeighbours(Player p, Player east, Player west, CardColour c, int victoryPoints)
-        {
-            int ePoints = east.getCardColourCount(c) * victoryPoints;
-            int wPoints = west.getCardColourCount(c) * victoryPoints;
+        // Science Choice - player chooses which science to gain from the card at the end of the game
+        // NOTE: Should we have this as a max function? eg. Find max of gear, tablet, compass and just add 1?
+        public static void AddScienceChoice(Player p, Score s) { p.addScore(s, 1); }
 
-            p.addScore(Score.VICTORY, (ePoints + wPoints));
+        // Victory Points or Army
+        public static void addScore(Player p, Score s, int points) { p.addScore(s, points); }
+
+        // Coin gained
+        public static void addCoin(Player p, int amount) { p.addResosurce(Resource.COIN, amount); }
+
+        // Victory Points awarded from the number of specific structure colour each neighbours constructed
+        public static void AddVictoryNeighboursColour(Player p, Player east, Player west, CardColour c, int amount)
+        {
+            int points = (east.getCardColourCount(c) + west.getCardColourCount(c)) * amount;
+            p.addScore(Score.VICTORY, points);
         }
+
+        // Victory Points awarded from the number of specific structure colour the player has constructed
+        public static void AddVictoryColour(Player p, CardColour c, int amount)
+        {
+            int points = p.getCardColourCount(c) * amount;
+            p.addScore(Score.VICTORY, points);
+        }
+
+        // Victory Points awarded from the number of conflict points each neighbour has
+        public static void AddVictoryNeighboursConflict(Player p, Player east, Player west)
+        {
+            int points = east.getSpecificScore(Score.CONFLICT) + west.getSpecificScore(Score.CONFLICT);
+            p.addScore(Score.VICTORY, points);
+        }
+
+        // Victory Points awarded from the number of wonderstages built from each neighbour including the player
+        public static void addVictoryWonders(Player p, Player east, Player west)
+        {
+            int points = p.getBoard().getSide().stagesBuilt;
+            points += east.getBoard().getSide().stagesBuilt;
+            points += west.getBoard().getSide().stagesBuilt;
+
+            p.addScore(Score.VICTORY, points);
+        }
+
     }
 }
