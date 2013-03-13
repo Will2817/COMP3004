@@ -81,7 +81,7 @@ namespace _7Wonders
             resources.Add(Resource.GLASS, 0);   // Glass
             resources.Add(Resource.LOOM, 0);    // Loom
             resources.Add(Resource.PAPYRUS, 0); // Papyrus
-            resources.Add(Resource.COIN, 0);    // Coin
+            resources.Add(Resource.COIN, 3);    // Coin - Players start with 3 coins
 
             choiceResources = new Dictionary<Resource,int>();
             choiceResources.Add(Resource.CLAY, 0);    // Clay
@@ -101,6 +101,11 @@ namespace _7Wonders
             cardColour.Add(CardColour.YELLOW, 0);
             cardColour.Add(CardColour.RED, 0);
             cardColour.Add(CardColour.PURPLE, 0);
+
+            // Initiating the trade costs
+            rcostEast = 2;
+            rcostWest = 2;
+            mcost = 2;
         }
 
        /* This is no longer needed, we will have hte player join the lobby or host
