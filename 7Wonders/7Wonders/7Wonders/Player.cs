@@ -27,7 +27,7 @@ namespace _7Wonders
 
         protected Dictionary<Score, int> score; // Players Score - Victory Points, Army, etc...
         protected Dictionary<Resource, int> resources; // Resources - Clay, Ore, etc... that are also purchasable by other players
-        protected Dictionary<Resource, int> choiceResources; // Used for players selecting a temp resource to use
+        //protected Dictionary<Resource, int> choiceResources; // Used for players selecting a temp resource to use
         protected Dictionary<CardColour, int> cardColour; // Used to keep count the number of structures
 
         // List of choices which are in lists
@@ -92,6 +92,7 @@ namespace _7Wonders
             resources.Add(Resource.PAPYRUS, 0); // Papyrus
             resources.Add(Resource.COIN, 0);    // Coin - Players start with 3 coins
 
+            /*
             choiceResources = new Dictionary<Resource, int>();
             choiceResources.Add(Resource.CLAY, 0);    // Clay
             choiceResources.Add(Resource.ORE, 0);     // Ore
@@ -100,6 +101,7 @@ namespace _7Wonders
             choiceResources.Add(Resource.GLASS, 0);   // Glass
             choiceResources.Add(Resource.LOOM, 0);    // Loom
             choiceResources.Add(Resource.PAPYRUS, 0); // Papyrus - Choice Resource never gets coin
+            */
 
             // Card Colours
             cardColour = new Dictionary<CardColour, int>();
@@ -128,13 +130,14 @@ namespace _7Wonders
         public Dictionary<Score, int> getScore() { return score; }
         public int getSpecificScore(Score s) { return score[s]; }
         public Dictionary<Resource, int> getResources() { return resources; }
-        public Dictionary<Resource, int> getChoiceResources() { return choiceResources; }
+        //public Dictionary<Resource, int> getChoiceResources() { return choiceResources; }
         public List<List<Resource>> getChoices() { return choices; }
         public List<List<Resource>> getUnpurchaseable() { return unpurchasable; }
         public Dictionary<CardColour, int> getCardColours() { return cardColour; }
 
         // Returns the players total number of resources a player has after
         // they hae decided on what choice they want
+        /*
         public Dictionary<Resource, int> getTotalResources()
         {
             Dictionary<Resource, int> temp = new Dictionary<Resource, int>();
@@ -190,6 +193,7 @@ namespace _7Wonders
             choiceResources[Resource.LOOM] = 0;    // Loom
             choiceResources[Resource.PAPYRUS] =  0; // Papyrus - Choice Resource never gets coin
         }
+        */
 
         public int getCardColourCount(CardColour c)
         {
