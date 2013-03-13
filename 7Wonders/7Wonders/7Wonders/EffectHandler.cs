@@ -6,6 +6,7 @@ using System.Text;
 namespace _7Wonders
 {
     /* EffectHandler Class
+     * This Class has Global Functions!
      * This class will be used to control the effects 
      * of cards along with the effects of Wonders
      */
@@ -34,24 +35,20 @@ namespace _7Wonders
             int gear = p.getScoreNum(Score.GEAR);
             int compass = p.getScoreNum(Score.COMPASS);
             int tablet = p.getScoreNum(Score.TABLET);
-
             Score maxScience;
 
             if (gear > compass)
-            {
-                maxScience = Score.GEAR;
+            {   maxScience = Score.GEAR;
 
                 if (tablet >= gear)
                     maxScience = Score.TABLET;
             }
             else
-            {
-                maxScience = Score.COMPASS;
+            {   maxScience = Score.COMPASS;
 
                 if (tablet >= compass)
                     maxScience = Score.TABLET;
             }
-
             p.addScore(maxScience, 1);        
         }
 
@@ -59,11 +56,23 @@ namespace _7Wonders
         // This could probably be used to replace alot of generic score functions
         public static void AddScore(Player p, Score s, int points) { p.addScore(s, points); }
 
-        // Coin gained
+        // Coin awarded with no "basis" expect the construction of the structure
         public static void AddCoin(Player p, int amount) { p.addResource(Resource.COIN, amount); }
 
-        // Coin gained from Card Colour
-        //public static void AddCoinColour()
+        // Coin awarded with the basis of Card Colour the Player owns
+        public static void AddCoinColour(Player p, CardColour c, int amount)
+        {
+            int count = p.getCardColourCount(c) * amount;
+            p.setResourceNum(Resource.COIN, count);
+        }
+
+        // Coin awarded from the number of specific structure colour each neighbours have constructed
+        public static void AddCoinAllColour(Player p, Player east, Player west, CardColour c, int amount)
+        {
+            int count = p.getCardColourCount(c) + east.getCardColourCount(c) + west.getCardColourCount(c);
+            count *= amount;
+            p.addResource(Resource.COIN, count);
+        }
 
         // Victory Points awarded from the number of specific structure colour each neighbours constructed
         public static void AddVictoryNeighboursColour(Player p, Player east, Player west, CardColour c, int amount)
@@ -87,7 +96,7 @@ namespace _7Wonders
         }
 
         // Victory Points awarded from the number of wonderstages built from each neighbour including the player
-        public static void addVictoryWonders(Player p, Player east, Player west)
+        public static void AddVictoryWonders(Player p, Player east, Player west)
         {
             int points = p.getBoard().getSide().stagesBuilt;
             points += east.getBoard().getSide().stagesBuilt;
