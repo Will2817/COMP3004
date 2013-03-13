@@ -183,14 +183,15 @@ namespace _7Wonders
                         updateHands();
                         updateScroll();
                     }
-                }
-                if (hand["hand" + j].isMouseOver(mouseState))
-                {
-                    hand["hand" + j].setWidth(CARDWIDTH + 60).setHeight((int)((CARDWIDTH + 60) * 1.612));//.setPosition(hand["hand" + j].getPosition() + new Vector2(-15, (int)(-15 * 1.612)));
-                }
-                else
-                {
-                    hand["hand" + j].setWidth(CARDWIDTH).setHeight(CARDHEIGHT);//.setPosition(hand["hand" + j].getPosition() + new Vector2(15, (int)(15 * 1.612)));
+                
+                    if (hand["hand" + j].isMouseOver(mouseState))
+                    {
+                        hand["hand" + j].setWidth(CARDWIDTH + 60).setHeight((int)((CARDWIDTH + 60) * 1.612));//.setPosition(hand["hand" + j].getPosition() + new Vector2(-15, (int)(-15 * 1.612)));
+                    }
+                    else
+                    {
+                        hand["hand" + j].setWidth(CARDWIDTH).setHeight(CARDHEIGHT);//.setPosition(hand["hand" + j].getPosition() + new Vector2(15, (int)(15 * 1.612)));
+                    }
                 }
             }
 
@@ -347,7 +348,19 @@ namespace _7Wonders
                 foreach (Card c in p.getPlayed())
                 {
                     if (!seatVisuals[p.getSeat()].ContainsKey(c.getImageId()))
+                    {
+                        int grayandbrown = p.getCardColourCount(CardColour.BROWN) + p.getCardColourCount(CardColour.GRAY);
+                        int nonegraybrown = p.getPlayed().Count - grayandbrown;
+                        if (c.colour == CardColour.BROWN || c.colour == CardColour.GRAY)
+                        {
+                            Game1.cards[c.getImageId()].setPosition(new Vector2(SEC1WIDTH + MARGIN * 2, MARGIN + (MARGIN + ((int)(CARDHEIGHT * 0.25))) * (grayandbrown - 1))).setWidth(CARDWIDTH).setHeight(CARDHEIGHT);
+                        }
+                        else
+                        {
+                            Game1.cards[c.getImageId()].setPosition(new Vector2(SEC1WIDTH + MARGIN * 3 + CARDWIDTH, MARGIN + (MARGIN + CARDHEIGHT) * (nonegraybrown - 1))).setWidth(CARDWIDTH).setHeight(CARDHEIGHT);
+                        }
                         seatVisuals[p.getSeat()].Add(c.getImageId(), Game1.cards[c.getImageId()]);
+                    }
                 }
             }
         }
