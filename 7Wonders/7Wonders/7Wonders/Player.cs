@@ -240,18 +240,14 @@ namespace _7Wonders
         public void addUnpurchasable(List<Resource> r) { unpurchasable.Add(r); }
         public void setLastCardsPlayed(List<string> _cards) { lastCardsPlayed = _cards; }
         public void setLastActions(List<ActionType> _actions) { lastActions = _actions; }
+        public void addTotalResource(Resource r, int amount) { totalResources[r] += amount; }
 
         public void resetTotalResources()
         {
-            totalResources[Resource.CLAY] = 0;
-                totalResources[Resource.COIN] = 0;
-                    totalResources[Resource.GLASS] = 0;
-                        totalResources[Resource.LOOM] = 0;
-                            totalResources[Resource.ORE] = 0;
-                                totalResources[Resource.PAPYRUS] = 0;
-                                totalResources[Resource.STONE] = 0;
-                                        totalResources[Resource.WOOD] = 0;
-                                          
+            foreach (Resource r in totalResources.Keys)
+            {
+                totalResources[r] = resources[r];
+            }                                     
         }
 
         // NEED A FUNCTION TO SET TOTALRESOURCES
