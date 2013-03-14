@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Newtonsoft.Json.Linq;
 
 namespace _7Wonders.Client
 {
@@ -18,6 +17,11 @@ namespace _7Wonders.Client
         public void notifyReadyChanged(bool ready)
         {
             netService.sendMessage(ready.ToString(), (int)ClientMessageType.READY_CHANGED);
+        }
+
+        public void sendActions(string actions)
+        {
+            netService.sendMessage(actions, (int)ClientMessageType.TURN_ACTION);
         }
 
         public void sendChatMessage(String message)
