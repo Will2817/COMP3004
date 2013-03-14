@@ -29,15 +29,17 @@ namespace _7Wonders
             {"purple", CardColour.PURPLE}
         };
 
+        static Dictionary<string, Score> scienceType = new Dictionary<string, Score>
+        { {"tab", Score.TABLET}, {"comp", Score.COMPASS}, {"gear", Score.GEAR} };
+
         // Pass in effects to 
         public static void ApplyEffect(Player p, Effect e)
         {
-            // Resource
+            // RESOURCES
             if (e.type.Length == 1)
-            {
                 AddResource(p, resourceType[e.type], e.amount);
-            }
-            // Victory Points
+
+            // VICTORY POINTS
             else if (e.type.Equals("victory"))
             {
                 // NO FROM/BASIS - add to score
@@ -91,11 +93,32 @@ namespace _7Wonders
                 }
 
             }
-                // Coin is just added because there is no from/basis
-            else if (e.type.Equals("coin") && e.basis.Equals(null))
+
+            // COINS
+            else if (e.type.Equals("coin"))
             {
-                AddResource(p, Resource.COIN, e.amount);
+                // No FROM/BASIS - add coin
+                if (e.from.Equals(null) && e.basis.Equals(null))
+                    AddResource(p, Resource.COIN, e.amount);
+
+                // FROM: PLAYER
+                // BASIS: CardColour, Wonderstages
+                else if (e.from.Equals("player"))
+                {
+                    if (e.basis.Equals("wonderstages"))
+                        AddCoinWonder(p, e.amount);
+                    else
+                        AddCoinColour(p, cardType[e.basis], e.amount);
+                }
+
+                // FROM: ALL
+                else if (e.basis.Equals("all"))
+                {
+                    //AddCoinAllColour(p, east, west, cardType[e.basis], e.amount);
+                }
             }
+
+            // RESOURCE CHOICE
             else if (e.type.Equals("rchoice"))
             {
                 List<Resource> choice = new List<Resource>();
@@ -104,9 +127,61 @@ namespace _7Wonders
                 {
                     choice.Add(resourceType[c]);
                 }
-                AddResourceChoice(p, choice);
+
+                if (e.basis.Equals("yellow"))
+                    AddResourceUnPurchaseable(p, choice);
+                else
+                    AddResourceChoice(p, choice);
             }
 
+            // SCIENCE CHOICE
+            else if (e.type.Equals("schoice"))
+                AddScienceChoice(p); // Max Function, will add onto the max science value
+
+            // ARMY
+            else if (e.type.Equals("army"))
+                AddScore(p, Score.ARMY, e.amount);
+
+            // Manufactured Resource Trade
+            else if (e.type.Equals("mcostBoth"))
+                SetManufactedTrade(p);
+
+            // Raw Resource Trade
+            else if (e.type.Equals("rcostEast"))
+                SetRawTradeEast(p);
+            else if (e.type.Equals("rcostWest"))
+                SetRawTradeWest(p);
+
+            // SCIENCE
+            else if (e.type.Equals("comp") || e.type.Equals("tab") || e.type.Equals("gear"))
+                AddScore(p, scienceType[e.type], e.amount);
+
+
+        // ===== WONDER SPECIFIC =====
+
+            // LAST CARD - not finished
+            else if (e.type.Equals("lastcard"))
+            {
+
+            }
+
+            // FREE BUILD - not finished
+            else if (e.type.Equals("freeBuild"))
+            {
+
+            }
+
+            // GUILD COPY - not finished
+            else if (e.type.Equals("guildCopy"))
+            {
+
+            }
+
+            // DISCARD - not finished
+            else if (e.type.Equals("discard"))
+            {
+
+            }
 
             // Players should know their neighbours east and west
             e.PrintEffect();
@@ -114,23 +189,18 @@ namespace _7Wonders
 
         // Add a certain number of x Resource r to Player p
         // "w", "o", "l", "p" etc
-        public static void AddResource(Player p, Resource r, int x)
+        private static void AddResource(Player p, Resource r, int x)
         {
             int resourceNum = p.getResourceNum(r) + x;
             p.setResourceNum(r, resourceNum);
         }
 
-        public static void AddResourceChoice(Player p, List<Resource> r) { p.addChoices(r); }
-        public static void AddResourceUnPurchaseable(Player p, List<Resource> r) { p.addUnpurchasable(r); }
-
-        // Resource choice - "rchoice" in json
-        // Adds a temporary Resource r to the players choice Resource Dictionary
-        // This might be a little moredifficult to implement... =(
-        //public static void ChoiceResource(Player p, Resource r, int x)   {   p.addChoiceResosurce(r);  }
+        private static void AddResourceChoice(Player p, List<Resource> r) { p.addChoices(r); }
+        private static void AddResourceUnPurchaseable(Player p, List<Resource> r) { p.addUnpurchasable(r); }
 
         // Science Choice - player chooses which science to gain from the card at the end of the game
         // NOTE: Should we have this as a max function? eg. Find max of gear, tablet, compass and just add 1?
-        public static void AddScienceChoice(Player p) 
+        private static void AddScienceChoice(Player p) 
         {
             int gear = p.getScoreNum(Score.GEAR);
             int compass = p.getScoreNum(Score.COMPASS);
@@ -152,29 +222,29 @@ namespace _7Wonders
             p.addScore(maxScience, 1);        
         }
 
-        // Victory Points or Army or any other score
+        // Victory Points, Army, Science or any other generic score
         // This could probably be used to replace alot of generic score functions
-        public static void AddScore(Player p, Score s, int points) { p.addScore(s, points); }
+        private static void AddScore(Player p, Score s, int points) { p.addScore(s, points); }
 
         // Coin awarded with no "basis" expect the construction of the structure
-        public static void AddCoin(Player p, int coin) { p.addResource(Resource.COIN, coin); }
+        private static void AddCoin(Player p, int coin) { p.addResource(Resource.COIN, coin); }
 
         // Coin awarded on the number of wonderstages a player has buit
-        public static void AddCoinWonder(Player p, int amount)
+        private static void AddCoinWonder(Player p, int amount)
         {
             int coin = p.getBoard().getSide().stagesBuilt * amount;
             p.addResource(Resource.COIN, coin);
         }
 
         // Coin awarded with the basis of Card Colour the Player owns
-        public static void AddCoinColour(Player p, CardColour c, int amount)
+        private static void AddCoinColour(Player p, CardColour c, int amount)
         {
             int coin = p.getCardColourCount(c) * amount;
             p.setResourceNum(Resource.COIN, coin);
         }
 
         // Coin awarded from the number of specific structure colour each neighbours have constructed
-        public static void AddCoinAllColour(Player p, Player east, Player west, CardColour c, int amount)
+        private static void AddCoinAllColour(Player p, Player east, Player west, CardColour c, int amount)
         {
             int coin = p.getCardColourCount(c) + east.getCardColourCount(c) + west.getCardColourCount(c);
             coin *= amount;
@@ -182,7 +252,7 @@ namespace _7Wonders
         }
 
         // Victory Points awarded from the number of specific structure colour each neighbours constructed
-        public static void AddVictoryNeighboursColour(Player p, Player east, Player west, CardColour c, int amount)
+        private static void AddVictoryNeighboursColour(Player p, Player east, Player west, CardColour c, int amount)
         {
             int points = (east.getCardColourCount(c) + west.getCardColourCount(c)) * amount;
             p.addScore(Score.VICTORY, points);
@@ -190,28 +260,28 @@ namespace _7Wonders
 
         // Victory Points awarded 
         // Through the number of specific structure colour the player has constructed
-        public static void AddVictoryColour(Player p, CardColour c, int amount)
+        private static void AddVictoryColour(Player p, CardColour c, int amount)
         {
             int points = p.getCardColourCount(c) * amount;
             p.addScore(Score.VICTORY, points);
         }
 
         // Victory Points awarded from the number of conflict points each neighbour has
-        public static void AddVictoryNeighboursConflict(Player p, Player east, Player west)
+        private static void AddVictoryNeighboursConflict(Player p, Player east, Player west)
         {
             int points = east.getSpecificScore(Score.CONFLICT) + west.getSpecificScore(Score.CONFLICT);
             p.addScore(Score.VICTORY, points);
         }
 
         // Victory Points awarded from the number of wonderstages the player has built
-        public static void AddVictoryWonder(Player p)
+        private static void AddVictoryWonder(Player p)
         {
             int points = p.getBoard().getSide().stagesBuilt;
             p.addScore(Score.VICTORY, points);
         }
 
         // Victory Points awarded from the number of wonderstages built from each neighbour including the player
-        public static void AddVictoryAllWonders(Player p, Player east, Player west)
+        private static void AddVictoryAllWonders(Player p, Player east, Player west)
         {
             int points = p.getBoard().getSide().stagesBuilt;
             points += east.getBoard().getSide().stagesBuilt;
@@ -221,11 +291,10 @@ namespace _7Wonders
         }
 
         // Trading Cost for East and West Raw Resources
-        public static void SetRawTradeEast(Player p) { p.rcostEast = 1; }
-        public static void SetRawTradeWest(Player p) { p.rcostWest = 1; }
+        private static void SetRawTradeEast(Player p) { p.rcostEast = 1; }
+        private static void SetRawTradeWest(Player p) { p.rcostWest = 1; }
 
         // Trading Cost for East && West of manufactured Resources
-        public static void SetManufactedTrade(Player p) { p.mcost = 1; }
-
+        private static void SetManufactedTrade(Player p) { p.mcost = 1; }
     }
 }

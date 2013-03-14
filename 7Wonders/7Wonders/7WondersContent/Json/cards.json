@@ -2061,11 +2061,7 @@
             "cost": {},
             "effects": [
                 {
-                    "type": "mcostEast",
-                    "amount": 1
-                },
-                {
-                    "type": "mcostWest",
+                    "type": "mcostBoth",
                     "amount": 1
                 }
             ],
@@ -2082,11 +2078,7 @@
             "cost": {},
             "effects": [
                 {
-                    "type": "mcostEast",
-                    "amount": 1
-                },
-                {
-                    "type": "mcostWest",
+                    "type": "mcostBoth",
                     "amount": 1
                 }
             ],
