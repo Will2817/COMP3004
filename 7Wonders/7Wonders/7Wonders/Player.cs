@@ -240,7 +240,7 @@ namespace _7Wonders
         }
 
         // Get the choice Resource number of a certain 'r'
-        public int getChoiceResourceNum(Resource r)
+        /*public int getChoiceResourceNum(Resource r)
         {
             if (choiceResources.ContainsKey(r))
             {
@@ -252,7 +252,7 @@ namespace _7Wonders
 
             return -1;
         }
-
+        */
 
         // MUTATORS
         public void setNameID(string n)         {   name = n;   }
@@ -332,7 +332,7 @@ namespace _7Wonders
         }
 
         // Sets the Resource of a certain 'r'
-        public void setChoiceResourceNum(Resource r, int x)
+        /*public void setChoiceResourceNum(Resource r, int x)
         {
             if (choiceResources.ContainsKey(r))
                 choiceResources[r] = x;
@@ -348,6 +348,7 @@ namespace _7Wonders
             else
                 Console.WriteLine("Error: Add Resource failed, no such resource " + r);
         }
+        */
 
         public void addCardColour(CardColour c, int x)
         {
