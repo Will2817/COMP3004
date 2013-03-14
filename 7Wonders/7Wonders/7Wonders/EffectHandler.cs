@@ -5,6 +5,8 @@ using System.Text;
 
 namespace _7Wonders
 {
+    using Game_Cards;
+
     /* EffectHandler Class
      * This Class has Global Functions!
      * This class will be used to control the effects 
@@ -12,6 +14,13 @@ namespace _7Wonders
      */
     public static class EffectHandler
     {
+        // Pass in effects to 
+        public static void ApplyEffect(Player p, Effect e)
+        {
+            // Players should know their neighbours east and west
+            e.PrintEffect();
+        }
+
         // Add a certain number of x Resource r to Player p
         // "w", "o", "l", "p" etc
         public static void AddResource(Player p, Resource r, int x)

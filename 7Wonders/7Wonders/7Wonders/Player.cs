@@ -244,14 +244,10 @@ namespace _7Wonders
 
         public void resetTotalResources()
         {
-            totalResources[Resource.CLAY] = resources[Resource.CLAY];
-            totalResources[Resource.COIN] = resources[Resource.COIN];
-            totalResources[Resource.GLASS] = resources[Resource.GLASS];
-            totalResources[Resource.LOOM] = resources[Resource.LOOM];
-            totalResources[Resource.ORE] = resources[Resource.ORE];
-            totalResources[Resource.PAPYRUS] = resources[Resource.PAPYRUS];
-            totalResources[Resource.STONE] = resources[Resource.STONE];
-            totalResources[Resource.WOOD] = resources[Resource.WOOD];                                          
+            foreach (Resource r in totalResources.Keys)
+            {
+                totalResources[r] = resources[r];
+            }                                     
         }
 
         // NEED A FUNCTION TO SET TOTALRESOURCES
