@@ -14,9 +14,100 @@ namespace _7Wonders
      */
     public static class EffectHandler
     {
+        // Used for converting Resources
+        static Dictionary<string, Resource> resourceType = new Dictionary<string, Resource>
+        {
+            {"w", Resource.WOOD}, {"s", Resource.STONE}, {"o", Resource.ORE},
+            {"c", Resource.CLAY}, {"g", Resource.GLASS}, {"p", Resource.PAPYRUS},
+            {"l", Resource.LOOM} // Coin is left out as there are other cases for it
+        };
+
+        static Dictionary<string, CardColour> cardType = new Dictionary<string, CardColour>
+        {
+            {"brown", CardColour.BROWN}, {"gray", CardColour.GRAY}, {"blue", CardColour.BLUE}, 
+            {"green", CardColour.GREEN}, {"yellow", CardColour.YELLOW}, {"red", CardColour.RED}, 
+            {"purple", CardColour.PURPLE}
+        };
+
         // Pass in effects to 
         public static void ApplyEffect(Player p, Effect e)
         {
+            // Resource
+            if (e.type.Length == 1)
+            {
+                AddResource(p, resourceType[e.type], e.amount);
+            }
+            // Victory Points
+            else if (e.type.Equals("victory"))
+            {
+                // NO FROM/BASIS - add to score
+                if (e.from.Equals(null) && e.basis.Equals(null))
+                    AddScore(p, Score.VICTORY, e.amount);
+
+                // Adding to the Score for Blue Structures raised
+                else if (e.from.Equals(null) && e.basis.Equals("blue"))
+                    AddScore(p, Score.VICTORY_BLUE, e.amount);
+
+                // FROM: NEIGHBORS
+                // and BASIS: CardColour, Wonderstages, Defeat
+                else if (e.from.Equals("neighbors"))
+                {
+                    // Apply victory points awarded for each
+                    // Wonderstage neigboring cities own
+                    if (e.basis.Equals("wonderstages"))
+                    {
+                        //AddVictoryAllWonders(p, east, west);
+                    }
+
+                        //Victory points given per neighbor's conlfict token
+                    else if (e.basis.Equals("defeat"))
+                    {
+                        //AddVictoryNeighboursConflict(p, east, west);
+                    }
+
+                        // Victory points awarded per certain structure built by neighbours
+                    else
+                    {
+                        //AddVictoryNeighboursColour(p, east, west, cardType[e.basis], e.amount);
+                    }
+
+                }
+
+                // FROM: PLAYER
+                // BASIS: CardColour, Wonderstages, 
+                else if (e.from.Equals("player"))
+                {
+                    if (e.basis.Equals("wonderstages"))
+                        AddVictoryWonder(p);
+                    else
+                        AddVictoryColour(p, cardType[e.basis], e.amount);
+                }
+
+                // FROM: ALL
+                // BASIS: Wonderstages
+                else if (e.from.Equals("all"))
+                {
+                    // AddVictoryAllWonders(p, east, west);
+                }
+
+            }
+                // Coin is just added because there is no from/basis
+            else if (e.type.Equals("coin") && e.basis.Equals(null))
+            {
+                AddResource(p, Resource.COIN, e.amount);
+            }
+            else if (e.type.Equals("rchoice"))
+            {
+                List<Resource> choice = new List<Resource>();
+
+                foreach (string c in e.list)
+                {
+                    choice.Add(resourceType[c]);
+                }
+                AddResourceChoice(p, choice);
+            }
+
+
             // Players should know their neighbours east and west
             e.PrintEffect();
         }
@@ -112,8 +203,15 @@ namespace _7Wonders
             p.addScore(Score.VICTORY, points);
         }
 
+        // Victory Points awarded from the number of wonderstages the player has built
+        public static void AddVictoryWonder(Player p)
+        {
+            int points = p.getBoard().getSide().stagesBuilt;
+            p.addScore(Score.VICTORY, points);
+        }
+
         // Victory Points awarded from the number of wonderstages built from each neighbour including the player
-        public static void AddVictoryWonders(Player p, Player east, Player west)
+        public static void AddVictoryAllWonders(Player p, Player east, Player west)
         {
             int points = p.getBoard().getSide().stagesBuilt;
             points += east.getBoard().getSide().stagesBuilt;
