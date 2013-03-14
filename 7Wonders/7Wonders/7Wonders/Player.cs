@@ -29,6 +29,7 @@ namespace _7Wonders
         protected Dictionary<Resource, int> resources; // Resources - Clay, Ore, etc... that are also purchasable by other players
         //protected Dictionary<Resource, int> choiceResources; // Used for players selecting a temp resource to use
         protected Dictionary<CardColour, int> cardColour; // Used to keep count the number of structures
+        protected Dictionary<Resource, int> totalResources;
 
         // List of choices which are in lists
         List<List<Resource>> choices;
@@ -70,6 +71,9 @@ namespace _7Wonders
             rcostWest = 2;
             mcost = 2;
 
+            choices = new List<List<Resource>>();
+            unpurchasable = new List<List<Resource>>();
+
             // Setting the Players Score Dictionary
             score = new Dictionary<Score, int>();
             score.Add(Score.VICTORY, 0);    // Victory Points
@@ -91,17 +95,15 @@ namespace _7Wonders
             resources.Add(Resource.LOOM, 0);    // Loom
             resources.Add(Resource.PAPYRUS, 0); // Papyrus
             resources.Add(Resource.COIN, 0);    // Coin - Players start with 3 coins
-
-            /*
-            choiceResources = new Dictionary<Resource, int>();
-            choiceResources.Add(Resource.CLAY, 0);    // Clay
-            choiceResources.Add(Resource.ORE, 0);     // Ore
-            choiceResources.Add(Resource.STONE, 0);   // Stone
-            choiceResources.Add(Resource.WOOD, 0);    // Wood
-            choiceResources.Add(Resource.GLASS, 0);   // Glass
-            choiceResources.Add(Resource.LOOM, 0);    // Loom
-            choiceResources.Add(Resource.PAPYRUS, 0); // Papyrus - Choice Resource never gets coin
-            */
+            
+            totalResources = new Dictionary<Resource, int>();
+            totalResources.Add(Resource.CLAY, 0);    // Clay
+            totalResources.Add(Resource.ORE, 0);     // Ore
+            totalResources.Add(Resource.STONE, 0);   // Stone
+            totalResources.Add(Resource.WOOD, 0);    // Wood
+            totalResources.Add(Resource.GLASS, 0);   // Glass
+            totalResources.Add(Resource.LOOM, 0);    // Loom
+            totalResources.Add(Resource.PAPYRUS, 0); // Papyrus - Choice Resource never gets coin
 
             // Card Colours
             cardColour = new Dictionary<CardColour, int>();
@@ -112,6 +114,38 @@ namespace _7Wonders
             cardColour.Add(CardColour.YELLOW, 0);
             cardColour.Add(CardColour.RED, 0);
             cardColour.Add(CardColour.PURPLE, 0);
+        }
+
+        // Check if player has the resources to purchase either
+        // a Wonder/Card
+        // But does not remove coin from the player
+        public bool canPurchase(Dictionary<Resource, int> cost)
+        {
+            if (cost.ContainsKey(Resource.CLAY) && (getTotalResource(Resource.CLAY) < cost[Resource.CLAY]))
+                return false;
+
+            if (cost.ContainsKey(Resource.COIN) && (getTotalResource(Resource.COIN) < cost[Resource.COIN]))
+                return false;
+
+            if (cost.ContainsKey(Resource.GLASS) && (getTotalResource(Resource.GLASS) < cost[Resource.GLASS]))
+                return false;
+
+            if (cost.ContainsKey(Resource.LOOM) && (getTotalResource(Resource.LOOM) < cost[Resource.LOOM]))
+                return false;
+
+            if (cost.ContainsKey(Resource.ORE) && (getTotalResource(Resource.ORE) < cost[Resource.ORE]))
+                return false;
+
+            if (cost.ContainsKey(Resource.PAPYRUS) && (getTotalResource(Resource.PAPYRUS) < cost[Resource.PAPYRUS]))
+                return false;
+
+            if (cost.ContainsKey(Resource.STONE) && (getTotalResource(Resource.STONE) < cost[Resource.STONE]))
+                return false;
+
+            if (cost.ContainsKey(Resource.WOOD) && (totalResources[Resource.WOOD] < cost[Resource.WOOD]))
+                return false;
+
+            return true;
         }
 
         // ACCESSORS
@@ -126,7 +160,7 @@ namespace _7Wonders
         public List<ActionType> getLastActions() { return lastActions; }
 
         // Returns the dicitonary object of Score & Resources 
-        //  along with List of choices and unpurchasable resources
+        // along with List of choices and unpurchasable resources
         public Dictionary<Score, int> getScore() { return score; }
         public int getSpecificScore(Score s) { return score[s]; }
         public Dictionary<Resource, int> getResources() { return resources; }
@@ -137,63 +171,19 @@ namespace _7Wonders
 
         // Returns the players total number of resources a player has after
         // they hae decided on what choice they want
-        /*
         public Dictionary<Resource, int> getTotalResources()
         {
-            Dictionary<Resource, int> temp = new Dictionary<Resource, int>();
-            if (!choiceResources.Equals(null) && (!resources.Equals(null)))
-            {
-                if (choiceResources.ContainsKey(Resource.CLAY))
-                {
-                    temp.Add(Resource.CLAY, (choiceResources[Resource.CLAY] + resources[Resource.CLAY]));
-                }
-
-                if (choiceResources.ContainsKey(Resource.GLASS))
-                {
-                    temp.Add(Resource.GLASS, (choiceResources[Resource.GLASS] + resources[Resource.GLASS]));
-                }
-
-                if (choiceResources.ContainsKey(Resource.LOOM))
-                {
-                    temp.Add(Resource.CLAY, (choiceResources[Resource.LOOM] + resources[Resource.LOOM]));
-                }
-
-                if (choiceResources.ContainsKey(Resource.ORE))
-                {
-                    temp.Add(Resource.CLAY, (choiceResources[Resource.ORE] + resources[Resource.ORE]));
-                }
-
-                if (choiceResources.ContainsKey(Resource.PAPYRUS))
-                {
-                    temp.Add(Resource.CLAY, (choiceResources[Resource.PAPYRUS] + resources[Resource.PAPYRUS]));
-                }
-
-                if (choiceResources.ContainsKey(Resource.STONE))
-                {
-                    temp.Add(Resource.CLAY, (choiceResources[Resource.STONE] + resources[Resource.STONE]));
-                }
-
-                if (choiceResources.ContainsKey(Resource.WOOD))
-                {
-                    temp.Add(Resource.CLAY, (choiceResources[Resource.WOOD] + resources[Resource.WOOD]));
-                }
-            }
-            return temp;
+            return totalResources;
         }
 
-        // Resets the Players choice on their resources for the next turn
-        public void resetChoiceResources()
+        // Returns the total number if a certain resource r
+        public int getTotalResource(Resource r)
         {
-            // Resetting all choices so players can again, choose which resource to gain
-            choiceResources[Resource.CLAY] = 0;    // Clay
-            choiceResources[Resource.ORE] =  0;     // Ore
-            choiceResources[Resource.STONE] = 0;   // Stone
-            choiceResources[Resource.WOOD] =  0;    // Wood
-            choiceResources[Resource.GLASS] =  0;   // Glass
-            choiceResources[Resource.LOOM] = 0;    // Loom
-            choiceResources[Resource.PAPYRUS] =  0; // Papyrus - Choice Resource never gets coin
+            if (totalResources.ContainsKey(r))
+                return totalResources[r];
+
+            return -1;
         }
-        */
 
         public int getCardColourCount(CardColour c)
         {
@@ -239,21 +229,6 @@ namespace _7Wonders
             return -1;
         }
 
-        // Get the choice Resource number of a certain 'r'
-        /*public int getChoiceResourceNum(Resource r)
-        {
-            if (choiceResources.ContainsKey(r))
-            {
-                Console.WriteLine("Resources " + r + ": " + choiceResources[r]);
-                return choiceResources[r];
-            }
-            else
-                Console.WriteLine("Error returning choiceResource: " + r);
-
-            return -1;
-        }
-        */
-
         // MUTATORS
         public void setNameID(string n)         {   name = n;   }
         public void setSeat(int s)              {   seatNumber = s; }
@@ -265,6 +240,21 @@ namespace _7Wonders
         public void addUnpurchasable(List<Resource> r) { unpurchasable.Add(r); }
         public void setLastCardsPlayed(List<string> _cards) { lastCardsPlayed = _cards; }
         public void setLastActions(List<ActionType> _actions) { lastActions = _actions; }
+
+        public void resetTotalResources()
+        {
+            totalResources[Resource.CLAY] = 0;
+                totalResources[Resource.COIN] = 0;
+                    totalResources[Resource.GLASS] = 0;
+                        totalResources[Resource.LOOM] = 0;
+                            totalResources[Resource.ORE] = 0;
+                                totalResources[Resource.PAPYRUS] = 0;
+                                totalResources[Resource.STONE] = 0;
+                                        totalResources[Resource.WOOD] = 0;
+                                          
+        }
+
+        // NEED A FUNCTION TO SET TOTALRESOURCES
 
         public void addPlayed(Card c)
         {
@@ -330,25 +320,6 @@ namespace _7Wonders
             else
                 Console.WriteLine("Error: Add Resource failed, no such resource " + r);
         }
-
-        // Sets the Resource of a certain 'r'
-        /*public void setChoiceResourceNum(Resource r, int x)
-        {
-            if (choiceResources.ContainsKey(r))
-                choiceResources[r] = x;
-            else
-                Console.WriteLine("Error: Set Resource failed, no such resource " + r);
-        }
-
-        //Adds to the Resource of a certain 'r'
-        public void addChoiceResosurce(Resource r)
-        {
-            if (choiceResources.ContainsKey(r))
-                choiceResources[r] += 1;
-            else
-                Console.WriteLine("Error: Add Resource failed, no such resource " + r);
-        }
-        */
 
         public void addCardColour(CardColour c, int x)
         {

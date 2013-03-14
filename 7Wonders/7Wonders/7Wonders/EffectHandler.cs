@@ -26,7 +26,7 @@ namespace _7Wonders
         // Resource choice - "rchoice" in json
         // Adds a temporary Resource r to the players choice Resource Dictionary
         // This might be a little moredifficult to implement... =(
-        public static void ChoiceResource(Player p, Resource r, int x)   {   p.addChoiceResosurce(r);  }
+        //public static void ChoiceResource(Player p, Resource r, int x)   {   p.addChoiceResosurce(r);  }
 
         // Science Choice - player chooses which science to gain from the card at the end of the game
         // NOTE: Should we have this as a max function? eg. Find max of gear, tablet, compass and just add 1?
