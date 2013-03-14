@@ -174,14 +174,6 @@ namespace _7Wonders
             {
                 if (hand.ContainsKey("hand" + j))
                 {
-                    if (hand["hand" + j].isMouseOver(mouseState))
-                    {
-                        hand["hand" + j].setWidth(CARDWIDTH + 60).setHeight((int)((CARDWIDTH + 60) * 1.612));//.setPosition(hand["hand" + j].getPosition() + new Vector2(-15, (int)(-15 * 1.612)));
-                    }
-                    else
-                    {
-                        hand["hand" + j].setWidth(CARDWIDTH).setHeight(CARDHEIGHT);//.setPosition(hand["hand" + j].getPosition() + new Vector2(15, (int)(15 * 1.612)));
-                    }
                     if (hand["hand" + j].isClicked())
                     {
                         Console.WriteLine("hand " + j + " was clicked");
@@ -361,17 +353,17 @@ namespace _7Wonders
                 {
                     if (c.colour == CardColour.BROWN || c.colour == CardColour.GRAY)
                     {
-                        if (played1 < 2)
+                        if (played1 < 5)
                         { 
                             Game1.cards[c.getImageId()].setPosition(new Vector2(SEC1WIDTH + MARGIN * 2, MARGIN + (MARGIN + ((int)(CARDHEIGHT * 0.25))) * played1)).setWidth(CARDWIDTH).setHeight(CARDHEIGHT);
                             played1++;
                         }
-                        else if (played2 < 2)
+                        else if (played2 < 5)
                         {
                             Game1.cards[c.getImageId()].setPosition(new Vector2(SEC1WIDTH + MARGIN * 2 + CARDWIDTH + MARGIN, MARGIN + (MARGIN + ((int)(CARDHEIGHT * 0.25))) * played2)).setWidth(CARDWIDTH).setHeight(CARDHEIGHT);
                             played2++;
                         }
-                        else if (played3 < 2)
+                        else if (played3 < 5)
                         {
                             Game1.cards[c.getImageId()].setPosition(new Vector2(SEC1WIDTH + MARGIN * 2 + (CARDWIDTH + MARGIN) * 2, MARGIN + (MARGIN + ((int)(CARDHEIGHT * 0.25))) * played3)).setWidth(CARDWIDTH).setHeight(CARDHEIGHT);
                             played3++;
@@ -384,17 +376,17 @@ namespace _7Wonders
                     }
                     else
                     {
-                        if (played4 < 2)
+                        if (played4 < 5)
                         {
                             Game1.cards[c.getImageId()].setPosition(new Vector2(SEC1WIDTH + MARGIN * 2 + (CARDWIDTH + MARGIN) * 3, MARGIN + (MARGIN + ((int)(CARDHEIGHT * 0.25))) * played4)).setWidth(CARDWIDTH).setHeight(CARDHEIGHT);
                             played4++;
                         }
-                        else if (played3 < 2)
+                        else if (played3 < 5)
                         {
                             Game1.cards[c.getImageId()].setPosition(new Vector2(SEC1WIDTH + MARGIN * 2 + (CARDWIDTH + MARGIN) * 2, MARGIN + (MARGIN + ((int)(CARDHEIGHT * 0.25))) * played3)).setWidth(CARDWIDTH).setHeight(CARDHEIGHT);
                             played3++;
                         }
-                        else if (played2 < 2)
+                        else if (played2 < 5)
                         {
                             Game1.cards[c.getImageId()].setPosition(new Vector2(SEC1WIDTH + MARGIN * 2 + CARDWIDTH + MARGIN, MARGIN + (MARGIN + ((int)(CARDHEIGHT * 0.25))) * played2)).setWidth(CARDWIDTH).setHeight(CARDHEIGHT);
                             played2++;
