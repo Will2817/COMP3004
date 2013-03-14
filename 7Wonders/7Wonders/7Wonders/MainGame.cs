@@ -38,7 +38,8 @@ namespace _7Wonders
         protected Player player;
         protected Visual wonder;
         protected Button leftButton;
-        protected Dictionary<string, Visual> played;
+
+        protected MouseState mousestate;
 
         public MainGame(Game1 theGame)
             : base(theGame, "background", 1.0f)
@@ -158,6 +159,7 @@ namespace _7Wonders
         public override void Update(GameTime gameTime, MouseState mouseState)
         {
             base.Update(gameTime, mouseState);
+            mousestate = mouseState;
             foreach (Visual v in baseVisuals.Values)
             {
                 v.Update(gameTime, mouseState);
@@ -272,6 +274,13 @@ namespace _7Wonders
             {
                 v.Draw(gameTime, spriteBatch);
             }
+            if (!showhand)
+            {
+                foreach (Visual v in activeVisuals.Values)
+                {
+                    if (v.isMouseOver(mousestate)) v.Draw(gameTime, spriteBatch);
+                }
+            }
         }
 
         public override Dictionary<string, string> isFinished()
@@ -344,22 +353,60 @@ namespace _7Wonders
         {
             foreach (Player p in Game1.client.getState().getPlayers().Values)
             {
+                int played1 = 0;
+                int played2 = 0;
+                int played3 = 0;
+                int played4 = 0;
                 foreach (Card c in p.getPlayed())
                 {
-                    if (!seatVisuals[p.getSeat()].ContainsKey(c.getImageId()))
+                    if (c.colour == CardColour.BROWN || c.colour == CardColour.GRAY)
                     {
-                        int grayandbrown = p.getCardColourCount(CardColour.BROWN) + p.getCardColourCount(CardColour.GRAY);
-                        int nonegraybrown = p.getPlayed().Count - grayandbrown;
-                        if (c.colour == CardColour.BROWN || c.colour == CardColour.GRAY)
+                        if (played1 < 2)
+                        { 
+                            Game1.cards[c.getImageId()].setPosition(new Vector2(SEC1WIDTH + MARGIN * 2, MARGIN + (MARGIN + ((int)(CARDHEIGHT * 0.25))) * played1)).setWidth(CARDWIDTH).setHeight(CARDHEIGHT);
+                            played1++;
+                        }
+                        else if (played2 < 2)
                         {
-                            Game1.cards[c.getImageId()].setPosition(new Vector2(SEC1WIDTH + MARGIN * 2, MARGIN + (MARGIN + ((int)(CARDHEIGHT * 0.25))) * (grayandbrown - 1))).setWidth(CARDWIDTH).setHeight(CARDHEIGHT);
+                            Game1.cards[c.getImageId()].setPosition(new Vector2(SEC1WIDTH + MARGIN * 2 + CARDWIDTH + MARGIN, MARGIN + (MARGIN + ((int)(CARDHEIGHT * 0.25))) * played2)).setWidth(CARDWIDTH).setHeight(CARDHEIGHT);
+                            played2++;
+                        }
+                        else if (played3 < 2)
+                        {
+                            Game1.cards[c.getImageId()].setPosition(new Vector2(SEC1WIDTH + MARGIN * 2 + (CARDWIDTH + MARGIN) * 2, MARGIN + (MARGIN + ((int)(CARDHEIGHT * 0.25))) * played3)).setWidth(CARDWIDTH).setHeight(CARDHEIGHT);
+                            played3++;
                         }
                         else
                         {
-                            Game1.cards[c.getImageId()].setPosition(new Vector2(SEC1WIDTH + MARGIN * 3 + CARDWIDTH, MARGIN + (MARGIN + CARDHEIGHT) * (nonegraybrown - 1))).setWidth(CARDWIDTH).setHeight(CARDHEIGHT);
+                            Game1.cards[c.getImageId()].setPosition(new Vector2(SEC1WIDTH + MARGIN * 2 + (CARDWIDTH + MARGIN) * 3, MARGIN + (MARGIN + ((int)(CARDHEIGHT * 0.25))) * played4)).setWidth(CARDWIDTH).setHeight(CARDHEIGHT);
+                            played4++;
                         }
-                        seatVisuals[p.getSeat()].Add(c.getImageId(), Game1.cards[c.getImageId()]);
                     }
+                    else
+                    {
+                        if (played4 < 2)
+                        {
+                            Game1.cards[c.getImageId()].setPosition(new Vector2(SEC1WIDTH + MARGIN * 2 + (CARDWIDTH + MARGIN) * 3, MARGIN + (MARGIN + ((int)(CARDHEIGHT * 0.25))) * played4)).setWidth(CARDWIDTH).setHeight(CARDHEIGHT);
+                            played4++;
+                        }
+                        else if (played3 < 2)
+                        {
+                            Game1.cards[c.getImageId()].setPosition(new Vector2(SEC1WIDTH + MARGIN * 2 + (CARDWIDTH + MARGIN) * 2, MARGIN + (MARGIN + ((int)(CARDHEIGHT * 0.25))) * played3)).setWidth(CARDWIDTH).setHeight(CARDHEIGHT);
+                            played3++;
+                        }
+                        else if (played2 < 2)
+                        {
+                            Game1.cards[c.getImageId()].setPosition(new Vector2(SEC1WIDTH + MARGIN * 2 + CARDWIDTH + MARGIN, MARGIN + (MARGIN + ((int)(CARDHEIGHT * 0.25))) * played2)).setWidth(CARDWIDTH).setHeight(CARDHEIGHT);
+                            played2++;
+                        }
+                        else
+                        {
+                            Game1.cards[c.getImageId()].setPosition(new Vector2(SEC1WIDTH + MARGIN * 2 + CARDWIDTH, MARGIN + (MARGIN + ((int)(CARDHEIGHT * 0.25))) * played1)).setWidth(CARDWIDTH).setHeight(CARDHEIGHT);
+                            played1++;
+                        }
+                    }
+                    if (!seatVisuals[p.getSeat()].ContainsKey(c.getImageId())) 
+                        seatVisuals[p.getSeat()].Add(c.getImageId(), Game1.cards[c.getImageId()]);
                 }
             }
         }

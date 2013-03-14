@@ -195,7 +195,7 @@ namespace _7Wonders
         {
             if (cardColour.ContainsKey(c))
             {
-                Console.WriteLine("Returning " + c + ": " + cardColour[c]);
+                //Console.WriteLine("Returning " + c + ": " + cardColour[c]);
                 return cardColour[c];
             }
             else
