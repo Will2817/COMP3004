@@ -47,5 +47,11 @@ namespace _7Wonders.Server
             }
         }
 
+        public void handleAction(string action, int turn_action)
+        {
+
+
+        }
+
     }
 }

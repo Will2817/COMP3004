@@ -10,5 +10,6 @@ namespace _7Wonders.Server
         void handleNewClient(long clientID, string name);
         void handleClientDrop(long clientID);
         void handleMessage(String message, int type, long clientID);
+        void handleAction(String action, int turn_action);
     }
 }
