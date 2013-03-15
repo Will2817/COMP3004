@@ -98,5 +98,10 @@ namespace _7Wonders.Client
         {
             gameManager.selectActions(actions);
         }
+
+        public Card getCard(string id)
+        {
+            return gameManager.getCard(id);
+        }
     }
 }
