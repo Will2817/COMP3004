@@ -21,6 +21,9 @@ namespace _7Wonders
         protected bool finished = false;
         protected string nextInterface = ""; 
         protected float dim;
+        protected Vector2 pos = Vector2.Zero;
+        protected int width = Game1.WIDTH;
+        protected int height = Game1.HEIGHT;
 
         public Interface(Game1 theGame, string _backText, float ?_dim=null)
         {
@@ -31,9 +34,21 @@ namespace _7Wonders
             else dim = 1;
         }
 
+        public Interface(Game1 theGame, string _backText, Vector2 _pos, int _width, int _height, float _dim = 1)
+        {
+            game = theGame;
+            backgroundText = _backText;
+            activeVisuals = new Dictionary<string, Visual>();
+            pos = _pos;
+            width = _width;
+            height = _height;
+            dim = _dim;
+        }
+
         public virtual void LoadContent()
         {
-            background = Game1.textures[backgroundText];
+            if (Game1.textures.ContainsKey(backgroundText))
+                background = Game1.textures[backgroundText];
         }
 
         public virtual void Update(GameTime gameTime, MouseState mouseState)
@@ -46,7 +61,7 @@ namespace _7Wonders
 
         public virtual void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(background, new Rectangle(0, 0, Game1.WIDTH, Game1.HEIGHT), Color.White*dim);
+            if (background != null) spriteBatch.Draw(background, new Rectangle((int)pos.X, (int)pos.Y, width, height), Color.White * dim);
             foreach (Visual v in activeVisuals.Values)
             {
                 v.Draw(gameTime, spriteBatch);

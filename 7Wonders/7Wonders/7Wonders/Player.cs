@@ -210,7 +210,6 @@ namespace _7Wonders
         {
             if (score.ContainsKey(s))
             {
-                Console.WriteLine("Returing " + s + ": " + score[s]);
                 return score[s];
             }
             else
@@ -223,10 +222,7 @@ namespace _7Wonders
         public int getResourceNum(Resource r)
         {
             if (resources.ContainsKey(r))
-            {
-                Console.WriteLine("Resources " + r + ": " + resources[r]);
                 return resources[r];
-            }
             else
                 Console.WriteLine("Error returning resource: " + r);
 

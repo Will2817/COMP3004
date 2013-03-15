@@ -55,7 +55,11 @@ namespace _7Wonders.Game_Cards
             }
 
             // Used for Testing the Effect parameters
+<<<<<<< HEAD
             // PrintEffect();
+=======
+            //PrintEffect();
+>>>>>>> origin/master
         }
 
         public void PrintEffect()

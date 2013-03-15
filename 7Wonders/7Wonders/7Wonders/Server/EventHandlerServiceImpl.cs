@@ -39,10 +39,14 @@ namespace _7Wonders.Server
                     Console.WriteLine("HandleMessage: BOARD_SELECTION");
                     break;
                 case ClientMessageType.TURN_ACTION:
+<<<<<<< HEAD
                     //stuff
                     Console.WriteLine("HandleMessage: TURN_ACTION");
                     Dictionary<string, ActionType> actions = new Dictionary<string, ActionType>();
                     gameManager.handleActions(clientID, actions);
+=======
+                    gameManager.handleActions(clientID, parseActions(message));
+>>>>>>> origin/master
                     break;
                 case ClientMessageType.CHAT_MESSAGE:
                     //stuff
@@ -52,10 +56,13 @@ namespace _7Wonders.Server
             }
         }
 
-        public void handleAction(string action, int turn_action)
+        public Dictionary<string, ActionType> parseActions(string message)
         {
-
-
+            Dictionary<string, ActionType> actions = new Dictionary<string, ActionType>();
+            JArray actionArray = (JArray)JObject.Parse(message)["actions"];
+            foreach (JObject obj in actionArray)
+                actions.Add((string )obj["card"], (ActionType) (int) obj["action"]);
+            return actions;
         }
 
     }

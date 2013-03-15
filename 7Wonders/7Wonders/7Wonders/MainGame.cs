@@ -18,6 +18,7 @@ namespace _7Wonders
         private const int CHECKBOXDIM = 15;
         private const int DIVIDERWIDTH = 2;
         private const int MAXHANDSIZE = 7;
+        private int NUMRESOURCES = Enum.GetNames(typeof(Resource)).Length;
         private int CARDWIDTH;
         private int CARDHEIGHT; 
         private int SEC1WIDTH = Game1.WIDTH / 3;
@@ -30,6 +31,8 @@ namespace _7Wonders
         private const int LABELHEIGHT = 35;
         private int LABELWIDTH;
 
+        private TradeInterface trade;
+
         protected Dictionary<int, Dictionary<string, Visual>> seatVisuals;
         protected Dictionary<string, Visual> baseVisuals;
         protected Dictionary<string, Visual> hand;
@@ -38,6 +41,7 @@ namespace _7Wonders
         protected Player player;
         protected Visual wonder;
         protected Button leftButton;
+        protected bool showTrade = false;
 
         protected MouseState mousestate;
 
@@ -61,6 +65,8 @@ namespace _7Wonders
             baseVisuals.Add("Divider1", new Visual(game, new Vector2(SEC1WIDTH - 1, 0), DIVIDERWIDTH, Game1.HEIGHT, "line", Color.Silver));
             baseVisuals.Add("Divider2", new Visual(game, new Vector2(0, SEC1HEIGHT - 1), Game1.WIDTH, DIVIDERWIDTH, "line", Color.Silver));
             baseVisuals.Add("Age", new Visual(game, new Vector2(Game1.WIDTH - MARGIN - 75, MARGIN), 75, 75, "age1"));
+
+            trade = new TradeInterface(theGame);
         }
 
         private void Initialize()
@@ -99,33 +105,14 @@ namespace _7Wonders
 
             int RESOURCEHEIGHT = SEC1HEIGHT + LABELHEIGHT + MARGIN * 3;
 
-            baseVisuals.Add("east1", new Visual(game, new Vector2(LABELLENGTH + MARGIN + RESOURCELENGTH * 0 / 8 + 5, RESOURCEHEIGHT), east.getResourceNum(Resource.CLAY) + "", "Font1"));
-            baseVisuals.Add("east2", new Visual(game, new Vector2(LABELLENGTH + MARGIN + RESOURCELENGTH * 1 / 8 + 5, RESOURCEHEIGHT), east.getResourceNum(Resource.STONE) + "", "Font1"));
-            baseVisuals.Add("east3", new Visual(game, new Vector2(LABELLENGTH + MARGIN + RESOURCELENGTH * 2 / 8 + 5, RESOURCEHEIGHT), east.getResourceNum(Resource.WOOD) + "", "Font1"));
-            baseVisuals.Add("east4", new Visual(game, new Vector2(LABELLENGTH + MARGIN + RESOURCELENGTH * 3 / 8 + 5, RESOURCEHEIGHT), east.getResourceNum(Resource.ORE) + "", "Font1"));
-            baseVisuals.Add("east5", new Visual(game, new Vector2(LABELLENGTH + MARGIN + RESOURCELENGTH * 4 / 8 + 5, RESOURCEHEIGHT), east.getResourceNum(Resource.GLASS) + "", "Font1"));
-            baseVisuals.Add("east6", new Visual(game, new Vector2(LABELLENGTH + MARGIN + RESOURCELENGTH * 5 / 8 + 5, RESOURCEHEIGHT), east.getResourceNum(Resource.PAPYRUS) + "", "Font1"));
-            baseVisuals.Add("east7", new Visual(game, new Vector2(LABELLENGTH + MARGIN + RESOURCELENGTH * 6 / 8 + 5, RESOURCEHEIGHT), east.getResourceNum(Resource.LOOM) + "", "Font1"));
-            baseVisuals.Add("east8", new Visual(game, new Vector2(LABELLENGTH + MARGIN + RESOURCELENGTH * 7 / 8 + 5, RESOURCEHEIGHT), east.getResourceNum(Resource.COIN) + "", "Font1"));
+            for (int i = 0; i < NUMRESOURCES; i++)
+            {
+                baseVisuals.Add("east" + i, new Visual(game, new Vector2(LABELLENGTH + MARGIN + RESOURCELENGTH * i / 8 + 5, RESOURCEHEIGHT), east.getResourceNum((Resource) i) + "", "Font1"));
 
-            baseVisuals.Add("west1", new Visual(game, new Vector2(LABELLENGTH + MARGIN + RESOURCELENGTH * 0 / 8 + 5, RESOURCEHEIGHT + LABELHEIGHT + MARGIN), west.getResourceNum(Resource.CLAY) + "", "Font1"));
-            baseVisuals.Add("west2", new Visual(game, new Vector2(LABELLENGTH + MARGIN + RESOURCELENGTH * 1 / 8 + 5, RESOURCEHEIGHT + LABELHEIGHT + MARGIN), west.getResourceNum(Resource.STONE) + "", "Font1"));
-            baseVisuals.Add("west3", new Visual(game, new Vector2(LABELLENGTH + MARGIN + RESOURCELENGTH * 2 / 8 + 5, RESOURCEHEIGHT + LABELHEIGHT + MARGIN), west.getResourceNum(Resource.WOOD) + "", "Font1"));
-            baseVisuals.Add("west4", new Visual(game, new Vector2(LABELLENGTH + MARGIN + RESOURCELENGTH * 3 / 8 + 5, RESOURCEHEIGHT + LABELHEIGHT + MARGIN), west.getResourceNum(Resource.ORE) + "", "Font1"));
-            baseVisuals.Add("west5", new Visual(game, new Vector2(LABELLENGTH + MARGIN + RESOURCELENGTH * 4 / 8 + 5, RESOURCEHEIGHT + LABELHEIGHT + MARGIN), west.getResourceNum(Resource.GLASS) + "", "Font1"));
-            baseVisuals.Add("west6", new Visual(game, new Vector2(LABELLENGTH + MARGIN + RESOURCELENGTH * 5 / 8 + 5, RESOURCEHEIGHT + LABELHEIGHT + MARGIN), west.getResourceNum(Resource.PAPYRUS) + "", "Font1"));
-            baseVisuals.Add("west7", new Visual(game, new Vector2(LABELLENGTH + MARGIN + RESOURCELENGTH * 6 / 8 + 5, RESOURCEHEIGHT + LABELHEIGHT + MARGIN), west.getResourceNum(Resource.LOOM) + "", "Font1"));
-            baseVisuals.Add("west8", new Visual(game, new Vector2(LABELLENGTH + MARGIN + RESOURCELENGTH * 7 / 8 + 5, RESOURCEHEIGHT + LABELHEIGHT + MARGIN), west.getResourceNum(Resource.COIN) + "", "Font1"));
+                baseVisuals.Add("west" + i, new Visual(game, new Vector2(LABELLENGTH + MARGIN + RESOURCELENGTH * i / 8 + 5, RESOURCEHEIGHT + LABELHEIGHT + MARGIN), west.getResourceNum((Resource)i) + "", "Font1"));
 
-            baseVisuals.Add("self1", new Visual(game, new Vector2(LABELLENGTH + MARGIN + RESOURCELENGTH * 0 / 8 + 5, Game1.HEIGHT - (MARGIN + LABELHEIGHT)), player.getResourceNum(Resource.CLAY) + "", "Font1"));
-            baseVisuals.Add("self2", new Visual(game, new Vector2(LABELLENGTH + MARGIN + RESOURCELENGTH * 1 / 8 + 5, Game1.HEIGHT - (MARGIN + LABELHEIGHT)), player.getResourceNum(Resource.STONE) + "", "Font1"));
-            baseVisuals.Add("self3", new Visual(game, new Vector2(LABELLENGTH + MARGIN + RESOURCELENGTH * 2 / 8 + 5, Game1.HEIGHT - (MARGIN + LABELHEIGHT)), player.getResourceNum(Resource.WOOD) + "", "Font1"));
-            baseVisuals.Add("self4", new Visual(game, new Vector2(LABELLENGTH + MARGIN + RESOURCELENGTH * 3 / 8 + 5, Game1.HEIGHT - (MARGIN + LABELHEIGHT)), player.getResourceNum(Resource.ORE) + "", "Font1"));
-            baseVisuals.Add("self5", new Visual(game, new Vector2(LABELLENGTH + MARGIN + RESOURCELENGTH * 4 / 8 + 5, Game1.HEIGHT - (MARGIN + LABELHEIGHT)), player.getResourceNum(Resource.GLASS) + "", "Font1"));
-            baseVisuals.Add("self6", new Visual(game, new Vector2(LABELLENGTH + MARGIN + RESOURCELENGTH * 5 / 8 + 5, Game1.HEIGHT - (MARGIN + LABELHEIGHT)), player.getResourceNum(Resource.PAPYRUS) + "", "Font1"));
-            baseVisuals.Add("self7", new Visual(game, new Vector2(LABELLENGTH + MARGIN + RESOURCELENGTH * 6 / 8 + 5, Game1.HEIGHT - (MARGIN + LABELHEIGHT)), player.getResourceNum(Resource.LOOM) + "", "Font1"));
-            baseVisuals.Add("self8", new Visual(game, new Vector2(LABELLENGTH + MARGIN + RESOURCELENGTH * 7 / 8 + 5, Game1.HEIGHT - (MARGIN + LABELHEIGHT)), player.getResourceNum(Resource.COIN) + "", "Font1"));
-
+                baseVisuals.Add("self" + i, new Visual(game, new Vector2(LABELLENGTH + MARGIN + RESOURCELENGTH * i / 8 + 5, Game1.HEIGHT - (MARGIN + LABELHEIGHT)), player.getResourceNum((Resource)i) + "", "Font1"));
+            }
             hand.Add("papermiddle", new Visual(game, new Vector2(MARGIN + 30 + (CARDWIDTH / 2 + MARGIN) * (7 - player.getHand().Count) + 1, 190), Game1.WIDTH - (MARGIN + 30 + (CARDWIDTH / 2 + MARGIN) * (7 - player.getHand().Count)), CARDHEIGHT+25, "papermiddle"));
 
             updatePlayed();
@@ -149,6 +136,7 @@ namespace _7Wonders
             {
                 v.LoadContent();
             }
+            trade.LoadContent();
         }
 
         public override void receiveMessage(Dictionary<string, string> message)
@@ -158,6 +146,19 @@ namespace _7Wonders
 
         public override void Update(GameTime gameTime, MouseState mouseState)
         {
+            if (showTrade)
+            {
+                trade.Update(gameTime, mouseState);
+                if (trade.isFinished() != null)
+                {
+                    trade.reset();
+                    showTrade = false;
+                    updateHands();
+                    updateScroll();
+                    updateResources();
+                }
+                return;
+            }
             base.Update(gameTime, mouseState);
             mousestate = mouseState;
             foreach (Visual v in baseVisuals.Values)
@@ -176,11 +177,13 @@ namespace _7Wonders
                 {
                     if (hand["hand" + j].isClicked())
                     {
-                        Console.WriteLine("hand " + j + " was clicked");
                         hand["hand" + j].reset();
+
+                        trade.showTrade(hand["hand" + j].getTexture(), j);
+                        showTrade = true;
                         //HACKS
-                        Game1.client.getSelf().addPlayed(Game1.client.getSelf().getHand()[j]);
-                        Game1.client.getSelf().getHand().RemoveAt(j);
+                        //Game1.client.getSelf().addPlayed(Game1.client.getSelf().getHand()[j]);
+                        //Game1.client.getSelf().getHand().RemoveAt(j);
                         //
                         updateHands();
                         updateScroll();
@@ -252,7 +255,6 @@ namespace _7Wonders
             }
             if (Game1.client.isHandUpdated()) updateHands();
             updatePlayed();
-
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
@@ -272,6 +274,10 @@ namespace _7Wonders
                 {
                     if (v.isMouseOver(mousestate)) v.Draw(gameTime, spriteBatch);
                 }
+            }
+            if (showTrade)
+            {
+                trade.Draw(gameTime, spriteBatch);
             }
         }
 
@@ -304,6 +310,7 @@ namespace _7Wonders
             for (int j = 0; j < MAXHANDSIZE; j++)
             {
                 if (hand.ContainsKey("hand" + j)) hand.Remove("hand" + j);
+                if (hand.ContainsKey("glow" + j)) hand.Remove("glow" + j);
             }
 
 
@@ -312,6 +319,11 @@ namespace _7Wonders
             {
                 Game1.cards[c.getImageId()].setPosition(new Vector2(MARGIN + 40 + (CARDWIDTH + MARGIN * 2) * k + (CARDWIDTH / 2 + MARGIN) * (7 - player.getHand().Count), 205)).setWidth(CARDWIDTH).setHeight(CARDHEIGHT);
                 hand.Add("hand" + k, Game1.cards[c.getImageId()]);
+                Visual v = new Visual(Game1.cards[c.getImageId()]).setRelativePosition(new Vector2(-1, -1)).setRelativeHeight(2).setRelativeWidth(2); ;
+                if (Game1.client.constructCost(c.getImageId()) == 0) v.setTexture("greenglow");
+                else if (Game1.client.constructCost(c.getImageId()) > 0) v.setTexture("goldglow");
+                else v.setTexture("redglow");
+                hand.Add("glow" + k, v);
                 k++;
             }
             hand["papermiddle"].setPosition(new Vector2(MARGIN + 30 + (CARDWIDTH / 2 + MARGIN) * (7 - player.getHand().Count) + 1, 190)).setWidth(Game1.WIDTH - (MARGIN + 30 + (CARDWIDTH / 2 + MARGIN) * (7 - player.getHand().Count) + 1));
@@ -338,6 +350,7 @@ namespace _7Wonders
             for (int j = 0; j < MAXHANDSIZE; j++)
             {
                 if (hand.ContainsKey("hand" + j)) hand["hand" + j].setVisible(showhand);
+                if (hand.ContainsKey("glow" + j)) hand["glow" + j].setVisible(showhand);
             }
         }
 
@@ -400,6 +413,25 @@ namespace _7Wonders
                     if (!seatVisuals[p.getSeat()].ContainsKey(c.getImageId())) 
                         seatVisuals[p.getSeat()].Add(c.getImageId(), Game1.cards[c.getImageId()]);
                 }
+            }
+        }
+
+        public void updateResources()
+        {
+            //these should be defined in the constructor
+            int westSeat = (player.getSeat() - 1 < 0) ? Game1.client.getState().getPlayers().Count - 1 : player.getSeat() - 1;
+            int eastSeat = (player.getSeat() + 1 > Game1.client.getState().getPlayers().Count - 1) ? 0 : player.getSeat() + 1;
+            Player east = Game1.client.getState().getPlayers().Values.ElementAt(eastSeat);
+            Player west = Game1.client.getState().getPlayers().Values.ElementAt(westSeat);
+            int LABELLENGTH = (SEC1WIDTH - 2 * MARGIN) / 5;
+            int RESOURCELENGTH = (SEC1WIDTH - 2 * MARGIN) * 4 / 5;
+            for (int i = 0; i < NUMRESOURCES; i++)
+            {
+                baseVisuals["east" + i].setString(east.getResourceNum((Resource) i) + "");
+
+                baseVisuals["west" + i].setString(west.getResourceNum((Resource)i) + "");
+
+                baseVisuals["self" + i].setString(player.getResourceNum((Resource)i) + "");
             }
         }
     }
