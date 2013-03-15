@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Newtonsoft.Json.Linq;
 
 namespace _7Wonders.Server
 {
@@ -155,6 +156,18 @@ namespace _7Wonders.Server
             {
                 if (!aiPlayers.ContainsKey(id))
                     messageSerializer.notifyHand(id, gameState.handToJson(id));
+            }
+        }
+
+        public void handleActions(long id, JObject jactions)
+        {
+            // Parse actions, check if they're valid and updates the player/discard pile/etc
+            // set the ready flag for that player so that it can check whether all players are ready and
+            // broadcasts the results of the turn
+            
+            //foreach ()
+            {
+
             }
         }
     }

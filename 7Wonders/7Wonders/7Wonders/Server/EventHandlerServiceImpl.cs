@@ -37,7 +37,7 @@ namespace _7Wonders.Server
                     //stuff
                     break;
                 case ClientMessageType.TURN_ACTION:
-                    //stuff
+                    gameManager.handleActions(clientID, JObject.Parse(message));
                     break;
                 case ClientMessageType.CHAT_MESSAGE:
                     //stuff
