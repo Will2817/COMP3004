@@ -32,8 +32,9 @@ namespace _7Wonders
         static Dictionary<string, Score> scienceType = new Dictionary<string, Score>
         { {"tab", Score.TABLET}, {"comp", Score.COMPASS}, {"gear", Score.GEAR} };
 
-        // Pass in effects to 
-        public static void ApplyEffect(Player p, Effect e)
+        // Effects of Cards/Wonders to be applied instantly. Other effects will be ignored
+        // and left to another global function to deal with it at the end of the game.
+        public static void ApplyEffect(GameState gameState, Player p, Effect e)
         {
             // RESOURCES
             if (e.type.Length == 1)
@@ -186,6 +187,8 @@ namespace _7Wonders
             // Players should know their neighbours east and west
             e.PrintEffect();
         }
+
+        public static void Discard(Player p) {  AddResource(p, Resource.COIN, 3); }
 
         // Add a certain number of x Resource r to Player p
         // "w", "o", "l", "p" etc

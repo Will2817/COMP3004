@@ -13,6 +13,7 @@ namespace _7Wonders.Server
         protected NetService netService;
         protected Deck deck;
         protected CardLibrary cards;
+        protected List<Card> discards;
 
         public GameManager()
         {
@@ -95,6 +96,8 @@ namespace _7Wonders.Server
       //      if (gameState.getAssign()) //uncomment these sections when ready to implement selecting a board;
       //      {
                 deck = new Deck(gameState.getPlayers().Count);
+                discards = new List<Card>();
+
                 foreach (Player p in gameState.getPlayers().Values)
                 {
                     p.setHand(deck.dealCards(1));
@@ -167,16 +170,17 @@ namespace _7Wonders.Server
             Player p = gameState.getPlayers()[id];
             List<string> playedCards = new List<string>();
             List<ActionType> playedActions = new List<ActionType>();
-
+            
             Console.WriteLine("Testing Handled Actions");
             foreach (KeyValuePair<string, ActionType> action in actions)
             {
+                Card c = cards.getCard(action.Key); 
+
                 switch (action.Value)
-                {
+                {                       
                     case ActionType.BUILD_CARD:
                         if (!p.getReady())
-                        {
-                            Card c = cards.getCard(action.Key);                            
+                        {                      
                             // If able to purchase and card hasn't been built yet
                             if (p.canPurchase(c.cost) && !p.cardPlayed(c))
                             {
@@ -195,7 +199,7 @@ namespace _7Wonders.Server
                                 // This is broken, we need to find a way to apply effects that are need to be applied at the end of the game
                                 // maybe have a list of effects that would be run at the end of the game?
                                 foreach (Game_Cards.Effect e in c.effects)
-                                    EffectHandler.ApplyEffect(p, e);
+                                    EffectHandler.ApplyEffect(gameState, p, e);
                             }
                             else
                                 Console.WriteLine(id + ": Cannot build Card: " + action.Key);                           
@@ -220,7 +224,7 @@ namespace _7Wonders.Server
 
                                 // Must take into account freebuild still or anything specific to wonders atm
                                 foreach (Game_Cards.Effect e in pBoard.getStageEffects(pBoard.stagesBuilt))
-                                    EffectHandler.ApplyEffect(p, e);
+                                    EffectHandler.ApplyEffect(gameState, p, e);
                             }
                             else
                                 Console.WriteLine(id + ": Cannot build Wonder [Max Wonder stage] OR [Not enough resources]");
@@ -232,18 +236,24 @@ namespace _7Wonders.Server
                     case ActionType.SELL_CARD:
                         if (!p.getReady())
                         {
-                            Card c = cards.getCard(action.Key); // Getting the Card
+                            //Check if the card is in the player's hand before discarding
+                            if (p.getHand().Contains(c))
+                            {
+                                // Add to list of lastPlayedCards and lastActions
+                                playedCards.Add(action.Key);
+                                playedActions.Add(ActionType.SELL_CARD);
 
-                            // Add to list of lastPlayedCards and lastActions
-                            playedCards.Add(action.Key);
-                            playedActions.Add(ActionType.SELL_CARD);
+                                // Setting Hand with the card removed and in play
+                                List<Card> newHand = p.getHand();
+                                newHand.Remove(c);
+                                p.setHand(newHand);
 
-                            // Setting Hand with the card removed and in play
-                            List<Card> newHand = p.getHand();
-                            newHand.Remove(c);
-                            p.setHand(newHand);
-                            
-                            // Need to place card into a discard pile
+                                // Adding the sold card to the discard pile
+                                discards.Add(c);
+                                EffectHandler.Discard(p);
+                            }
+                            else
+                                Console.WriteLine(id + ": Cannot discard a card not in hand! [" + action.Value + "]");
                         }
                         else
                             Console.WriteLine(id + ": Cannot SELL_CARD, already marked as ready");
