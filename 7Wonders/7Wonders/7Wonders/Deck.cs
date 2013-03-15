@@ -15,6 +15,9 @@ namespace _7Wonders
         private static List<Card> age3;
         private static List<Card> guilds;
 
+        // Discard Pile
+        private static List<Card> discardPile;
+
         // Random Variables
         private static Random rnd = new Random();
         private int r;
@@ -26,6 +29,8 @@ namespace _7Wonders
             age2 = new List<Card>();
             age3 = new List<Card>();
             guilds = new List<Card>();
+            discardPile = new List<Card>();
+
             r = 0;
 
             // Loops through the cards.json array and gets the cards
@@ -119,6 +124,11 @@ namespace _7Wonders
                     break;
             }
             return hand;
+        }
+
+        public void discard(Card c)
+        {
+            discardPile.Add(c);
         }
     }
 }

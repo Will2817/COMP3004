@@ -164,8 +164,13 @@ namespace _7Wonders.Client
         public void selectActions(Dictionary<string, ActionType> actions)
         {
             JArray actionArray = new JArray();
+
+            Console.WriteLine("Testing Selected Action");
             foreach (KeyValuePair<string, ActionType> action in actions)
             {
+                Console.WriteLine("\tcard: " + action.Key.ToString());
+                Console.WriteLine("\taction: " + action.Value + "\n");
+
                 actionArray.Add(new JObject(new JProperty("card", action.Key),
                                             (new JProperty("action", (int)action.Value))));
             }

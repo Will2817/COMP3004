@@ -31,12 +31,16 @@ namespace _7Wonders.Server
             switch ((ClientMessageType)type)
             {
                 case ClientMessageType.READY_CHANGED:
+                    Console.WriteLine("{0}: READY_CHANGED", clientID);
                     gameManager.setPlayerReady(clientID, Boolean.Parse(message));
                     break;
                 case ClientMessageType.BOARD_SELECTION:
                     //stuff
+                    Console.WriteLine("HandleMessage: BOARD_SELECTION");
                     break;
                 case ClientMessageType.TURN_ACTION:
+                    //stuff
+                    Console.WriteLine("HandleMessage: TURN_ACTION");
                     Dictionary<string, ActionType> actions = new Dictionary<string, ActionType>();
                     gameManager.handleActions(clientID, actions);
                     break;

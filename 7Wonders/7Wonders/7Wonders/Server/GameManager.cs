@@ -163,9 +163,66 @@ namespace _7Wonders.Server
             // Checks if actions are valid and updates the player/discard pile/etc
             // set the ready flag for that player so that it can check whether all players are ready and
             // broadcasts the results of the turn
-            
-            //foreach ()
+            Player p = gameState.getPlayers()[id];
+
+            Console.WriteLine("Testing Handled Actions");
+            foreach (KeyValuePair<string, ActionType> action in actions)
             {
+                Console.WriteLine("{0}, {1}", action.Key, action.Value);
+                switch (action.Value)
+                {
+                    case ActionType.BUILD_CARD:
+                        if (!p.getReady())
+                        {
+                            Console.WriteLine(id +  " BUILD_CARD");
+                         
+                            p.setReady(true);
+                        }
+                        else
+                            Console.WriteLine("Player is already marked as ready");
+                        break;
+
+                    case ActionType.BUILD_WONDER:
+                        if (!p.getReady())
+                        {
+                            Side pBoard = p.getBoard().getSide();
+
+                            Console.WriteLine(id + " BUILD_WONDER");
+                            if (pBoard.stagesBuilt < pBoard.getStageNum() && p.canPurchase(pBoard.getStageCost(pBoard.stagesBuilt + 1)))
+                            {
+                                // Build Board and place effect into players effect list                      
+                                pBoard.stagesBuilt += 1;
+                                //List<Effect> effects = pBoard.getStageEffects(pBoard.stagesBuilt);
+
+                                p.setReady(true);
+                            }
+                            else
+                            {
+                                Console.WriteLine(id + ": Cannot build Wonder [Max Wonder stage] OR [Not enough resources]");
+                            }
+                            
+                        }
+                        else
+                            Console.WriteLine("Player is already marked as ready");
+                        break;
+
+                    case ActionType.SELL_CARD:
+                        if (!p.getReady())
+                        {
+                            Console.WriteLine(id + " SELL_CARD");
+
+                            //deck.discard( /* selected Card*/);
+                            p.setReady(true);
+                        }
+
+                        break;
+
+                    default:
+                        Console.WriteLine("Action Error: " + action.Value);
+                        break;
+                }
+
+
 
             }
         }

@@ -16,7 +16,8 @@ namespace _7Wonders
         protected List<Card> played;
         protected bool ready;
         protected ActionType action; // Players Action selected for the turn
-        
+        protected Card selectedCard;
+
         protected List<string> lastCardsPlayed;
         protected List<ActionType> lastActions;
 
@@ -45,6 +46,7 @@ namespace _7Wonders
             board       = null;
             hand        = null;
             played      =  null;
+            selectedCard = null;
             ready       = false;
             action      = 0;
 
@@ -70,6 +72,7 @@ namespace _7Wonders
             rcostEast = 2;
             rcostWest = 2;
             mcost = 2;
+            selectedCard = null;
 
             choices = new List<List<Resource>>();
             unpurchasable = new List<List<Resource>>();
@@ -158,6 +161,7 @@ namespace _7Wonders
         public bool getReady() { return ready; }
         public List<string> getLastCardsPlayed() { return lastCardsPlayed; }
         public List<ActionType> getLastActions() { return lastActions; }
+        public Card getSelectedCard(Card c) { return selectedCard; }
 
         // Returns the dicitonary object of Score & Resources 
         // along with List of choices and unpurchasable resources
@@ -241,6 +245,7 @@ namespace _7Wonders
         public void setLastCardsPlayed(List<string> _cards) { lastCardsPlayed = _cards; }
         public void setLastActions(List<ActionType> _actions) { lastActions = _actions; }
         public void addTotalResource(Resource r, int amount) { totalResources[r] += amount; }
+        public void setSelectedCard(Card c) { selectedCard = c; }
 
         public void resetTotalResources()
         {
