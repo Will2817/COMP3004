@@ -126,6 +126,18 @@ namespace _7Wonders
             return hand;
         }
 
+        public Card getDiscardCard(Card c)
+        {
+            if (discardPile.Contains(c))
+            {
+                Card cardReturned = getDiscardCard(c);
+                discardPile.Remove(c);
+                return cardReturned;
+            }
+            else
+                return null;
+        }
+
         public void discard(Card c)
         {
             discardPile.Add(c);
