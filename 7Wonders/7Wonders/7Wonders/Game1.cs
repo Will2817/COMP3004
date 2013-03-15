@@ -124,6 +124,11 @@ namespace _7Wonders
             textures.Add("emptyResourceBar", Content.Load<Texture2D>("Images/emptyResourceBar"));
             textures.Add("paperleft", Content.Load<Texture2D>("Images/paper_left"));
             textures.Add("papermiddle", Content.Load<Texture2D>("Images/paper_middle"));
+            textures.Add("bg", Content.Load<Texture2D>("Images/bg"));
+            textures.Add("discard", Content.Load<Texture2D>("Images/deck"));
+            textures.Add("greenglow", Content.Load<Texture2D>("Images/greenglow"));
+            textures.Add("goldglow", Content.Load<Texture2D>("Images/goldglow"));
+            textures.Add("redglow", Content.Load<Texture2D>("Images/redglow"));
 
             foreach (JObject j in (JArray)wondersJson["wonders"])
             {
