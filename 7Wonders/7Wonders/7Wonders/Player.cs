@@ -35,7 +35,6 @@ namespace _7Wonders
         List<List<Resource>> choices;
         List<List<Resource>> unpurchasable;
 
-
         // Default Player Constructor
         public Player(long _id, string _name)
         {
