@@ -12,6 +12,8 @@ namespace _7Wonders.Server
         protected MessageSerializerService messageSerializer;
         protected NetService netService;
         protected Deck deck;
+        protected CardLibrary cards;
+        protected List<Card> discards;
 
         public GameManager()
         {
@@ -94,6 +96,8 @@ namespace _7Wonders.Server
       //      if (gameState.getAssign()) //uncomment these sections when ready to implement selecting a board;
       //      {
                 deck = new Deck(gameState.getPlayers().Count);
+                discards = new List<Card>();
+
                 foreach (Player p in gameState.getPlayers().Values)
                 {
                     p.setHand(deck.dealCards(1));
@@ -163,11 +167,108 @@ namespace _7Wonders.Server
             // Checks if actions are valid and updates the player/discard pile/etc
             // set the ready flag for that player so that it can check whether all players are ready and
             // broadcasts the results of the turn
+            Player p = gameState.getPlayers()[id];
+            List<string> playedCards = new List<string>();
+            List<ActionType> playedActions = new List<ActionType>();
             
-            //foreach ()
+            Console.WriteLine("Testing Handled Actions");
+            foreach (KeyValuePair<string, ActionType> action in actions)
             {
+                Card c = cards.getCard(action.Key); 
 
-            }
+                switch (action.Value)
+                {                       
+                    case ActionType.BUILD_CARD:
+                        if (!p.getReady())
+                        {                      
+                            // If able to purchase and card hasn't been built yet
+                            if (p.canPurchase(c.cost) && !p.cardPlayed(c))
+                            {
+                                // Add to list of lastPlayedCards and lastActions
+                                playedCards.Add(action.Key);
+                                playedActions.Add(ActionType.BUILD_CARD);
+
+                                // Setting Hand with the card removed and in play
+                                List<Card> newHand = p.getHand();
+                                newHand.Remove(c);
+                                p.setHand(newHand);
+
+                                // Play card and update the # of card colour 
+                                p.addPlayed(c);
+
+                                // This is broken, we need to find a way to apply effects that are need to be applied at the end of the game
+                                // maybe have a list of effects that would be run at the end of the game?
+                                foreach (Game_Cards.Effect e in c.effects)
+                                    EffectHandler.ApplyEffect(gameState, p, e);
+                            }
+                            else
+                                Console.WriteLine(id + ": Cannot build Card: " + action.Key);                           
+                        }
+                        else
+                            Console.WriteLine(id + ": Cannot BUILD_CARD, already marked as ready");
+                        break;
+
+                    case ActionType.BUILD_WONDER:
+                        if (!p.getReady())
+                        {
+                            Side pBoard = p.getBoard().getSide();
+                            // If player has wonders left to build and hasthe resources, then build
+                            if (pBoard.stagesBuilt < pBoard.getStageNum() && p.canPurchase(pBoard.getStageCost(pBoard.stagesBuilt + 1)))
+                            {
+                                // Add to list of lastPlayedCards and lastActions
+                                playedCards.Add(action.Key);
+                                playedActions.Add(ActionType.BUILD_WONDER);
+
+                                // Build Board and place effect into players effect list                      
+                                pBoard.stagesBuilt += 1;
+
+                                // Must take into account freebuild still or anything specific to wonders atm
+                                foreach (Game_Cards.Effect e in pBoard.getStageEffects(pBoard.stagesBuilt))
+                                    EffectHandler.ApplyEffect(gameState, p, e);
+                            }
+                            else
+                                Console.WriteLine(id + ": Cannot build Wonder [Max Wonder stage] OR [Not enough resources]");
+                        }
+                        else
+                            Console.WriteLine(id + ": Cannot BUILD_WONDER, already marked as ready");
+                        break;
+
+                    case ActionType.SELL_CARD:
+                        if (!p.getReady())
+                        {
+                            //Check if the card is in the player's hand before discarding
+                            if (p.getHand().Contains(c))
+                            {
+                                // Add to list of lastPlayedCards and lastActions
+                                playedCards.Add(action.Key);
+                                playedActions.Add(ActionType.SELL_CARD);
+
+                                // Setting Hand with the card removed and in play
+                                List<Card> newHand = p.getHand();
+                                newHand.Remove(c);
+                                p.setHand(newHand);
+
+                                // Adding the sold card to the discard pile
+                                discards.Add(c);
+                                EffectHandler.Discard(p);
+                            }
+                            else
+                                Console.WriteLine(id + ": Cannot discard a card not in hand! [" + action.Value + "]");
+                        }
+                        else
+                            Console.WriteLine(id + ": Cannot SELL_CARD, already marked as ready");
+                        break;
+
+                    default:
+                        Console.WriteLine("Action Error: " + action.Value);
+                        break;
+                } // End switch
+            } // End foreach
+
+            // Setting the players last action/cards played and player to READY
+            p.setLastActions(playedActions);
+            p.setLastCardsPlayed(playedCards);
+            setPlayerReady(id, true);
         }
     }
 }
