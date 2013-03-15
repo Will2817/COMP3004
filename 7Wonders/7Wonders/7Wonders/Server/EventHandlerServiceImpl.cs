@@ -39,14 +39,11 @@ namespace _7Wonders.Server
                     Console.WriteLine("HandleMessage: BOARD_SELECTION");
                     break;
                 case ClientMessageType.TURN_ACTION:
-<<<<<<< HEAD
                     //stuff
                     Console.WriteLine("HandleMessage: TURN_ACTION");
                     Dictionary<string, ActionType> actions = new Dictionary<string, ActionType>();
-                    gameManager.handleActions(clientID, actions);
-=======
+                    //gameManager.handleActions(clientID, actions);
                     gameManager.handleActions(clientID, parseActions(message));
->>>>>>> origin/master
                     break;
                 case ClientMessageType.CHAT_MESSAGE:
                     //stuff
