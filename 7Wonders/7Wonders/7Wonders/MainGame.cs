@@ -177,7 +177,6 @@ namespace _7Wonders
                 {
                     if (hand["hand" + j].isClicked())
                     {
-                        Console.WriteLine("hand " + j + " was clicked");
                         hand["hand" + j].reset();
 
                         trade.showTrade(hand["hand" + j].getTexture(), j);
