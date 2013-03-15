@@ -35,7 +35,7 @@ namespace _7Wonders.Server
         {
             Player newAI = new Player(System.DateTime.UtcNow.Ticks, type);
             newAI.setReady(true);
-            aiPlayers.Add(newAI.getID(), new AIPlayer(type));
+            aiPlayers.Add(newAI.getID(), new AIPlayer(type, newAI.getID(), this));
             addPlayer(newAI);
         }
 
