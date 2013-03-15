@@ -879,8 +879,7 @@
                 {
                     "type": "victory",
                     "amount": 3,
-                    "from": "none",
-                    "basis": "none"
+					"basis": "blue"
                 }
             ],
             "chains": [
@@ -898,8 +897,7 @@
                 {
                     "type": "victory",
                     "amount": 3,
-                    "from": "none",
-                    "basis": "none"
+					"basis": "blue"
                 }
             ],
             "chains": [
@@ -919,8 +917,7 @@
                 {
                     "type": "victory",
                     "amount": 3,
-                    "from": "none",
-                    "basis": "none"
+					"basis": "blue"
                 }
             ],
             "chains": [
@@ -940,8 +937,7 @@
                 {
                     "type": "victory",
                     "amount": 3,
-                    "from": "none",
-                    "basis": "none"
+					"basis": "blue"
                 }
             ],
             "chains": [
@@ -959,8 +955,7 @@
                 {
                     "type": "victory",
                     "amount": 2,
-                    "from": "none",
-                    "basis": "none"
+					"basis": "blue"
                 }
             ],
             "chains": [
@@ -978,8 +973,7 @@
                 {
                     "type": "victory",
                     "amount": 2,
-                    "from": "none",
-                    "basis": "none"
+					"basis": "blue"
                 }
             ],
             "chains": [
@@ -997,8 +991,7 @@
                 {
                     "type": "victory",
                     "amount": 2,
-                    "from": "none",
-                    "basis": "none"
+					"basis": "blue"
                 }
             ],
             "chains": [
@@ -1016,8 +1009,7 @@
                 {
                     "type": "victory",
                     "amount": 2,
-                    "from": "none",
-                    "basis": "none"
+					"basis": "blue"
                 }
             ],
             "chains": [
@@ -1037,8 +1029,7 @@
                 {
                     "type": "victory",
                     "amount": 5,
-                    "from": "none",
-                    "basis": "none"
+					"basis": "blue"
                 }
             ],
             "chains": [
@@ -1058,8 +1049,7 @@
                 {
                     "type": "victory",
                     "amount": 5,
-                    "from": "none",
-                    "basis": "none"
+					"basis": "blue"
                 }
             ],
             "chains": [
@@ -1081,8 +1071,7 @@
                 {
                     "type": "victory",
                     "amount": 3,
-                    "from": "none",
-                    "basis": "none"
+					"basis": "blue"
                 }
             ],
             "chains": [
@@ -1104,8 +1093,7 @@
                 {
                     "type": "victory",
                     "amount": 3,
-                    "from": "none",
-                    "basis": "none"
+					"basis": "blue"
                 }
             ],
             "chains": [
@@ -1126,8 +1114,7 @@
                 {
                     "type": "victory",
                     "amount": 4,
-                    "from": "none",
-                    "basis": "none"
+					"basis": "blue"
                 }
             ],
             "chains": [
@@ -1148,8 +1135,7 @@
                 {
                     "type": "victory",
                     "amount": 4,
-                    "from": "none",
-                    "basis": "none"
+					"basis": "blue"
                 }
             ],
             "chains": [
@@ -1173,8 +1159,7 @@
                 {
                     "type": "victory",
                     "amount": 7,
-                    "from": "none",
-                    "basis": "none"
+					"basis": "blue"
                 }
             ],
             "chains": [
@@ -1198,8 +1183,7 @@
                 {
                     "type": "victory",
                     "amount": 7,
-                    "from": "none",
-                    "basis": "none"
+					"basis": "blue"
                 }
             ],
             "chains": [
@@ -1220,8 +1204,7 @@
                 {
                     "type": "victory",
                     "amount": 5,
-                    "from": "none",
-                    "basis": "none"
+					"basis": "blue"
                 }
             ],
             "chains": [
@@ -1242,8 +1225,7 @@
                 {
                     "type": "victory",
                     "amount": 5,
-                    "from": "none",
-                    "basis": "none"
+					"basis": "blue"
                 }
             ],
             "chains": [
@@ -1265,8 +1247,7 @@
                 {
                     "type": "victory",
                     "amount": 6,
-                    "from": "none",
-                    "basis": "none"
+					"basis": "blue"
                 }
             ],
             "chains": [
@@ -1288,8 +1269,7 @@
                 {
                     "type": "victory",
                     "amount": 6,
-                    "from": "none",
-                    "basis": "none"
+					"basis": "blue"
                 }
             ],
             "chains": [
@@ -1311,8 +1291,7 @@
                 {
                     "type": "victory",
                     "amount": 6,
-                    "from": "none",
-                    "basis": "none"
+					"basis": "blue"
                 }
             ],
             "chains": [
@@ -1338,8 +1317,7 @@
                 {
                     "type": "victory",
                     "amount": 8,
-                    "from": "none",
-                    "basis": "none"
+					"basis": "blue"
                 }
             ],
             "chains": [
@@ -1365,8 +1343,7 @@
                 {
                     "type": "victory",
                     "amount": 8,
-                    "from": "none",
-                    "basis": "none"
+					"basis": "blue"
                 }
             ],
             "chains": [
@@ -1387,8 +1364,7 @@
                 {
                     "type": "victory",
                     "amount": 4,
-                    "from": "none",
-                    "basis": "none"
+					"basis": "blue"
                 }
             ],
             "chains": [
@@ -1409,8 +1385,7 @@
                 {
                     "type": "victory",
                     "amount": 4,
-                    "from": "none",
-                    "basis": "none"
+					"basis": "blue"
                 }
             ],
             "chains": [
@@ -1432,8 +1407,7 @@
                 {
                     "type": "victory",
                     "amount": 6,
-                    "from": "none",
-                    "basis": "none"
+					"basis": "blue"
                 }
             ],
             "chains": [
@@ -1455,8 +1429,7 @@
                 {
                     "type": "victory",
                     "amount": 6,
-                    "from": "none",
-                    "basis": "none"
+					"basis": "blue"
                 }
             ],
             "chains": [
@@ -2088,11 +2061,7 @@
             "cost": {},
             "effects": [
                 {
-                    "type": "mcostEast",
-                    "amount": 1
-                },
-                {
-                    "type": "mcostWest",
+                    "type": "mcostBoth",
                     "amount": 1
                 }
             ],
@@ -2109,11 +2078,7 @@
             "cost": {},
             "effects": [
                 {
-                    "type": "mcostEast",
-                    "amount": 1
-                },
-                {
-                    "type": "mcostWest",
+                    "type": "mcostBoth",
                     "amount": 1
                 }
             ],
@@ -2137,7 +2102,8 @@
                         "g",
                         "l",
                         "p"
-                    ]
+                    ],
+					"basis": "yellow"					
                 }
             ],
             "chains": [
@@ -2161,7 +2127,8 @@
                         "g",
                         "l",
                         "p"
-                    ]
+                    ],
+					"basis": "yellow"
                 }
             ],
             "chains": [
@@ -2185,7 +2152,8 @@
                         "g",
                         "l",
                         "p"
-                    ]
+                    ],
+					"basis": "yellow"
                 }
             ],
             "chains": [
@@ -2210,7 +2178,8 @@
                         "s",
                         "o",
                         "w"
-                    ]
+                    ],
+					"basis": "yellow"
                 }
             ],
             "chains": [
@@ -2234,7 +2203,8 @@
                         "s",
                         "o",
                         "w"
-                    ]
+                    ],
+					"basis": "yellow"
                 }
             ],
             "chains": [
@@ -2258,7 +2228,8 @@
                         "s",
                         "o",
                         "w"
-                    ]
+                    ],
+					"basis": "yellow"
                 }
             ],
             "chains": [

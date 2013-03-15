@@ -37,7 +37,7 @@ namespace _7Wonders.Server
                     //stuff
                     break;
                 case ClientMessageType.TURN_ACTION:
-                    //stuff
+                    gameManager.handleActions(clientID, parseActions(message));
                     break;
                 case ClientMessageType.CHAT_MESSAGE:
                     //stuff
@@ -45,6 +45,15 @@ namespace _7Wonders.Server
                 default:
                     break;
             }
+        }
+
+        public Dictionary<string, ActionType> parseActions(string message)
+        {
+            Dictionary<string, ActionType> actions = new Dictionary<string, ActionType>();
+            JArray actionArray = (JArray)JObject.Parse(message)["actions"];
+            foreach (JObject obj in actionArray)
+                actions.Add((string )obj["card"], (ActionType) (int) obj["action"]);
+            return actions;
         }
 
     }

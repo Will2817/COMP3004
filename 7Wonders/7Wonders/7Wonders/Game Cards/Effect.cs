@@ -18,6 +18,12 @@ namespace _7Wonders.Game_Cards
 
         public Effect(JObject _json)
         {
+            type = null;
+            amount = -1;
+            list = null;
+            from = null;
+            basis = null;
+
             foreach (KeyValuePair<string, JToken> token in (JObject)_json)
             {
                 switch (token.Key)
@@ -47,6 +53,9 @@ namespace _7Wonders.Game_Cards
                         break;
                 }
             }
+
+            // Used for Testing the Effect parameters
+            PrintEffect();
         }
 
         public void PrintEffect()
@@ -62,11 +71,18 @@ namespace _7Wonders.Game_Cards
                 for (int i = 0; i < list.Count(); i++)
                     Console.Write(list[i] + "\t");
             }
+            else
+                Console.WriteLine("\tList:\t NULL");
 
             if (from != null)
                 Console.WriteLine("\tFrom:\t" + from);
+            else
+                Console.WriteLine("\tFrom:\t NULL");
+
             if (basis != null)
                 Console.WriteLine("\tBasis:\t" + basis);
+            else
+                Console.WriteLine("\tBasis:\t NULL\n");
 
         }
     }

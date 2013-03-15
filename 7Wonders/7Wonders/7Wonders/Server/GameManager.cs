@@ -35,7 +35,7 @@ namespace _7Wonders.Server
         {
             Player newAI = new Player(System.DateTime.UtcNow.Ticks, type);
             newAI.setReady(true);
-            aiPlayers.Add(newAI.getID(), new AIPlayer(type));
+            aiPlayers.Add(newAI.getID(), new AIPlayer(type, newAI.getID(), this));
             addPlayer(newAI);
         }
 
@@ -155,6 +155,18 @@ namespace _7Wonders.Server
             {
                 if (!aiPlayers.ContainsKey(id))
                     messageSerializer.notifyHand(id, gameState.handToJson(id));
+            }
+        }
+
+        public void handleActions(long id, Dictionary<string, ActionType> actions)
+        {
+            // Checks if actions are valid and updates the player/discard pile/etc
+            // set the ready flag for that player so that it can check whether all players are ready and
+            // broadcasts the results of the turn
+            
+            //foreach ()
+            {
+
             }
         }
     }
