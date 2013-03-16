@@ -16,7 +16,7 @@ namespace _7Wonders
         protected int lengthCap;
 
         public Textbox(Game1 theGame, Vector2 _pos, int _w, int _h, string _t, string _sfont, int _cap)
-            : base(theGame, _pos, _w, _h, "line")
+            : base(_pos, _w, _h, "line")
         {
             fontName = _sfont;
             textureColor = Color.White * opacity;

@@ -21,15 +21,15 @@ namespace _7Wonders
         protected bool dropRequest = false;
 
         public DropDown(Game1 theGame, Vector2 _pos, int _w, int _h, List<string> _options, bool? _enabled = true)
-            :base(theGame, _pos, _w, _h, "line", Color.White)
+            : base(_pos, _w, _h, "line", Color.White)
         {
             enabled = (_enabled.HasValue) ? _enabled.Value : true;
             strings = new Dictionary<string, Visual>();
-            selected = new Visual(game, position, width, height, _options[0], "Font1", Color.White, Color.SlateGray);
+            selected = new Visual(position, width, height, _options[0], "Font1", Color.White, Color.SlateGray);
             int count=1;
             foreach (string s in _options)
             {
-                strings.Add(s, (new Visual(game, position+new Vector2(0, count*height), width+21, height, s,"Font1", Color.White)).setVisible(false));
+                strings.Add(s, (new Visual(position + new Vector2(0, count * height), width + 21, height, s, "Font1", Color.White)).setVisible(false));
                 count++;
             }
 

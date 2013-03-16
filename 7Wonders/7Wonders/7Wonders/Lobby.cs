@@ -58,8 +58,8 @@ namespace _7Wonders
             wonders = new Dictionary<String, Visual>();
 
             visuals1 = new Dictionary<String, Visual>();
-            visuals1.Add("Divider1", new Visual(game, new Vector2(SEC1WIDTH - 1, 0), DIVIDERWIDTH, Game1.HEIGHT, "line", Color.Silver));
-            visuals1.Add("Divider2", new Visual(game, new Vector2(0, SEC1HEIGHT - 1), Game1.WIDTH, DIVIDERWIDTH, "line", Color.Silver));
+            visuals1.Add("Divider1", new Visual(new Vector2(SEC1WIDTH - 1, 0), DIVIDERWIDTH, Game1.HEIGHT, "line", Color.Silver));
+            visuals1.Add("Divider2", new Visual(new Vector2(0, SEC1HEIGHT - 1), Game1.WIDTH, DIVIDERWIDTH, "line", Color.Silver));
 
             dropDowns = new List<DropDown>();
             dropDowns.Add(new DropDown(game, new Vector2(MARGIN, MARGIN), DROPDOWNWIDTH, DROPDOWNHEIGHT, new List<string>() { "Host" }, false));
@@ -96,7 +96,7 @@ namespace _7Wonders
                 
             }
 
-            visuals1.Add("selected", new Visual(game, new Vector2(5 + SEC1WIDTH, 5 + SEC1HEIGHT), WONDERWIDTH * 2 + 10, WONDERHEIGHT * 2, Game1.wonders.Values.First().getTexture()));
+            visuals1.Add("selected", new Visual(new Vector2(5 + SEC1WIDTH, 5 + SEC1HEIGHT), WONDERWIDTH * 2 + 10, WONDERHEIGHT * 2, Game1.wonders.Values.First().getTexture()));
             visuals1.Add("toggleButton", sideButton);
             visuals1.Add("backButton", backButton);
             activeVisuals = visuals1;

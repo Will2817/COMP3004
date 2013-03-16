@@ -19,13 +19,13 @@ namespace _7Wonders
 
         // Checkbox constructor - Virtual
         public Checkbox(Game1 theGame, Vector2 _pos, int _w, int _h)
-            :base(theGame, _pos, _w, _h, "line")
+            : base(_pos, _w, _h, "line")
         {
             textureColor = new Color(255, 255, 255, opacity);
         }
 
         public Checkbox(Game1 theGame, Vector2 _pos)
-            : base(theGame, _pos, 15, 15, "line")
+            : base(_pos, 15, 15, "line")
         {
             textureColor = new Color(255, 255, 255, opacity);
         }

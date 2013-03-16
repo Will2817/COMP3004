@@ -16,7 +16,7 @@ namespace _7Wonders
 
         // Button Constructor
         public Button(Game1 theGame, Vector2 _pos,int _w, int _h, string _t, string _sfont, string texture=null)
-            : base(theGame, _pos, _w, _h, (texture != null) ? texture: "button")
+            : base(_pos, _w, _h, (texture != null) ? texture : "button")
         {
             fontName = _sfont;
             textureColor = new Color(255 - highlight, 255 - highlight, 255 - highlight) * opacity;

@@ -49,20 +49,20 @@ namespace _7Wonders
             visuals1.Add("HGame", HGame);
             visuals1.Add("JGame", JGame);
 
-            visuals2.Add("DBox", new Visual(game,new Vector2(250,200),300,300, "line", Color.Silver));
-            visuals2.Add("Box1", new Visual(game, new Vector2(275, 210), 200, 50, "line", Color.SlateGray));
-            visuals2.Add("String1", new Visual(game, new Vector2(280, 215), "Room Setup", "Font1", Color.White));
-            visuals2.Add("Box2", new Visual(game, new Vector2(260, 270), 150, 50, "line", Color.SlateGray));
-            visuals2.Add("String2", new Visual(game, new Vector2(265, 275), "Assign boards", "Font1", Color.White));
+            visuals2.Add("DBox", new Visual(new Vector2(250, 200), 300, 300, "line", Color.Silver));
+            visuals2.Add("Box1", new Visual(new Vector2(275, 210), 200, 50, "line", Color.SlateGray));
+            visuals2.Add("String1", new Visual(new Vector2(280, 215), "Room Setup", "Font1", Color.White));
+            visuals2.Add("Box2", new Visual(new Vector2(260, 270), 150, 50, "line", Color.SlateGray));
+            visuals2.Add("String2", new Visual(new Vector2(265, 275), "Assign boards", "Font1", Color.White));
             visuals2.Add("Check1", randomBox);
-            visuals2.Add("Box3", new Visual(game, new Vector2(260, 340), 150, 50, "line", Color.SlateGray));
-            visuals2.Add("String3", new Visual(game, new Vector2(265, 345), "Only Side A", "Font1", Color.White));
+            visuals2.Add("Box3", new Visual(new Vector2(260, 340), 150, 50, "line", Color.SlateGray));
+            visuals2.Add("String3", new Visual(new Vector2(265, 345), "Only Side A", "Font1", Color.White));
             visuals2.Add("Check2", onlyABox);
             visuals2.Add("CRoom", CRoom);
             visuals2.Add("backButton", backButton);
 
-            connectDia.Add("connectBox", new Visual(game, new Vector2(250, 200), 300, 125, "line", Color.Silver));
-            connectDia.Add("message", new Visual(game, new Vector2(280, 215), "", "Font1", Color.White));
+            connectDia.Add("connectBox", new Visual(new Vector2(250, 200), 300, 125, "line", Color.Silver));
+            connectDia.Add("message", new Visual(new Vector2(280, 215), "", "Font1", Color.White));
             OK = new Button(game, new Vector2(280, 250), 120, 50, "Okay", "Font1");
             connectDia.Add("ok", OK);
 
