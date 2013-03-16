@@ -36,9 +36,9 @@ namespace _7Wonders
         protected bool backToMenu = true;
         protected const int NUMPLAYERS = 7;
         protected bool viewSideB = false;
-        
-        public Lobby(Game1 theGame)
-            : base(theGame, "title", 0.4f)
+
+        public Lobby()
+            : base("title", 0.4f)
         {
             playerTypes = new List<string>() { "Open"};
             foreach (string type in Server.AIPlayer.aiTypes.Keys)
@@ -46,13 +46,13 @@ namespace _7Wonders
                 playerTypes.Add(type);
             }
 
-            sideButton = new Button(game, new Vector2(Game1.WIDTH - 140, Game1.HEIGHT - 140), 140, 40, "Toggle Side", "Font1");
-            backButton = new Button(game, new Vector2(10, Game1.HEIGHT - 100), 75, 40, "Back", "Font1");
+            sideButton = new Button(new Vector2(Game1.WIDTH - 140, Game1.HEIGHT - 140), 140, 40, "Toggle Side", "Font1");
+            backButton = new Button(new Vector2(10, Game1.HEIGHT - 100), 75, 40, "Back", "Font1");
 
             readyCBs = new List<Checkbox>();
             for (int i = 0; i < NUMPLAYERS; i++)
             {
-                readyCBs.Add(new Checkbox(game, new Vector2(50 + DROPDOWNWIDTH, 20 + (MARGIN + DROPDOWNHEIGHT) * i), CHECKBOXDIM, CHECKBOXDIM));
+                readyCBs.Add(new Checkbox(new Vector2(50 + DROPDOWNWIDTH, 20 + (MARGIN + DROPDOWNHEIGHT) * i), CHECKBOXDIM, CHECKBOXDIM));
             }
 
             wonders = new Dictionary<String, Visual>();
@@ -62,11 +62,11 @@ namespace _7Wonders
             visuals1.Add("Divider2", new Visual(new Vector2(0, SEC1HEIGHT - 1), Game1.WIDTH, DIVIDERWIDTH, "line", Color.Silver));
 
             dropDowns = new List<DropDown>();
-            dropDowns.Add(new DropDown(game, new Vector2(MARGIN, MARGIN), DROPDOWNWIDTH, DROPDOWNHEIGHT, new List<string>() { "Host" }, false));
+            dropDowns.Add(new DropDown(new Vector2(MARGIN, MARGIN), DROPDOWNWIDTH, DROPDOWNHEIGHT, new List<string>() { "Host" }, false));
 
             for (int i = 1; i < NUMPLAYERS; i++)
             {
-                dropDowns.Add(new DropDown(game, new Vector2(MARGIN, MARGIN + (MARGIN + DROPDOWNHEIGHT) * i), DROPDOWNWIDTH, DROPDOWNHEIGHT, playerTypes, false));
+                dropDowns.Add(new DropDown(new Vector2(MARGIN, MARGIN + (MARGIN + DROPDOWNHEIGHT) * i), DROPDOWNWIDTH, DROPDOWNHEIGHT, playerTypes, false));
             }
 
             for (int i = dropDowns.Count; i > 0; i--)

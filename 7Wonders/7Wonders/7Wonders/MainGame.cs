@@ -46,7 +46,7 @@ namespace _7Wonders
         protected MouseState mousestate;
 
         public MainGame(Game1 theGame)
-            : base(theGame, "background", 1.0f)
+            : base("background", 1.0f)
         {
             LABELWIDTH = SEC1WIDTH / 2 - MARGIN;
             CARDWIDTH = (Game1.WIDTH - 8 * (MARGIN * 2) - 30) / MAXHANDSIZE;
@@ -54,7 +54,7 @@ namespace _7Wonders
             player = null;
             wonder = null;
             hand = new Dictionary<string, Visual>();
-            leftButton = new Button(game, new Vector2(Game1.WIDTH - 27, 200 + CARDHEIGHT / 2 - 7), 15, 15, "", "Font1", "left");
+            leftButton = new Button(new Vector2(Game1.WIDTH - 27, 200 + CARDHEIGHT / 2 - 7), 15, 15, "", "Font1", "left");
             hand.Add("paperleft", new Visual(new Vector2(Game1.WIDTH - 27, 190), 30, CARDHEIGHT + 30, "paperleft"));
             hand.Add("leftButton", leftButton.setBorder(false));
 
@@ -66,7 +66,7 @@ namespace _7Wonders
             baseVisuals.Add("Divider2", new Visual(new Vector2(0, SEC1HEIGHT - 1), Game1.WIDTH, DIVIDERWIDTH, "line", Color.Silver));
             baseVisuals.Add("Age", new Visual(new Vector2(Game1.WIDTH - MARGIN - 75, MARGIN), 75, 75, "age1"));
 
-            trade = new TradeInterface(theGame);
+            trade = new TradeInterface();
         }
 
         private void Initialize()
@@ -194,7 +194,7 @@ namespace _7Wonders
 
             int storeSeat = seatViewed;
 
-            switch (game.recordedPresses)
+            switch (Game1.recordedPresses)
             {
                 case "1":
                     seatViewed = 0;
@@ -239,7 +239,7 @@ namespace _7Wonders
                 default:
                     break;
             }
-            game.recordedPresses = "";
+            Game1.recordedPresses = "";
 
             if (storeSeat != seatViewed)
             {

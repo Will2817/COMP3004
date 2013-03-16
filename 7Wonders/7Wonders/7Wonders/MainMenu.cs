@@ -30,21 +30,21 @@ namespace _7Wonders
 
         protected bool host = false;
 
-        public MainMenu(Game1 theGame)
-            :base (theGame, "title")
+        public MainMenu()
+            : base("title")
         {
             visuals1 = new Dictionary<String, Visual>();
             visuals2 = new Dictionary<String, Visual>();
             visuals3 = new Dictionary<String, Visual>();
             connectDia = new Dictionary<String, Visual>();
 
-            HGame = new Button(game, new Vector2(150, 450), 200, 50, "Host Game", "Font1");
-            JGame = new Button(game, new Vector2(450, 450), 200, 50, "Join Game", "Font1");
-            CRoom = new Button(game, new Vector2(260, 420), 145, 50, "Create Room", "Font1");
-            backButton = new Button(game, new Vector2(410, 420), 120, 50, "Back", "Font1");
+            HGame = new Button(new Vector2(150, 450), 200, 50, "Host Game", "Font1");
+            JGame = new Button(new Vector2(450, 450), 200, 50, "Join Game", "Font1");
+            CRoom = new Button(new Vector2(260, 420), 145, 50, "Create Room", "Font1");
+            backButton = new Button(new Vector2(410, 420), 120, 50, "Back", "Font1");
 
-            randomBox = new Checkbox(game, new Vector2(450, 285));
-            onlyABox = new Checkbox(game, new Vector2(450, 355));
+            randomBox = new Checkbox(new Vector2(450, 285));
+            onlyABox = new Checkbox(new Vector2(450, 355));
 
             visuals1.Add("HGame", HGame);
             visuals1.Add("JGame", JGame);
@@ -63,7 +63,7 @@ namespace _7Wonders
 
             connectDia.Add("connectBox", new Visual(new Vector2(250, 200), 300, 125, "line", Color.Silver));
             connectDia.Add("message", new Visual(new Vector2(280, 215), "", "Font1", Color.White));
-            OK = new Button(game, new Vector2(280, 250), 120, 50, "Okay", "Font1");
+            OK = new Button(new Vector2(280, 250), 120, 50, "Okay", "Font1");
             connectDia.Add("ok", OK);
 
             activeVisuals = visuals1;

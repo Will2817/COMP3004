@@ -20,7 +20,7 @@ namespace _7Wonders
         protected bool isDown = false;
         protected bool dropRequest = false;
 
-        public DropDown(Game1 theGame, Vector2 _pos, int _w, int _h, List<string> _options, bool? _enabled = true)
+        public DropDown(Vector2 _pos, int _w, int _h, List<string> _options, bool? _enabled = true)
             : base(_pos, _w, _h, "line", Color.White)
         {
             enabled = (_enabled.HasValue) ? _enabled.Value : true;
@@ -33,7 +33,7 @@ namespace _7Wonders
                 count++;
             }
 
-            dropButton = new Button(game, position+new Vector2(width+1, 0),20, height, "", "Font1", "drop");
+            dropButton = new Button(position + new Vector2(width + 1, 0), 20, height, "", "Font1", "drop");
         }
 
         public override void LoadContent()

@@ -14,7 +14,6 @@ namespace _7Wonders
 {
     public class Interface
         {
-        protected Game1 game;
         protected Dictionary<String, Visual> activeVisuals;
         protected string backgroundText;
         protected Texture2D background;
@@ -25,18 +24,16 @@ namespace _7Wonders
         protected int width = Game1.WIDTH;
         protected int height = Game1.HEIGHT;
 
-        public Interface(Game1 theGame, string _backText, float ?_dim=null)
+        public Interface(string _backText, float? _dim = null)
         {
-            game = theGame;
             backgroundText = _backText;
             activeVisuals = new Dictionary<string,Visual>();
             if (_dim.HasValue) dim = _dim.Value;
             else dim = 1;
         }
 
-        public Interface(Game1 theGame, string _backText, Vector2 _pos, int _width, int _height, float _dim = 1)
+        public Interface(string _backText, Vector2 _pos, int _width, int _height, float _dim = 1)
         {
-            game = theGame;
             backgroundText = _backText;
             activeVisuals = new Dictionary<string, Visual>();
             pos = _pos;

@@ -36,8 +36,8 @@ namespace _7Wonders
         private int cardCost = 0;
         private TradeHelper th = new TradeHelper("", Resource.CLAY, 3, new Vector2(400,400));
 
-        public TradeInterface(Game1 theGame)
-            : base(theGame, "bg", new Vector2(Game1.WIDTH/3, Game1.HEIGHT/6), Game1.WIDTH * 2/3, Game1.HEIGHT * 2/3)
+        public TradeInterface()
+            : base("bg", new Vector2(Game1.WIDTH / 3, Game1.HEIGHT / 6), Game1.WIDTH * 2 / 3, Game1.HEIGHT * 2 / 3)
         {
             CARDHEIGHT = height - MARGIN * 2;
             CARDWIDTH = (int) (CARDHEIGHT / CARDRATIO) - MARGIN * 2;
@@ -49,13 +49,13 @@ namespace _7Wonders
             requirements = new Dictionary<Visual, Resource>();
 
             card = new Visual(new Vector2(pos.X + MARGIN, pos.Y + MARGIN), CARDWIDTH, CARDHEIGHT, null);
-            buildCard = new Button(theGame, new Vector2(pos.X + width - 150, pos.Y + MARGIN + height * 0 / 4), 100, 50, "Card", "Font1");
-            buildStage = new Button(theGame, new Vector2(pos.X + width - 150, pos.Y + MARGIN * 2 + height * 1 / 4), 100, 50, "Stage", "Font1");
-            sellCard = new Button(theGame, new Vector2(pos.X + width - 150, pos.Y + MARGIN * 3 + height * 2 / 4), 100, 50, "Sell", "Font1");
-            close = new Button(theGame, new Vector2(pos.X + width - 150, pos.Y + MARGIN * 4 + height* 3/4), 100, 50, "Close", "Font1");
+            buildCard = new Button(new Vector2(pos.X + width - 150, pos.Y + MARGIN + height * 0 / 4), 100, 50, "Card", "Font1");
+            buildStage = new Button(new Vector2(pos.X + width - 150, pos.Y + MARGIN * 2 + height * 1 / 4), 100, 50, "Stage", "Font1");
+            sellCard = new Button(new Vector2(pos.X + width - 150, pos.Y + MARGIN * 3 + height * 2 / 4), 100, 50, "Sell", "Font1");
+            close = new Button(new Vector2(pos.X + width - 150, pos.Y + MARGIN * 4 + height * 3 / 4), 100, 50, "Close", "Font1");
 
-            back = new Button(theGame, new Vector2(pos.X + width/5, pos.Y + height * 9 / 10), 100, 40, "Back", "Font1");
-            build = new Button(theGame, new Vector2(pos.X + width * 3/5, pos.Y + height * 9 / 10), 100, 40, "Build", "Font1");
+            back = new Button(new Vector2(pos.X + width / 5, pos.Y + height * 9 / 10), 100, 40, "Back", "Font1");
+            build = new Button(new Vector2(pos.X + width * 3 / 5, pos.Y + height * 9 / 10), 100, 40, "Build", "Font1");
 
             visuals1.Add("buildcard", buildCard);
             visuals1.Add("buildstage", buildStage);

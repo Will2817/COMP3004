@@ -28,7 +28,7 @@ namespace _7Wonders
 
         public static int MAXPLAYER = 7;
 
-        public string recordedPresses = "";
+        public static string recordedPresses = "";
         static KeyboardState prevState = Keyboard.GetState();
 
         public static int WIDTH = 800;
@@ -70,9 +70,9 @@ namespace _7Wonders
             }
 
             interfaces = new Dictionary<String, Interface>();
-            interfaces.Add("mainmenu", new MainMenu(this));
-            interfaces.Add("lobby", new Lobby(this));
-            interfaces.Add("hostlobby", new HostLobby(this));
+            interfaces.Add("mainmenu", new MainMenu());
+            interfaces.Add("lobby", new Lobby());
+            interfaces.Add("hostlobby", new HostLobby());
             interfaces.Add("maingame", new MainGame(this));
             activeInterface = interfaces["mainmenu"];
 

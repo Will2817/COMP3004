@@ -15,7 +15,7 @@ namespace _7Wonders
         protected string displayedText = "";
         protected int lengthCap;
 
-        public Textbox(Game1 theGame, Vector2 _pos, int _w, int _h, string _t, string _sfont, int _cap)
+        public Textbox(Vector2 _pos, int _w, int _h, string _t, string _sfont, int _cap)
             : base(_pos, _w, _h, "line")
         {
             fontName = _sfont;
@@ -41,11 +41,11 @@ namespace _7Wonders
             }
             if (hasFocus)
             {
-                if ((game.recordedPresses == "back")&&(text.Length>0))
+                if ((Game1.recordedPresses == "back")&&(text.Length>0))
                     text = text.Substring(0, text.Length - 1);
                 else 
-                    if (text.Length < lengthCap) text += game.recordedPresses;
-                game.recordedPresses = "";
+                    if (text.Length < lengthCap) text += Game1.recordedPresses;
+                Game1.recordedPresses = "";
                 displayedText = text;
                 if (gameTime.TotalGameTime.Milliseconds < 500)
                 {

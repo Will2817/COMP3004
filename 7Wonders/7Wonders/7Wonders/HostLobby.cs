@@ -18,11 +18,11 @@ namespace _7Wonders
         protected Button startButton;
         protected DropDown dropped = null;
         protected bool existsADrop = false;
-        
-        public HostLobby(Game1 theGame)
-            : base(theGame)
+
+        public HostLobby()
+            : base()
         {
-            startButton = new Button(game, new Vector2(90, Game1.HEIGHT - 100), 75, 40, "Start", "Font1");
+            startButton = new Button(new Vector2(90, Game1.HEIGHT - 100), 75, 40, "Start", "Font1");
 
             foreach (DropDown dd in dropDowns)
             {
