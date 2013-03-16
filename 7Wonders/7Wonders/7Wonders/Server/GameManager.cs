@@ -190,8 +190,8 @@ namespace _7Wonders.Server
                         // Play card and update the # of card colour 
                         p.addPlayed(c);
 
-                        // This is broken, we need to find a way to apply effects that are need to be applied at the end of the game
-                        // maybe have a list of effects that would be run at the end of the game?
+                        // Only applies instant effects of cards, such as victory points, coins,
+                        // resource choices, army, trade and science
                         foreach (Game_Cards.Effect e in c.effects)
                             EffectHandler.ApplyEffect(gameState, p, e);
                         break;
@@ -221,7 +221,7 @@ namespace _7Wonders.Server
 
                         // Adding the sold card to the discard pile
                         discards.Add(c);
-                        EffectHandler.Discard(p);
+                        EffectHandler.SellCard(p);
                         break;
 
                     default:
