@@ -142,7 +142,7 @@ namespace _7Wonders.Client
             messageSerializer.sendActions(jActions.ToString());
         }
 
-        private Player getWestNeighbour(Player p)
+        public Player getWestNeighbour(Player p)
         {
             foreach (Player o in gameState.getPlayers().Values)
             {
@@ -152,7 +152,7 @@ namespace _7Wonders.Client
             return null;
         }
 
-        private Player getEastNeighbour(Player p)
+        public Player getEastNeighbour(Player p)
         {
             foreach (Player o in gameState.getPlayers().Values)
             {

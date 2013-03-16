@@ -65,12 +65,11 @@ namespace _7Wonders
             baseVisuals.Add("Divider1", new Visual(new Vector2(SEC1WIDTH - 1, 0), DIVIDERWIDTH, Game1.HEIGHT, "line", Color.Silver));
             baseVisuals.Add("Divider2", new Visual(new Vector2(0, SEC1HEIGHT - 1), Game1.WIDTH, DIVIDERWIDTH, "line", Color.Silver));
             baseVisuals.Add("Age", new Visual(new Vector2(Game1.WIDTH - MARGIN - 75, MARGIN), 75, 75, "age1"));
-
-            trade = new TradeInterface();
         }
 
         private void Initialize()
         {
+            trade = new TradeInterface();
             player = Game1.client.getSelf();
             foreach (Player p in Game1.client.getState().getPlayers().Values)
             {
@@ -135,7 +134,7 @@ namespace _7Wonders
             {
                 v.LoadContent();
             }
-            trade.LoadContent();
+            if (trade != null) trade.LoadContent();
         }
 
         public override void receiveMessage(Dictionary<string, string> message)
