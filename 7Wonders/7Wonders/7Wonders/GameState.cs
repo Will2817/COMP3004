@@ -7,6 +7,7 @@ using Newtonsoft.Json.Linq;
 
 namespace _7Wonders
 {
+    // Keeps the Game State of the current game in progress
     public class GameState
     {
         private Dictionary<long, Player> players;
@@ -168,7 +169,7 @@ namespace _7Wonders
             return j.ToString();
         }
 
-        public void setHand(CardLibrary cardLibrary, long id, string message)
+        public void setHand(long id, string message)
         {
             List<string> hand = new List<string>();
             JArray j = JArray.Parse(message);

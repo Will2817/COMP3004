@@ -114,7 +114,7 @@ namespace _7Wonders
                 v.setVisible(true);
 
             cardCost = Game1.client.constructCost(image);
-            if (Game1.client.getCard(image).cost.ContainsKey(Resource.COIN))
+            if (CardLibrary.getCard(image).cost.ContainsKey(Resource.COIN))
             {
                 needtrade = false;
             }
@@ -165,10 +165,10 @@ namespace _7Wonders
                     else
                     {
                         //HACKS
-                        Game1.client.getSelf().addPlayed(Game1.client.getCard(Game1.client.getSelf().getHand()[cardSpot]));
+                        Game1.client.getSelf().addPlayed(CardLibrary.getCard(Game1.client.getSelf().getHand()[cardSpot]));
                         Game1.client.getSelf().getHand().RemoveAt(cardSpot);
-                        if (Game1.client.getCard(card.getTexture()).cost.ContainsKey(Resource.COIN))
-                            Game1.client.getSelf().addResource(Resource.COIN, -Game1.client.getCard(card.getTexture()).cost[Resource.COIN]);
+                        if (CardLibrary.getCard(card.getTexture()).cost.ContainsKey(Resource.COIN))
+                            Game1.client.getSelf().addResource(Resource.COIN, -CardLibrary.getCard(card.getTexture()).cost[Resource.COIN]);
                         else
                             Game1.client.getSelf().addResource(Resource.COIN, -cardCost);
                         //
@@ -256,7 +256,7 @@ namespace _7Wonders
                 v.setVisible(false);
             }
             int i = 0;
-            foreach (KeyValuePair<Resource,int> kp in Game1.client.getCard(card.getTexture()).cost)
+            foreach (KeyValuePair<Resource, int> kp in CardLibrary.getCard(card.getTexture()).cost)
             {
                 for (int j = 0; j < kp.Value; j++)
                 {

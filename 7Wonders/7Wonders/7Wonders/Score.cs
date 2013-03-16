@@ -5,6 +5,7 @@ using System.Text;
 
 namespace _7Wonders
 {
+    // Enumerators for the players score
     public enum Score
     {
         VICTORY,

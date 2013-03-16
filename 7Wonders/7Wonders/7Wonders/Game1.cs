@@ -49,6 +49,7 @@ namespace _7Wonders
 
         public Game1()
         {
+            CardLibrary.init();
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             textures = new Dictionary<String, Texture2D>();

@@ -12,7 +12,6 @@ namespace _7Wonders.Server
         protected MessageSerializerService messageSerializer;
         protected NetService netService;
         protected Deck deck;
-        protected CardLibrary cards;
         protected List<Card> discards;
 
         public GameManager()
@@ -170,97 +169,59 @@ namespace _7Wonders.Server
             Player p = gameState.getPlayers()[id];
             List<string> playedCards = new List<string>();
             List<ActionType> playedActions = new List<ActionType>();
-            
+            if (p.getReady()) return;
             Console.WriteLine("Testing Handled Actions");
             foreach (KeyValuePair<string, ActionType> action in actions)
             {
                 string card = action.Key;
-                Card c = cards.getCard(card); 
-
+                Card c = CardLibrary.getCard(card);
                 switch (action.Value)
                 {                       
                     case ActionType.BUILD_CARD:
-                        if (!p.getReady())
-                        {
-                            // Consider validating move/checking whether player has already played card.
-
-                            bool freeConstruction = false;
-                            // Check if the card has a chain, and if so has the chain card been built yet
-                            /*foreach (Card _checkChain in p.getPlayed())
-                            {
-                                foreach (string chain in _checkChain.chains)
-                                {
-                                    if (chain.Equals(c.name))
-                                    {
-                                        freeConstruction = true;
-                                        break;
-                                    }
-                                }
-                                if (freeConstruction)
-                                    break; // Stops foreach loop as soon as freeConstruction is true
-                            }*/
-                            
-
-                                // Take into account coin costs and deduct it
-                                if (!freeConstruction && c.cost.ContainsKey(Resource.COIN))
-                                    p.addResource(Resource.COIN, (-1 * c.cost[Resource.COIN]));
+                        // Consider validating move/checking whether player has already played card.
                                 
-                                // Add to list of lastPlayedCards and lastActions
-                                playedCards.Add(card);
-                                playedActions.Add(ActionType.BUILD_CARD);
+                        // Add to list of lastPlayedCards and lastActions
+                        playedCards.Add(card);
+                        playedActions.Add(ActionType.BUILD_CARD);
 
-                                // Remove card from player's hand
-                                p.getHand().Remove(card);
+                        // Remove card from player's hand
+                        p.getHand().Remove(card);
 
-                                // Play card and update the # of card colour 
-                                p.addPlayed(c);
+                        // Play card and update the # of card colour 
+                        p.addPlayed(c);
 
-                                // This is broken, we need to find a way to apply effects that are need to be applied at the end of the game
-                                // maybe have a list of effects that would be run at the end of the game?
-                                foreach (Game_Cards.Effect e in c.effects)
-                                    EffectHandler.ApplyEffect(gameState, p, e);                        
-                        }
-                        else
-                            Console.WriteLine(id + ": Cannot BUILD_CARD, already marked as ready");
+                        // This is broken, we need to find a way to apply effects that are need to be applied at the end of the game
+                        // maybe have a list of effects that would be run at the end of the game?
+                        foreach (Game_Cards.Effect e in c.effects)
+                            EffectHandler.ApplyEffect(gameState, p, e);
                         break;
 
                     case ActionType.BUILD_WONDER:
-                        if (!p.getReady())
-                        {
-                            Console.WriteLine(id + ": BUILDING WONDER" + action.Key);
-                            Side pBoard = p.getBoard().getSide();
-                            //Consider checking whether player has stages left to build/can afford to build next stage
-                                // Add to list of lastActions
-                                playedActions.Add(ActionType.BUILD_WONDER);
+                        Console.WriteLine(id + ": BUILDING WONDER" + action.Key);
+                        Side pBoard = p.getBoard().getSide();
+                        //Consider checking whether player has stages left to build/can afford to build next stage
+                        // Add to list of lastActions
+                        playedActions.Add(ActionType.BUILD_WONDER);
 
-                                // Build Board and place effect into players effect list                      
-                                pBoard.stagesBuilt += 1;
+                        // Build Board and place effect into players effect list                      
+                        pBoard.stagesBuilt += 1;
 
-                                // Must take into account freebuild still or anything specific to wonders atm
-                                foreach (Game_Cards.Effect e in pBoard.getStageEffects(pBoard.stagesBuilt))
-                                    EffectHandler.ApplyEffect(gameState, p, e);
-                        }
-                        else
-                            Console.WriteLine(id + ": Cannot BUILD_WONDER, already marked as ready");
+                        // Must take into account freebuild still or anything specific to wonders atm
+                        foreach (Game_Cards.Effect e in pBoard.getStageEffects(pBoard.stagesBuilt))
+                            EffectHandler.ApplyEffect(gameState, p, e);
                         break;
 
                     case ActionType.SELL_CARD:
-                        if (!p.getReady())//need to move already ready check out of case statement
-                        {
-                                Console.WriteLine(id + ": DISCARDING " + action.Key);
-                                // Add to list of lastPlayedCards and lastActions
-                                playedCards.Add(action.Key);
-                                playedActions.Add(ActionType.SELL_CARD);
+                        Console.WriteLine(id + ": DISCARDING " + action.Key);
+                        // Add to list of lastActions
+                        playedActions.Add(ActionType.SELL_CARD);
 
-                                // Setting Hand with the card removed and in play
-                                p.getHand().Remove(card);
+                        // Setting Hand with the card removed and in play
+                        p.getHand().Remove(card);
 
-                                // Adding the sold card to the discard pile
-                                discards.Add(c);
-                                EffectHandler.Discard(p);               
-                        }
-                        else
-                            Console.WriteLine(id + ": Cannot SELL_CARD, already marked as ready");
+                        // Adding the sold card to the discard pile
+                        discards.Add(c);
+                        EffectHandler.Discard(p);
                         break;
 
                     default:
