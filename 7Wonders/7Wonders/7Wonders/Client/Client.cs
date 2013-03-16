@@ -98,5 +98,15 @@ namespace _7Wonders.Client
         {
             gameManager.selectActions(actions, westGold, eastGold);
         }
+
+        public Player westPlayer(Player p)
+        {
+            return gameManager.getWestNeighbour(p);
+        }
+
+        public Player eastPlayer(Player p)
+        {
+            return gameManager.getEastNeighbour(p);
+        }
     }
 }

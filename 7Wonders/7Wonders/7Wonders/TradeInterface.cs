@@ -29,12 +29,16 @@ namespace _7Wonders
         private Dictionary<string, Visual> visuals1;
         private Dictionary<string, Visual> trade;
         private Dictionary<Visual, Resource> requirements;
+        private Dictionary<Resource, TradeHelper> westHelpers;
+        private Dictionary<Resource, TradeHelper> eastHelpers;
         private int cardSpot = 0;
         private bool disableBuild = false;
-        private bool buildingCard = true;
+        private bool buildingCard = false;
         private bool needtrade = false;
         private int cardCost = 0;
-        private TradeHelper th = new TradeHelper("", Resource.CLAY, 3, new Vector2(400,400));
+        Player self;
+        Player west;
+        Player east;
 
         public TradeInterface()
             : base("bg", new Vector2(Game1.WIDTH / 3, Game1.HEIGHT / 6), Game1.WIDTH * 2 / 3, Game1.HEIGHT * 2 / 3)
@@ -43,6 +47,10 @@ namespace _7Wonders
             CARDWIDTH = (int) (CARDHEIGHT / CARDRATIO) - MARGIN * 2;
             SECTIONWIDTH = (width - MARGIN * 4) / 3;
             RSIZE = (int)(height * 0.054f);
+
+            self = Game1.client.getSelf();
+            west = Game1.client.westPlayer(self);
+            east = Game1.client.eastPlayer(self);
 
             visuals1 = new Dictionary<string, Visual>();
             trade = new Dictionary<string, Visual>();
@@ -76,26 +84,24 @@ namespace _7Wonders
             trade.Add("border5", new Visual(new Vector2(pos.X + (SECTIONWIDTH + MARGIN) * 1 + MARGIN - 1, pos.Y + RSIZE * 4 + MARGIN * 3 - 1), SECTIONWIDTH + 2, RSIZE * 6 + 2, "border").setBorder(false));
             trade.Add("border6", new Visual(new Vector2(pos.X + (SECTIONWIDTH + MARGIN) * 2 + MARGIN - 1, pos.Y + RSIZE * 4 + MARGIN * 3 - 1), SECTIONWIDTH + 2, RSIZE * 6 + 2, "border").setBorder(false));
 
-            for (int i = 0; i < 6; i++)
-            {
-                trade.Add("res1" + i, new Visual(new Vector2(pos.X + MARGIN * 2 + RSIZE * i, pos.Y + 04 * RSIZE + MARGIN * 3), RSIZE, RSIZE, "CLAY"));
-                trade.Add("res2" + i, new Visual(new Vector2(pos.X + MARGIN * 2 + RSIZE * i, pos.Y + 05 * RSIZE + MARGIN * 3), RSIZE, RSIZE, "CLAY"));
-                trade.Add("res3" + i, new Visual(new Vector2(pos.X + MARGIN * 2 + RSIZE * i, pos.Y + 06 * RSIZE + MARGIN * 3), RSIZE, RSIZE, "CLAY"));
-                trade.Add("res4" + i, new Visual(new Vector2(pos.X + MARGIN * 2 + RSIZE * i, pos.Y + 07 * RSIZE + MARGIN * 3), RSIZE, RSIZE, "CLAY"));
-                trade.Add("res5" + i, new Visual(new Vector2(pos.X + MARGIN * 2 + RSIZE * i, pos.Y + 08 * RSIZE + MARGIN * 3), RSIZE, RSIZE, "CLAY"));
-                trade.Add("res6" + i, new Visual(new Vector2(pos.X + MARGIN * 2 + RSIZE * i, pos.Y + 09 * RSIZE + MARGIN * 3), RSIZE, RSIZE, "CLAY"));
-                trade.Add("res7" + i, new Visual(new Vector2(pos.X + MARGIN * 2 + RSIZE * i, pos.Y + 10 * RSIZE + MARGIN * 4), RSIZE, RSIZE, "CLAY"));
-                trade.Add("res8" + i, new Visual(new Vector2(pos.X + MARGIN * 2 + RSIZE * i, pos.Y + 11 * RSIZE + MARGIN * 4), RSIZE, RSIZE, "CLAY"));
-                trade.Add("res9" + i, new Visual(new Vector2(pos.X + MARGIN * 2 + RSIZE * i, pos.Y + 12 * RSIZE + MARGIN * 4), RSIZE, RSIZE, "CLAY"));
+            westHelpers = new Dictionary<Resource, TradeHelper>();
+            eastHelpers = new Dictionary<Resource, TradeHelper>();
+            foreach (Resource r in Enum.GetValues(typeof(Resource))){
+                if (r != Resource.COIN)
+                {
+                    westHelpers.Add(r, new TradeHelper(r, 3, new Vector2(pos.X + MARGIN, pos.Y + ((int)r + 4) * RSIZE + MARGIN * 3)));
+                    eastHelpers.Add(r, new TradeHelper(r, 3, new Vector2(pos.X + SECTIONWIDTH * 2+ MARGIN * 3, pos.Y + ((int)r + 4) * RSIZE + MARGIN * 3)));
+                }
+
             }
 
             trade.Add("back", back);
             trade.Add("build", build);
 
-            trade.Add("rwest", new Visual(new Vector2(pos.X + width * 1 / 3, pos.Y + MARGIN), 110, 45, "rwest"));
-            trade.Add("reast", new Visual(new Vector2(pos.X + width * 1 / 3, pos.Y + MARGIN), 110, 45, "reast"));
-            trade.Add("rboth", new Visual(new Vector2(pos.X + width * 1 / 3, pos.Y + MARGIN), 110, 45, "rboth"));
-            trade.Add("mboth", new Visual(new Vector2(pos.X + width * 2 / 3, pos.Y + MARGIN), 110, 45, "mboth"));
+            trade.Add("rwest", new Visual(new Vector2(pos.X + width * 1 / 3 + MARGIN, pos.Y + MARGIN), 110, 45, "rwest"));
+            trade.Add("reast", new Visual(new Vector2(pos.X + width * 1 / 3 + MARGIN, pos.Y + MARGIN), 110, 45, "reast"));
+            trade.Add("rboth", new Visual(new Vector2(pos.X + width * 1 / 3 + MARGIN, pos.Y + MARGIN), 110, 45, "rboth"));
+            trade.Add("mboth", new Visual(new Vector2(pos.X + width * 2 / 3 + MARGIN * 2, pos.Y + MARGIN), 110, 45, "mboth"));
 
             for (int i = 0; i < 7; i++)
             {
@@ -138,6 +144,10 @@ namespace _7Wonders
                 v.LoadContent();
             foreach (Visual v in trade.Values)
                 v.LoadContent();
+            foreach (TradeHelper t in westHelpers.Values)
+                t.LoadContent();
+            foreach (TradeHelper t in eastHelpers.Values)
+                t.LoadContent();
         }
 
         public override void Update(GameTime gameTime, MouseState mouseState)
@@ -223,6 +233,10 @@ namespace _7Wonders
             {
                 foreach (Visual v in requirements.Keys)
                     v.Update(gameTime, mouseState);
+                foreach (TradeHelper t in westHelpers.Values)
+                    t.Update(gameTime, mouseState);
+                foreach (TradeHelper t in eastHelpers.Values)
+                    t.Update(gameTime, mouseState);
             }
         }
 
@@ -233,6 +247,10 @@ namespace _7Wonders
             {
                 foreach (Visual v in requirements.Keys)
                     v.Draw(gameTime, spriteBatch);
+                foreach (TradeHelper t in westHelpers.Values)
+                    t.Draw(gameTime, spriteBatch);
+                foreach (TradeHelper t in eastHelpers.Values)
+                    t.Draw(gameTime, spriteBatch);
             }
         }
 
@@ -255,7 +273,16 @@ namespace _7Wonders
             {
                 v.setVisible(false);
             }
+            foreach (TradeHelper t in westHelpers.Values)
+            {
+                t.setVisible(false);
+            }
+            foreach (TradeHelper t in eastHelpers.Values)
+            {
+                t.setVisible(false);
+            }
             int i = 0;
+            int k = 0;
             foreach (KeyValuePair<Resource, int> kp in CardLibrary.getCard(card.getTexture()).cost)
             {
                 for (int j = 0; j < kp.Value; j++)
@@ -264,6 +291,20 @@ namespace _7Wonders
                     requirements[v] = kp.Key;
                     i++;
                 }
+
+                if (west.getResourceNum(kp.Key) > 0)
+                {
+                    westHelpers[kp.Key].setY((int)pos.Y + (k + 4) * RSIZE + MARGIN * 3);
+                    westHelpers[kp.Key].setMax(west.getResourceNum(kp.Key));
+                    westHelpers[kp.Key].setVisible(true);
+                }
+                if (east.getResourceNum(kp.Key) > 0)
+                {
+                    eastHelpers[kp.Key].setY((int)pos.Y + (k + 4) * RSIZE + MARGIN * 3);
+                    eastHelpers[kp.Key].setMax(east.getResourceNum(kp.Key));
+                    eastHelpers[kp.Key].setVisible(true);
+                }
+                k++;
             }
         }
 
@@ -272,19 +313,90 @@ namespace _7Wonders
             private string neighbour;
             private int max;
             private int num = 0;
-            Resource r;
             private Visual resource;
-            private Visual plus;
-            private Visual minus;
+            private Button plus;
+            private Button minus;
             private Visual total;
 
-            public TradeHelper(string _neighbour, Resource _r, int _max, Vector2 position)
+            public TradeHelper(Resource _r, int _max, Vector2 position)
             {
-                neighbour = _neighbour;
-                r = _r;
                 max = _max;
-                resource = new Visual(position, RSIZE, RSIZE, r.ToString());
+                resource = new Visual(position, RSIZE, RSIZE, _r.ToString()).setBorder(false);
+                plus = new Button(position + new Vector2(RSIZE + MARGIN, 0), RSIZE, RSIZE, null, null, "plus", false);
+                minus = new Button(position + new Vector2((RSIZE + MARGIN) * 2, 0), RSIZE, RSIZE, null, null, "minus", false);
+                total = new Visual(position + new Vector2((RSIZE + MARGIN) * 3, 0), RSIZE, RSIZE, num.ToString(), "Font1", null, Color.Gray, "line", 0).setBorder(false);
+                setVisible(false);
+            }
 
+            public void LoadContent()
+            {
+                resource.LoadContent();
+                plus.LoadContent();
+                minus.LoadContent();
+                total.LoadContent();
+            }
+
+            public void setY(int y)
+            {
+                resource.setPosition(new Vector2(resource.getPosition().X, y));
+                plus.setPosition(new Vector2(plus.getPosition().X, y));
+                minus.setPosition(new Vector2(minus.getPosition().X, y));
+                total.setPosition(new Vector2(total.getPosition().X, y));
+            }
+
+            public void setMax(int _max)
+            {
+                num = 0;
+                max = _max;
+            }
+
+            public void Update(GameTime gameTime, MouseState mouseState)
+            {
+                resource.Update(gameTime, mouseState);
+                plus.Update(gameTime, mouseState);
+                minus.Update(gameTime, mouseState);
+                total.Update(gameTime, mouseState);
+
+                if (plus.isClicked())
+                {
+                    plus.reset();
+                    if (num < max)
+                    {
+                        num++;
+                        total.setString(num.ToString());
+                    }
+                }
+
+                if (minus.isClicked())
+                {
+                    minus.reset();
+                    if (num > 0)
+                    {
+                        num--;
+                        total.setString(num.ToString());
+                    }
+                }
+            }
+
+            public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+            {
+                resource.Draw(gameTime, spriteBatch);
+                plus.Draw(gameTime, spriteBatch);
+                minus.Draw(gameTime, spriteBatch);
+                total.Draw(gameTime, spriteBatch);
+            }
+
+            public void setVisible(bool _visible)
+            {
+                resource.setVisible(_visible);
+                plus.setVisible(_visible);
+                minus.setVisible(_visible);
+                total.setVisible(_visible);
+            }
+
+            public List<Visual> getVisuals()
+            {
+                return new List<Visual>() { resource, plus, minus, total };
             }
         }
     }

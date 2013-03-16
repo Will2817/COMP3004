@@ -36,6 +36,7 @@ namespace _7Wonders
         protected bool visible = true;
         protected bool enabled = true;
         protected bool border = true;
+        protected int margin = 2;
 
         // Constructor with Visual as a parameter
         public Visual(Visual v)
@@ -64,16 +65,17 @@ namespace _7Wonders
             stringColor *= opacity;
         }
 
-        public Visual(Vector2 _pos, string _text, string _fontName, Color? _color = null)
+        public Visual(Vector2 _pos, string _text, string _fontName, Color? _color = null, int _margin = 2)
         {
             position = _pos;
             textureColor *= opacity;
             stringColor = ((_color.HasValue) ? _color.Value : Color.White) * opacity;
             fontName = _fontName;
             text = _text;
+            margin = _margin;
         }
 
-        public Visual(Vector2 _pos, int _w, int _h, string _text, string _fontName, Color? _stringColor = null, Color? _textureColor = null, string _textureName = "line")
+        public Visual(Vector2 _pos, int _w, int _h, string _text, string _fontName, Color? _stringColor = null, Color? _textureColor = null, string _textureName = "line", int _margin = 2)
         {
             position = _pos;
             width = _w;
@@ -83,6 +85,7 @@ namespace _7Wonders
             fontName = _fontName;
             text = _text;
             textureName = _textureName;
+            margin = _margin;
         }
 
         public virtual void LoadContent()
@@ -122,7 +125,7 @@ namespace _7Wonders
             }
             if (text != null)
             {
-                spriteBatch.DrawString(font, text, new Vector2(position.X + 2, position.Y + 2), stringColor);
+                spriteBatch.DrawString(font, text, new Vector2(position.X + margin, position.Y + margin), stringColor);
             }
         }
 
@@ -207,7 +210,7 @@ namespace _7Wonders
             return this;
         }
 
-        public Visual setBorder(bool _border)
+        public virtual Visual setBorder(bool _border)
         {
             border = _border;
             return this;

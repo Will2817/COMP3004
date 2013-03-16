@@ -148,6 +148,9 @@ namespace _7Wonders
             textures.Add("WOODSTONEORECLAY", Content.Load<Texture2D>("Images/Resources/WOODSTONEORECLAY"));
             textures.Add("GLASSLOOMPAPYRUS", Content.Load<Texture2D>("Images/Resources/GLASSLOOMPAPYRUS"));
 
+            textures.Add("plus", Content.Load<Texture2D>("Images/plus"));
+            textures.Add("minus", Content.Load<Texture2D>("Images/minus"));
+
             foreach (JObject j in (JArray)wondersJson["wonders"])
             {
                 textures.Add((string)j["a"]["image"], Content.Load<Texture2D>("Images/Wonders/" + j["a"]["image"]));
