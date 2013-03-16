@@ -94,9 +94,9 @@ namespace _7Wonders.Client
             return gameManager.constructCost(cardID);
         }
 
-        public void playCard(Dictionary<string, ActionType> actions)
+        public void playCard(Dictionary<string, ActionType> actions, int westGold, int eastGold)
         {
-            gameManager.selectActions(actions);
+            gameManager.selectActions(actions, westGold, eastGold);
         }
 
         public Player westPlayer(Player p)

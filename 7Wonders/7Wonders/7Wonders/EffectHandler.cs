@@ -14,6 +14,10 @@ namespace _7Wonders
      */
     public static class EffectHandler
     {
+        // Wonder effects boolean
+        static bool [] freeBuild = {true, true, true}; // Once per age a player can build for free
+
+
         // Used for converting Resources
         static Dictionary<string, Resource> resourceType = new Dictionary<string, Resource>
         {
@@ -96,15 +100,34 @@ namespace _7Wonders
 
                         // SCIENCE CHOICE
                         else if (e.type.Equals("schoice"))
-                            AddScienceChoice(curr); // Max Function, will add onto the max science value
-
-                        // GUILD COPY - not finished
-                        else if (e.type.Equals("guildCopy"))
-                        {
-                            //CopyGuild(p);
-                        }
-                    } // End Effect Loop
+                            AddScienceChoice(curr); // Max Function, will add onto the max science value                        
+                    } // End Effect Loop for Cards                    
                 } // End Current Player's Card Loop
+
+
+                // Loop through Wonder Effects for the players
+                // GUILD COPY - not finished
+                /*else if (e.type.Equals("guildCopy"))
+                {
+                    //CopyGuild(p);
+                }*/
+            } // End Player Loop
+        }
+
+        // Effects to be applied during the last turn of every age
+        // Dependant on Wonders
+        public static void ApplyEndAge(GameState gameState)
+        {
+            foreach (KeyValuePair<long, Player> player in gameState.getPlayers())
+            {
+                Player curr = player.Value;
+                foreach (Effect effect in curr.getBoard().getSide().getStageEffects(gameState.getAge()))
+                {
+                    if (effect.basis.Equals("lastcard"))
+                    {
+
+                    }
+                } // End Loop for Wonder Effects
             } // End Player Loop
         }
 
@@ -199,20 +222,13 @@ namespace _7Wonders
 
 
         // ===== WONDER SPECIFIC =====
-
-            // LAST CARD - not finished
-            else if (e.type.Equals("lastcard"))
-            {
-
-            }
-
-            // FREE BUILD - not finished
+            // FREE BUILD - not finished *wild card --> can be done at anytime during an age
             else if (e.type.Equals("freeBuild"))
             {
 
             }
 
-            // DISCARD - not finished
+            // DISCARD - End of turn the stage was built and build a card from discard pile for free
             else if (e.type.Equals("discard"))
             {
 
@@ -334,45 +350,46 @@ namespace _7Wonders
         // Trading Cost for East && West of manufactured Resources
         private static void SetManufactedTrade(Player p) { p.mcost = 1; }
 
-        // Handing Gardens of Babylon [2nd stage]
-        // Gives the player the option of playing their seventh
-        // age card instead of discarding it.
-        // Play a card by paying it's cost
-        private static void LastCard(Player p)
+        // Babylon B [2nd stage]
+        // Handle this at the end of every age to play the last card if
+        // Player can pay for it, or discard to earn 3 coins or build the third wonder.
+        // EXTRA TURN basically
+        private static void LastCard(Player p, Card c)
         {
             // stuff
         }
 
         // Olympia A
         // the player can, once per Age, build a structure of their choice for free
-        private static void FreeBuild(Player p)
+        private static void FreeBuild(Player p, Card c, int age)
         {
-            // stuff
+            p.addPlayed(c);
+        }
+
+        public static bool checkFreeBuild(int age)
+        {
+            return freeBuild[age];
         }
 
         // Olympia B [3rd stage]
         // The third stage allows the player to "copy" a Guild (purple card) of
-        // their choice built by one of their two neighboring cities
-        private static void CopyGuild(Player p)
+        // their choice built by one of their two neighboring cities at the end of the game
+        private static void CopyGuild(Player p, string cardID)
         {
-            // stuff
-        }
-
-        // Babylon B [2nd stage]
-        // Handle this at the end of every age to play the last card if
-        // Player can pay for it, or discard to earn 3 coins or build the third wonder.
-        // EXTRA TURN basically
-        public static void LastCard2(Player p) //<-----------------This was a duplicate function name PLEASE CHANGE
-        {
-            // stuff
+            Card c = CardLibrary.getCard(cardID);
+            if (!p.cardPlayed(cardID) && c.colour.Equals(CardColour.PURPLE))
+            {
+                p.addPlayed(c);
+            }
         }
 
         // Halikarnassos A [2nd/3rd stage]
         // look at one of the discarded cards since the beginning of the 
         // game and build one for free
-        public static void Discard(Player p)
+        public static Card Discard(Player p, List<Card> discardPile)
         {
             // stuff
+            return null;
         }
     }
 }

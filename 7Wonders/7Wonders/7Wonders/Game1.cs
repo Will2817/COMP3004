@@ -253,7 +253,14 @@ namespace _7Wonders
                     }
                 }
                 if ((message["nextInterface"] == "maingame"))
-                    //if (!client.isUpdateAvailable()) Thread.Sleep(100);
+                {
+                    while (!client.getState().isGameInProgress())
+                    { }
+                    foreach (Player p in client.getState().getPlayers().Values)
+                    {
+                        Console.WriteLine("HERE ARE the BOARDS: " + p.getBoard().getName());
+                    }
+                }
                 activeInterface.reset();
                 activeInterface = interfaces[message["nextInterface"]];
                 activeInterface.receiveMessage(message);

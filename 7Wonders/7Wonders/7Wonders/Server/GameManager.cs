@@ -90,6 +90,26 @@ namespace _7Wonders.Server
             updateAIs();
         }
 
+        public Player getWestNeighbour(Player p)
+        {
+            foreach (Player o in gameState.getPlayers().Values)
+            {
+                if (o.getSeat() == p.getSeat() - 1 || (p.getSeat() == 0 && o.getSeat() == gameState.getPlayers().Count - 1))
+                    return o;
+            }
+            return null;
+        }
+
+        public Player getEastNeighbour(Player p)
+        {
+            foreach (Player o in gameState.getPlayers().Values)
+            {
+                if (o.getSeat() == p.getSeat() + 1 || (o.getSeat() == 0 && p.getSeat() == gameState.getPlayers().Count - 1))
+                    return o;
+            }
+            return null;
+        }
+
         public int startGame()
         {
       //      if (gameState.getAssign()) //uncomment these sections when ready to implement selecting a board;
@@ -116,6 +136,7 @@ namespace _7Wonders.Server
                     p.setBoard(wonders[i]);
                     p.addResource(wonders[i].getSide().getIntialResource(), 1);
                     p.addResource(Resource.COIN, 3);
+                    p.setReady(false);
                 }
                 messageSerializer.notifyWonderAssign(gameState.wonderAssignToJson());
                 messageSerializer.broadcastSuperState(gameState.superJson());
@@ -158,15 +179,29 @@ namespace _7Wonders.Server
             {
                 if (!aiPlayers.ContainsKey(id))
                     messageSerializer.notifyHand(id, gameState.handToJson(id));
+                else
+                    aiPlayers[id].selectAction(gameState);
             }
         }
 
-        public void handleActions(long id, Dictionary<string, ActionType> actions)
+        public void handleActions(long id, Dictionary<string, ActionType> actions, int westGold, int eastGold)
         {
             // Checks if actions are valid and updates the player/discard pile/etc
             // set the ready flag for that player so that it can check whether all players are ready and
             // broadcasts the results of the turn
             Player p = gameState.getPlayers()[id];
+            Player west = null;
+            Player east = null;
+            foreach (Player o in gameState.getPlayers().Values)
+            {
+                if (o.getSeat() == p.getSeat() - 1 || (p.getSeat() == 0 && o.getSeat() == gameState.getPlayers().Count - 1))
+                    west = o;
+                if (o.getSeat() == p.getSeat() + 1 || (o.getSeat() == 0 && p.getSeat() == gameState.getPlayers().Count - 1))
+                    east =  o;
+            }
+            west.addResource(Resource.COIN, westGold);
+            east.addResource(Resource.COIN, eastGold);
+            p.addResource(Resource.COIN, -1 * (westGold + eastGold));
             List<string> playedCards = new List<string>();
             List<ActionType> playedActions = new List<ActionType>();
             if (p.getReady()) return;
@@ -190,8 +225,8 @@ namespace _7Wonders.Server
                         // Play card and update the # of card colour 
                         p.addPlayed(c);
 
-                        // This is broken, we need to find a way to apply effects that are need to be applied at the end of the game
-                        // maybe have a list of effects that would be run at the end of the game?
+                        // Only applies instant effects of cards, such as victory points, coins,
+                        // resource choices, army, trade and science
                         foreach (Game_Cards.Effect e in c.effects)
                             EffectHandler.ApplyEffect(gameState, p, e);
                         break;
@@ -221,7 +256,7 @@ namespace _7Wonders.Server
 
                         // Adding the sold card to the discard pile
                         discards.Add(c);
-                        EffectHandler.Discard(p);
+                        EffectHandler.SellCard(p);
                         break;
 
                     default:
@@ -234,6 +269,67 @@ namespace _7Wonders.Server
             p.setLastActions(playedActions);
             p.setLastCardsPlayed(playedCards);
             setPlayerReady(id, true);
+
+            if (playersReady()) endTurn();
+        }
+
+        private void endTurn()
+        {
+            if (gameState.getTurn() == 6)
+            {
+                if (gameState.getAge() == 3)
+                {
+                    endGame();
+                    return;
+                }
+                gameState.incrementAge();
+                gameState.resetTurn();
+                foreach (Player p in gameState.getPlayers().Values)
+                    p.setHand(deck.dealCards(1));
+                resolveMilitaryConflicts();
+            }
+            else
+            {
+                messageSerializer.broadcastSuperState(gameState.superJson());
+                rotateHands();
+                gameState.incrementTurn();
+            }
+            sendHands();
+        }
+
+        private void rotateHands()
+        {
+            List<Player> players = gameState.getPlayers().Values.ToList();
+            players.Sort((p, q) => p.getSeat().CompareTo(q.getSeat()));
+            List<List<string>> hands = new List<List<string>>();
+            foreach (Player p in players)
+                hands.Add(p.getHand());
+            switch (gameState.getAge())
+            {
+                case 1:
+                case 3:
+                    List<string> firstHand = hands.First();
+                    hands.RemoveAt(0);
+                    hands.Add(firstHand);
+                    break;
+                case 2:
+                    List<string> lastHand = hands.Last();
+                    hands.RemoveAt(hands.Count - 1);
+                    hands.Add(lastHand);
+                    break;
+            }
+            for (int i = 0; i < players.Count; i++)
+                players[i].setHand(hands[i]);
+        }
+
+        private void resolveMilitaryConflicts()
+        {
+            //calculate and broadcast military conflict results
+        }
+
+        private void endGame()
+        {
+
         }
     }
 }
