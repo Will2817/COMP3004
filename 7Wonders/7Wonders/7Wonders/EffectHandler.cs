@@ -362,7 +362,7 @@ namespace _7Wonders
         // Handle this at the end of every age to play the last card if
         // Player can pay for it, or discard to earn 3 coins or build the third wonder.
         // EXTRA TURN basically
-        public static void LastCard(Player p)
+        public static void LastCard2(Player p) //<-----------------This was a duplicate function name PLEASE CHANGE
         {
             // stuff
         }
