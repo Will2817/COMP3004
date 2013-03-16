@@ -151,9 +151,9 @@ namespace _7Wonders
                 {
                     trade.reset();
                     showTrade = false;
-                    updateHands();
-                    updateScroll();
-                    updateResources();
+                    //updateHands();
+                    //updateScroll();
+                    //updateResources();
                 }
                 return;
             }
@@ -188,8 +188,6 @@ namespace _7Wonders
                     }
                 }
             }
-
-            if (Game1.client.isUpdateAvailable()) networkUpdates();
 
             int storeSeat = seatViewed;
 
@@ -251,7 +249,22 @@ namespace _7Wonders
                 showhand = !showhand;
                 updateScroll();
             }
-            if (Game1.client.isHandUpdated()) updateHands();
+            //updateHands();
+            if (Game1.client.isUpdateAvailable())
+            {
+                if (Game1.client.isHandUpdated())
+                {
+                    showhand = false;
+                    updateHands();
+                    updateScroll();
+                }
+                if (Game1.client.isPlayerUpdated())
+                {
+                    updatePlayed();
+                    updateResources();
+                    Game1.client.setPlayerChecked();
+                }
+            }
             updatePlayed();
         }
 
@@ -295,11 +308,6 @@ namespace _7Wonders
                 {
                     {"nextInterface", "maingame"}
                 };
-        }
-
-        private void networkUpdates()
-        {
-
         }
 
         private void updateHands()

@@ -176,13 +176,12 @@ namespace _7Wonders
                     else
                     {
                         //HACKS
-                        Game1.client.getSelf().addPlayed(CardLibrary.getCard(Game1.client.getSelf().getHand()[cardSpot]));
-                        Game1.client.getSelf().getHand().RemoveAt(cardSpot);
-                        if (CardLibrary.getCard(card.getTexture()).cost.ContainsKey(Resource.COIN))
+                        Game1.client.playCard(new Dictionary<string, ActionType>() { { card.getTexture(), ActionType.BUILD_CARD } }, 0, 0);
+                       /* if (CardLibrary.getCard(card.getTexture()).cost.ContainsKey(Resource.COIN))
                             Game1.client.getSelf().addResource(Resource.COIN, -CardLibrary.getCard(card.getTexture()).cost[Resource.COIN]);
                         else
                             Game1.client.getSelf().addResource(Resource.COIN, -cardCost);
-                        //
+                        //*/
                         finished = true;
                     }
                 }
@@ -191,19 +190,21 @@ namespace _7Wonders
             if (buildStage.isClicked())
             {
                 //HACKS
-                Game1.client.getSelf().getHand().RemoveAt(cardSpot);
+                //Game1.client.getSelf().getHand().RemoveAt(cardSpot);
                 //
                 buildStage.reset();
-                buildingCard = false;
-                finished = true;
+                //buildingCard = false;
+                //finished = true;
             }
 
             if (sellCard.isClicked())
             {
                 //HACKS
-                Game1.client.getSelf().getHand().RemoveAt(cardSpot);
-                Game1.client.getSelf().addResource(Resource.COIN, 3);
+                //Game1.client.getSelf().getHand().RemoveAt(cardSpot);
+                //Game1.client.getSelf().addResource(Resource.COIN, 3);
                 //
+
+                Game1.client.playCard(new Dictionary<string, ActionType>() { { card.getTexture(), ActionType.SELL_CARD } }, 0, 0);
                 sellCard.reset();
                 finished = true;
             }

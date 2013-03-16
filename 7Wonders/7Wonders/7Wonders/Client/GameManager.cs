@@ -130,7 +130,7 @@ namespace _7Wonders.Client
             return ConstructionUtils.constructCost(self, getWestNeighbour(self), getEastNeighbour(self), card.cost);
         }
 
-        public void selectActions(Dictionary<string, ActionType> actions, int goldWest, int goldEast)
+        public void selectActions(Dictionary<string, ActionType> actions, int westGold, int eastGold)
         {
             JArray actionArray = new JArray();
             foreach (KeyValuePair<string, ActionType> action in actions)
@@ -138,9 +138,10 @@ namespace _7Wonders.Client
                 actionArray.Add(new JObject(new JProperty("card", action.Key),
                                             (new JProperty("action", (int)action.Value))));
             }
-            JObject jActions = new JObject("actions", actionArray);
-            jActions.Add(new JProperty("goldWest", goldWest));
-            jActions.Add(new JProperty("goldEast", goldEast));
+            JObject jActions = new JObject(
+                new JProperty("actions", actionArray),
+                new JProperty("westGold", westGold),
+                new JProperty("eastGold", eastGold));
             messageSerializer.sendActions(jActions.ToString());
         }
 
