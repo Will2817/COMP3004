@@ -47,9 +47,9 @@ namespace _7Wonders
                 foreach (KeyValuePair<long, Player> neighbor in gameState.getPlayers())
                 {
                     if ((position + 1) % 3 == neighbor.Value.getSeat())                    
-                        west = neighbor.Value;
-                    if ((position - 1) % 3 == neighbor.Value.getSeat())
                         east = neighbor.Value;
+                    if ((position - 1) % 3 == neighbor.Value.getSeat())
+                        west = neighbor.Value;
                 }
 
                 // Looping through the player's played cards
@@ -105,6 +105,19 @@ namespace _7Wonders
         // and left to another global function to deal with it at the end of the game.
         public static void ApplyEffect(GameState gameState, Player p, Effect e)
         {
+            // Setting up Neighboring cities
+            Player east = null;
+            Player west = null;
+
+            // Setting up the east and west neighbors
+            foreach (KeyValuePair<long, Player> neighbor in gameState.getPlayers())
+            {
+                if ((p.getSeat() + 1) % 3 == neighbor.Value.getSeat())
+                    east = neighbor.Value;
+                if ((p.getSeat() - 1) % 3 == neighbor.Value.getSeat())
+                    west = neighbor.Value;
+            }
+
             // RESOURCES
             if (e.type.Length == 1)
                 AddResource(p, resourceType[e.type], e.amount);
@@ -141,7 +154,7 @@ namespace _7Wonders
                 // FROM: ALL
                 else if (e.basis.Equals("all"))
                 {
-                    //AddCoinAllColour(p, east, west, cardType[e.basis], e.amount);
+                    AddCoinAllColour(p, east, west, cardType[e.basis], e.amount);
                 }
             }
 

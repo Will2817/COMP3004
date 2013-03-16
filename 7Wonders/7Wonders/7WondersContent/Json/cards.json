@@ -1993,8 +1993,7 @@
             "cost": {},
             "effects": [
                 {
-                    "type": "rcostEast",
-                    "amount": 1
+                    "type": "rcostEast"
                 }
             ],
             "chains": [
@@ -2010,8 +2009,7 @@
             "cost": {},
             "effects": [
                 {
-                    "type": "rcostEast",
-                    "amount": 1
+                    "type": "rcostEast"
                 }
             ],
             "chains": [
@@ -2027,8 +2025,7 @@
             "cost": {},
             "effects": [
                 {
-                    "type": "rcostWest",
-                    "amount": 1
+                    "type": "rcostWest"
                 }
             ],
             "chains": [
@@ -2044,8 +2041,7 @@
             "cost": {},
             "effects": [
                 {
-                    "type": "rcostWest",
-                    "amount": 1
+                    "type": "rcostWest"
                 }
             ],
             "chains": [
@@ -2061,8 +2057,7 @@
             "cost": {},
             "effects": [
                 {
-                    "type": "mcostBoth",
-                    "amount": 1
+                    "type": "mcostBoth"
                 }
             ],
             "chains": [
@@ -2078,8 +2073,7 @@
             "cost": {},
             "effects": [
                 {
-                    "type": "mcostBoth",
-                    "amount": 1
+                    "type": "mcostBoth"
                 }
             ],
             "chains": [

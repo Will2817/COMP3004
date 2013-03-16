@@ -181,8 +181,30 @@ namespace _7Wonders.Server
                 {                       
                     case ActionType.BUILD_CARD:
                         if (!p.getReady())
-                        {                      
+                        {
                             // Consider validating move/checking whether player has already played card.
+
+                            bool freeConstruction = false;
+                            // Check if the card has a chain, and if so has the chain card been built yet
+                            foreach (Card _checkChain in p.getPlayed())
+                            {
+                                foreach (string chain in _checkChain.chains)
+                                {
+                                    if (chain.Equals(c.name))
+                                    {
+                                        freeConstruction = true;
+                                        break;
+                                    }
+                                }
+                                if (freeConstruction)
+                                    break; // Stops foreach loop as soon as freeConstruction is true
+                            }
+                            
+
+                                // Take into account coin costs and deduct it
+                                if (!freeConstruction && c.cost.ContainsKey(Resource.COIN))
+                                    p.addResource(Resource.COIN, (-1 * c.cost[Resource.COIN]));
+                                
                                 // Add to list of lastPlayedCards and lastActions
                                 playedCards.Add(card);
                                 playedActions.Add(ActionType.BUILD_CARD);
@@ -205,6 +227,7 @@ namespace _7Wonders.Server
                     case ActionType.BUILD_WONDER:
                         if (!p.getReady())
                         {
+                            Console.WriteLine(id + ": BUILDING WONDER" + action.Key);
                             Side pBoard = p.getBoard().getSide();
                             //Consider checking whether player has stages left to build/can afford to build next stage
                                 // Add to list of lastActions
@@ -224,6 +247,7 @@ namespace _7Wonders.Server
                     case ActionType.SELL_CARD:
                         if (!p.getReady())//need to move already ready check out of case statement
                         {
+                                Console.WriteLine(id + ": DISCARDING " + action.Key);
                                 // Add to list of lastPlayedCards and lastActions
                                 playedCards.Add(action.Key);
                                 playedActions.Add(ActionType.SELL_CARD);
@@ -233,7 +257,7 @@ namespace _7Wonders.Server
 
                                 // Adding the sold card to the discard pile
                                 discards.Add(c);
-                                EffectHandler.Discard(p);
+                                EffectHandler.Discard(p);               
                         }
                         else
                             Console.WriteLine(id + ": Cannot SELL_CARD, already marked as ready");
