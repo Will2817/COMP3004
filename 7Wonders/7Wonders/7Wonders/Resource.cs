@@ -5,6 +5,7 @@ using System.Text;
 
 namespace _7Wonders
 {
+    // Enumerators for the Resources
     public enum Resource
     {
         CLAY = 0,
