@@ -192,5 +192,10 @@ namespace _7Wonders.Client
             }
             return null;
         }
+
+        public Card getCard(string id)
+        {
+            return cardLibrary.getCard(id);
+        }
     }
 }
