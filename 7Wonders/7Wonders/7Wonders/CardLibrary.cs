@@ -10,9 +10,9 @@ namespace _7Wonders
 {
     public class CardLibrary
     {
-        Dictionary<string, Card> cards;
+        public static Dictionary<string, Card> cards;
 
-        public CardLibrary()
+        public static void init()
         {
             JObject _json = JObject.Parse(File.ReadAllText("Content/Json/cards.json"));
             cards = new Dictionary<string, Card>();
@@ -23,7 +23,7 @@ namespace _7Wonders
 
         }
 
-        public Card getCard(string cardKey)
+        public static Card getCard(string cardKey)
         {
             if (cards.ContainsKey(cardKey)) return cards[cardKey];
             return null;

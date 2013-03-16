@@ -12,7 +12,6 @@ namespace _7Wonders.Server
         protected MessageSerializerService messageSerializer;
         protected NetService netService;
         protected Deck deck;
-        protected CardLibrary cards;
         protected List<Card> discards;
 
         public GameManager()
@@ -175,7 +174,7 @@ namespace _7Wonders.Server
             foreach (KeyValuePair<string, ActionType> action in actions)
             {
                 string card = action.Key;
-                Card c = cards.getCard(card);
+                Card c = CardLibrary.getCard(card);
                 switch (action.Value)
                 {                       
                     case ActionType.BUILD_CARD:

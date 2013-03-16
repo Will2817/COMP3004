@@ -364,7 +364,7 @@ namespace _7Wonders
                 int played4 = 0;
                 foreach (string cardID in p.getPlayed())
                 {
-                    Card c = Game1.client.getCard(cardID);
+                    Card c = CardLibrary.getCard(cardID);
                     if (c.colour == CardColour.BROWN || c.colour == CardColour.GRAY)
                     {
                         if (played1 < 5)
