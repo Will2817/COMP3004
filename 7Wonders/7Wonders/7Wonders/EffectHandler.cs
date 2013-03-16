@@ -101,7 +101,7 @@ namespace _7Wonders
                         // GUILD COPY - not finished
                         else if (e.type.Equals("guildCopy"))
                         {
-                            CopyGuild(p);
+                            //CopyGuild(p);
                         }
                     } // End Effect Loop
                 } // End Current Player's Card Loop
