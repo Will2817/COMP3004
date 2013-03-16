@@ -116,7 +116,8 @@ namespace _7Wonders
             updatePlayed();
             updateHands();
             updateScroll();
-            
+            Game1.client.setHandChecked();
+            Game1.client.setPlayerChecked();
 
             seatViewed = player.getSeat();
             activeVisuals = seatVisuals[seatViewed];
@@ -249,7 +250,7 @@ namespace _7Wonders
                 showhand = !showhand;
                 updateScroll();
             }
-            //updateHands();
+
             if (Game1.client.isUpdateAvailable())
             {
                 if (Game1.client.isHandUpdated())
@@ -257,6 +258,7 @@ namespace _7Wonders
                     showhand = false;
                     updateHands();
                     updateScroll();
+                    Game1.client.setHandChecked();
                 }
                 if (Game1.client.isPlayerUpdated())
                 {
@@ -333,7 +335,6 @@ namespace _7Wonders
                 k++;
             }
             hand["papermiddle"].setPosition(new Vector2(MARGIN + 30 + (CARDWIDTH / 2 + MARGIN) * (7 - player.getHand().Count) + 1, 190)).setWidth(Game1.WIDTH - (MARGIN + 30 + (CARDWIDTH / 2 + MARGIN) * (7 - player.getHand().Count) + 1));
-            Game1.client.setHandChecked();
         }
 
         private void updateScroll()

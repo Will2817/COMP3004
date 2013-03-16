@@ -168,6 +168,11 @@ namespace _7Wonders
             {
                 i.LoadContent();
             }
+
+            foreach (Visual v in cards.Values)
+            {
+                v.LoadContent();
+            }
         }
 
         /// <summary>
