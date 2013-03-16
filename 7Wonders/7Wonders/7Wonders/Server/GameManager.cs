@@ -257,7 +257,7 @@ namespace _7Wonders.Server
 
                                 // Adding the sold card to the discard pile
                                 discards.Add(c);
-                                EffectHandler.Discard(p);               
+                                EffectHandler.SellCard(p);               
                         }
                         else
                             Console.WriteLine(id + ": Cannot SELL_CARD, already marked as ready");

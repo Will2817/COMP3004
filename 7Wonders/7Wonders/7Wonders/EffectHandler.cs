@@ -97,6 +97,12 @@ namespace _7Wonders
                         // SCIENCE CHOICE
                         else if (e.type.Equals("schoice"))
                             AddScienceChoice(curr); // Max Function, will add onto the max science value
+
+                        // GUILD COPY - not finished
+                        else if (e.type.Equals("guildCopy"))
+                        {
+                            CopyGuild(p);
+                        }
                     } // End Effect Loop
                 } // End Current Player's Card Loop
             } // End Player Loop
@@ -153,10 +159,8 @@ namespace _7Wonders
                 }
 
                 // FROM: ALL
-                else if (e.basis.Equals("all"))
-                {
+                else if (e.basis.Equals("all"))                
                     AddCoinAllColour(p, east, west, cardType[e.basis], e.amount);
-                }
             }
 
             // RESOURCE CHOICE
@@ -208,12 +212,6 @@ namespace _7Wonders
 
             }
 
-            // GUILD COPY - not finished
-            else if (e.type.Equals("guildCopy"))
-            {
-
-            }
-
             // DISCARD - not finished
             else if (e.type.Equals("discard"))
             {
@@ -224,7 +222,7 @@ namespace _7Wonders
             e.PrintEffect();
         }
 
-        public static void Discard(Player p) {  AddResource(p, Resource.COIN, 3); }
+        public static void SellCard(Player p) {  AddResource(p, Resource.COIN, 3); }
 
         // Add a certain number of x Resource r to Player p
         // "w", "o", "l", "p" etc
@@ -335,5 +333,46 @@ namespace _7Wonders
 
         // Trading Cost for East && West of manufactured Resources
         private static void SetManufactedTrade(Player p) { p.mcost = 1; }
+
+        // Handing Gardens of Babylon [2nd stage]
+        // Gives the player the option of playing their seventh
+        // age card instead of discarding it.
+        // Play a card by paying it's cost
+        private static void LastCard(Player p)
+        {
+            // stuff
+        }
+
+        // Olympia A
+        // the player can, once per Age, build a structure of their choice for free
+        private static void FreeBuild(Player p)
+        {
+            // stuff
+        }
+
+        // Olympia B [3rd stage]
+        // The third stage allows the player to "copy" a Guild (purple card) of
+        // their choice built by one of their two neighboring cities
+        private static void CopyGuild(Player p)
+        {
+            // stuff
+        }
+
+        // Babylon B [2nd stage]
+        // Handle this at the end of every age to play the last card if
+        // Player can pay for it, or discard to earn 3 coins or build the third wonder.
+        // EXTRA TURN basically
+        public static void LastCard(Player p)
+        {
+            // stuff
+        }
+
+        // Halikarnassos A [2nd/3rd stage]
+        // look at one of the discarded cards since the beginning of the 
+        // game and build one for free
+        public static void Discard(Player p)
+        {
+            // stuff
+        }
     }
 }

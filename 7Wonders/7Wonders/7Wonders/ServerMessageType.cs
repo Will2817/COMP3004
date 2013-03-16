@@ -5,6 +5,7 @@ using System.Text;
 
 namespace _7Wonders
 {
+    // Enumerator for Server Messages
     public enum ServerMessageType
     {
         PLAYER_JOINED,
