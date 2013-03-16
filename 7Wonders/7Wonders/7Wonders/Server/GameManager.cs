@@ -161,6 +161,26 @@ namespace _7Wonders.Server
             }
         }
 
+        public Player getWestNeighbour(Player p)
+        {
+            foreach (Player o in gameState.getPlayers().Values)
+            {
+                if (o.getSeat() == p.getSeat() - 1 || (p.getSeat() == 0 && o.getSeat() == gameState.getPlayers().Count - 1))
+                    return o;
+            }
+            return null;
+        }
+
+        public Player getEastNeighbour(Player p)
+        {
+            foreach (Player o in gameState.getPlayers().Values)
+            {
+                if (o.getSeat() == p.getSeat() + 1 || (o.getSeat() == 0 && p.getSeat() == gameState.getPlayers().Count - 1))
+                    return o;
+            }
+            return null;
+        }
+
         public void handleActions(long id, Dictionary<string, ActionType> actions)
         {
             // Checks if actions are valid and updates the player/discard pile/etc
