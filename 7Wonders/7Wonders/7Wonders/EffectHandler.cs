@@ -32,7 +32,7 @@ namespace _7Wonders
         static Dictionary<string, Score> scienceType = new Dictionary<string, Score>
         { {"tab", Score.TABLET}, {"comp", Score.COMPASS}, {"gear", Score.GEAR} };
 
-        public static void ApplyEndGameEffect(GameState gameState)
+        public static void ApplyEndGameEffect(GameState gameState, CardLibrary cards)
         {
             int numPlayers = gameState.getPlayers().Count();
 
@@ -53,8 +53,9 @@ namespace _7Wonders
                 }
 
                 // Looping through the player's played cards
-                foreach (Card c in curr.getPlayed())
+                foreach (string cardID in curr.getPlayed())
                 {
+                    Card c = cards.getCard(cardID);
                     // Looping through the effects of each Card for End Game purposes
                     foreach (Effect e in c.effects)
                     {

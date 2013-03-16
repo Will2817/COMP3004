@@ -145,7 +145,7 @@ namespace _7Wonders
                     else
                     {
                         //HACKS
-                        Game1.client.getSelf().addPlayed(Game1.client.getSelf().getHand()[cardSpot]);
+                        Game1.client.getSelf().addPlayed(Game1.client.getCard(Game1.client.getSelf().getHand()[cardSpot]));
                         Game1.client.getSelf().getHand().RemoveAt(cardSpot);
                         if (Game1.client.getCard(card.getTexture()).cost.ContainsKey(Resource.COIN))
                             Game1.client.getSelf().addResource(Resource.COIN, -Game1.client.getCard(card.getTexture()).cost[Resource.COIN]);

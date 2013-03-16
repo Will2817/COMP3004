@@ -186,7 +186,7 @@ namespace _7Wonders.Server
 
                             bool freeConstruction = false;
                             // Check if the card has a chain, and if so has the chain card been built yet
-                            foreach (Card _checkChain in p.getPlayed())
+                            /*foreach (Card _checkChain in p.getPlayed())
                             {
                                 foreach (string chain in _checkChain.chains)
                                 {
@@ -198,7 +198,7 @@ namespace _7Wonders.Server
                                 }
                                 if (freeConstruction)
                                     break; // Stops foreach loop as soon as freeConstruction is true
-                            }
+                            }*/
                             
 
                                 // Take into account coin costs and deduct it
