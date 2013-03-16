@@ -121,6 +121,7 @@ namespace _7Wonders
             
         }
 
+        // Returns a string of the image ID
         public string getImageId()
         {
             return name + "_" + age + "_" + players;

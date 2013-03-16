@@ -82,19 +82,10 @@ namespace _7Wonders
             }
 
             stages = new List<Structure>();
-
-            foreach (JObject stage in j["stages"])
-            {
-                //stages.Add(new Structure((JObject)stage["cost"], (JObject)stage["effects"]));
-            }
-
             stageNum = stageCosts.Count;
         }
 
-        public Resource getIntialResource()
-        {
-            return initialResource;
-        }
+        public Resource getIntialResource() { return initialResource; }
 
         // Returns the number of stages in the particular Wonder
         public int getStageNum() { return stageNum; }

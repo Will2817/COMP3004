@@ -7,6 +7,7 @@ using Newtonsoft.Json.Linq;
 
 namespace _7Wonders
 {
+    // Keeps the Game State of the current game in progress
     public class GameState
     {
         private Dictionary<long, Player> players;

@@ -8,6 +8,8 @@ using Newtonsoft.Json.Linq;
 
 namespace _7Wonders
 {
+    // This is a Libarbary of Cards where when parse to strings
+    // it will keep a dictionary of all cards via it's parsed string along with it s Card object
     public class CardLibrary
     {
         public static Dictionary<string, Card> cards;
