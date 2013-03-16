@@ -90,6 +90,26 @@ namespace _7Wonders.Server
             updateAIs();
         }
 
+        public Player getWestNeighbour(Player p)
+        {
+            foreach (Player o in gameState.getPlayers().Values)
+            {
+                if (o.getSeat() == p.getSeat() - 1 || (p.getSeat() == 0 && o.getSeat() == gameState.getPlayers().Count - 1))
+                    return o;
+            }
+            return null;
+        }
+
+        public Player getEastNeighbour(Player p)
+        {
+            foreach (Player o in gameState.getPlayers().Values)
+            {
+                if (o.getSeat() == p.getSeat() + 1 || (o.getSeat() == 0 && p.getSeat() == gameState.getPlayers().Count - 1))
+                    return o;
+            }
+            return null;
+        }
+
         public int startGame()
         {
       //      if (gameState.getAssign()) //uncomment these sections when ready to implement selecting a board;
