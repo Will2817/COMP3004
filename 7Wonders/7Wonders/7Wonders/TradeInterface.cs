@@ -25,9 +25,12 @@ namespace _7Wonders
         private Visual card;
         private Dictionary<string, Visual> visuals1;
         private Dictionary<string, Visual> trade;
+        private Dictionary<Visual, Resource> requirements;
         private int cardSpot = 0;
         private bool disableBuild = false;
         private bool buildingCard = true;
+        private bool needtrade = false;
+        private int cardCost = 0;
 
         public TradeInterface(Game1 theGame)
             : base(theGame, "bg", new Vector2(Game1.WIDTH/6, Game1.HEIGHT/6), Game1.WIDTH * 2/3, Game1.HEIGHT * 2/3)
@@ -37,6 +40,7 @@ namespace _7Wonders
 
             visuals1 = new Dictionary<string, Visual>();
             trade = new Dictionary<string, Visual>();
+            requirements = new Dictionary<Visual, Resource>();
 
             card = new Visual(theGame, new Vector2(pos.X + MARGIN, pos.Y + MARGIN), CARDWIDTH, CARDHEIGHT, null);
             buildCard = new Button(theGame, new Vector2(pos.X + width - 150, pos.Y + MARGIN + height * 0 / 4), 100, 50, "Card", "Font1");
@@ -54,7 +58,17 @@ namespace _7Wonders
             visuals1.Add("close", close);
 
             trade.Add("discount", new Visual(theGame, new Vector2(pos.X + MARGIN * 2, pos.Y + MARGIN), "Requirements:", "Font1", Color.Black));
-            trade.Add("cost", new Visual(theGame, new Vector2(pos.X + MARGIN, pos.Y + MARGIN), width/3 - MARGIN * 2, height / 5 - MARGIN * 2, "border").setBorder(false));
+            trade.Add("costborder", new Visual(theGame, new Vector2(pos.X + MARGIN, pos.Y + MARGIN), width/3 - MARGIN * 2, height / 5 - MARGIN * 2, "border").setBorder(false));
+            trade.Add("label1", new Visual(theGame, new Vector2(pos.X + MARGIN * 2, pos.Y + height / 5 + MARGIN * 2), "West", "Font1", Color.Black));
+            trade.Add("border1", new Visual(theGame, new Vector2(pos.X + MARGIN, pos.Y + height / 5 + MARGIN * 2), width / 3 - MARGIN * 2, height / 10 - MARGIN * 2, "border").setBorder(false));
+            trade.Add("label2", new Visual(theGame, new Vector2(pos.X + width / 3 + MARGIN * 3, pos.Y + height / 5 + MARGIN * 2), "Self:", "Font1", Color.Black));
+            trade.Add("border2", new Visual(theGame, new Vector2(pos.X + width / 3 + MARGIN * 2, pos.Y + height / 5 + MARGIN * 2), width / 3 - MARGIN * 2, height / 10 - MARGIN * 2, "border").setBorder(false));
+            trade.Add("label3", new Visual(theGame, new Vector2(pos.X + width * 2 / 3 + MARGIN * 3, pos.Y + height / 5 + MARGIN * 2), "East", "Font1", Color.Black));
+            trade.Add("border3", new Visual(theGame, new Vector2(pos.X + width * 2 / 3 + MARGIN * 2, pos.Y + height / 5 + MARGIN * 2), width / 3 - MARGIN * 2, height / 10 - MARGIN * 2, "border").setBorder(false));
+
+            trade.Add("border4", new Visual(theGame, new Vector2(pos.X + MARGIN, pos.Y + height * 3 / 10 + MARGIN * 2), width / 3 - MARGIN * 2, ((width / 3 - MARGIN * 2) / 6 - MARGIN * 2) * 3, "border").setBorder(false));
+            trade.Add("border5", new Visual(theGame, new Vector2(pos.X + width / 3 + MARGIN * 2, pos.Y + height * 3 / 10 + MARGIN * 2), width / 3 - MARGIN * 2, ((width / 3 - MARGIN * 2) / 6 - MARGIN * 2) * 3, "border").setBorder(false));
+            trade.Add("border6", new Visual(theGame, new Vector2(pos.X + width * 2 / 3 + MARGIN * 2, pos.Y + height * 3 / 10 + MARGIN * 2), width / 3 - MARGIN * 2, ((width / 3 - MARGIN * 2) / 6 - MARGIN * 2) * 3, "border").setBorder(false));
             trade.Add("back", back);
             trade.Add("build", build);
 
@@ -62,6 +76,11 @@ namespace _7Wonders
             trade.Add("reast", new Visual(theGame, new Vector2(pos.X + width * 1 / 3, pos.Y + MARGIN), 110, 45, "reast"));
             trade.Add("rboth", new Visual(theGame, new Vector2(pos.X + width * 1 / 3, pos.Y + MARGIN), 110, 45, "rboth"));
             trade.Add("mboth", new Visual(theGame, new Vector2(pos.X + width * 2 / 3, pos.Y + MARGIN), 110, 45, "mboth"));
+
+            for (int i = 0; i < 7; i++)
+            {
+                requirements.Add(new Visual(theGame, new Vector2(pos.X + MARGIN * 2 + (15 + 1) * i, pos.Y + MARGIN + 30), width / 21 - 1, width / 21 - 1, null).setVisible(false), Resource.CLAY);
+            }
 
             activeVisuals = visuals1;
             hideTrade();
@@ -73,7 +92,17 @@ namespace _7Wonders
             card.setTexture(image);
             foreach (Visual v in activeVisuals.Values)
                 v.setVisible(true);
-            if (Game1.client.constructCost(Game1.client.getSelf().getHand()[cardSpot]) < 0) disableBuild = true;
+
+            cardCost = Game1.client.constructCost(image);
+            if (Game1.client.getCard(image).cost.ContainsKey(Resource.COIN))
+            {
+                needtrade = false;
+            }
+
+            if (cardCost < 0) disableBuild = true;
+            else if (cardCost == 0) needtrade = false;
+            else needtrade = true;
+            
         }
 
         public void hideTrade()
@@ -107,9 +136,24 @@ namespace _7Wonders
                     //Game1.client.getSelf().addResource(Resource.COIN, -cost);
                     //
                     buildCard.reset();
-                    buildingCard = true;
-                    buildTrade();
-                    activeVisuals = trade;
+                    if (needtrade)
+                    {
+                        buildingCard = true;
+                        buildTrade();
+                        activeVisuals = trade;
+                    }
+                    else
+                    {
+                        //HACKS
+                        Game1.client.getSelf().addPlayed(Game1.client.getSelf().getHand()[cardSpot]);
+                        Game1.client.getSelf().getHand().RemoveAt(cardSpot);
+                        if (Game1.client.getCard(card.getTexture()).cost.ContainsKey(Resource.COIN))
+                            Game1.client.getSelf().addResource(Resource.COIN, -Game1.client.getCard(card.getTexture()).cost[Resource.COIN]);
+                        else
+                            Game1.client.getSelf().addResource(Resource.COIN, -cardCost);
+                        //
+                        finished = true;
+                    }
                 }
             }
 
@@ -143,6 +187,7 @@ namespace _7Wonders
             if (back.isClicked())
             {
                 back.reset();
+                buildingCard = false;
                 activeVisuals = visuals1;
             }
 
@@ -153,11 +198,22 @@ namespace _7Wonders
                 //activeVisuals = visuals1;
                 //finished = true;
             }
+
+            if (buildingCard)
+            {
+                foreach (Visual v in requirements.Keys)
+                    v.Update(gameTime, mouseState);
+            }
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             base.Draw(gameTime, spriteBatch);
+            if (buildingCard)
+            {
+                foreach (Visual v in requirements.Keys)
+                    v.Draw(gameTime, spriteBatch);
+            }
         }
 
         public override Dictionary<string, string> isFinished()
@@ -175,6 +231,20 @@ namespace _7Wonders
 
         private void buildTrade()
         {
+            foreach (Visual v in requirements.Keys)
+            {
+                v.setVisible(false);
+            }
+            int i = 0;
+            foreach (KeyValuePair<Resource,int> kp in Game1.client.getCard(card.getTexture()).cost)
+            {
+                for (int j = 0; j < kp.Value; j++)
+                {
+                    Visual v = requirements.Keys.ElementAt(i).setTexture(kp.Key.ToString()).setVisible(true);
+                    requirements[v] = kp.Key;
+                    i++;
+                }
+            }
         }
     }
 }

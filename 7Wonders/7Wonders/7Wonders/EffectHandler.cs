@@ -32,6 +32,75 @@ namespace _7Wonders
         static Dictionary<string, Score> scienceType = new Dictionary<string, Score>
         { {"tab", Score.TABLET}, {"comp", Score.COMPASS}, {"gear", Score.GEAR} };
 
+        public static void ApplyEndGameEffect(GameState gameState)
+        {
+            int numPlayers = gameState.getPlayers().Count();
+
+            foreach (KeyValuePair<long, Player> player in gameState.getPlayers())
+            {
+                Player curr = player.Value;
+                int position = curr.getSeat();
+                Player east = null;
+                Player west = null;
+
+                // Setting up the east and west neighbors
+                foreach (KeyValuePair<long, Player> neighbor in gameState.getPlayers())
+                {
+                    if ((position + 1) % 3 == neighbor.Value.getSeat())                    
+                        west = neighbor.Value;
+                    if ((position - 1) % 3 == neighbor.Value.getSeat())
+                        east = neighbor.Value;
+                }
+
+                // Looping through the player's played cards
+                foreach (Card c in curr.getPlayed())
+                {
+                    // Looping through the effects of each Card for End Game purposes
+                    foreach (Effect e in c.effects)
+                    {
+                        // Victory Points
+                        if (e.type.Equals("victory"))
+                        {
+                            // FROM: NEIGHBORS
+                            // and BASIS: CardColour, Wonderstages, Defeat
+                            if (e.from.Equals("neighbors"))
+                            {
+                                // Apply victory points awarded for each
+                                // Wonderstage neigboring cities own
+                                if (e.basis.Equals("wonderstages"))
+                                    AddVictoryAllWonders(curr, east, west);
+
+                                //Victory points given per neighbor's conlfict token
+                                else if (e.basis.Equals("defeat"))
+                                    AddVictoryNeighboursConflict(curr, east, west);
+
+                                 // Victory points awarded per certain structure built by neighbours
+                                else
+                                    AddVictoryNeighboursColour(curr, east, west, cardType[e.basis], e.amount);
+                            }
+                            // FROM: PLAYER
+                            // BASIS: CardColour, Wonderstages, 
+                            else if (e.from.Equals("player"))
+                            {
+                                if (e.basis.Equals("wonderstages"))
+                                    AddVictoryWonder(curr);
+                                else
+                                    AddVictoryColour(curr, cardType[e.basis], e.amount);
+                            }
+                            // FROM: ALL
+                            // BASIS: Wonderstages
+                            else if (e.from.Equals("all"))
+                                AddVictoryAllWonders(curr, east, west);
+                        } // End Victory Points
+
+                        // SCIENCE CHOICE
+                        else if (e.type.Equals("schoice"))
+                            AddScienceChoice(curr); // Max Function, will add onto the max science value
+                    } // End Effect Loop
+                } // End Current Player's Card Loop
+            } // End Player Loop
+        }
+
         // Effects of Cards/Wonders to be applied instantly. Other effects will be ignored
         // and left to another global function to deal with it at the end of the game.
         public static void ApplyEffect(GameState gameState, Player p, Effect e)
@@ -49,50 +118,7 @@ namespace _7Wonders
 
                 // Adding to the Score for Blue Structures raised
                 else if (e.from.Equals(null) && e.basis.Equals("blue"))
-                    AddScore(p, Score.VICTORY_BLUE, e.amount);
-
-                // FROM: NEIGHBORS
-                // and BASIS: CardColour, Wonderstages, Defeat
-                else if (e.from.Equals("neighbors"))
-                {
-                    // Apply victory points awarded for each
-                    // Wonderstage neigboring cities own
-                    if (e.basis.Equals("wonderstages"))
-                    {
-                        //AddVictoryAllWonders(p, east, west);
-                    }
-
-                        //Victory points given per neighbor's conlfict token
-                    else if (e.basis.Equals("defeat"))
-                    {
-                        //AddVictoryNeighboursConflict(p, east, west);
-                    }
-
-                        // Victory points awarded per certain structure built by neighbours
-                    else
-                    {
-                        //AddVictoryNeighboursColour(p, east, west, cardType[e.basis], e.amount);
-                    }
-
-                }
-
-                // FROM: PLAYER
-                // BASIS: CardColour, Wonderstages, 
-                else if (e.from.Equals("player"))
-                {
-                    if (e.basis.Equals("wonderstages"))
-                        AddVictoryWonder(p);
-                    else
-                        AddVictoryColour(p, cardType[e.basis], e.amount);
-                }
-
-                // FROM: ALL
-                // BASIS: Wonderstages
-                else if (e.from.Equals("all"))
-                {
-                    // AddVictoryAllWonders(p, east, west);
-                }
-
+                    AddScore(p, Score.VICTORY_BLUE, e.amount);    
             }
 
             // COINS
@@ -129,15 +155,11 @@ namespace _7Wonders
                     choice.Add(resourceType[c]);
                 }
 
-                if (e.basis.Equals("yellow"))
+                if (e.basis.Equals("yellow") || e.basis.Equals("wonder"))
                     AddResourceUnPurchaseable(p, choice);
                 else
                     AddResourceChoice(p, choice);
             }
-
-            // SCIENCE CHOICE
-            else if (e.type.Equals("schoice"))
-                AddScienceChoice(p); // Max Function, will add onto the max science value
 
             // ARMY
             else if (e.type.Equals("army"))

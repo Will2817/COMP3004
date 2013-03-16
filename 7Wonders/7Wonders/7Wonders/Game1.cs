@@ -134,6 +134,18 @@ namespace _7Wonders
             textures.Add("rboth", Content.Load<Texture2D>("Images/r_both"));
             textures.Add("mboth", Content.Load<Texture2D>("Images/m_both"));
             textures.Add("border", Content.Load<Texture2D>("Images/border"));
+            foreach (string s in Enum.GetNames(typeof (Resource)))
+            {
+                if (s!="COIN") textures.Add(s, Content.Load<Texture2D>("Images/Resources/"+s));
+            }
+            textures.Add("CLAYORE", Content.Load<Texture2D>("Images/Resources/CLAYORE"));
+            textures.Add("STONECLAY", Content.Load<Texture2D>("Images/Resources/STONECLAY"));
+            textures.Add("STONEORE", Content.Load<Texture2D>("Images/Resources/STONEORE"));
+            textures.Add("STONEWOOD", Content.Load<Texture2D>("Images/Resources/STONEWOOD"));
+            textures.Add("WOODCLAY", Content.Load<Texture2D>("Images/Resources/WOODCLAY"));
+            textures.Add("WOODORE", Content.Load<Texture2D>("Images/Resources/WOODORE"));
+            textures.Add("WOODSTONEORECLAY", Content.Load<Texture2D>("Images/Resources/WOODSTONEORECLAY"));
+            textures.Add("GLASSLOOMPAPYRUS", Content.Load<Texture2D>("Images/Resources/GLASSLOOMPAPYRUS"));
 
             foreach (JObject j in (JArray)wondersJson["wonders"])
             {
