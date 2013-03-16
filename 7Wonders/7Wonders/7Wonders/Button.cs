@@ -15,13 +15,14 @@ namespace _7Wonders
         protected static int highlight = 50;
 
         // Button Constructor
-        public Button(Vector2 _pos, int _w, int _h, string _t, string _sfont, string texture = null)
+        public Button(Vector2 _pos, int _w, int _h, string _t, string _sfont, string texture = null, bool _border = true)
             : base(_pos, _w, _h, (texture != null) ? texture : "button")
         {
             fontName = _sfont;
             textureColor = new Color(255 - highlight, 255 - highlight, 255 - highlight) * opacity;
             stringColor = Color.Black * opacity;
             text = _t;
+            border = _border;
         }
 
         // Text Mutator
@@ -41,7 +42,7 @@ namespace _7Wonders
             }
             if (border) spriteBatch.Draw(Game1.textures["line"], new Rectangle((int)position.X - 1, (int)position.Y - 1, width + 2, height + 2), Color.Black*opacity);
             spriteBatch.Draw(texture, new Rectangle((int)position.X, (int)position.Y, width, height), actual);
-            spriteBatch.DrawString(font, text, new Vector2(position.X + 11, position.Y + 7), stringColor);
+            if (fontName != null)spriteBatch.DrawString(font, text, new Vector2(position.X + 11, position.Y + 7), stringColor);
         }
     }
 }
