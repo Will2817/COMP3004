@@ -264,6 +264,7 @@ namespace _7Wonders
             foreach (string s in (JArray)j["cards"])
             {
                 lastCardsPlayed.Add(s);
+                addPlayed(CardLibrary.getCard(s));
             }
         }
     }
