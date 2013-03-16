@@ -190,6 +190,7 @@ namespace _7Wonders.Server
             // set the ready flag for that player so that it can check whether all players are ready and
             // broadcasts the results of the turn
             Player p = gameState.getPlayers()[id];
+            if (p.getReady()) return;
             Player west = null;
             Player east = null;
             foreach (Player o in gameState.getPlayers().Values)
@@ -204,7 +205,6 @@ namespace _7Wonders.Server
             p.addResource(Resource.COIN, -1 * (westGold + eastGold));
             List<string> playedCards = new List<string>();
             List<ActionType> playedActions = new List<ActionType>();
-            if (p.getReady()) return;
             Console.WriteLine("Testing Handled Actions");
             foreach (KeyValuePair<string, ActionType> action in actions)
             {

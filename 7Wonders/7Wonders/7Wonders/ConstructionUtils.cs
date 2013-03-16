@@ -5,7 +5,7 @@ using System.Text;
 
 namespace _7Wonders
 {
-    class ConstructionUtils
+    public class ConstructionUtils
     {
         //Checks how a player with neighbours west and east would have to spend in order to meet the given cost
         //Returns -1 if the player cannot possibly build the card (including if his neighbours have the required
@@ -49,20 +49,18 @@ namespace _7Wonders
         //Calculates, for each resource in cost, the maximum number of that resource that could be covered were it given priority in choices
         //E.g. if a value is zero, that resource cannot be acquired from the given set of choices
         //If a value is one and there are two of that resource in the cost, at least one of that resource must be obtained elsewhere
-        private Dictionary<Resource, int> maxCoveragePerResourceByChoices(Dictionary<Resource, int> cost, List<List<Resource>> choices)
+        private static Dictionary<Resource, int> maxCoveragePerResourceByChoices(Dictionary<Resource, int> cost, List<List<Resource>> choices)
         {
             Dictionary<Resource, int> coverage = new Dictionary<Resource, int>();
             foreach (Resource r in cost.Keys)
                 coverage.Add(r, 0);
             foreach (List<Resource> choice in choices)
                 foreach (Resource r in choice)
-                    if (coverage.ContainsKey(r)) coverage[r]++;
-            foreach (Resource r in coverage.Keys)
-                if (coverage[r] > cost[r]) coverage[r] = cost[r];
+                    if (coverage.ContainsKey(r) && coverage[r] < cost[r]) coverage[r]++;
             return coverage;
         }
 
-        private List<List<Resource>> getRelevantChoices(Dictionary<Resource, int> cost, List<List<Resource>> choices)
+        private static List<List<Resource>> getRelevantChoices(Dictionary<Resource, int> cost, List<List<Resource>> choices)
         {
             List<List<Resource>> relevantChoices = new List<List<Resource>>();
             foreach (List<Resource> choice in choices)
@@ -73,6 +71,21 @@ namespace _7Wonders
                         break;
                     }
             return relevantChoices;
+        }
+
+        public static bool canChoicesCover(List<List<Resource>> choices, Dictionary<Resource, int> cost)
+        {
+            List<List<Resource>> relevantChoices = getRelevantChoices(cost, choices);
+            int totalAmount = 0;
+            foreach (KeyValuePair<Resource, int> r in cost)
+            {
+                Dictionary<Resource, int> rCost = new Dictionary<Resource, int>();
+                rCost.Add(r.Key, r.Value);
+                if (!canChoicesCover(choices, rCost)) return false;
+                totalAmount += r.Value;
+            }
+            if (relevantChoices.Count < totalAmount) return false;
+            return true;
         }
     }
 }
