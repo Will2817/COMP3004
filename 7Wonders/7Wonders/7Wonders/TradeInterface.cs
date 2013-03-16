@@ -73,7 +73,7 @@ namespace _7Wonders
             card.setTexture(image);
             foreach (Visual v in activeVisuals.Values)
                 v.setVisible(true);
-            if (Game1.client.constructCost(Game1.client.getSelf().getHand()[cardSpot].getImageId()) < 0) disableBuild = true;
+            if (Game1.client.constructCost(Game1.client.getSelf().getHand()[cardSpot]) < 0) disableBuild = true;
         }
 
         public void hideTrade()

@@ -129,10 +129,7 @@ namespace _7Wonders.Client
             Player self = gameState.getPlayers()[netService.getID()];
             Card card = cardLibrary.getCard(cardID);
             foreach (string cid in card.chains)
-            {
-                Card c = cardLibrary.getCard(cid);
-                if (self.getPlayed().Contains(c)) return 0;//Building from chain is free
-            }
+                if (self.getPlayed().Contains(cid)) return 0;//Building from chain is free
             return constructCost(card.cost, self);
         }
 

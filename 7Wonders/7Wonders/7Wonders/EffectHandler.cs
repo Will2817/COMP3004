@@ -198,8 +198,8 @@ namespace _7Wonders
             p.setResourceNum(r, resourceNum);
         }
 
-        private static void AddResourceChoice(Player p, List<Resource> r) { p.addChoices(r); }
-        private static void AddResourceUnPurchaseable(Player p, List<Resource> r) { p.addUnpurchasable(r); }
+        private static void AddResourceChoice(Player p, List<Resource> r) { p.addPublicChoices(r); }
+        private static void AddResourceUnPurchaseable(Player p, List<Resource> r) { p.addPrivateChoices(r); }
 
         // Science Choice - player chooses which science to gain from the card at the end of the game
         // NOTE: Should we have this as a max function? eg. Find max of gear, tablet, compass and just add 1?
@@ -272,7 +272,7 @@ namespace _7Wonders
         // Victory Points awarded from the number of conflict points each neighbour has
         private static void AddVictoryNeighboursConflict(Player p, Player east, Player west)
         {
-            int points = east.getSpecificScore(Score.CONFLICT) + west.getSpecificScore(Score.CONFLICT);
+            int points = east.getScoreType(Score.CONFLICT) + west.getScoreType(Score.CONFLICT);
             p.addScore(Score.VICTORY, points);
         }
 

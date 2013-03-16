@@ -161,21 +161,19 @@ namespace _7Wonders
         public string handToJson(long id)
         {
             JArray j = new JArray();
-            foreach (Card c in players[id].getHand())
+            foreach (string card in players[id].getHand())
             {
-                j.Add(c.toJObject());
+                j.Add(card);
             }
             return j.ToString();
         }
 
         public void setHand(CardLibrary cardLibrary, long id, string message)
         {
-            List<Card> hand = new List<Card>();
+            List<string> hand = new List<string>();
             JArray j = JArray.Parse(message);
-            foreach (JObject c in j)
-            {
-                hand.Add(cardLibrary.getCard((string)c["card"]));
-            }
+            foreach (JToken card in j)
+                hand.Add((string) card);
             players[id].setHand(hand);
         }
 

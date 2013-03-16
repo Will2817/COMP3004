@@ -44,7 +44,8 @@ namespace _7Wonders.Server
         {
             Player self = gameState.getPlayers()[id];
             Dictionary<string, ActionType> actions = new Dictionary<string, ActionType>();
-            foreach (Card c in self.getHand())
+            /*
+            foreach (string c in self.getHand())
             {
                 bool playable = true;
                 foreach (Resource r in c.cost.Keys)
@@ -61,8 +62,8 @@ namespace _7Wonders.Server
                     //call game manager action select method thing once done
                     return;
                 }
-            }
-            actions.Add(self.getHand()[0].getImageId(), ActionType.SELL_CARD);
+            }*/
+            actions.Add(self.getHand()[0], ActionType.SELL_CARD);
             //call game manager action select method thing once done
         }
     }

@@ -315,13 +315,13 @@ namespace _7Wonders
 
 
             int k = 0;
-            foreach (Card c in player.getHand())
+            foreach (string c in player.getHand())
             {
-                Game1.cards[c.getImageId()].setPosition(new Vector2(MARGIN + 40 + (CARDWIDTH + MARGIN * 2) * k + (CARDWIDTH / 2 + MARGIN) * (7 - player.getHand().Count), 205)).setWidth(CARDWIDTH).setHeight(CARDHEIGHT);
-                hand.Add("hand" + k, Game1.cards[c.getImageId()]);
-                Visual v = new Visual(Game1.cards[c.getImageId()]).setRelativePosition(new Vector2(-1, -1)).setRelativeHeight(2).setRelativeWidth(2); ;
-                if (Game1.client.constructCost(c.getImageId()) == 0) v.setTexture("greenglow");
-                else if (Game1.client.constructCost(c.getImageId()) > 0) v.setTexture("goldglow");
+                Game1.cards[c].setPosition(new Vector2(MARGIN + 40 + (CARDWIDTH + MARGIN * 2) * k + (CARDWIDTH / 2 + MARGIN) * (7 - player.getHand().Count), 205)).setWidth(CARDWIDTH).setHeight(CARDHEIGHT);
+                hand.Add("hand" + k, Game1.cards[c]);
+                Visual v = new Visual(Game1.cards[c]).setRelativePosition(new Vector2(-1, -1)).setRelativeHeight(2).setRelativeWidth(2); ;
+                if (Game1.client.constructCost(c) == 0) v.setTexture("greenglow");
+                else if (Game1.client.constructCost(c) > 0) v.setTexture("goldglow");
                 else v.setTexture("redglow");
                 hand.Add("glow" + k, v);
                 k++;
@@ -362,8 +362,9 @@ namespace _7Wonders
                 int played2 = 0;
                 int played3 = 0;
                 int played4 = 0;
-                foreach (Card c in p.getPlayed())
+                foreach (string cardID in p.getPlayed())
                 {
+                    Card c = Game1.client.getCard(cardID);
                     if (c.colour == CardColour.BROWN || c.colour == CardColour.GRAY)
                     {
                         if (played1 < 5)

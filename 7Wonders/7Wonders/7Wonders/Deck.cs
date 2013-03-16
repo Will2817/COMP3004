@@ -82,9 +82,9 @@ namespace _7Wonders
         // Deals 7 random cards to a player 
         // depending on the age number it will determine the age
         // and then removes it from the deck
-        public List<Card> dealCards(int age)
+        public List<string> dealCards(int age)
         {
-            List<Card> hand = new List<Card>();
+            List<string> hand = new List<string>();
 
             switch(age)
             {
@@ -93,7 +93,7 @@ namespace _7Wonders
                     {
                         r = rnd.Next(age1.Count());
 
-                        hand.Add(age1[r]);
+                        hand.Add(age1[r].getImageId());
                         age1.RemoveAt(r);
                     }
                     break;
@@ -103,7 +103,7 @@ namespace _7Wonders
                     {
                         r = rnd.Next(age2.Count());
 
-                        hand.Add(age3[r]);
+                        hand.Add(age2[r].getImageId());
                         age2.RemoveAt(r);
                     }
                     break;
@@ -113,7 +113,7 @@ namespace _7Wonders
                     {
                         r = rnd.Next(age3.Count());
 
-                        hand.Add(age3[r]);
+                        hand.Add(age3[r].getImageId());
                         age3.RemoveAt(r);
                     }
                     break;
