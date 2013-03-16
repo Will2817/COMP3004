@@ -153,7 +153,8 @@ namespace _7Wonders.Client
             {
                 //remainingCost.Add(r, 0);
                 if (cost[r] > self.getResourceNum(r) + west.getResourceNum(r) + east.getResourceNum(r)) return -1;//temporary
-                coinCost += 2 * (cost[r] - self.getResourceNum(r));
+                int thisCost = 2 * (cost[r] - self.getResourceNum(r));
+                coinCost += thisCost >= 0 ? thisCost : 0;
 
                 //if (cost[r] > self.getResourceNum(r))
                     //remainingCost[r] = cost[r] - self.getResourceNum(r);
