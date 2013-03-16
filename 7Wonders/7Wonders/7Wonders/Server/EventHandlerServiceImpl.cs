@@ -37,7 +37,7 @@ namespace _7Wonders.Server
                     //stuff
                     break;
                 case ClientMessageType.TURN_ACTION:
-                    gameManager.handleActions(clientID, parseActions(message));
+                    parseActions(clientID, message);
                     break;
                 case ClientMessageType.CHAT_MESSAGE:
                     //stuff
@@ -47,13 +47,16 @@ namespace _7Wonders.Server
             }
         }
 
-        public Dictionary<string, ActionType> parseActions(string message)
+        public void parseActions(long clientID, string message)
         {
             Dictionary<string, ActionType> actions = new Dictionary<string, ActionType>();
-            JArray actionArray = (JArray)JObject.Parse(message)["actions"];
+            JObject jMessage = JObject.Parse(message);
+            JArray actionArray = (JArray)jMessage["actions"];
             foreach (JObject obj in actionArray)
                 actions.Add((string )obj["card"], (ActionType) (int) obj["action"]);
-            return actions;
+            int westGold = (int)jMessage["westGold"];
+            int eastGold = (int)jMessage["eastGold"];
+            gameManager.handleActions(clientID, actions, westGold, eastGold);
         }
 
     }

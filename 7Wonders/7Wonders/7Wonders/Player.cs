@@ -57,6 +57,13 @@ namespace _7Wonders
             Initializer();
         }
 
+        public void updatePlayer(JObject j)
+        {
+            name = (string)j["name"];
+            seatNumber = (int)j["seat"];
+            ready = bool.Parse((string)j["ready"]);
+        }
+
         private void Initializer()
         {
             //Initializing Variables
