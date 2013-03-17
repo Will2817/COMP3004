@@ -33,15 +33,16 @@ namespace _7Wonders.Server
             this.type = aiTypes[type];
             this.gameManager = gameManager;
         }
+
         public void updateGameState(GameState gameState)
         {
             this.gameState = gameState;
-            if (gameState.isGameInProgress() && gameState.getPlayers()[id].getReady())
-                selectAction();
         }
 
-        private void selectAction()
+        public void selectAction(GameState gameState)
         {
+            Console.WriteLine("AI: Selecting Card");
+            this.gameState = gameState;
             Player self = gameState.getPlayers()[id];
             Dictionary<string, ActionType> actions = new Dictionary<string, ActionType>();
             /*
@@ -64,7 +65,8 @@ namespace _7Wonders.Server
                 }
             }*/
             actions.Add(self.getHand()[0], ActionType.SELL_CARD);
-            //call game manager action select method thing once done
+            gameManager.handleActions(id, actions, 0, 0);
+            Console.WriteLine("AI: Actions handled");
         }
     }
 }

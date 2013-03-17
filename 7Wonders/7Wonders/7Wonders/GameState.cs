@@ -16,6 +16,7 @@ namespace _7Wonders
         private bool onlySideA;
         private bool assign;
         private int age;
+        private int turn;
 
         public GameState()
         {
@@ -26,6 +27,7 @@ namespace _7Wonders
             JObject wondersJson = JObject.Parse(File.ReadAllText("Content/Json/wonderlist.json"));
             wonders = new Dictionary<string, Wonder>();
             age = 1;
+            turn = 1;
             foreach (JObject j in (JArray)wondersJson["wonders"])
             {
                 wonders.Add((string)j["name"], new Wonder(j));
@@ -33,10 +35,14 @@ namespace _7Wonders
         }
 
         public int getAge() { return age; }
+        public int getTurn() { return turn; }
         public bool isGameInProgress() { return gameInProgress; }
         public bool getOnlySideA() { return onlySideA; }
         public bool getAssign() { return assign; }
-        public void setOptions(bool _onlySideA, bool _assign) { onlySideA = _onlySideA; assign = _assign;} 
+        public void setOptions(bool _onlySideA, bool _assign) { onlySideA = _onlySideA; assign = _assign;}
+        public void incrementAge() { age++; }
+        public void incrementTurn() { turn++; }
+        public void resetTurn() { turn = 1; }
 
         public void addPlayer(Player _player)
         {
@@ -100,10 +106,16 @@ namespace _7Wonders
         public void playersFromJson(string json)
         {
             JObject jplayers = JObject.Parse(json);
-            players.Clear();
+            List<long> temp = new List<long>();
             foreach (JObject j in jplayers["players"])
             {
-                players.Add((long)j["id"], new Player(j));
+                temp.Add((long)j["id"]);
+                if (players.ContainsKey((long)j["id"])) players[(long)j["id"]].updatePlayer(j);
+                else players.Add((long)j["id"], new Player(j));
+            }
+            foreach (long id in players.Keys)
+            {
+                if (!temp.Contains(id)) players.Remove(id);
             }
         }
 
@@ -152,6 +164,7 @@ namespace _7Wonders
             JArray o = JArray.Parse(json);
             foreach (JObject w in o)
             {
+                Console.WriteLine(wonders[(string)w["wonder"]].getName());
                 players[(long) w["player"]].setBoard(wonders[(string)w["wonder"]]);
                 if ((string)w["side"] == "A") players[(long)w["player"]].getBoard().setSideA();
                 else players[(long)w["player"]].getBoard().setSideB();

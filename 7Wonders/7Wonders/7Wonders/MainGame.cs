@@ -116,7 +116,8 @@ namespace _7Wonders
             updatePlayed();
             updateHands();
             updateScroll();
-            
+            Game1.client.setHandChecked();
+            Game1.client.setPlayerChecked();
 
             seatViewed = player.getSeat();
             activeVisuals = seatVisuals[seatViewed];
@@ -151,9 +152,9 @@ namespace _7Wonders
                 {
                     trade.reset();
                     showTrade = false;
-                    updateHands();
-                    updateScroll();
-                    updateResources();
+                    //updateHands();
+                    //updateScroll();
+                    //updateResources();
                 }
                 return;
             }
@@ -188,8 +189,6 @@ namespace _7Wonders
                     }
                 }
             }
-
-            if (Game1.client.isUpdateAvailable()) networkUpdates();
 
             int storeSeat = seatViewed;
 
@@ -251,7 +250,23 @@ namespace _7Wonders
                 showhand = !showhand;
                 updateScroll();
             }
-            if (Game1.client.isHandUpdated()) updateHands();
+
+            if (Game1.client.isUpdateAvailable())
+            {
+                if (Game1.client.isHandUpdated())
+                {
+                    showhand = false;
+                    updateHands();
+                    updateScroll();
+                    Game1.client.setHandChecked();
+                }
+                if (Game1.client.isPlayerUpdated())
+                {
+                    updatePlayed();
+                    updateResources();
+                    Game1.client.setPlayerChecked();
+                }
+            }
             updatePlayed();
         }
 
@@ -297,11 +312,6 @@ namespace _7Wonders
                 };
         }
 
-        private void networkUpdates()
-        {
-
-        }
-
         private void updateHands()
         {
 
@@ -325,7 +335,6 @@ namespace _7Wonders
                 k++;
             }
             hand["papermiddle"].setPosition(new Vector2(MARGIN + 30 + (CARDWIDTH / 2 + MARGIN) * (7 - player.getHand().Count) + 1, 190)).setWidth(Game1.WIDTH - (MARGIN + 30 + (CARDWIDTH / 2 + MARGIN) * (7 - player.getHand().Count) + 1));
-            Game1.client.setHandChecked();
         }
 
         private void updateScroll()

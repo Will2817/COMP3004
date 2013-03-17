@@ -28,7 +28,8 @@ namespace _7Wonders
         private Visual card;
         private Dictionary<string, Visual> visuals1;
         private Dictionary<string, Visual> trade;
-        private Dictionary<Visual, Resource> requirements;
+        private static Dictionary<Resource, int> cost;
+        private static Dictionary<Visual, Resource> requirements;
         private Dictionary<Resource, TradeHelper> westHelpers;
         private Dictionary<Resource, TradeHelper> eastHelpers;
         private int cardSpot = 0;
@@ -175,13 +176,12 @@ namespace _7Wonders
                     else
                     {
                         //HACKS
-                        Game1.client.getSelf().addPlayed(CardLibrary.getCard(Game1.client.getSelf().getHand()[cardSpot]));
-                        Game1.client.getSelf().getHand().RemoveAt(cardSpot);
-                        if (CardLibrary.getCard(card.getTexture()).cost.ContainsKey(Resource.COIN))
+                        Game1.client.playCard(new Dictionary<string, ActionType>() { { card.getTexture(), ActionType.BUILD_CARD } }, 0, 0);
+                       /* if (CardLibrary.getCard(card.getTexture()).cost.ContainsKey(Resource.COIN))
                             Game1.client.getSelf().addResource(Resource.COIN, -CardLibrary.getCard(card.getTexture()).cost[Resource.COIN]);
                         else
                             Game1.client.getSelf().addResource(Resource.COIN, -cardCost);
-                        //
+                        //*/
                         finished = true;
                     }
                 }
@@ -190,19 +190,21 @@ namespace _7Wonders
             if (buildStage.isClicked())
             {
                 //HACKS
-                Game1.client.getSelf().getHand().RemoveAt(cardSpot);
+                //Game1.client.getSelf().getHand().RemoveAt(cardSpot);
                 //
                 buildStage.reset();
-                buildingCard = false;
-                finished = true;
+                //buildingCard = false;
+                //finished = true;
             }
 
             if (sellCard.isClicked())
             {
                 //HACKS
-                Game1.client.getSelf().getHand().RemoveAt(cardSpot);
-                Game1.client.getSelf().addResource(Resource.COIN, 3);
+                //Game1.client.getSelf().getHand().RemoveAt(cardSpot);
+                //Game1.client.getSelf().addResource(Resource.COIN, 3);
                 //
+
+                Game1.client.playCard(new Dictionary<string, ActionType>() { { card.getTexture(), ActionType.SELL_CARD } }, 0, 0);
                 sellCard.reset();
                 finished = true;
             }
@@ -283,7 +285,8 @@ namespace _7Wonders
             }
             int i = 0;
             int k = 0;
-            foreach (KeyValuePair<Resource, int> kp in CardLibrary.getCard(card.getTexture()).cost)
+            cost = CardLibrary.getCard(card.getTexture()).cost;
+            foreach (KeyValuePair<Resource, int> kp in cost)
             {
                 for (int j = 0; j < kp.Value; j++)
                 {
@@ -295,31 +298,50 @@ namespace _7Wonders
                 if (west.getResourceNum(kp.Key) > 0)
                 {
                     westHelpers[kp.Key].setY((int)pos.Y + (k + 4) * RSIZE + MARGIN * 3);
-                    westHelpers[kp.Key].setMax(west.getResourceNum(kp.Key));
+                    westHelpers[kp.Key].setMax(Math.Min(west.getResourceNum(kp.Key), kp.Value));
                     westHelpers[kp.Key].setVisible(true);
                 }
                 if (east.getResourceNum(kp.Key) > 0)
                 {
                     eastHelpers[kp.Key].setY((int)pos.Y + (k + 4) * RSIZE + MARGIN * 3);
-                    eastHelpers[kp.Key].setMax(east.getResourceNum(kp.Key));
+                    eastHelpers[kp.Key].setMax(Math.Min(east.getResourceNum(kp.Key), kp.Value));
                     eastHelpers[kp.Key].setVisible(true);
                 }
                 k++;
             }
         }
 
+        private static void updateCost()
+        {
+            foreach (Visual v in requirements.Keys)
+            {
+                v.setVisible(false);
+            }
+            int i = 0;
+            foreach (KeyValuePair<Resource, int> kp in cost)
+            {
+                for (int j = 0; j < kp.Value; j++)
+                {
+                    Visual v = requirements.Keys.ElementAt(i).setTexture(kp.Key.ToString()).setVisible(true);
+                    requirements[v] = kp.Key;
+                    i++;
+                }
+            }
+        }
+
         private class TradeHelper
         {
-            private string neighbour;
             private int max;
             private int num = 0;
             private Visual resource;
             private Button plus;
             private Button minus;
             private Visual total;
+            private Resource r;
 
             public TradeHelper(Resource _r, int _max, Vector2 position)
             {
+                r = _r;
                 max = _max;
                 resource = new Visual(position, RSIZE, RSIZE, _r.ToString()).setBorder(false);
                 plus = new Button(position + new Vector2(RSIZE + MARGIN, 0), RSIZE, RSIZE, null, null, "plus", false);
@@ -360,11 +382,13 @@ namespace _7Wonders
                 if (plus.isClicked())
                 {
                     plus.reset();
-                    if (num < max)
+                    if ((num < max)&&(cost[r] > 0))
                     {
+                        cost[r]--;
                         num++;
                         total.setString(num.ToString());
-                    }
+                        updateCost();
+                    }                    
                 }
 
                 if (minus.isClicked())
@@ -372,8 +396,10 @@ namespace _7Wonders
                     minus.reset();
                     if (num > 0)
                     {
+                        cost[r]++;
                         num--;
                         total.setString(num.ToString());
+                        updateCost();
                     }
                 }
             }

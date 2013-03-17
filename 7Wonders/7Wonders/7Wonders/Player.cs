@@ -57,6 +57,13 @@ namespace _7Wonders
             Initializer();
         }
 
+        public void updatePlayer(JObject j)
+        {
+            name = (string)j["name"];
+            seatNumber = (int)j["seat"];
+            ready = bool.Parse((string)j["ready"]);
+        }
+
         private void Initializer()
         {
             //Initializing Variables
@@ -257,6 +264,7 @@ namespace _7Wonders
             foreach (string s in (JArray)j["cards"])
             {
                 lastCardsPlayed.Add(s);
+                addPlayed(CardLibrary.getCard(s));
             }
         }
     }
