@@ -139,6 +139,15 @@ namespace _7Wonders
         {
             foreach (Visual v in activeVisuals.Values)
                 v.setVisible(false);
+            if (buildingCard)
+            {
+                foreach (Visual v in trade.Values)
+                    v.setVisible(false);
+                foreach (TradeHelper t in westHelpers.Values)
+                    t.setVisible(false);
+                foreach (TradeHelper t in eastHelpers.Values)
+                    t.setVisible(false);
+            }
         }
 
         public override void LoadContent()
@@ -213,6 +222,7 @@ namespace _7Wonders
                 build.reset();
                 if (isComplete())
                 {
+                    hideTrade();
                     Game1.client.playCard(new Dictionary<string, ActionType>() { { card.getTexture(), ActionType.BUILD_CARD } }, westCoin, eastCoin);
                     activeVisuals = visuals1;
                     finished = true;
@@ -344,7 +354,6 @@ namespace _7Wonders
 
         private class TradeHelper
         {
-            private string neighbour;
             private int max;
             private int num = 0;
             private Visual resource;
@@ -355,7 +364,6 @@ namespace _7Wonders
 
             public TradeHelper(Resource _r, int _max, Vector2 position)
             {
-                //neighbour = _neighbour;
                 r = _r;
                 max = _max;
                 resource = new Visual(position, RSIZE, RSIZE, _r.ToString()).setBorder(false);
