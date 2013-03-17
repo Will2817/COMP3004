@@ -2591,7 +2591,7 @@
             "effects": [
                 {                    
                     "type": "comp",
-                    "amount": 1                
+                    "amount": 1
                 }
             ],
             "chains": [
