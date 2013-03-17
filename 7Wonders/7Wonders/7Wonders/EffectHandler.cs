@@ -196,7 +196,7 @@ namespace _7Wonders
                     choice.Add(resourceType[c]);
                 }
 
-                if (e.basis.Equals("yellow") || e.basis.Equals("wonder"))
+                if ((e.basis != null) && (e.basis.Equals("yellow") || e.basis.Equals("wonder")))
                     AddResourceUnPurchaseable(p, choice);
                 else
                     AddResourceChoice(p, choice);
