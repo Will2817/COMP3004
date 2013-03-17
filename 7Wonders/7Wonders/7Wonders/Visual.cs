@@ -248,5 +248,10 @@ namespace _7Wonders
         {
             leftmargin = i;
         }
+
+        public void setTopMargin(int i)
+        {
+            topmargin = i;
+        }
     }
 }

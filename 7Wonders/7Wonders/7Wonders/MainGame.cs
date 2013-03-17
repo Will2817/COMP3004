@@ -65,6 +65,15 @@ namespace _7Wonders
             baseVisuals.Add("Divider1", new Visual(new Vector2(SEC1WIDTH - 1, 0), DIVIDERWIDTH, Game1.HEIGHT, "line", Color.Silver));
             baseVisuals.Add("Divider2", new Visual(new Vector2(0, SEC1HEIGHT - 1), Game1.WIDTH, DIVIDERWIDTH, "line", Color.Silver));
             baseVisuals.Add("Age", new Visual(new Vector2(Game1.WIDTH - MARGIN - 75, MARGIN), 75, 75, "age1"));
+            baseVisuals.Add("discard", new Visual(new Vector2(Game1.WIDTH - MARGIN - 60, MARGIN * 3 + 120), 60, 60, "0", "Font1", null, Color.White, "deck"));
+            baseVisuals["discard"].setLeftMargin(15);
+            baseVisuals["discard"].setTopMargin(9);
+            baseVisuals.Add("conflict", new Visual(new Vector2(Game1.WIDTH - MARGIN - 60, MARGIN * 2 + 75), 60, 60, "0", "Font1", null, Color.White, "conflict"));
+            baseVisuals["conflict"].setLeftMargin(19);
+            baseVisuals["conflict"].setTopMargin(20);
+            
+
+
         }
 
         private void Initialize()
@@ -89,11 +98,11 @@ namespace _7Wonders
             int LABELLENGTH = (SEC1WIDTH - 2 * MARGIN) / 5;
             int RESOURCELENGTH = (SEC1WIDTH - 2 * MARGIN) * 4 / 5;
             baseVisuals.Add("resources", new Visual(new Vector2(LABELLENGTH + MARGIN, SEC1HEIGHT + MARGIN * 2), RESOURCELENGTH, LABELHEIGHT, "resourceBar"));
-            baseVisuals.Add("east", new Visual(new Vector2(MARGIN, SEC1HEIGHT + LABELHEIGHT + MARGIN * 3), LABELLENGTH, LABELHEIGHT, "East", "Font1", null, null, "grayback"));
-            baseVisuals.Add("west", new Visual(new Vector2(MARGIN, SEC1HEIGHT + LABELHEIGHT * 2 + MARGIN * 4), LABELLENGTH, LABELHEIGHT, "West", "Font1", null, null, "grayback"));
+            baseVisuals.Add("west", new Visual(new Vector2(MARGIN, SEC1HEIGHT + LABELHEIGHT + MARGIN * 3), LABELLENGTH, LABELHEIGHT, "West", "Font1", null, null, "grayback"));
+            baseVisuals.Add("east", new Visual(new Vector2(MARGIN, SEC1HEIGHT + LABELHEIGHT * 2 + MARGIN * 4), LABELLENGTH, LABELHEIGHT, "East", "Font1", null, null, "grayback"));
             baseVisuals.Add("self", new Visual(new Vector2(MARGIN, Game1.HEIGHT - (MARGIN + LABELHEIGHT)), LABELLENGTH, LABELHEIGHT, "Self", "Font1", null, null, "grayback"));
-            baseVisuals.Add("eastresources", new Visual(new Vector2(LABELLENGTH + MARGIN, SEC1HEIGHT + LABELHEIGHT + MARGIN * 3), RESOURCELENGTH, LABELHEIGHT, "emptyResourceBar"));
-            baseVisuals.Add("westresources", new Visual(new Vector2(LABELLENGTH + MARGIN, SEC1HEIGHT + LABELHEIGHT * 2 + MARGIN * 4), RESOURCELENGTH, LABELHEIGHT, "emptyResourceBar"));
+            baseVisuals.Add("westresources", new Visual(new Vector2(LABELLENGTH + MARGIN, SEC1HEIGHT + LABELHEIGHT + MARGIN * 3), RESOURCELENGTH, LABELHEIGHT, "emptyResourceBar"));
+            baseVisuals.Add("eastresources", new Visual(new Vector2(LABELLENGTH + MARGIN, SEC1HEIGHT + LABELHEIGHT * 2 + MARGIN * 4), RESOURCELENGTH, LABELHEIGHT, "emptyResourceBar"));
             baseVisuals.Add("selfresources", new Visual(new Vector2(LABELLENGTH + MARGIN, Game1.HEIGHT - (MARGIN + LABELHEIGHT)), RESOURCELENGTH, LABELHEIGHT, "emptyResourceBar"));
 
             int westSeat = (player.getSeat() - 1 < 0) ? Game1.client.getState().getPlayers().Count - 1 : player.getSeat() - 1;
@@ -105,9 +114,9 @@ namespace _7Wonders
 
             for (int i = 0; i < NUMRESOURCES; i++)
             {
-                baseVisuals.Add("east" + i, new Visual(new Vector2(LABELLENGTH + MARGIN + RESOURCELENGTH * i / 8 + 5, RESOURCEHEIGHT), east.getResourceNum((Resource)i) + "", "Font1"));
+                baseVisuals.Add("west" + i, new Visual(new Vector2(LABELLENGTH + MARGIN + RESOURCELENGTH * i / 8 + 5, RESOURCEHEIGHT), west.getResourceNum((Resource)i) + "", "Font1"));
 
-                baseVisuals.Add("west" + i, new Visual(new Vector2(LABELLENGTH + MARGIN + RESOURCELENGTH * i / 8 + 5, RESOURCEHEIGHT + LABELHEIGHT + MARGIN), west.getResourceNum((Resource)i) + "", "Font1"));
+                baseVisuals.Add("east" + i, new Visual(new Vector2(LABELLENGTH + MARGIN + RESOURCELENGTH * i / 8 + 5, RESOURCEHEIGHT + LABELHEIGHT + MARGIN), east.getResourceNum((Resource)i) + "", "Font1"));                
 
                 baseVisuals.Add("self" + i, new Visual(new Vector2(LABELLENGTH + MARGIN + RESOURCELENGTH * i / 8 + 5, Game1.HEIGHT - (MARGIN + LABELHEIGHT)), player.getResourceNum((Resource)i) + "", "Font1"));
 
@@ -466,6 +475,8 @@ namespace _7Wonders
             }
 
             baseVisuals["Age"].setTexture("age" + Game1.client.getState().getAge());
+            baseVisuals["conflict"].setString(player.getScoreNum(Score.CONFLICT).ToString());
+            baseVisuals["discard"].setString("0");///get actual number of discards
         }
     }
 }
