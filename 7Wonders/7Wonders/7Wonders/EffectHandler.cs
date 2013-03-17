@@ -15,7 +15,7 @@ namespace _7Wonders
     public static class EffectHandler
     {
         // Wonder effects boolean
-        static bool [] freeBuild = {true, true, true}; // Once per age a player can build for free
+        static bool[] freeBuild = { true, true, true }; // Once per age a player can build for free
 
 
         // Used for converting Resources
@@ -33,8 +33,7 @@ namespace _7Wonders
             {"purple", CardColour.PURPLE}
         };
 
-        static Dictionary<string, Score> scienceType = new Dictionary<string, Score>
-        { {"tab", Score.TABLET}, {"comp", Score.COMPASS}, {"gear", Score.GEAR} };
+        static Dictionary<string, Score> scienceType = new Dictionary<string, Score> { { "tab", Score.TABLET }, { "comp", Score.COMPASS }, { "gear", Score.GEAR } };
 
         public static void ApplyEndGameEffect(GameState gameState)
         {
@@ -50,7 +49,7 @@ namespace _7Wonders
                 // Setting up the east and west neighbors
                 foreach (KeyValuePair<long, Player> neighbor in gameState.getPlayers())
                 {
-                    if ((position + 1) % 3 == neighbor.Value.getSeat())                    
+                    if ((position + 1) % 3 == neighbor.Value.getSeat())
                         east = neighbor.Value;
                     if ((position - 1) % 3 == neighbor.Value.getSeat())
                         west = neighbor.Value;
@@ -133,21 +132,8 @@ namespace _7Wonders
 
         // Effects of Cards/Wonders to be applied instantly. Other effects will be ignored
         // and left to another global function to deal with it at the end of the game.
-        public static void ApplyEffect(GameState gameState, Player p, Effect e)
+        public static void ApplyEffect(Player p, Player east, Player west, Effect e)
         {
-            // Setting up Neighboring cities
-            Player east = null;
-            Player west = null;
-
-            // Setting up the east and west neighbors
-            foreach (KeyValuePair<long, Player> neighbor in gameState.getPlayers())
-            {
-                if ((p.getSeat() + 1) % 3 == neighbor.Value.getSeat())
-                    east = neighbor.Value;
-                if ((p.getSeat() - 1) % 3 == neighbor.Value.getSeat())
-                    west = neighbor.Value;
-            }
-
             // RESOURCES
             if (e.type.Length == 1)
                 AddResource(p, resourceType[e.type], e.amount);
@@ -161,7 +147,7 @@ namespace _7Wonders
 
                 // Adding to the Score for Blue Structures raised
                 else if (e.from == null && e.basis.Equals("blue"))
-                    AddScore(p, Score.VICTORY_BLUE, e.amount);    
+                    AddScore(p, Score.VICTORY_BLUE, e.amount);
             }
 
             // COINS
@@ -180,9 +166,8 @@ namespace _7Wonders
                     else
                         AddCoinColour(p, cardType[e.basis], e.amount);
                 }
-
                 // FROM: ALL
-                else if (e.basis.Equals("all"))                
+                else if (e.from.Equals("all"))
                     AddCoinAllColour(p, east, west, cardType[e.basis], e.amount);
             }
 
@@ -192,9 +177,7 @@ namespace _7Wonders
                 List<Resource> choice = new List<Resource>();
 
                 foreach (string c in e.list)
-                {
                     choice.Add(resourceType[c]);
-                }
 
                 if ((e.basis != null) && (e.basis.Equals("yellow") || e.basis.Equals("wonder")))
                     AddResourceUnPurchaseable(p, choice);
@@ -238,7 +221,7 @@ namespace _7Wonders
             e.PrintEffect();
         }
 
-        public static void SellCard(Player p) {  AddResource(p, Resource.COIN, 3); }
+        public static void SellCard(Player p) { AddResource(p, Resource.COIN, 3); }
 
         // Add a certain number of x Resource r to Player p
         // "w", "o", "l", "p" etc
@@ -253,7 +236,7 @@ namespace _7Wonders
 
         // Science Choice - player chooses which science to gain from the card at the end of the game
         // NOTE: Should we have this as a max function? eg. Find max of gear, tablet, compass and just add 1?
-        private static void AddScienceChoice(Player p) 
+        private static void AddScienceChoice(Player p)
         {
             int gear = p.getScoreNum(Score.GEAR);
             int compass = p.getScoreNum(Score.COMPASS);
@@ -261,18 +244,20 @@ namespace _7Wonders
             Score maxScience;
 
             if (gear > compass)
-            {   maxScience = Score.GEAR;
+            {
+                maxScience = Score.GEAR;
 
                 if (tablet >= gear)
                     maxScience = Score.TABLET;
             }
             else
-            {   maxScience = Score.COMPASS;
+            {
+                maxScience = Score.COMPASS;
 
                 if (tablet >= compass)
                     maxScience = Score.TABLET;
             }
-            p.addScore(maxScience, 1);        
+            p.addScore(maxScience, 1);
         }
 
         // Victory Points, Army, Science or any other generic score
@@ -363,11 +348,13 @@ namespace _7Wonders
         // the player can, once per Age, build a structure of their choice for free
         private static void FreeBuild(Player p, Card c, int age)
         {
+            // stuff
             p.addPlayed(c);
         }
 
         public static bool checkFreeBuild(int age)
         {
+            // stuff
             return freeBuild[age];
         }
 
@@ -376,6 +363,7 @@ namespace _7Wonders
         // their choice built by one of their two neighboring cities at the end of the game
         private static void CopyGuild(Player p, string cardID)
         {
+            // stuff
             Card c = CardLibrary.getCard(cardID);
             if (!p.cardPlayed(cardID) && c.colour.Equals(CardColour.PURPLE))
             {
