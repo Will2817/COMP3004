@@ -2589,7 +2589,7 @@
                 "l": 1
             },
             "effects": [
-                {
+                {                    
                     "type": "comp",
                     "amount": 1
                 }

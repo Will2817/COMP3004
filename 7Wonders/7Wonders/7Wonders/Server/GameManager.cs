@@ -227,7 +227,7 @@ namespace _7Wonders.Server
                         // Only applies instant effects of cards, such as victory points, coins,
                         // resource choices, army, trade and science
                         foreach (Game_Cards.Effect e in c.effects)
-                            EffectHandler.ApplyEffect(gameState, p, e);
+                            EffectHandler.ApplyEffect(p, getEastNeighbour(p), getWestNeighbour(p),e);
                         break;
 
                     case ActionType.BUILD_WONDER:
@@ -242,7 +242,7 @@ namespace _7Wonders.Server
 
                         // Must take into account freebuild still or anything specific to wonders atm
                         foreach (Game_Cards.Effect e in pBoard.getStageEffects(pBoard.stagesBuilt))
-                            EffectHandler.ApplyEffect(gameState, p, e);
+                            EffectHandler.ApplyEffect(p, getEastNeighbour(p), getWestNeighbour(p), e);
                         break;
 
                     case ActionType.SELL_CARD:
@@ -316,7 +316,7 @@ namespace _7Wonders.Server
                 case 2:
                     List<string> lastHand = hands.Last();
                     hands.RemoveAt(hands.Count - 1);
-                    hands.Add(lastHand);
+                    hands.Insert(0, lastHand);
                     break;
             }
             for (int i = 0; i < players.Count; i++)
