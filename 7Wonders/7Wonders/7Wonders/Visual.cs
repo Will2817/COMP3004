@@ -37,6 +37,7 @@ namespace _7Wonders
         protected bool enabled = true;
         protected bool border = true;
         protected int margin = 2;
+        public int z{get; set;} 
 
         // Constructor with Visual as a parameter
         public Visual(Visual v)
@@ -62,6 +63,7 @@ namespace _7Wonders
             height = _h;
             textureName = _textureName;
             textureColor = ((_color.HasValue) ? _color.Value : Color.White)*opacity;
+            z = 0;
             stringColor *= opacity;
         }
 
@@ -73,6 +75,7 @@ namespace _7Wonders
             fontName = _fontName;
             text = _text;
             margin = _margin;
+            z = 0;
         }
 
         public Visual(Vector2 _pos, int _w, int _h, string _text, string _fontName, Color? _stringColor = null, Color? _textureColor = null, string _textureName = "line", int _margin = 2)
@@ -86,6 +89,7 @@ namespace _7Wonders
             text = _text;
             textureName = _textureName;
             margin = _margin;
+            z = 0;
         }
 
         public virtual void LoadContent()
