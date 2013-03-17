@@ -110,6 +110,13 @@ namespace _7Wonders
                 baseVisuals.Add("west" + i, new Visual(new Vector2(LABELLENGTH + MARGIN + RESOURCELENGTH * i / 8 + 5, RESOURCEHEIGHT + LABELHEIGHT + MARGIN), west.getResourceNum((Resource)i) + "", "Font1"));
 
                 baseVisuals.Add("self" + i, new Visual(new Vector2(LABELLENGTH + MARGIN + RESOURCELENGTH * i / 8 + 5, Game1.HEIGHT - (MARGIN + LABELHEIGHT)), player.getResourceNum((Resource)i) + "", "Font1"));
+
+                if ((Resource)i == Resource.COIN)
+                {
+                    baseVisuals["east" + i].setLeftMargin(-2);
+                    baseVisuals["west" + i].setLeftMargin(-2);
+                    baseVisuals["self" + i].setLeftMargin(-2);
+                }
             }
             hand.Add("papermiddle", new Visual(new Vector2(MARGIN + 30 + (CARDWIDTH / 2 + MARGIN) * (7 - player.getHand().Count) + 1, 190), Game1.WIDTH - (MARGIN + 30 + (CARDWIDTH / 2 + MARGIN) * (7 - player.getHand().Count)), CARDHEIGHT + 25, "papermiddle"));
 

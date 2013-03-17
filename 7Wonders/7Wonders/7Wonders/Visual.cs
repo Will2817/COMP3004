@@ -36,7 +36,8 @@ namespace _7Wonders
         protected bool visible = true;
         protected bool enabled = true;
         protected bool border = true;
-        protected int margin = 2;
+        protected int topmargin = 2;
+        protected int leftmargin = 2;
         public int z{get; set;} 
 
         // Constructor with Visual as a parameter
@@ -74,7 +75,7 @@ namespace _7Wonders
             stringColor = ((_color.HasValue) ? _color.Value : Color.White) * opacity;
             fontName = _fontName;
             text = _text;
-            margin = _margin;
+            leftmargin = topmargin = _margin;
             z = 0;
         }
 
@@ -88,7 +89,7 @@ namespace _7Wonders
             fontName = _fontName;
             text = _text;
             textureName = _textureName;
-            margin = _margin;
+            leftmargin = topmargin = _margin;
             z = 0;
         }
 
@@ -129,7 +130,7 @@ namespace _7Wonders
             }
             if (text != null)
             {
-                spriteBatch.DrawString(font, text, new Vector2(position.X + margin, position.Y + margin), stringColor);
+                spriteBatch.DrawString(font, text, new Vector2(position.X + leftmargin, position.Y + topmargin), stringColor);
             }
         }
 
@@ -241,6 +242,11 @@ namespace _7Wonders
         public Vector2 getPosition()
         {
             return position;
+        }
+
+        public void setLeftMargin(int i)
+        {
+            leftmargin = i;
         }
     }
 }

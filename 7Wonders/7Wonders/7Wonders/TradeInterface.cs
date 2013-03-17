@@ -291,15 +291,17 @@ namespace _7Wonders
             foreach (TradeHelper t in westHelpers.Values)
             {
                 t.setVisible(false);
+                t.reset();
             }
             foreach (TradeHelper t in eastHelpers.Values)
             {
                 t.setVisible(false);
+                t.reset();
             }
             int i = 0;
             int w = 0;
             int e = 0;
-            cost = CardLibrary.getCard(card.getTexture()).cost;
+            cost = ConstructionUtils.outsourcedCosts(self, CardLibrary.getCard(card.getTexture()).cost);
             foreach (KeyValuePair<Resource, int> kp in cost)
             {
                 for (int j = 0; j < kp.Value; j++)
@@ -393,6 +395,11 @@ namespace _7Wonders
                 plus.setPosition(new Vector2(plus.getPosition().X, y));
                 minus.setPosition(new Vector2(minus.getPosition().X, y));
                 total.setPosition(new Vector2(total.getPosition().X, y));
+            }
+
+            public void reset()
+            {
+                num = 0;
             }
 
             public void setMax(int _max)
