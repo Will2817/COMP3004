@@ -81,8 +81,8 @@ namespace _7Wonders
                 baseVisuals.Add("tablet" + p.getSeat(), new Visual(new Vector2(MARGIN + LABELWIDTH + (LABELWIDTH * 5 / 24), MARGIN * 2 + (MARGIN + LABELHEIGHT) * (p.getSeat() + 1)), p.getScoreNum(Score.TABLET).ToString(), "Font1"));
                 baseVisuals.Add("compas" + p.getSeat(), new Visual(new Vector2(MARGIN + LABELWIDTH + (LABELWIDTH * 9 / 24), MARGIN * 2 + (MARGIN + LABELHEIGHT) * (p.getSeat() + 1)), p.getScoreNum(Score.COMPASS).ToString(), "Font1"));
                 int i;
-                baseVisuals.Add("victory" + p.getSeat(), new Visual(new Vector2(MARGIN + LABELWIDTH + (LABELWIDTH * 13 / 24), MARGIN * 2 + (MARGIN + LABELHEIGHT) * (p.getSeat() + 1)), ((i = p.getScoreNum(Score.VICTORY_BLUE)) < 10) ? "0" + i : i.ToString(), "Font1"));
-                baseVisuals.Add("army" + p.getSeat(), new Visual(new Vector2(MARGIN + LABELWIDTH + (LABELWIDTH * 19 / 24), MARGIN * 2 + (MARGIN + LABELHEIGHT) * (p.getSeat() + 1)), ((i = p.getScoreNum(Score.ARMY)) < 10) ? "0" + i : i.ToString(), "Font1"));
+                baseVisuals.Add("victory" + p.getSeat(), new Visual(new Vector2(MARGIN + LABELWIDTH + (LABELWIDTH * 13 / 24), MARGIN * 2 + (MARGIN + LABELHEIGHT) * (p.getSeat() + 1)), p.getScoreNum(Score.VICTORY_BLUE).ToString(), "Font1"));
+                baseVisuals.Add("army" + p.getSeat(), new Visual(new Vector2(MARGIN + LABELWIDTH + (LABELWIDTH * 19 / 24), MARGIN * 2 + (MARGIN + LABELHEIGHT) * (p.getSeat() + 1)), p.getScoreNum(Score.ARMY).ToString(), "Font1"));
 
             }
 
@@ -116,6 +116,7 @@ namespace _7Wonders
             updatePlayed();
             updateHands();
             updateScroll();
+            updatePlayers();
             Game1.client.setHandChecked();
             Game1.client.setPlayerChecked();
 
@@ -235,9 +236,9 @@ namespace _7Wonders
 
             if (storeSeat != seatViewed)
             {
-                baseVisuals["player" + storeSeat].setColor(Color.Gray);
-                baseVisuals["player" + seatViewed].setColor(Color.Orange);
+                updatePlayers();
             }
+
             if (leftButton.isClicked())
             {
                 leftButton.reset();
@@ -258,6 +259,7 @@ namespace _7Wonders
                 {
                     updatePlayed();
                     updateResources();
+                    updatePlayers();
                     Game1.client.setPlayerChecked();
                 }
             }
@@ -274,6 +276,14 @@ namespace _7Wonders
             {
                 v.Draw(gameTime, spriteBatch);
             }
+            if (!showhand)
+	        {
+	            foreach (Visual v in activeVisuals.Values)
+	            {
+	                if (v.isMouseOver(mousestate)) v.Draw(gameTime, spriteBatch);
+	            }
+            }
+
             if (showTrade)
             {
                 trade.Draw(gameTime, spriteBatch);
@@ -296,6 +306,13 @@ namespace _7Wonders
                 {
                     {"nextInterface", "maingame"}
                 };
+        }
+
+        private void updatePlayers()
+        {
+            foreach (Player p in Game1.client.getState().getPlayers().Values)
+                baseVisuals["player" + p.getSeat()].setColor((p.getReady())? Color.Green : Color.Gray);
+            baseVisuals["player" + seatViewed].setColor(Color.Orange);
         }
 
         private void updateHands()
@@ -430,6 +447,18 @@ namespace _7Wonders
 
                 baseVisuals["self" + i].setString(player.getResourceNum((Resource)i) + "");
             }
+
+            foreach (Player p in Game1.client.getState().getPlayers().Values)
+            {
+                baseVisuals["gear" + p.getSeat()].setString(p.getScoreNum(Score.GEAR).ToString());
+                baseVisuals["tablet" + p.getSeat()].setString(p.getScoreNum(Score.TABLET).ToString());
+                baseVisuals["compas" + p.getSeat()].setString(p.getScoreNum(Score.COMPASS).ToString());
+                baseVisuals["victory" + p.getSeat()].setString(p.getScoreNum(Score.VICTORY_BLUE).ToString());
+                baseVisuals["army" + p.getSeat()].setString(p.getScoreNum(Score.ARMY).ToString());
+
+            }
+
+            baseVisuals["Age"].setTexture("age" + Game1.client.getState().getAge());
         }
     }
 }
