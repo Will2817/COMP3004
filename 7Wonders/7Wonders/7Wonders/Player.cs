@@ -217,6 +217,24 @@ namespace _7Wonders
                 resource.Add(new JProperty(((int)r).ToString(), resources[r]));
             }
 
+            JArray pubChoices = new JArray();
+            foreach (List<Resource> choice in publicChoices)
+            {
+                JArray arr = new JArray();
+                foreach (Resource r in choice)
+                    arr.Add((int)r);
+                pubChoices.Add(arr);
+            }
+
+            JArray privChoices = new JArray();
+            foreach (List<Resource> choice in privateChoices)
+            {
+                JArray arr = new JArray();
+                foreach (Resource r in choice)
+                    arr.Add((int)r);
+                privChoices.Add(arr);
+            }
+
             JArray actions = new JArray();
             JArray cards = new JArray();
             foreach (string s in lastCardsPlayed)
@@ -241,7 +259,9 @@ namespace _7Wonders
                         new JProperty(((int)Score.VICTORY_BLUE).ToString(), score[Score.VICTORY_BLUE]))),
                 new JProperty("resource", resource),
                 new JProperty("actions", actions),
-                new JProperty("cards", cards));
+                new JProperty("cards", cards),
+                new JProperty("publicChoices", pubChoices),
+                new JProperty("privateChoices", privChoices));
             return j;
         }
 
@@ -265,6 +285,24 @@ namespace _7Wonders
             {
                 lastCardsPlayed.Add(s);
                 addPlayed(CardLibrary.getCard(s));
+            }
+
+            publicChoices.Clear();
+            foreach (JArray choiceSet in (JArray)j["publicChoices"])
+            {
+                List<Resource> choices = new List<Resource>();
+                foreach (int r in choiceSet)
+                    choices.Add((Resource)r);
+                publicChoices.Add(choices);
+            }
+
+            privateChoices.Clear();
+            foreach (JArray choiceSet in (JArray)j["privateChoices"])
+            {
+                List<Resource> choices = new List<Resource>();
+                foreach (int r in choiceSet)
+                    choices.Add((Resource)r);
+                privateChoices.Add(choices);
             }
         }
     }

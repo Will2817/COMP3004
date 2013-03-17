@@ -16,7 +16,7 @@ namespace _7Wonders
         public static int constructCost(Player player, Player west, Player east, Dictionary<Resource, int> cost)
         {
             Dictionary<Resource, int> cost2 = outsourcedCosts(player, cost);
-            if (cost2.Count == 0) return 0;
+            if (cost2.Count == 0 || canChoicesCover(player.getTotalChoices(), cost2)) return 0;
             //check if player can meet remaining cost with choices
             int coinCost = 0;
             foreach (int amt in cost2.Values) coinCost += amt;
@@ -60,7 +60,7 @@ namespace _7Wonders
             return coverage;
         }
 
-        private static List<List<Resource>> getRelevantChoices(Dictionary<Resource, int> cost, List<List<Resource>> choices)
+        public static List<List<Resource>> getRelevantChoices(Dictionary<Resource, int> cost, List<List<Resource>> choices)
         {
             List<List<Resource>> relevantChoices = new List<List<Resource>>();
             foreach (List<Resource> choice in choices)
@@ -76,9 +76,12 @@ namespace _7Wonders
         public static bool canChoicesCover(List<List<Resource>> choices, Dictionary<Resource, int> cost)
         {
             List<List<Resource>> relevantChoices = getRelevantChoices(cost, choices);
+            if (relevantChoices.Count == 0) return false;
             int totalAmount = 0;
             foreach (KeyValuePair<Resource, int> r in cost)
             {
+                if (relevantChoices.Count < r.Value) return false;
+                else if (cost.Count == 1) return true;
                 Dictionary<Resource, int> rCost = new Dictionary<Resource, int>();
                 rCost.Add(r.Key, r.Value);
                 if (!canChoicesCover(choices, rCost)) return false;

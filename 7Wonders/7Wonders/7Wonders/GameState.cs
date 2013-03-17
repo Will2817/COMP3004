@@ -193,21 +193,28 @@ namespace _7Wonders
 
         public string superJson()
         {
-            JArray super = new JArray();
+            JArray jPlayers = new JArray();
             foreach (Player p in players.Values)
             {
-                super.Add(p.superJson());
+                jPlayers.Add(p.superJson());
             }
+            JObject super = new JObject(new JProperty("players", jPlayers),
+                                        new JProperty("age", age),
+                                        new JProperty("turn", turn));
             return super.ToString();
         }
 
         public void superParse(string json)
         {
-            JArray ja = JArray.Parse(json);
+            JObject obj = JObject.Parse(json);
+
+            JArray ja = (JArray)obj["players"];
             foreach (JObject jo in ja)
             {
                 players[(long)jo["id"]].superParse(jo);
             }
+            age = (int)obj["age"];
+            turn = (int)obj["turn"];
         }
     }
 }
