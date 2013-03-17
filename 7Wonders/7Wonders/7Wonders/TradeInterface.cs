@@ -30,8 +30,8 @@ namespace _7Wonders
         private Dictionary<string, Visual> trade;
         private static Dictionary<Resource, int> cost;
         private static Dictionary<Visual, Resource> requirements;
-        private Dictionary<Resource, TradeHelper> westHelpers;
-        private Dictionary<Resource, TradeHelper> eastHelpers;
+        private static Dictionary<Resource, TradeHelper> westHelpers;
+        private static Dictionary<Resource, TradeHelper> eastHelpers;
         private int cardSpot = 0;
         private bool disableBuild = false;
         private bool buildingCard = false;
@@ -40,6 +40,9 @@ namespace _7Wonders
         Player self;
         Player west;
         Player east;
+
+        static int eastCoin = 0;
+        static int westCoin = 0;
 
         public TradeInterface()
             : base("bg", new Vector2(Game1.WIDTH / 3, Game1.HEIGHT / 6), Game1.WIDTH * 2 / 3, Game1.HEIGHT * 2 / 3)
@@ -208,9 +211,12 @@ namespace _7Wonders
             if (build.isClicked())
             {
                 build.reset();
-                //Check if cost is met
-                //activeVisuals = visuals1;
-                //finished = true;
+                if (isComplete())
+                {
+                    Game1.client.playCard(new Dictionary<string, ActionType>() { { card.getTexture(), ActionType.BUILD_CARD } }, westCoin, eastCoin);
+                    activeVisuals = visuals1;
+                    finished = true;
+                }
             }
 
             if (buildingCard)
@@ -236,6 +242,15 @@ namespace _7Wonders
                 foreach (TradeHelper t in eastHelpers.Values)
                     t.Draw(gameTime, spriteBatch);
             }
+        }
+
+        private bool isComplete()
+        {
+            foreach (int i in cost.Values)
+            {
+                if (i > 0) return false;
+            }
+            return true;
         }
 
         public override Dictionary<string, string> isFinished()
@@ -266,7 +281,8 @@ namespace _7Wonders
                 t.setVisible(false);
             }
             int i = 0;
-            int k = 0;
+            int w = 0;
+            int e = 0;
             cost = CardLibrary.getCard(card.getTexture()).cost;
             foreach (KeyValuePair<Resource, int> kp in cost)
             {
@@ -279,17 +295,19 @@ namespace _7Wonders
 
                 if (west.getResourceNum(kp.Key) > 0)
                 {
-                    westHelpers[kp.Key].setY((int)pos.Y + (k + 4) * RSIZE + MARGIN * 3);
+                    westHelpers[kp.Key].setY((int)pos.Y + (w + 4) * RSIZE + MARGIN * 3);
                     westHelpers[kp.Key].setMax(Math.Min(west.getResourceNum(kp.Key), kp.Value));
                     westHelpers[kp.Key].setVisible(true);
+                    w++;
                 }
                 if (east.getResourceNum(kp.Key) > 0)
                 {
-                    eastHelpers[kp.Key].setY((int)pos.Y + (k + 4) * RSIZE + MARGIN * 3);
+                    eastHelpers[kp.Key].setY((int)pos.Y + (e + 4) * RSIZE + MARGIN * 3);
                     eastHelpers[kp.Key].setMax(Math.Min(east.getResourceNum(kp.Key), kp.Value));
                     eastHelpers[kp.Key].setVisible(true);
+                    e++;
                 }
-                k++;
+                
             }
         }
 
@@ -309,10 +327,24 @@ namespace _7Wonders
                     i++;
                 }
             }
+            
+            westCoin= 0;
+            foreach (KeyValuePair<Resource, TradeHelper> kp in westHelpers)
+            {
+                if (kp.Key >= Resource.ORE) westCoin += kp.Value.getValue() * Game1.client.getSelf().mcost;
+                else westCoin += kp.Value.getValue() * Game1.client.getSelf().rcostWest;
+            }
+            eastCoin = 0;
+            foreach (KeyValuePair<Resource, TradeHelper> kp in eastHelpers)
+            {
+                if (kp.Key >= Resource.ORE) eastCoin += kp.Value.getValue() * Game1.client.getSelf().mcost;
+                else eastCoin += kp.Value.getValue() * Game1.client.getSelf().rcostEast;
+            }
         }
 
         private class TradeHelper
         {
+            private string neighbour;
             private int max;
             private int num = 0;
             private Visual resource;
@@ -323,6 +355,7 @@ namespace _7Wonders
 
             public TradeHelper(Resource _r, int _max, Vector2 position)
             {
+                //neighbour = _neighbour;
                 r = _r;
                 max = _max;
                 resource = new Visual(position, RSIZE, RSIZE, _r.ToString()).setBorder(false);
@@ -352,6 +385,11 @@ namespace _7Wonders
             {
                 num = 0;
                 max = _max;
+            }
+
+            public int getValue()
+            {
+                return int.Parse(total.getString());
             }
 
             public void Update(GameTime gameTime, MouseState mouseState)
