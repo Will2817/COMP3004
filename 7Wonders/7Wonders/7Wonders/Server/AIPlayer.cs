@@ -44,26 +44,27 @@ namespace _7Wonders.Server
             Console.WriteLine("AI: Selecting Card");
             this.gameState = gameState;
             Player self = gameState.getPlayers()[id];
+            Player west = null;
+            Player east = null;
+            foreach (Player o in gameState.getPlayers().Values)
+            {
+                if (o.getSeat() == self.getSeat() - 1 || (self.getSeat() == 0 && o.getSeat() == gameState.getPlayers().Count - 1))
+                    west = o;
+                if (o.getSeat() == self.getSeat() + 1 || (o.getSeat() == 0 && self.getSeat() == gameState.getPlayers().Count - 1))
+                    east =  o;
+            }
             Dictionary<string, ActionType> actions = new Dictionary<string, ActionType>();
-            /*
             foreach (string c in self.getHand())
             {
-                bool playable = true;
-                foreach (Resource r in c.cost.Keys)
+                Card card = CardLibrary.getCard(c);
+                
+                if (ConstructionUtils.canChainBuild(self, card) || ConstructionUtils.constructCost(self, west, east, card.cost) == 0)
                 {
-                    if (c.cost[r] > self.getResourceNum(r))
-                    {
-                        playable = false;
-                        break;
-                    }
-                }
-                if (playable)
-                {
-                    actions.Add(c.getImageId(), ActionType.BUILD_CARD);
-                    //call game manager action select method thing once done
+                    actions.Add(c, ActionType.BUILD_CARD);
+                    gameManager.handleActions(id, actions, 0, 0);
                     return;
                 }
-            }*/
+            }
             actions.Add(self.getHand()[0], ActionType.SELL_CARD);
             gameManager.handleActions(id, actions, 0, 0);
             Console.WriteLine("AI: Actions handled");
