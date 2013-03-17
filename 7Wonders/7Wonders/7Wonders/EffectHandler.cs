@@ -156,11 +156,11 @@ namespace _7Wonders
             else if (e.type.Equals("victory"))
             {
                 // NO FROM/BASIS - add to score
-                if (e.from.Equals(null) && e.basis.Equals(null))
+                if (e.from == null && e.basis == null)
                     AddScore(p, Score.VICTORY, e.amount);
 
                 // Adding to the Score for Blue Structures raised
-                else if (e.from.Equals(null) && e.basis.Equals("blue"))
+                else if (e.from == null && e.basis.Equals("blue"))
                     AddScore(p, Score.VICTORY_BLUE, e.amount);    
             }
 
@@ -168,7 +168,7 @@ namespace _7Wonders
             else if (e.type.Equals("coin"))
             {
                 // No FROM/BASIS - add coin
-                if (e.from.Equals(null) && e.basis.Equals(null))
+                if (e.from == null && e.basis == null)
                     AddResource(p, Resource.COIN, e.amount);
 
                 // FROM: PLAYER
