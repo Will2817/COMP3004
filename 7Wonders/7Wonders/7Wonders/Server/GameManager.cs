@@ -176,12 +176,10 @@ namespace _7Wonders.Server
         public void sendHands()
         {
             foreach (long id in gameState.getPlayers().Keys)
-            {
                 if (!aiPlayers.ContainsKey(id))
                     messageSerializer.notifyHand(id, gameState.handToJson(id));
-                else
-                    aiPlayers[id].selectAction(gameState);
-            }
+            foreach (long id in aiPlayers.Keys)
+                aiPlayers[id].selectAction(gameState);
         }
 
         public void handleActions(long id, Dictionary<string, ActionType> actions, int westGold, int eastGold)
@@ -213,6 +211,7 @@ namespace _7Wonders.Server
                 switch (action.Value)
                 {                       
                     case ActionType.BUILD_CARD:
+                        Console.WriteLine("Player is building card");
                         // Consider validating move/checking whether player has already played card.
                                 
                         // Add to list of lastPlayedCards and lastActions
@@ -275,6 +274,8 @@ namespace _7Wonders.Server
 
         private void endTurn()
         {
+            foreach (Player p in gameState.getPlayers().Values)
+                p.setReady(false);
             if (gameState.getTurn() == 6)
             {
                 if (gameState.getAge() == 3)
@@ -285,15 +286,15 @@ namespace _7Wonders.Server
                 gameState.incrementAge();
                 gameState.resetTurn();
                 foreach (Player p in gameState.getPlayers().Values)
-                    p.setHand(deck.dealCards(1));
+                    p.setHand(deck.dealCards(gameState.getAge()));
                 resolveMilitaryConflicts();
             }
             else
             {
-                messageSerializer.broadcastSuperState(gameState.superJson());
                 rotateHands();
                 gameState.incrementTurn();
             }
+            messageSerializer.broadcastSuperState(gameState.superJson());
             sendHands();
         }
 
