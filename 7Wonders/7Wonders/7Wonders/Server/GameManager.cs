@@ -316,7 +316,7 @@ namespace _7Wonders.Server
                 case 2:
                     List<string> lastHand = hands.Last();
                     hands.RemoveAt(hands.Count - 1);
-                    hands.Add(lastHand);
+                    hands.Insert(0, lastHand);
                     break;
             }
             for (int i = 0; i < players.Count; i++)
