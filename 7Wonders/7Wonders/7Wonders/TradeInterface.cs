@@ -141,12 +141,18 @@ namespace _7Wonders
                 v.setVisible(false);
             if (buildingCard)
             {
-                foreach (Visual v in trade.Values)
+                foreach (Visual v in requirements.Keys)
+                {
                     v.setVisible(false);
+                }
                 foreach (TradeHelper t in westHelpers.Values)
+                {
                     t.setVisible(false);
+                }
                 foreach (TradeHelper t in eastHelpers.Values)
+                {
                     t.setVisible(false);
+                }
             }
         }
 
@@ -222,9 +228,9 @@ namespace _7Wonders
                 build.reset();
                 if (isComplete())
                 {
-                    hideTrade();
                     Game1.client.playCard(new Dictionary<string, ActionType>() { { card.getTexture(), ActionType.BUILD_CARD } }, westCoin, eastCoin);
                     activeVisuals = visuals1;
+                    hideTrade();
                     finished = true;
                 }
             }
