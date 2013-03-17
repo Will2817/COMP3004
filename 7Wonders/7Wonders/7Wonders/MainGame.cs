@@ -26,7 +26,6 @@ namespace _7Wonders
         private int WONDERWIDTH = Game1.WIDTH / 3 - 10;
         private int SEC1HEIGHT = Game1.HEIGHT * 2 / 3;
         private int DROPDOWNWIDTH = (Game1.WIDTH / 3) - 135;
-        //private int DROPDOWNWIDTH = SEC1WIDTH
         private int DROPDOWNHEIGHT = (Game1.HEIGHT / 2 - (Game1.MAXPLAYER + 1) * MARGIN) / Game1.MAXPLAYER;
         private const int LABELHEIGHT = 35;
         private int LABELWIDTH;
@@ -35,7 +34,7 @@ namespace _7Wonders
 
         protected Dictionary<int, Dictionary<string, Visual>> seatVisuals;
         protected Dictionary<string, Visual> baseVisuals;
-        protected Dictionary<string, Visual> hand;
+        protected SortedDictionary<string, Visual> hand;
         protected bool showhand = false;
         protected int seatViewed = 0;
         protected Player player;
@@ -53,8 +52,9 @@ namespace _7Wonders
             CARDHEIGHT = (int) (CARDWIDTH * 1.612);
             player = null;
             wonder = null;
-            hand = new Dictionary<string, Visual>();
+            hand = new SortedDictionary<string, Visual>();
             leftButton = new Button(new Vector2(Game1.WIDTH - 27, 200 + CARDHEIGHT / 2 - 7), 15, 15, "", "Font1", "left");
+            leftButton.z = 1;
             hand.Add("paperleft", new Visual(new Vector2(Game1.WIDTH - 27, 190), 30, CARDHEIGHT + 30, "paperleft"));
             hand.Add("leftButton", leftButton.setBorder(false));
 
@@ -148,14 +148,14 @@ namespace _7Wonders
             if (showTrade)
             {
                 trade.Update(gameTime, mouseState);
-                if (trade.isFinished() != null)
+                Dictionary<string, string> message;
+                if ((message = trade.isFinished()) != null)
                 {
+                    showhand = false;
                     trade.reset();
                     showTrade = false;
-                    //updateHands();
-                    //updateScroll();
-                    //updateResources();
                 }
+
                 return;
             }
             base.Update(gameTime, mouseState);
@@ -180,12 +180,6 @@ namespace _7Wonders
 
                         trade.showTrade(hand["hand" + j].getTexture(), j);
                         showTrade = true;
-                        //HACKS
-                        //Game1.client.getSelf().addPlayed(Game1.client.getSelf().getHand()[j]);
-                        //Game1.client.getSelf().getHand().RemoveAt(j);
-                        //
-                        updateHands();
-                        updateScroll();
                     }
                 }
             }
@@ -267,7 +261,6 @@ namespace _7Wonders
                     Game1.client.setPlayerChecked();
                 }
             }
-            updatePlayed();
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
@@ -277,16 +270,9 @@ namespace _7Wonders
             {
                 v.Draw(gameTime, spriteBatch);
             }
-            foreach (Visual v in hand.Values)
+            foreach (Visual v in hand.Values.OrderBy(item => item.z))
             {
                 v.Draw(gameTime, spriteBatch);
-            }
-            if (!showhand)
-            {
-                foreach (Visual v in activeVisuals.Values)
-                {
-                    if (v.isMouseOver(mousestate)) v.Draw(gameTime, spriteBatch);
-                }
             }
             if (showTrade)
             {
@@ -326,8 +312,10 @@ namespace _7Wonders
             foreach (string c in player.getHand())
             {
                 Game1.cards[c].setPosition(new Vector2(MARGIN + 40 + (CARDWIDTH + MARGIN * 2) * k + (CARDWIDTH / 2 + MARGIN) * (7 - player.getHand().Count), 205)).setWidth(CARDWIDTH).setHeight(CARDHEIGHT);
+                Game1.cards[c].z = 2;
                 hand.Add("hand" + k, Game1.cards[c]);
-                Visual v = new Visual(Game1.cards[c]).setRelativePosition(new Vector2(-1, -1)).setRelativeHeight(2).setRelativeWidth(2); ;
+                Visual v = new Visual(Game1.cards[c]).setRelativePosition(new Vector2(-1, -1)).setRelativeHeight(2).setRelativeWidth(2);
+                v.z = 3;
                 if (Game1.client.constructCost(c) == 0) v.setTexture("greenglow");
                 else if (Game1.client.constructCost(c) > 0) v.setTexture("goldglow");
                 else v.setTexture("redglow");

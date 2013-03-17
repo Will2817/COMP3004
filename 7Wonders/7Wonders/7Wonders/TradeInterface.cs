@@ -160,12 +160,6 @@ namespace _7Wonders
                 buildCard.reset();
                 if (!disableBuild)
                 {
-                    //HACKS
-                    //int cost = Game1.client.constructCost(Game1.client.getSelf().getHand()[cardSpot].getImageId());
-                    //Game1.client.getSelf().addPlayed(Game1.client.getSelf().getHand()[cardSpot]);
-                    //Game1.client.getSelf().getHand().RemoveAt(cardSpot);
-                    //Game1.client.getSelf().addResource(Resource.COIN, -cost);
-                    //
                     buildCard.reset();
                     if (needtrade)
                     {
@@ -175,13 +169,7 @@ namespace _7Wonders
                     }
                     else
                     {
-                        //HACKS
                         Game1.client.playCard(new Dictionary<string, ActionType>() { { card.getTexture(), ActionType.BUILD_CARD } }, 0, 0);
-                       /* if (CardLibrary.getCard(card.getTexture()).cost.ContainsKey(Resource.COIN))
-                            Game1.client.getSelf().addResource(Resource.COIN, -CardLibrary.getCard(card.getTexture()).cost[Resource.COIN]);
-                        else
-                            Game1.client.getSelf().addResource(Resource.COIN, -cardCost);
-                        //*/
                         finished = true;
                     }
                 }
@@ -199,11 +187,6 @@ namespace _7Wonders
 
             if (sellCard.isClicked())
             {
-                //HACKS
-                //Game1.client.getSelf().getHand().RemoveAt(cardSpot);
-                //Game1.client.getSelf().addResource(Resource.COIN, 3);
-                //
-
                 Game1.client.playCard(new Dictionary<string, ActionType>() { { card.getTexture(), ActionType.SELL_CARD } }, 0, 0);
                 sellCard.reset();
                 finished = true;
@@ -211,7 +194,6 @@ namespace _7Wonders
 
             if (close.isClicked())
             {
-                
                 close.reset();
                 finished = true;
             }
