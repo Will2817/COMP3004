@@ -280,6 +280,7 @@ namespace _7Wonders.Server
             {
                 if (gameState.getAge() == 3)
                 {
+                    resolveMilitaryConflicts();
                     endGame();
                     return;
                 }
@@ -287,7 +288,7 @@ namespace _7Wonders.Server
                 gameState.resetTurn();
                 foreach (Player p in gameState.getPlayers().Values)
                     p.setHand(deck.dealCards(gameState.getAge()));
-                resolveMilitaryConflicts(gameState.getAge() - 1);
+                resolveMilitaryConflicts();
             }
             else
             {
@@ -323,9 +324,8 @@ namespace _7Wonders.Server
                 players[i].setHand(hands[i]);
         }
 
-        private void resolveMilitaryConflicts(int agePlayed)
+        private void resolveMilitaryConflicts()
         {
-            int[] victoryTokens = { 1, 3, 5 };
             //calculate and broadcast military conflict results
             foreach (Player p in gameState.getPlayers().Values)
             {
@@ -333,14 +333,14 @@ namespace _7Wonders.Server
                 int westArmy = getWestNeighbour(p).getScoreNum(Score.ARMY);
 
                 if (p.getScoreNum(Score.ARMY) > eastArmy)
-                    p.addScore(Score.VICTORY, victoryTokens[agePlayed - 1]);
+                    p.addScore(Score.CONFLICT, (gameState.getAge() * 2 ) -1);
                 else if (p.getScoreNum(Score.ARMY) < eastArmy)
-                    p.addScore(Score.VICTORY, -1);
+                    p.addScore(Score.CONFLICT, -1);
 
                 if (p.getScoreNum(Score.ARMY) > westArmy)
-                    p.addScore(Score.VICTORY, victoryTokens[agePlayed - 1]);
+                    p.addScore(Score.CONFLICT, (gameState.getAge() * 2) - 1);
                 else if (p.getScoreNum(Score.ARMY) < westArmy)
-                    p.addScore(Score.VICTORY, -1);
+                    p.addScore(Score.CONFLICT, -1);
             }
         }
 
