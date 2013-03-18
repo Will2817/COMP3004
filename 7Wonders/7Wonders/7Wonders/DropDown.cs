@@ -25,11 +25,11 @@ namespace _7Wonders
         {
             enabled = (_enabled.HasValue) ? _enabled.Value : true;
             strings = new Dictionary<string, Visual>();
-            selected = new Visual(position, width, height, _options[0], "Font1", Color.White, Color.SlateGray);
+            selected = new Visual(position, width, height, _options[0], "Font1", Color.White, Color.Gray, "grayback");
             int count=1;
             foreach (string s in _options)
             {
-                strings.Add(s, (new Visual(position + new Vector2(0, count * height), width + 21, height, s, "Font1", Color.White)).setVisible(false));
+                strings.Add(s, (new Visual(position + new Vector2(0, count * height), width + 21, height, s, "Font1", Color.White, Color.Orange, "grayback")).setVisible(false));
                 count++;
             }
 
