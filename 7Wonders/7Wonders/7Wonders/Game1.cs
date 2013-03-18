@@ -152,6 +152,7 @@ namespace _7Wonders
             textures.Add("minus", Content.Load<Texture2D>("Images/minus"));
             textures.Add("conflict", Content.Load<Texture2D>("Images/fight1"));
             textures.Add("deck", Content.Load<Texture2D>("Images/deck"));
+            textures.Add("coin", Content.Load<Texture2D>("Images/coin"));
 
             foreach (JObject j in (JArray)wondersJson["wonders"])
             {
