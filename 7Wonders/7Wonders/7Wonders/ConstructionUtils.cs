@@ -7,6 +7,8 @@ namespace _7Wonders
 {
     public class ConstructionUtils
     {
+        private static List<Resource> rawGoods = new List<Resource>{ Resource.CLAY, Resource.ORE, Resource.STONE, Resource.WOOD };
+        private static List<Resource> manGoods = new List<Resource> { Resource.GLASS, Resource.LOOM, Resource.PAPYRUS };
         //Checks how a player with neighbours west and east would have to spend in order to meet the given cost
         //Returns -1 if the player cannot possibly build the card (including if his neighbours have the required
         //resources, but he cannot afford to purchase them)
@@ -15,13 +17,64 @@ namespace _7Wonders
         //required resources to meet the cost
         public static int constructCost(Player player, Player west, Player east, Dictionary<Resource, int> cost)
         {
-            Dictionary<Resource, int> cost2 = outsourcedCosts(player, cost);
-            if (cost2.Count == 0 || canChoicesCover(player.getTotalChoices(), cost2)) return 0;
+            if (cost.ContainsKey(Resource.COIN))
+                return (cost[Resource.COIN] > player.getResourceNum(Resource.COIN)) ? -1 : cost[Resource.COIN];
+            Dictionary<Resource, int> costAfterPlayerResources = outsourcedCosts(player, cost);
+            if (costAfterPlayerResources.Count == 0 || canChoicesCover(player.getTotalChoices(), costAfterPlayerResources)) return 0;
             //check if player can meet remaining cost with choices
             int coinCost = 0;
-            foreach (int amt in cost2.Values) coinCost += amt;
-            Dictionary<Resource, int> cost3 = outsourcedCosts(west, cost2);
-            if (cost3.Count > 0 && outsourcedCosts(east, cost3).Count > 0) return -1;
+            //raw resources
+            Player cheaper;
+            Player notCheaper;
+            int cheaperCost;
+            int notCheaperCost;
+            if (player.rcostEast < player.rcostWest)
+            {
+                cheaper = east;
+                notCheaper = west;
+                cheaperCost = player.rcostEast;
+                notCheaperCost = player.rcostWest;
+            }
+            else
+            {
+                cheaper = west;
+                notCheaper = east;
+                cheaperCost = player.rcostWest;
+                notCheaperCost = player.rcostEast;
+            }
+            Dictionary<Resource, int> rawCost = new Dictionary<Resource, int>();
+            foreach (Resource r in rawGoods.Intersect(costAfterPlayerResources.Keys))
+                rawCost.Add(r, costAfterPlayerResources[r]);
+            // List<List<Resource>> rawChoices = new List<List<Resource>>();
+            //rawChoices.AddRange(west.getPublicChoices());
+            //rawChoices.AddRange(east.getPublicChoices());
+            Dictionary<Resource, int> leftoverRaw = outsourcedCosts(cheaper, rawCost);
+            foreach (Resource r in rawGoods.Intersect(costAfterPlayerResources.Keys))
+                coinCost += cheaperCost * (costAfterPlayerResources[r] - (leftoverRaw.ContainsKey(r)?leftoverRaw[r]:0));
+            if (!(leftoverRaw.Count == 0 || canChoicesCover(player.getTotalChoices(), leftoverRaw)))
+            {
+                Dictionary<Resource, int> stillLeftoverRaw = outsourcedCosts(notCheaper, leftoverRaw);
+                foreach (Resource r in rawGoods.Intersect(leftoverRaw.Keys))
+                    coinCost += notCheaperCost * (leftoverRaw[r] - (stillLeftoverRaw.ContainsKey(r) ? stillLeftoverRaw[r] : 0));
+                if (!(stillLeftoverRaw.Count == 0 || canChoicesCover(player.getTotalChoices(), stillLeftoverRaw))) return -1;
+            }
+            
+
+            //manufactured goods
+            Dictionary<Resource, int> manCost = new Dictionary<Resource, int>();
+            foreach (Resource r in manGoods.Intersect(costAfterPlayerResources.Keys))
+                manCost.Add(r, costAfterPlayerResources[r]);
+            Dictionary<Resource, int> leftoverMan = outsourcedCosts(west, manCost);
+            foreach (Resource r in manGoods.Intersect(costAfterPlayerResources.Keys))
+                coinCost += player.mcost * (costAfterPlayerResources[r] - (leftoverMan.ContainsKey(r) ? leftoverMan[r] : 0));
+            if (!(leftoverMan.Count == 0 || canChoicesCover(player.getTotalChoices(), leftoverMan)))
+            {
+                Dictionary<Resource, int> stillLeftoverMan = outsourcedCosts(east, leftoverMan);
+                foreach (Resource r in manGoods.Intersect(leftoverMan.Keys))
+                    coinCost += player.mcost * (leftoverMan[r] - (stillLeftoverMan.ContainsKey(r) ? stillLeftoverMan[r] : 0));
+                if (!(stillLeftoverMan.Count == 0 || canChoicesCover(player.getTotalChoices(), stillLeftoverMan))) return -1;
+            }
+
             return coinCost > player.getResourceNum(Resource.COIN) ? -1 : coinCost;
         }
 
