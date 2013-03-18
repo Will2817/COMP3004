@@ -335,12 +335,18 @@ namespace _7Wonders.Server
                 if (p.getScoreNum(Score.ARMY) > eastArmy)
                     p.addScore(Score.CONFLICT, (gameState.getAge() * 2 ) -1);
                 else if (p.getScoreNum(Score.ARMY) < eastArmy)
+                {
                     p.addScore(Score.CONFLICT, -1);
+                    p.addScore(Score.DEFEAT, 1);
+                }
 
                 if (p.getScoreNum(Score.ARMY) > westArmy)
                     p.addScore(Score.CONFLICT, (gameState.getAge() * 2) - 1);
                 else if (p.getScoreNum(Score.ARMY) < westArmy)
+                {
                     p.addScore(Score.CONFLICT, -1);
+                    p.addScore(Score.DEFEAT, 1);
+                }
             }
         }
 

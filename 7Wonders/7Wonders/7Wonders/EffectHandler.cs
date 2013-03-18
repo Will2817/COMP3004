@@ -354,7 +354,7 @@ namespace _7Wonders
         // Victory Points awarded from the number of specific structure colour each neighbours constructed
         private static void AddVictoryNeighboursColour(Player p, Player east, Player west, CardColour c, int amount)
         {
-            p.addScore(Score.VICTORY, GetVictoryNeighboursColour(east, west, c, amount);
+            p.addScore(Score.VICTORY, GetVictoryNeighboursColour(east, west, c, amount));
         }
 
         // Victory Points returned from the number of specific structure colour each neighbours constructed
@@ -376,19 +376,19 @@ namespace _7Wonders
             return p.getCardColourCount(c) * amount;
         }
 
-        // THIS IS WRONG...
         // Victory Points awarded from the number of conflict points each neighbour has
         private static void AddVictoryNeighboursConflict(Player p, Player east, Player west)
-        {
-            int points = east.getScoreType(Score.CONFLICT) + west.getScoreType(Score.CONFLICT);
-            p.addScore(Score.VICTORY, points);
+        {            
+            p.addScore(Score.VICTORY, GetVictoryNeighboursConflict(east, west));
         }
 
         // Victory Points returned for the number of defeat tokens each neighbouring city has
         private static int GetVictoryNeighboursConflict(Player east, Player west)
         {
-            return 0;
+
+            return east.getScoreType(Score.DEFEAT) + west.getScoreType(Score.DEFEAT); ;
         }
+
         // Victory Points awarded from the number of wonderstages the player has built
         private static void AddVictoryWonder(Player p)
         {
