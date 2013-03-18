@@ -45,6 +45,7 @@ namespace _7Wonders
                 int position = curr.getSeat();
                 Player east = null;
                 Player west = null;
+                int schoiceCount = 0;
 
                 // Setting up the east and west neighbors
                 foreach (KeyValuePair<long, Player> neighbor in gameState.getPlayers())
@@ -99,17 +100,27 @@ namespace _7Wonders
 
                         // SCIENCE CHOICE
                         else if (e.type.Equals("schoice"))
-                            AddScienceChoice(curr); // Max Function, will add onto the max science value                        
+                            schoiceCount += 1;
                     } // End Effect Loop for Cards                    
                 } // End Current Player's Card Loop
 
-
-                // Loop through Wonder Effects for the players
-                // GUILD COPY - not finished
-                /*else if (e.type.Equals("guildCopy"))
+                for (int i = 1; i <= curr.getBoard().getSide().stagesBuilt; i++)
                 {
-                    //CopyGuild(p);
-                }*/
+                    foreach (Effect e in curr.getBoard().getSide().getStageEffects(i))
+                    {
+                        if (e.type.Equals("schoice"))
+                            schoiceCount += 1;
+                        // Loop through Wonder Effects for the players
+                        // GUILD COPY - not finished
+                        else if (e.type.Equals("guildCopy"))
+                        {
+                            //CopyGuild(p);
+                        }
+                    } // Foreach loop through Wondestage effects
+                } // For loop through the stages
+
+                // Max Function, will add onto the max science value
+                AddScienceChoice(curr, schoiceCount);
             } // End Player Loop
         }
 
@@ -236,28 +247,76 @@ namespace _7Wonders
 
         // Science Choice - player chooses which science to gain from the card at the end of the game
         // NOTE: Should we have this as a max function? eg. Find max of gear, tablet, compass and just add 1?
-        private static void AddScienceChoice(Player p)
+        private static void AddScienceChoice(Player p, int x)
         {
             int gear = p.getScoreNum(Score.GEAR);
             int compass = p.getScoreNum(Score.COMPASS);
-            int tablet = p.getScoreNum(Score.TABLET);
-            Score maxScience;
+            int tablet = p.getScoreNum(Score.TABLET);            
 
-            if (gear > compass)
+            if (x == 1)
             {
-                maxScience = Score.GEAR;
+                int max1 = CalculateScience((gear + 1), compass, tablet);
+                int max2 = CalculateScience(gear, (compass + 1), tablet);
+                int max3 = CalculateScience(gear, compass, (tablet + 1));
 
-                if (tablet >= gear)
-                    maxScience = Score.TABLET;
+                int maxScore = Math.Max(Math.Max(max1, max2), max3);
+                if (maxScore == max1)
+                    p.addScore(Score.GEAR, 1);
+                else if (maxScore == max2)
+                    p.addScore(Score.COMPASS, 1);
+                else if (maxScore == max3)
+                    p.addScore(Score.TABLET, 1);
             }
-            else
+            else if (x == 2)
             {
-                maxScience = Score.COMPASS;
+                int max1 = CalculateScience(gear + 2, compass, tablet);
+                int max2 = CalculateScience(gear, compass + 2, tablet);
+                int max3 = CalculateScience(gear, compass, tablet + 2);
+                int max4 = CalculateScience(gear + 1, compass + 1, tablet);
+                int max5 = CalculateScience(gear + 1, compass, tablet + 1);
+                int max6 = CalculateScience(gear, compass + 1, tablet + 1);
 
-                if (tablet >= compass)
-                    maxScience = Score.TABLET;
+                int maxScore = Math.Max(Math.Max(Math.Max(Math.Max(Math.Max(max1, max2), max3), max4), max5), max6);
+
+                if (maxScore == max1)                
+                    p.addScore(Score.GEAR, 2);
+                else if (maxScore == max2)
+                    p.addScore(Score.COMPASS, 2);
+                else if (maxScore == max3)
+                    p.addScore(Score.TABLET, 2);
+                else if (maxScore == max4)
+                {
+                    p.addScore(Score.GEAR, 1);
+                    p.addScore(Score.COMPASS, 1);
+                }
+                else if (maxScore == max5)
+                {
+                    p.addScore(Score.GEAR, 1);
+                    p.addScore(Score.TABLET, 1);
+                }
+                else if (maxScore == max6)
+                {
+                    p.addScore(Score.COMPASS, 1);
+                    p.addScore(Score.TABLET, 1);
+                }
             }
-            p.addScore(maxScience, 1);
+        }
+
+        public static int CalculateScience(int g, int c, int t)
+        {
+            int gear = g;
+            int comp = c;
+            int tab = t;
+            int total = (gear * gear) + (comp * comp) + (tab * tab);
+
+            while (gear >= 1 && comp >= 1 && tab >= 1)
+            {
+                total += 7;
+                gear -= 1;
+                comp -= 1;
+                tab -= 1;
+            }
+            return total;
         }
 
         // Victory Points, Army, Science or any other generic score
