@@ -204,7 +204,9 @@ namespace _7Wonders
                 //Game1.client.getSelf().getHand().RemoveAt(cardSpot);
                 //
                 buildStage.reset();
-                //buildingCard = false;
+                buildingCard = false;
+                buildTrade();
+                activeVisuals = trade;
                 //finished = true;
             }
 
@@ -233,7 +235,9 @@ namespace _7Wonders
                 build.reset();
                 if (isComplete())
                 {
-                    Game1.client.playCard(new Dictionary<string, ActionType>() { { card.getTexture(), ActionType.BUILD_CARD } }, westCoin, eastCoin);
+                    if (buildingCard)
+                        Game1.client.playCard(new Dictionary<string, ActionType>() { { card.getTexture(), ActionType.BUILD_CARD } }, westCoin, eastCoin);
+                    else Game1.client.playCard(new Dictionary<string, ActionType>() { { card.getTexture(), ActionType.BUILD_WONDER } }, westCoin, eastCoin);
                     activeVisuals = visuals1;
                     hideTrade();
                     finished = true;
@@ -317,7 +321,11 @@ namespace _7Wonders
             int i = 0;
             int w = 0;
             int e = 0;
-            cost = ConstructionUtils.outsourcedCosts(self, CardLibrary.getCard(card.getTexture()).cost);
+
+            if (buildingCard)
+                cost = ConstructionUtils.outsourcedCosts(self, CardLibrary.getCard(card.getTexture()).cost);
+            else
+                cost = ConstructionUtils.outsourcedCosts(self, self.getBoard().getStageCost(self.getBoard().getStagesBuilt()));
             foreach (KeyValuePair<Resource, int> kp in cost)
             {
                 for (int j = 0; j < kp.Value; j++)

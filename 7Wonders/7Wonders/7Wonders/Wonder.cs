@@ -84,5 +84,17 @@ namespace _7Wonders
             if (usingA) return name + "_A";
             return name + "_B";
         }
+
+        public int getStagesBuilt()
+        {
+            if (usingA) return sideA.stagesBuilt;
+            return sideB.stagesBuilt;
+        }
+
+        public Dictionary<Resource, int> getStageCost(int stage)
+        {
+            if (usingA) return sideA.getStageCost(stage);
+            return sideB.getStageCost(stage);
+        }
     }
 }

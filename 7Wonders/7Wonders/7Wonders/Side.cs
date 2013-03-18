@@ -91,15 +91,15 @@ namespace _7Wonders
         public int getStageNum() { return stageNum; }
 
         // Returns a Dictionary of Costs for that particular stage
-        public Dictionary<Resource, int> getStageCost(int _stageNum)
+        public Dictionary<Resource, int> getStageCost(int _stage)
         {
-            return stageCosts[_stageNum];
+            return stageCosts[_stage];
         }
 
         // Returns a List of Effects for that particular stage
-        public List<Effect> getStageEffects(int _stageNum)
+        public List<Effect> getStageEffects(int _stage)
         {
-            return stageEffects[_stageNum];
+            return stageEffects[_stage];
         }
 
         // Returns a List of the Dictionary Costs for the Wonder
