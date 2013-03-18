@@ -23,7 +23,7 @@ namespace _7Wonders.Server
 
         public NetServiceImpl()
         {
-            JObject constants = JObject.Parse(File.ReadAllText("Content/Json/constants-networking.json"));
+            JObject constants = JObject.Parse(File.ReadAllText("Content/Json/config.json"));
             tag = constants.Value<String>("tag");
             port = constants.Value<int>("port");
             clientport = constants.Value<int>("clientport");

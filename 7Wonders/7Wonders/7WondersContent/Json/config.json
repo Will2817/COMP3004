@@ -3,5 +3,7 @@
 	"clientport": 4320,
     "localhost" : "127.0.0.1",
     "tag" : "7Wonders",
-	"discoverywait" : 1000
+	"discoverywait" : 1000,
+	"screenWidth": 1024,
+	"screenHeight": 768
 }
