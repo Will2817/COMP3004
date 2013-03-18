@@ -284,11 +284,11 @@ namespace _7Wonders.Server
                     endGame();
                     return;
                 }
+                resolveMilitaryConflicts();
                 gameState.incrementAge();
                 gameState.resetTurn();
                 foreach (Player p in gameState.getPlayers().Values)
-                    p.setHand(deck.dealCards(gameState.getAge()));
-                resolveMilitaryConflicts();
+                    p.setHand(deck.dealCards(gameState.getAge()));                
             }
             else
             {

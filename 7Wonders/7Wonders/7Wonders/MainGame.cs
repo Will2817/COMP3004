@@ -68,12 +68,6 @@ namespace _7Wonders
             baseVisuals.Add("discard", new Visual(new Vector2(Game1.WIDTH - MARGIN - 60, MARGIN * 3 + 120), 60, 60, "0", "Font1", null, Color.White, "deck"));
             baseVisuals["discard"].setLeftMargin(15);
             baseVisuals["discard"].setTopMargin(9);
-            baseVisuals.Add("conflict", new Visual(new Vector2(Game1.WIDTH - MARGIN - 60, MARGIN * 2 + 75), 60, 60, "0", "Font1", null, Color.White, "conflict"));
-            baseVisuals["conflict"].setLeftMargin(19);
-            baseVisuals["conflict"].setTopMargin(20);
-            
-
-
         }
 
         private void Initialize()
@@ -82,8 +76,12 @@ namespace _7Wonders
             player = Game1.client.getSelf();
             foreach (Player p in Game1.client.getState().getPlayers().Values)
             {
+                Visual v = new Visual(new Vector2(Game1.WIDTH - MARGIN - 60, MARGIN * 2 + 75), 60, 60, "0", "Font1", null, Color.White, "conflict");
+                v.setLeftMargin(19);
+                v.setTopMargin(20);
+                v.LoadContent();//BAD HACKS
                 Game1.wonders[p.getBoard().getName()].setPosition(new Vector2(5 + SEC1WIDTH, 5 + SEC1HEIGHT)).setWidth(WONDERWIDTH * 2 + 10).setHeight(WONDERHEIGHT * 2).setTexture(p.getBoard().getImageName());
-                seatVisuals.Add(p.getSeat(), new Dictionary<string, Visual>(){{p.getBoard().getImageName(), Game1.wonders[p.getBoard().getName()]}});
+                seatVisuals.Add(p.getSeat(), new Dictionary<string, Visual>(){{p.getBoard().getImageName(), Game1.wonders[p.getBoard().getName()]}, {"conflict", v}});
                 baseVisuals.Add("player" + p.getSeat(), new Visual(new Vector2(MARGIN, MARGIN * 2 + (MARGIN + LABELHEIGHT) * (p.getSeat() + 1)), DROPDOWNWIDTH, LABELHEIGHT, p.getName(), "Font1", Color.White, (p.getSeat() == player.getSeat()) ? Color.Orange : Color.Gray, "grayback"));
                 baseVisuals.Add("status" + p.getSeat(), new Visual(new Vector2(MARGIN + LABELWIDTH, MARGIN * 2 + (MARGIN + LABELHEIGHT) * (p.getSeat() + 1)), LABELWIDTH, LABELHEIGHT, "blank"));
                 baseVisuals.Add("gear" + p.getSeat(), new Visual(new Vector2(MARGIN + LABELWIDTH + (LABELWIDTH * 1 / 24), MARGIN * 2 + (MARGIN + LABELHEIGHT) * (p.getSeat() + 1)), p.getScoreNum(Score.GEAR).ToString(), "Font1"));
@@ -91,7 +89,6 @@ namespace _7Wonders
                 baseVisuals.Add("compas" + p.getSeat(), new Visual(new Vector2(MARGIN + LABELWIDTH + (LABELWIDTH * 9 / 24), MARGIN * 2 + (MARGIN + LABELHEIGHT) * (p.getSeat() + 1)), p.getScoreNum(Score.COMPASS).ToString(), "Font1"));
                 baseVisuals.Add("victory" + p.getSeat(), new Visual(new Vector2(MARGIN + LABELWIDTH + (LABELWIDTH * 13 / 24), MARGIN * 2 + (MARGIN + LABELHEIGHT) * (p.getSeat() + 1)), p.getScoreNum(Score.VICTORY_BLUE).ToString(), "Font1"));
                 baseVisuals.Add("army" + p.getSeat(), new Visual(new Vector2(MARGIN + LABELWIDTH + (LABELWIDTH * 19 / 24), MARGIN * 2 + (MARGIN + LABELHEIGHT) * (p.getSeat() + 1)), p.getScoreNum(Score.ARMY).ToString(), "Font1"));
-
             }
 
             int LABELLENGTH = (SEC1WIDTH - 2 * MARGIN) / 5;
@@ -470,11 +467,10 @@ namespace _7Wonders
                 baseVisuals["compas" + p.getSeat()].setString(p.getScoreNum(Score.COMPASS).ToString());
                 baseVisuals["victory" + p.getSeat()].setString(p.getScoreNum(Score.VICTORY_BLUE).ToString());
                 baseVisuals["army" + p.getSeat()].setString(p.getScoreNum(Score.ARMY).ToString());
-
+                seatVisuals[p.getSeat()]["conflict"].setString(p.getScoreNum(Score.CONFLICT).ToString());
             }
 
             baseVisuals["Age"].setTexture("age" + Game1.client.getState().getAge());
-            baseVisuals["conflict"].setString(player.getScoreNum(Score.CONFLICT).ToString());
             baseVisuals["discard"].setString("0");//get actual number of discards
 
         }
