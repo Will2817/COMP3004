@@ -284,16 +284,18 @@ namespace _7Wonders
             {
                 v.Draw(gameTime, spriteBatch);
             }
-            foreach (Visual v in hand.Values.OrderBy(item => item.z))
-            {
-                v.Draw(gameTime, spriteBatch);
-            }
+
             if (!showhand)
 	        {
 	            foreach (Visual v in activeVisuals.Values)
 	            {
 	                if (v.isMouseOver(mousestate)) v.Draw(gameTime, spriteBatch);
 	            }
+            }
+
+            foreach (Visual v in hand.Values.OrderBy(item => item.z))
+            {
+                v.Draw(gameTime, spriteBatch);
             }
 
             if (showTrade)

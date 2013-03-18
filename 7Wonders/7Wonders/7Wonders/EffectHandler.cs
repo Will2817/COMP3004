@@ -337,7 +337,7 @@ namespace _7Wonders
         private static void AddCoinColour(Player p, CardColour c, int amount)
         {
             int coin = p.getCardColourCount(c) * amount;
-            p.setResourceNum(Resource.COIN, coin);
+            p.addResource(Resource.COIN, coin);
         }
 
         // Coin awarded from the number of specific structure colour each neighbours have constructed
