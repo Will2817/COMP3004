@@ -56,6 +56,24 @@ namespace _7Wonders
                         west = neighbor.Value;
                 }
 
+                // Check Wonder board effects first
+                // This way if a player has guildCopy, it will take into account that the scientist guild
+                // card is added into the players played hand and counted
+                for (int i = 1; i <= curr.getBoard().getSide().stagesBuilt; i++)
+                {
+                    foreach (Effect e in curr.getBoard().getSide().getStageEffects(i))
+                    {
+                        if (e.type.Equals("schoice"))
+                            schoiceCount += 1;
+                        // Loop through Wonder Effects for the players
+                        // GUILD COPY - not finished
+                        else if (e.type.Equals("guildCopy"))
+                        {
+                            CopyGuild(curr, east, west);
+                        }
+                    } // Foreach loop through Wondestage effects
+                } // For loop through the stages
+
                 // Looping through the player's played cards
                 foreach (string cardID in curr.getPlayed())
                 {
@@ -103,21 +121,6 @@ namespace _7Wonders
                             schoiceCount += 1;
                     } // End Effect Loop for Cards                    
                 } // End Current Player's Card Loop
-
-                for (int i = 1; i <= curr.getBoard().getSide().stagesBuilt; i++)
-                {
-                    foreach (Effect e in curr.getBoard().getSide().getStageEffects(i))
-                    {
-                        if (e.type.Equals("schoice"))
-                            schoiceCount += 1;
-                        // Loop through Wonder Effects for the players
-                        // GUILD COPY - not finished
-                        else if (e.type.Equals("guildCopy"))
-                        {
-                            CopyGuild(curr, east, west);
-                        }
-                    } // Foreach loop through Wondestage effects
-                } // For loop through the stages
 
                 // Max Function, will add onto the max science value
                 AddScienceChoice(curr, schoiceCount);
@@ -351,18 +354,29 @@ namespace _7Wonders
         // Victory Points awarded from the number of specific structure colour each neighbours constructed
         private static void AddVictoryNeighboursColour(Player p, Player east, Player west, CardColour c, int amount)
         {
-            int points = (east.getCardColourCount(c) + west.getCardColourCount(c)) * amount;
-            p.addScore(Score.VICTORY, points);
+            p.addScore(Score.VICTORY, GetVictoryNeighboursColour(east, west, c, amount);
+        }
+
+        // Victory Points returned from the number of specific structure colour each neighbours constructed
+        private static int GetVictoryNeighboursColour(Player east, Player west, CardColour c, int amount)
+        {
+            return (east.getCardColourCount(c) + west.getCardColourCount(c)) * amount;
         }
 
         // Victory Points awarded 
         // Through the number of specific structure colour the player has constructed
         private static void AddVictoryColour(Player p, CardColour c, int amount)
         {
-            int points = p.getCardColourCount(c) * amount;
-            p.addScore(Score.VICTORY, points);
+            p.addScore(Score.VICTORY, GetVictoryColour(p, c, amount));
         }
 
+        // Victory Points returned from the number of specific structure colour the player has constructed
+        private static int GetVictoryColour(Player p, CardColour c, int amount)
+        {
+            return p.getCardColourCount(c) * amount;
+        }
+
+        // THIS IS WRONG...
         // Victory Points awarded from the number of conflict points each neighbour has
         private static void AddVictoryNeighboursConflict(Player p, Player east, Player west)
         {
@@ -370,6 +384,11 @@ namespace _7Wonders
             p.addScore(Score.VICTORY, points);
         }
 
+        // Victory Points returned for the number of defeat tokens each neighbouring city has
+        private static int GetVictoryNeighboursConflict(Player east, Player west)
+        {
+            return 0;
+        }
         // Victory Points awarded from the number of wonderstages the player has built
         private static void AddVictoryWonder(Player p)
         {
@@ -380,11 +399,13 @@ namespace _7Wonders
         // Victory Points awarded from the number of wonderstages built from each neighbour including the player
         private static void AddVictoryAllWonders(Player p, Player east, Player west)
         {
-            int points = p.getBoard().getSide().stagesBuilt;
-            points += east.getBoard().getSide().stagesBuilt;
-            points += west.getBoard().getSide().stagesBuilt;
+            p.addScore(Score.VICTORY, GetVictoryAllWonders(p, east, west));
+        }
 
-            p.addScore(Score.VICTORY, points);
+        // Victory Points returned from the number of wonderstages built from each neighbour including the player
+        private static int GetVictoryAllWonders(Player p, Player east, Player west)
+        {
+            return p.getBoard().getSide().stagesBuilt + east.getBoard().getSide().stagesBuilt + west.getBoard().getSide().stagesBuilt;
         }
 
         // Trading Cost for East and West Raw Resources
@@ -423,6 +444,9 @@ namespace _7Wonders
         private static void CopyGuild(Player p, Player east, Player west)
         {
             List<string> guilds = new List<string>();
+            Dictionary<string, int> guildScore = new Dictionary<string,int>();
+            string bestCard = null;
+            int bestScore = 0;
 
             // Guild Cards taken from East Player
             foreach (string c in east.getPlayed())            
@@ -431,10 +455,58 @@ namespace _7Wonders
 
             // Guild Cards taken from West Player
             foreach (string c in west.getPlayed())
-                if (CardLibrary.getCard(c).colour.Equals("purple"))
-                    guilds.Add(c);
+                if (CardLibrary.getCard(c).colour.Equals(CardColour.PURPLE))
+                    guilds.Add(c);                
 
+            // Looping through the Guild Cards available to calculate the best guild
+            foreach (string cardID in guilds)
+            {
+                guildScore.Add(cardID, 0);
+                foreach (Effect e in CardLibrary.getCard(cardID).effects)
+                {
+                    if (e.type.Equals("victory") && e.from.Equals("neighbors"))
+                    {
+                        if (cardType.ContainsKey(e.basis))
+                            guildScore[cardID] = GetVictoryNeighboursColour(east, west, cardType[e.basis], e.amount);
+                        else if (e.basis.Equals("defeat"))
+                        {
+                            //Need to finish the function called here
+                            guildScore[cardID] = GetVictoryNeighboursConflict(east, west);
+                        }
+                    }
+                    else if (e.type.Equals("victory") && e.from.Equals("player") && cardType.ContainsKey(e.basis))
+                        guildScore[cardID] += GetVictoryColour(p, cardType[e.basis], e.amount); // Added multiple times
+                    else if (e.type.Equals("victory") && e.from.Equals("all") && e.basis.Equals("wonderstages"))
+                        guildScore[cardID] = GetVictoryAllWonders(p, east, west);
+                    else if (e.type.Equals("schoice"))
+                    {
+                        //CalculateScience(g c t)
+                        int gear = p.getScoreNum(Score.GEAR);
+                        int comp = p.getScoreNum(Score.COMPASS);
+                        int tab = p.getScoreNum(Score.TABLET);
+                        
+                        int maxScience = Math.Max(Math.Max(
+                            CalculateScience(gear + 1, comp, tab), 
+                            CalculateScience(gear, comp + 1, tab)), 
+                            CalculateScience(gear, comp, tab + 1));
 
+                        guildScore[cardID] = maxScience;
+                    }
+                }
+            } // End Foreach string cardID in guilds
+
+            // Finding the best guild Card
+            foreach (KeyValuePair<string, int> key in guildScore)
+            {
+                if (key.Value > bestScore)
+                {
+                    bestScore = key.Value;
+                    bestCard = key.Key;
+                }
+            }
+
+            // Best Guild Card
+            p.addPlayed(CardLibrary.getCard(bestCard));
         }
 
         // Halikarnassos A [2nd/3rd stage]
