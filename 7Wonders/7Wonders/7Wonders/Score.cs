@@ -15,6 +15,7 @@ namespace _7Wonders
         TABLET,
         COMPASS,
         GEAR,
-        VICTORY_BLUE
+        VICTORY_BLUE,
+        DEFEAT
     }
 }

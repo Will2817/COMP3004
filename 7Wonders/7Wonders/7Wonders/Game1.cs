@@ -31,8 +31,8 @@ namespace _7Wonders
         public static string recordedPresses = "";
         static KeyboardState prevState = Keyboard.GetState();
 
-        public static int WIDTH = 800;
-        public static int HEIGHT = 600;
+        public static int WIDTH;
+        public static int HEIGHT;
         GraphicsDeviceManager graphics;
         GraphicsDevice device;
         SpriteBatch spriteBatch;
@@ -42,6 +42,7 @@ namespace _7Wonders
         Interface activeInterface;
         JObject wondersJson = JObject.Parse(File.ReadAllText("Content/Json/wonderlist.json"));
         JObject cardsJson = JObject.Parse(File.ReadAllText("Content/Json/cards.json"));
+        JObject config = JObject.Parse(File.ReadAllText("Content/Json/config.json"));
         public static Client.Client client;
         public static Server.Server host;
 
@@ -49,6 +50,9 @@ namespace _7Wonders
 
         public Game1()
         {
+            WIDTH = (config["screenWidth"] != null)? (int)config["screenWidth"] : 800;
+            HEIGHT = (config["screenWidth"] != null) ? (int)config["screenHeight"] : 600;
+
             CardLibrary.init();
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
