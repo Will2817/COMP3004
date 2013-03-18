@@ -352,7 +352,7 @@ namespace _7Wonders.Server
 
         private void endGame()
         {
-
+            EffectHandler.ApplyEndGameEffect(gameState);
         }
     }
 }
