@@ -89,7 +89,6 @@ namespace _7Wonders
                 baseVisuals.Add("gear" + p.getSeat(), new Visual(new Vector2(MARGIN + LABELWIDTH + (LABELWIDTH * 1 / 24), MARGIN * 2 + (MARGIN + LABELHEIGHT) * (p.getSeat() + 1)), p.getScoreNum(Score.GEAR).ToString(), "Font1"));
                 baseVisuals.Add("tablet" + p.getSeat(), new Visual(new Vector2(MARGIN + LABELWIDTH + (LABELWIDTH * 5 / 24), MARGIN * 2 + (MARGIN + LABELHEIGHT) * (p.getSeat() + 1)), p.getScoreNum(Score.TABLET).ToString(), "Font1"));
                 baseVisuals.Add("compas" + p.getSeat(), new Visual(new Vector2(MARGIN + LABELWIDTH + (LABELWIDTH * 9 / 24), MARGIN * 2 + (MARGIN + LABELHEIGHT) * (p.getSeat() + 1)), p.getScoreNum(Score.COMPASS).ToString(), "Font1"));
-                int i;
                 baseVisuals.Add("victory" + p.getSeat(), new Visual(new Vector2(MARGIN + LABELWIDTH + (LABELWIDTH * 13 / 24), MARGIN * 2 + (MARGIN + LABELHEIGHT) * (p.getSeat() + 1)), p.getScoreNum(Score.VICTORY_BLUE).ToString(), "Font1"));
                 baseVisuals.Add("army" + p.getSeat(), new Visual(new Vector2(MARGIN + LABELWIDTH + (LABELWIDTH * 19 / 24), MARGIN * 2 + (MARGIN + LABELHEIGHT) * (p.getSeat() + 1)), p.getScoreNum(Score.ARMY).ToString(), "Font1"));
 
@@ -476,7 +475,8 @@ namespace _7Wonders
 
             baseVisuals["Age"].setTexture("age" + Game1.client.getState().getAge());
             baseVisuals["conflict"].setString(player.getScoreNum(Score.CONFLICT).ToString());
-            baseVisuals["discard"].setString("0");///get actual number of discards
+            baseVisuals["discard"].setString("0");//get actual number of discards
+
         }
     }
 }

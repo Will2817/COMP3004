@@ -261,7 +261,10 @@ namespace _7Wonders
                 new JProperty("actions", actions),
                 new JProperty("cards", cards),
                 new JProperty("publicChoices", pubChoices),
-                new JProperty("privateChoices", privChoices));
+                new JProperty("privateChoices", privChoices),
+                new JProperty("rcostEast", rcostEast),
+                new JProperty("rcostWest", rcostWest),
+                new JProperty("mcost", mcost));
             return j;
         }
 
@@ -304,6 +307,9 @@ namespace _7Wonders
                     choices.Add((Resource)r);
                 privateChoices.Add(choices);
             }
+            rcostWest = (int)j["rcostWest"];
+            rcostEast = (int)j["rcostEast"];
+            mcost = (int)j["mcost"];
         }
     }
 }
