@@ -114,7 +114,7 @@ namespace _7Wonders
                         // GUILD COPY - not finished
                         else if (e.type.Equals("guildCopy"))
                         {
-                            //CopyGuild(p);
+                            CopyGuild(curr, east, west);
                         }
                     } // Foreach loop through Wondestage effects
                 } // For loop through the stages
@@ -420,14 +420,21 @@ namespace _7Wonders
         // Olympia B [3rd stage]
         // The third stage allows the player to "copy" a Guild (purple card) of
         // their choice built by one of their two neighboring cities at the end of the game
-        private static void CopyGuild(Player p, string cardID)
+        private static void CopyGuild(Player p, Player east, Player west)
         {
-            // stuff
-            Card c = CardLibrary.getCard(cardID);
-            if (!p.cardPlayed(cardID) && c.colour.Equals(CardColour.PURPLE))
-            {
-                p.addPlayed(c);
-            }
+            List<string> guilds = new List<string>();
+
+            // Guild Cards taken from East Player
+            foreach (string c in east.getPlayed())            
+                if (CardLibrary.getCard(c).colour.Equals("purple"))
+                    guilds.Add(c);
+
+            // Guild Cards taken from West Player
+            foreach (string c in west.getPlayed())
+                if (CardLibrary.getCard(c).colour.Equals("purple"))
+                    guilds.Add(c);
+
+
         }
 
         // Halikarnassos A [2nd/3rd stage]
