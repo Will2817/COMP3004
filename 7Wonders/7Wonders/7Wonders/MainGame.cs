@@ -168,6 +168,7 @@ namespace _7Wonders
                     showhand = false;
                     trade.reset();
                     showTrade = false;
+                    updateHands();
                 }
 
                 return;

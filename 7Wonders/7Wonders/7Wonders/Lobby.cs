@@ -21,8 +21,8 @@ namespace _7Wonders
         protected int WONDERHEIGHT = (Game1.HEIGHT - 10) / 6;
         protected int WONDERWIDTH = Game1.WIDTH / 3 - 10;
         protected int SEC1HEIGHT = Game1.HEIGHT * 2/3;
-        protected int DROPDOWNWIDTH = (Game1.WIDTH / 3) - 100;
-        protected int DROPDOWNHEIGHT = (Game1.HEIGHT/2 - (Game1.MAXPLAYER + 1) * MARGIN) / Game1.MAXPLAYER;        
+        protected int DROPDOWNWIDTH = (int)((Game1.WIDTH / 3) * 0.70f);
+        protected int DROPDOWNHEIGHT = (Game1.HEIGHT/2 - (Game1.MAXPLAYER + 1) * MARGIN) / Game1.MAXPLAYER - (int)((Game1.HEIGHT - 600) * 0.04375f);        
 
         protected Dictionary<String, Visual> visuals1;
         protected List<Checkbox> readyCBs;
@@ -52,7 +52,7 @@ namespace _7Wonders
             readyCBs = new List<Checkbox>();
             for (int i = 0; i < NUMPLAYERS; i++)
             {
-                readyCBs.Add(new Checkbox(new Vector2(50 + DROPDOWNWIDTH, 20 + (MARGIN + DROPDOWNHEIGHT) * i), CHECKBOXDIM, CHECKBOXDIM));
+                readyCBs.Add(new Checkbox(new Vector2(50 + DROPDOWNWIDTH, 20 + (MARGIN + DROPDOWNHEIGHT) * (i + 1)), CHECKBOXDIM, CHECKBOXDIM));
             }
 
             wonders = new Dictionary<String, Visual>();
@@ -60,13 +60,16 @@ namespace _7Wonders
             visuals1 = new Dictionary<String, Visual>();
             visuals1.Add("Divider1", new Visual(new Vector2(SEC1WIDTH - 1, 0), DIVIDERWIDTH, Game1.HEIGHT, "line", Color.Silver));
             visuals1.Add("Divider2", new Visual(new Vector2(0, SEC1HEIGHT - 1), Game1.WIDTH, DIVIDERWIDTH, "line", Color.Silver));
+            visuals1.Add("label1", new Visual(new Vector2(MARGIN, MARGIN), DROPDOWNWIDTH, DROPDOWNHEIGHT, "Players", "Font1", Color.White, Color.DarkOrange, "grayback"));
+            visuals1.Add("label2", new Visual(new Vector2(MARGIN * 2 + DROPDOWNWIDTH, MARGIN), SEC1WIDTH - DROPDOWNWIDTH - MARGIN * 3, DROPDOWNHEIGHT, "Ready", "Font1", Color.White, Color.DarkOrange, "grayback"));
+
 
             dropDowns = new List<DropDown>();
-            dropDowns.Add(new DropDown(new Vector2(MARGIN, MARGIN), DROPDOWNWIDTH, DROPDOWNHEIGHT, new List<string>() { "Host" }, false));
+            dropDowns.Add(new DropDown(new Vector2(MARGIN, MARGIN * 2 + DROPDOWNHEIGHT), DROPDOWNWIDTH, DROPDOWNHEIGHT, new List<string>() { "Host" }, false));
 
             for (int i = 1; i < NUMPLAYERS; i++)
             {
-                dropDowns.Add(new DropDown(new Vector2(MARGIN, MARGIN + (MARGIN + DROPDOWNHEIGHT) * i), DROPDOWNWIDTH, DROPDOWNHEIGHT, playerTypes, false));
+                dropDowns.Add(new DropDown(new Vector2(MARGIN, MARGIN + (MARGIN + DROPDOWNHEIGHT) * (i + 1)), DROPDOWNWIDTH, DROPDOWNHEIGHT, playerTypes, false));
             }
 
             for (int i = dropDowns.Count; i > 0; i--)
@@ -193,6 +196,10 @@ namespace _7Wonders
             {
                 updateHelper(i);
             }
+
+            foreach (DropDown dd in dropDowns)
+                dd.setSelected("Open");
+
             foreach (Player p in Game1.client.getState().getPlayers().Values)
             {
                 int seat = p.getSeat();

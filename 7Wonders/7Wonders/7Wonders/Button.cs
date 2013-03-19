@@ -44,6 +44,11 @@ namespace _7Wonders
             spriteBatch.Draw(texture, new Rectangle((int)position.X, (int)position.Y, width, height), actual);
             if (fontName != null)spriteBatch.DrawString(font, text, new Vector2(position.X + 11, position.Y + 7), stringColor);
         }
+
+        public void setClicked(bool _bool)
+        {
+            clicked= _bool;
+        }
     }
 }
 

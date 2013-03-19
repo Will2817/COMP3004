@@ -38,32 +38,34 @@ namespace _7Wonders
             visuals3 = new Dictionary<String, Visual>();
             connectDia = new Dictionary<String, Visual>();
 
-            HGame = new Button(new Vector2(150, 450), 200, 50, "Host Game", "Font1");
-            JGame = new Button(new Vector2(450, 450), 200, 50, "Join Game", "Font1");
-            CRoom = new Button(new Vector2(260, 420), 145, 50, "Create Room", "Font1");
-            backButton = new Button(new Vector2(410, 420), 120, 50, "Back", "Font1");
+            HGame = new Button(new Vector2(Game1.WIDTH / 2 - 100, Game1.HEIGHT / 2), 200, 50, "Host Game", "Font1");
+            JGame = new Button(new Vector2(Game1.WIDTH / 2 - 100, Game1.HEIGHT / 2 + 100), 200, 50, "Join Game", "Font1");
+            CRoom = new Button(new Vector2(Game1.WIDTH / 2 - 145, Game1.HEIGHT / 2 + 95), 140, 50, "Create Room", "Font1");
+            backButton = new Button(new Vector2(Game1.WIDTH / 2 + 10, Game1.HEIGHT /2 + 95), 120, 50, "Back", "Font1");
 
-            randomBox = new Checkbox(new Vector2(450, 285));
-            onlyABox = new Checkbox(new Vector2(450, 355));
+            randomBox = new Checkbox(new Vector2(Game1.WIDTH / 2 + 75, Game1.HEIGHT / 2 - 40));
+            randomBox.setSelected(true).setEnabled(false);//Hack to prevent selection
+            onlyABox = new Checkbox(new Vector2(Game1.WIDTH / 2 + 75, Game1.HEIGHT / 2 + 40));
 
             visuals1.Add("HGame", HGame);
             visuals1.Add("JGame", JGame);
 
-            visuals2.Add("DBox", new Visual(new Vector2(250, 200), 300, 300, "line", Color.Silver));
-            visuals2.Add("Box1", new Visual(new Vector2(275, 210), 200, 50, "line", Color.SlateGray));
-            visuals2.Add("String1", new Visual(new Vector2(280, 215), "Room Setup", "Font1", Color.White));
-            visuals2.Add("Box2", new Visual(new Vector2(260, 270), 150, 50, "line", Color.SlateGray));
-            visuals2.Add("String2", new Visual(new Vector2(265, 275), "Assign boards", "Font1", Color.White));
+            visuals2.Add("DBox", new Visual(new Vector2(Game1.WIDTH / 2 - 150, Game1.HEIGHT/2 - 150), 300, 300, "line", Color.Silver));
+            visuals2.Add("Box1", new Visual(new Vector2(Game1.WIDTH / 2 - 100, Game1.HEIGHT/2 - 125), 200, 50, "line", Color.SlateGray));
+            visuals2.Add("String1", new Visual(new Vector2(Game1.WIDTH / 2 - 85, Game1.HEIGHT / 2 - 125), "Room Setup", "Font1", Color.White));
+            visuals2.Add("Box2", new Visual(new Vector2(Game1.WIDTH / 2 - 100, Game1.HEIGHT / 2 - 50), 150, 50, "line", Color.SlateGray));
+            visuals2.Add("String2", new Visual(new Vector2(Game1.WIDTH / 2 - 95, Game1.HEIGHT / 2 - 50), "Assign boards", "Font1", Color.White));
             visuals2.Add("Check1", randomBox);
-            visuals2.Add("Box3", new Visual(new Vector2(260, 340), 150, 50, "line", Color.SlateGray));
-            visuals2.Add("String3", new Visual(new Vector2(265, 345), "Only Side A", "Font1", Color.White));
+            visuals2.Add("Box3", new Visual(new Vector2(Game1.WIDTH / 2 - 100, Game1.HEIGHT / 2 + 25), 150, 50, "line", Color.SlateGray));
+            visuals2.Add("String3", new Visual(new Vector2(Game1.WIDTH / 2 - 95, Game1.HEIGHT / 2 + 25), "Only Side A", "Font1", Color.White));
             visuals2.Add("Check2", onlyABox);
             visuals2.Add("CRoom", CRoom);
             visuals2.Add("backButton", backButton);
 
-            connectDia.Add("connectBox", new Visual(new Vector2(250, 200), 300, 125, "line", Color.Silver));
-            connectDia.Add("message", new Visual(new Vector2(280, 215), "", "Font1", Color.White));
-            OK = new Button(new Vector2(280, 250), 120, 50, "Okay", "Font1");
+            connectDia.Add("connectBox", new Visual(new Vector2(Game1.WIDTH / 2 - 150, Game1.HEIGHT / 2 - 75), 300, 125, "line", Color.Silver));
+            connectDia.Add("Box", new Visual(new Vector2(Game1.WIDTH / 2 - 100, Game1.HEIGHT / 2 - 70), 225, 50, "line", Color.SlateGray));
+            connectDia.Add("message", new Visual(new Vector2(Game1.WIDTH / 2 - 90, Game1.HEIGHT / 2 - 65), "", "Font1", Color.White));
+            OK = new Button(new Vector2(Game1.WIDTH / 2 - 60, Game1.HEIGHT / 2 - 10), 120, 50, "Okay", "Font1");
             connectDia.Add("ok", OK);
 
             activeVisuals = visuals1;

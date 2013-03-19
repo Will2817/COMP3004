@@ -112,8 +112,8 @@ namespace _7Wonders.Server
 
         public int startGame()
         {
-      //      if (gameState.getAssign()) //uncomment these sections when ready to implement selecting a board;
-      //      {
+            if (gameState.getAssign()) //uncomment these sections when ready to implement selecting a board;
+            {
                 deck = new Deck(gameState.getPlayers().Count);
                 discards = new List<Card>();
 
@@ -144,12 +144,12 @@ namespace _7Wonders.Server
                 updateAIs();
                 
                 return 0;
-     /*       }
+            }
             else
             {
                 //handle board picking
                 return 0;
-            }*/
+            }
         }
 
         public bool playersReady()

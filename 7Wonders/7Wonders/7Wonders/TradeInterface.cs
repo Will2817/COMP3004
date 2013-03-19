@@ -293,9 +293,9 @@ namespace _7Wonders
                     t.Draw(gameTime, spriteBatch);
                 foreach (TradeChoice tc in selfChoices)
                     tc.Draw(gameTime, spriteBatch);
-                foreach (TradeChoice tc in selfChoices)
+                foreach (TradeChoice tc in westChoices)
                     tc.Draw(gameTime, spriteBatch);
-                foreach (TradeChoice tc in selfChoices)
+                foreach (TradeChoice tc in eastChoices)
                     tc.Draw(gameTime, spriteBatch);
             }
         }
@@ -390,21 +390,21 @@ namespace _7Wonders
             eastChoices.Clear();
             westChoices.Clear();
             int counter = 0;
-            foreach (List<Resource> choices in self.getTotalChoices())
+            foreach (List<Resource> choices in ConstructionUtils.getRelevantChoices(cost, self.getTotalChoices()))
             {
                 selfChoices.Add(new TradeChoice(choices, new Vector2(pos.X + SECTIONWIDTH + MARGIN * 2, pos.Y + (RSIZE + MARGIN) * (3 + counter) + MARGIN * 5 - 1)));
                 counter++;
             }
             counter = 0;
-            foreach (List<Resource> choices in west.getPublicChoices())
+            foreach (List<Resource> choices in ConstructionUtils.getRelevantChoices(cost, west.getPublicChoices()))
             {
-                westChoices.Add(new TradeChoice(choices, new Vector2(pos.X + MARGIN + ((counter>2)? SECTIONWIDTH/2: 0), pos.Y + (RSIZE + MARGIN) * (10 + counter % 3) + MARGIN * 3 - 1)));
+                westChoices.Add(new TradeChoice(choices, new Vector2(pos.X + MARGIN + ((counter > 2) ? SECTIONWIDTH / 2 : 0), pos.Y + RSIZE * (10 + counter % 3) + MARGIN * (4 + counter % 3) - 1)));
                 counter++;
             }
             counter = 0;
-            foreach (List<Resource> choices in east.getPublicChoices())
+            foreach (List<Resource> choices in ConstructionUtils.getRelevantChoices(cost, east.getPublicChoices()))
             {
-                eastChoices.Add(new TradeChoice(choices, new Vector2(pos.X + (SECTIONWIDTH + MARGIN) * 2 + MARGIN + ((counter > 2) ? SECTIONWIDTH / 2 : 0), pos.Y + (RSIZE + MARGIN) * (10 + counter % 3) + MARGIN * 3 - 1)));
+                eastChoices.Add(new TradeChoice(choices, new Vector2(pos.X + (SECTIONWIDTH + MARGIN) * 2 + MARGIN + ((counter > 2) ? SECTIONWIDTH / 2 : 0), pos.Y + RSIZE * (10 + counter % 3) + MARGIN * (4 + counter % 3) - 1)));
                 counter++;
             }
         }
@@ -640,7 +640,7 @@ namespace _7Wonders
                         }
                         else
                         {
-                            if (cost.ContainsKey(kp.Key)){
+                            if (cost.ContainsKey(kp.Key) && cost[kp.Key] > 0){
                                 if (selected != Resource.COIN) cost[selected]++;                            
                                 selected = kp.Key;
                                 cost[selected]--;

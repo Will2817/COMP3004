@@ -86,7 +86,7 @@ namespace _7Wonders
                         {
                             // FROM: NEIGHBORS
                             // and BASIS: CardColour, Wonderstages, Defeat
-                            if (e.from.Equals("neighbors"))
+                            if (e.from != null && e.from.Equals("neighbors"))
                             {
                                 // Apply victory points awarded for each
                                 // Wonderstage neigboring cities own
@@ -103,7 +103,7 @@ namespace _7Wonders
                             }
                             // FROM: PLAYER
                             // BASIS: CardColour, Wonderstages, 
-                            else if (e.from.Equals("player"))
+                            else if (e.from != null && e.from.Equals("player"))
                             {
                                 if (e.basis.Equals("wonderstages"))
                                     AddVictoryWonder(curr);
@@ -112,7 +112,7 @@ namespace _7Wonders
                             }
                             // FROM: ALL
                             // BASIS: Wonderstages
-                            else if (e.from.Equals("all"))
+                            else if (e.from != null && e.from.Equals("all"))
                                 AddVictoryAllWonders(curr, east, west);
                         } // End Victory Points
 
