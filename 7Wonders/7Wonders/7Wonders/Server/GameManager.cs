@@ -241,7 +241,7 @@ namespace _7Wonders.Server
                         pBoard.stagesBuilt += 1;
 
                         // Must take into account freebuild still or anything specific to wonders atm
-                        foreach (Game_Cards.Effect e in pBoard.getStageEffects(pBoard.stagesBuilt))
+                        foreach (Game_Cards.Effect e in pBoard.getStageEffects(pBoard.stagesBuilt - 1))
                             EffectHandler.ApplyEffect(p, getEastNeighbour(p), getWestNeighbour(p), e);
                         break;
 

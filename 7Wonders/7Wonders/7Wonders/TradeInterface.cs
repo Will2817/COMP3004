@@ -33,10 +33,13 @@ namespace _7Wonders
         private static Dictionary<Resource, TradeHelper> westHelpers;
         private static Dictionary<Resource, TradeHelper> eastHelpers;
         private int cardSpot = 0;
-        private bool disableBuild = false;
+
         private bool buildingCard = false;
-        private bool needtrade = false;
+        private bool needTradeBuild = false;
+        private bool needTradeStage = false;
+
         private int cardCost = 0;
+        private int stageCost = 0;
         static Player self;
         Player west;
         Player east;
@@ -129,14 +132,20 @@ namespace _7Wonders
                 v.setVisible(true);
 
             cardCost = Game1.client.constructCost(image);
-            if (CardLibrary.getCard(image).cost.ContainsKey(Resource.COIN))
-            {
-                needtrade = false;
-            }
+            stageCost = -1;
+            
+            int temp = 0;
+            if ((temp = self.getBoard().getStagesBuilt()) < self.getBoard().getSide().getStageNum())
+                stageCost = ConstructionUtils.constructCost(self, west, east, self.getBoard().getStageCost(temp));
 
-            if (cardCost < 0) disableBuild = true;
-            else if (cardCost == 0) needtrade = false;
-            else needtrade = true;
+            buildCard.setEnabled(true).setColor(Color.White);
+            buildStage.setEnabled(true).setColor(Color.White);
+
+
+            if (cardCost < 0) buildCard.setEnabled(false).setColor(Color.Gray);
+            if (stageCost < 0) buildStage.setEnabled(false).setColor(Color.Gray);
+            needTradeBuild = (cardCost > 0 && !CardLibrary.getCard(image).cost.ContainsKey(Resource.COIN)) ? true : false;
+            needTradeStage = (stageCost > 0) ? true : false;
             
         }
 
@@ -181,33 +190,33 @@ namespace _7Wonders
             if (buildCard.isClicked())
             {
                 buildCard.reset();
-                if (!disableBuild)
+                if (needTradeBuild)
                 {
-                    buildCard.reset();
-                    if (needtrade)
-                    {
-                        buildingCard = true;
-                        buildTrade();
-                        activeVisuals = trade;
-                    }
-                    else
-                    {
-                        Game1.client.playCard(new Dictionary<string, ActionType>() { { card.getTexture(), ActionType.BUILD_CARD } }, 0, 0);
-                        finished = true;
-                    }
+                    buildingCard = true;
+                    buildTrade();
+                    activeVisuals = trade;
+                }
+                else
+                {
+                    Game1.client.playCard(new Dictionary<string, ActionType>() { { card.getTexture(), ActionType.BUILD_CARD } }, 0, 0);
+                    finished = true;
                 }
             }
 
             if (buildStage.isClicked())
             {
-                //HACKS
-                //Game1.client.getSelf().getHand().RemoveAt(cardSpot);
-                //
                 buildStage.reset();
-                buildingCard = false;
-                buildTrade();
-                activeVisuals = trade;
-                //finished = true;
+                if (needTradeStage)
+                {
+                    buildingCard = false;
+                    buildTrade();
+                    activeVisuals = trade;
+                }
+                else
+                {
+                    Game1.client.playCard(new Dictionary<string, ActionType>() { { card.getTexture(), ActionType.BUILD_WONDER } }, 0, 0);
+                    finished = true;
+                }
             }
 
             if (sellCard.isClicked())
@@ -244,7 +253,7 @@ namespace _7Wonders
                 }
             }
 
-            if (buildingCard)
+            if (activeVisuals == trade)
             {
                 foreach (Visual v in requirements.Keys)
                     v.Update(gameTime, mouseState);
@@ -258,7 +267,7 @@ namespace _7Wonders
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             base.Draw(gameTime, spriteBatch);
-            if (buildingCard)
+            if (activeVisuals == trade)
             {
                 foreach (Visual v in requirements.Keys)
                     v.Draw(gameTime, spriteBatch);
@@ -288,7 +297,6 @@ namespace _7Wonders
         public override void reset()
         {
             base.reset();
-            disableBuild = false;
         }
 
         private void buildTrade()

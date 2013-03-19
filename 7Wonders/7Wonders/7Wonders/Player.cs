@@ -265,7 +265,8 @@ namespace _7Wonders
                 new JProperty("privateChoices", privChoices),
                 new JProperty("rcostEast", rcostEast),
                 new JProperty("rcostWest", rcostWest),
-                new JProperty("mcost", mcost));
+                new JProperty("mcost", mcost),
+                new JProperty("stagesBuilt", board.getStagesBuilt()));
             return j;
         }
 
@@ -311,6 +312,7 @@ namespace _7Wonders
             rcostWest = (int)j["rcostWest"];
             rcostEast = (int)j["rcostEast"];
             mcost = (int)j["mcost"];
+            board.getSide().stagesBuilt = (int)j["stagesBuilt"];
         }
     }
 }

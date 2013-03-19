@@ -76,12 +76,13 @@ namespace _7Wonders
             player = Game1.client.getSelf();
             foreach (Player p in Game1.client.getState().getPlayers().Values)
             {
-                Visual v = new Visual(new Vector2(Game1.WIDTH - MARGIN - 60, MARGIN * 2 + 75), 60, 60, "0", "Font1", null, Color.White, "conflict");
-                v.setLeftMargin(19);
-                v.setTopMargin(20);
-                v.LoadContent();//BAD HACKS
+                Visual conflict = new Visual(new Vector2(Game1.WIDTH - MARGIN - 60, MARGIN * 2 + 75), 60, 60, "0", "Font1", null, Color.White, "conflict");
+                conflict.setLeftMargin(19);
+                conflict.setTopMargin(20);
+                conflict.LoadContent();//BAD HACKS
+                Visual stages = new Visual(new Vector2(Game1.WIDTH - 100, Game1.HEIGHT - 150), 100, 100, "stage13").setVisible(false);
                 Game1.wonders[p.getBoard().getName()].setPosition(new Vector2(5 + SEC1WIDTH, 5 + SEC1HEIGHT)).setWidth(WONDERWIDTH * 2 + 10).setHeight(WONDERHEIGHT * 2).setTexture(p.getBoard().getImageName());
-                seatVisuals.Add(p.getSeat(), new Dictionary<string, Visual>(){{p.getBoard().getImageName(), Game1.wonders[p.getBoard().getName()]}, {"conflict", v}});
+                seatVisuals.Add(p.getSeat(), new Dictionary<string, Visual>(){{"wonder", Game1.wonders[p.getBoard().getName()]}, {"conflict", conflict}, {"stages", stages}});
                 baseVisuals.Add("player" + p.getSeat(), new Visual(new Vector2(MARGIN, MARGIN * 2 + (MARGIN + LABELHEIGHT) * (p.getSeat() + 1)), DROPDOWNWIDTH, LABELHEIGHT, p.getName(), "Font1", Color.White, (p.getSeat() == player.getSeat()) ? Color.Orange : Color.Gray, "grayback"));
                 baseVisuals.Add("status" + p.getSeat(), new Visual(new Vector2(MARGIN + LABELWIDTH, MARGIN * 2 + (MARGIN + LABELHEIGHT) * (p.getSeat() + 1)), LABELWIDTH, LABELHEIGHT, "blank"));
                 baseVisuals.Add("gear" + p.getSeat(), new Visual(new Vector2(MARGIN + LABELWIDTH + (LABELWIDTH * 1 / 24), MARGIN * 2 + (MARGIN + LABELHEIGHT) * (p.getSeat() + 1)), p.getScoreNum(Score.GEAR).ToString(), "Font1"));
@@ -287,9 +288,10 @@ namespace _7Wonders
 
             if (!showhand)
 	        {
-	            foreach (Visual v in activeVisuals.Values)
+	            foreach (KeyValuePair<string,Visual> kp in activeVisuals)
 	            {
-	                if (v.isMouseOver(mousestate)) v.Draw(gameTime, spriteBatch);
+                    if (kp.Key != "wonder" && kp.Key != "stages")
+	                    if (kp.Value.isMouseOver(mousestate)) kp.Value.Draw(gameTime, spriteBatch);
 	            }
             }
 
@@ -470,6 +472,7 @@ namespace _7Wonders
                 baseVisuals["victory" + p.getSeat()].setString(p.getScoreNum(Score.VICTORY_BLUE).ToString());
                 baseVisuals["army" + p.getSeat()].setString(p.getScoreNum(Score.ARMY).ToString());
                 seatVisuals[p.getSeat()]["conflict"].setString(p.getScoreNum(Score.CONFLICT).ToString());
+                if (p.getBoard().getStagesBuilt() > 0) seatVisuals[p.getSeat()]["stages"].setTexture("stage" + p.getBoard().getStagesBuilt() + p.getBoard().getSide().getStageNum()).setVisible(true);
             }
 
             baseVisuals["Age"].setTexture("age" + Game1.client.getState().getAge());

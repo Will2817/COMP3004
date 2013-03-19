@@ -158,6 +158,16 @@ namespace _7Wonders
             textures.Add("deck", Content.Load<Texture2D>("Images/deck"));
             textures.Add("coin", Content.Load<Texture2D>("Images/coin"));
 
+            textures.Add("stage12", Content.Load<Texture2D>("Images/Wonders/stage12"));
+            textures.Add("stage22", Content.Load<Texture2D>("Images/Wonders/stage22"));
+            textures.Add("stage13", Content.Load<Texture2D>("Images/Wonders/stage13"));
+            textures.Add("stage23", Content.Load<Texture2D>("Images/Wonders/stage23"));
+            textures.Add("stage33", Content.Load<Texture2D>("Images/Wonders/stage33"));
+            textures.Add("stage14", Content.Load<Texture2D>("Images/Wonders/stage14"));
+            textures.Add("stage24", Content.Load<Texture2D>("Images/Wonders/stage24"));
+            textures.Add("stage34", Content.Load<Texture2D>("Images/Wonders/stage34"));
+            textures.Add("stage44", Content.Load<Texture2D>("Images/Wonders/stage44"));
+
             foreach (JObject j in (JArray)wondersJson["wonders"])
             {
                 textures.Add((string)j["a"]["image"], Content.Load<Texture2D>("Images/Wonders/" + j["a"]["image"]));
