@@ -257,6 +257,7 @@ namespace _7Wonders
                         new JProperty(((int)Score.COMPASS).ToString(), score[Score.COMPASS]),
                         new JProperty(((int)Score.GEAR).ToString(), score[Score.GEAR]),
                         new JProperty(((int)Score.VICTORY_BLUE).ToString(), score[Score.VICTORY_BLUE]),
+                        new JProperty(((int)Score.VICTORY).ToString(), score[Score.VICTORY]),
                         new JProperty(((int)Score.DEFEAT).ToString(), score[Score.DEFEAT]))),
                 new JProperty("resource", resource),
                 new JProperty("actions", actions),

@@ -200,7 +200,8 @@ namespace _7Wonders
             }
             JObject super = new JObject(new JProperty("players", jPlayers),
                                         new JProperty("age", age),
-                                        new JProperty("turn", turn));
+                                        new JProperty("turn", turn),
+                                        new JProperty("inprogress", gameInProgress));
             return super.ToString();
         }
 
@@ -215,6 +216,12 @@ namespace _7Wonders
             }
             age = (int)obj["age"];
             turn = (int)obj["turn"];
+            gameInProgress = (bool)obj["inprogress"];
+        }
+
+        public void setInProgress(bool _progress)
+        {
+            gameInProgress = _progress;
         }
     }
 }

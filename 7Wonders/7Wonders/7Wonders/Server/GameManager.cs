@@ -138,6 +138,8 @@ namespace _7Wonders.Server
                     p.addResource(Resource.COIN, 3);
                     p.setReady(false);
                 }
+                gameState.setInProgress(true);
+
                 messageSerializer.notifyWonderAssign(gameState.wonderAssignToJson());
                 messageSerializer.broadcastSuperState(gameState.superJson());
                 sendHands();
@@ -283,6 +285,8 @@ namespace _7Wonders.Server
                 {
                     resolveMilitaryConflicts();
                     endGame();
+                    gameState.setInProgress(false);
+                    messageSerializer.broadcastSuperState(gameState.superJson());
                     return;
                 }
                 resolveMilitaryConflicts();

@@ -139,6 +139,7 @@ namespace _7Wonders
             textures.Add("rboth", Content.Load<Texture2D>("Images/r_both"));
             textures.Add("mboth", Content.Load<Texture2D>("Images/m_both"));
             textures.Add("border", Content.Load<Texture2D>("Images/border"));
+            textures.Add("scorehead", Content.Load<Texture2D>("Images/scorehead"));
             foreach (string s in Enum.GetNames(typeof (Resource)))
             {
                 if (s!="COIN") textures.Add(s, Content.Load<Texture2D>("Images/Resources/"+s));

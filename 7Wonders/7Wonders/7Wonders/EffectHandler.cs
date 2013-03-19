@@ -50,9 +50,9 @@ namespace _7Wonders
                 // Setting up the east and west neighbors
                 foreach (KeyValuePair<long, Player> neighbor in gameState.getPlayers())
                 {
-                    if ((position + 1) % 3 == neighbor.Value.getSeat())
+                    if ((position + 1) % numPlayers == neighbor.Value.getSeat())
                         east = neighbor.Value;
-                    if ((position - 1) % 3 == neighbor.Value.getSeat())
+                    if ((position - 1) == neighbor.Value.getSeat() || (position == 0 && neighbor.Value.getSeat() == numPlayers - 1))
                         west = neighbor.Value;
                 }
 
@@ -124,6 +124,8 @@ namespace _7Wonders
 
                 // Max Function, will add onto the max science value
                 AddScienceChoice(curr, schoiceCount);
+                curr.addScore(Score.VICTORY, curr.getScoreNum(Score.CONFLICT));
+                curr.addScore(Score.VICTORY, (int)curr.getScoreNum(Score.COIN) / 3);
             } // End Player Loop
         }
 
@@ -161,7 +163,10 @@ namespace _7Wonders
 
                 // Adding to the Score for Blue Structures raised
                 else if (e.from == null && e.basis.Equals("blue"))
+                {
                     AddScore(p, Score.VICTORY_BLUE, e.amount);
+                    AddScore(p, Score.VICTORY, e.amount);
+                }
             }
 
             // COINS
@@ -386,7 +391,7 @@ namespace _7Wonders
         private static int GetVictoryNeighboursConflict(Player east, Player west)
         {
 
-            return east.getScoreType(Score.DEFEAT) + west.getScoreType(Score.DEFEAT); ;
+            return east.getScoreType(Score.DEFEAT) + west.getScoreType(Score.DEFEAT);
         }
 
         // Victory Points awarded from the number of wonderstages the player has built

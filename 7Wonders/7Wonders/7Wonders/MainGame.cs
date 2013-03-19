@@ -30,6 +30,8 @@ namespace _7Wonders
         private const int LABELHEIGHT = 35;
         private int LABELWIDTH;
 
+        private int SCOREWIDTH = (int)(Game1.WIDTH / 2 * 0.609f / 7);
+
         private TradeInterface trade;
 
         protected Dictionary<int, Dictionary<string, Visual>> seatVisuals;
@@ -41,6 +43,7 @@ namespace _7Wonders
         protected Visual wonder;
         protected Button leftButton;
         protected bool showTrade = false;
+        protected bool showScore = false;
 
         protected MouseState mousestate;
 
@@ -68,6 +71,7 @@ namespace _7Wonders
             baseVisuals.Add("discard", new Visual(new Vector2(Game1.WIDTH - MARGIN - 60, MARGIN * 3 + 120), 60, 60, "0", "Font1", null, Color.White, "deck"));
             baseVisuals["discard"].setLeftMargin(15);
             baseVisuals["discard"].setTopMargin(9);
+
         }
 
         private void Initialize()
@@ -132,6 +136,17 @@ namespace _7Wonders
             updatePlayers();
             Game1.client.setHandChecked();
             Game1.client.setPlayerChecked();
+
+            baseVisuals.Add("Scorehead", new Visual(new Vector2(Game1.WIDTH / 4, Game1.HEIGHT / 4), Game1.WIDTH / 2, 50, "scorehead").setVisible(false));
+            int n = 1;
+            foreach (Player p in Game1.client.getState().getPlayers().Values)
+            {
+                baseVisuals.Add("name"+p.getSeat(), new Visual(new Vector2(Game1.WIDTH / 4, Game1.HEIGHT / 4 + 40 * n), (int)(Game1.WIDTH / 2 * 0.296f), 40, p.getName(), "Font1", null, null, "line").setVisible(false));
+                baseVisuals.Add("score" + p.getSeat(), new Visual(new Vector2(Game1.WIDTH / 4 + (int)(Game1.WIDTH / 2 * 0.296f) , Game1.HEIGHT / 4 + 40 * n), SCOREWIDTH * 7, 40, "Score Stuff....", "Font1", null, null, "line").setVisible(false));
+                baseVisuals.Add("sum" + p.getSeat(), new Visual(new Vector2(Game1.WIDTH / 4 + (int)(Game1.WIDTH / 2 * 0.296f) + SCOREWIDTH * 7, Game1.HEIGHT / 4 + 40 * n), 33, 40, p.getScoreNum(Score.VICTORY).ToString(), "Font1", null, null, "line").setVisible(false));
+                n++;
+            }
+
 
             seatViewed = player.getSeat();
             activeVisuals = seatVisuals[seatViewed];
@@ -275,6 +290,17 @@ namespace _7Wonders
                     updateResources();
                     updatePlayers();
                     Game1.client.setPlayerChecked();
+                }
+                if (!Game1.client.getState().isGameInProgress() && !showScore)
+                {
+                    showScore = true;
+                    baseVisuals["Scorehead"].setVisible(true);
+                    foreach (Player p in Game1.client.getState().getPlayers().Values)
+                    {
+                        baseVisuals["name" + p.getSeat()].setVisible(true);
+                        baseVisuals["score" + p.getSeat()].setVisible(true);
+                        baseVisuals["sum" + p.getSeat()].setString(p.getScoreNum(Score.VICTORY).ToString()).setVisible(true);
+                    }
                 }
             }
         }
