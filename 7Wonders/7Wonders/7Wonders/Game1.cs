@@ -97,7 +97,7 @@ namespace _7Wonders
             device = graphics.GraphicsDevice;
             graphics.PreferredBackBufferWidth = WIDTH;
             graphics.PreferredBackBufferHeight = HEIGHT;
-            graphics.IsFullScreen = false;
+            graphics.IsFullScreen = (config["fullscreen"] != null)? (bool)config["fullscreen"] : false;
             graphics.ApplyChanges();
             Window.Title = "7 Wonders";
             base.Initialize();
@@ -143,20 +143,14 @@ namespace _7Wonders
             {
                 if (s!="COIN") textures.Add(s, Content.Load<Texture2D>("Images/Resources/"+s));
             }
-            textures.Add("CLAYORE", Content.Load<Texture2D>("Images/Resources/CLAYORE"));
-            textures.Add("STONECLAY", Content.Load<Texture2D>("Images/Resources/STONECLAY"));
-            textures.Add("STONEORE", Content.Load<Texture2D>("Images/Resources/STONEORE"));
-            textures.Add("STONEWOOD", Content.Load<Texture2D>("Images/Resources/STONEWOOD"));
-            textures.Add("WOODCLAY", Content.Load<Texture2D>("Images/Resources/WOODCLAY"));
-            textures.Add("WOODORE", Content.Load<Texture2D>("Images/Resources/WOODORE"));
-            textures.Add("WOODSTONEORECLAY", Content.Load<Texture2D>("Images/Resources/WOODSTONEORECLAY"));
-            textures.Add("GLASSLOOMPAPYRUS", Content.Load<Texture2D>("Images/Resources/GLASSLOOMPAPYRUS"));
 
             textures.Add("plus", Content.Load<Texture2D>("Images/plus"));
             textures.Add("minus", Content.Load<Texture2D>("Images/minus"));
             textures.Add("conflict", Content.Load<Texture2D>("Images/fight1"));
             textures.Add("deck", Content.Load<Texture2D>("Images/deck"));
             textures.Add("coin", Content.Load<Texture2D>("Images/coin"));
+            textures.Add("rglow", Content.Load<Texture2D>("Images/rglow"));
+            textures.Add("rsplit", Content.Load<Texture2D>("Images/rsplit"));
 
             textures.Add("stage12", Content.Load<Texture2D>("Images/Wonders/stage12"));
             textures.Add("stage22", Content.Load<Texture2D>("Images/Wonders/stage22"));

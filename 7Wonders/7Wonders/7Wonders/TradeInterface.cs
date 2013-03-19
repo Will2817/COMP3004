@@ -44,6 +44,10 @@ namespace _7Wonders
         Player west;
         Player east;
 
+        private List<TradeChoice> selfChoices;
+        private static List<TradeChoice> eastChoices;
+        private static List<TradeChoice> westChoices;
+
         static int eastCoin = 0;
         static int westCoin = 0;
 
@@ -62,6 +66,9 @@ namespace _7Wonders
             visuals1 = new Dictionary<string, Visual>();
             trade = new Dictionary<string, Visual>();
             requirements = new Dictionary<Visual, Resource>();
+            selfChoices = new List<TradeChoice>();
+            eastChoices = new List<TradeChoice>();
+            westChoices = new List<TradeChoice>();
 
             card = new Visual(new Vector2(pos.X + MARGIN, pos.Y + MARGIN), CARDWIDTH, CARDHEIGHT, null);
             buildCard = new Button(new Vector2(pos.X + width - 150, pos.Y + MARGIN + height * 0 / 4), 100, 50, "Card", "Font1");
@@ -110,9 +117,9 @@ namespace _7Wonders
             trade.Add("rboth", new Visual(new Vector2(pos.X + width * 1 / 3 + MARGIN, pos.Y + MARGIN), 110, 45, "rboth"));
             trade.Add("mboth", new Visual(new Vector2(pos.X + width * 2 / 3 + MARGIN * 2, pos.Y + MARGIN), 110, 45, "mboth"));
 
-            trade.Add("westCoin", new Visual(new Vector2(pos.X + SECTIONWIDTH/3 + MARGIN - 1, pos.Y + (int)(RSIZE * 13) + MARGIN * 5 - 1), RSIZE * 2, RSIZE * 2, westCoin.ToString(), "Font1", Color.Black, Color.White, "coin", 7).setBorder(false));
-            trade.Add("selfCoin", new Visual(new Vector2(pos.X + SECTIONWIDTH / 3 + (SECTIONWIDTH + MARGIN) * 1 + MARGIN - 1, pos.Y + (int)(RSIZE * 13) + MARGIN * 5 - 1), RSIZE * 2, RSIZE * 2, (self.getResourceNum(Resource.COIN) - westCoin - eastCoin).ToString(), "Font1", Color.Black, Color.White, "coin", 7).setBorder(false));
-            trade.Add("eastCoin", new Visual(new Vector2(pos.X + SECTIONWIDTH / 3 + (SECTIONWIDTH + MARGIN) * 2 + MARGIN - 1, pos.Y + (int)(RSIZE * 13) + MARGIN * 5 - 1), RSIZE * 2, RSIZE * 2, eastCoin.ToString(), "Font1", Color.Black, Color.White, "coin", 7).setBorder(false));            
+            trade.Add("westCoin", new Visual(new Vector2(pos.X + SECTIONWIDTH/3 + MARGIN - 1, pos.Y + (int)(RSIZE * 13) + MARGIN * 5 - 1), RSIZE * 2, RSIZE * 2, westCoin.ToString(), "Font1", Color.Black, Color.White, "coin", Game1.HEIGHT / 70).setBorder(false));
+            trade.Add("selfCoin", new Visual(new Vector2(pos.X + SECTIONWIDTH / 3 + (SECTIONWIDTH + MARGIN) * 1 + MARGIN - 1, pos.Y + (int)(RSIZE * 13) + MARGIN * 5 - 1), RSIZE * 2, RSIZE * 2, (self.getResourceNum(Resource.COIN) - westCoin - eastCoin).ToString(), "Font1", Color.Black, Color.White, "coin", Game1.HEIGHT / 70).setBorder(false));
+            trade.Add("eastCoin", new Visual(new Vector2(pos.X + SECTIONWIDTH / 3 + (SECTIONWIDTH + MARGIN) * 2 + MARGIN - 1, pos.Y + (int)(RSIZE * 13) + MARGIN * 5 - 1), RSIZE * 2, RSIZE * 2, eastCoin.ToString(), "Font1", Color.Black, Color.White, "coin", Game1.HEIGHT / 70).setBorder(false));            
 
 
             for (int i = 0; i < 7; i++)
@@ -261,6 +268,8 @@ namespace _7Wonders
                     t.Update(gameTime, mouseState);
                 foreach (TradeHelper t in eastHelpers.Values)
                     t.Update(gameTime, mouseState);
+                foreach (TradeChoice tc in selfChoices)
+                    tc.Update(gameTime, mouseState);
             }
         }
 
@@ -275,6 +284,8 @@ namespace _7Wonders
                     t.Draw(gameTime, spriteBatch);
                 foreach (TradeHelper t in eastHelpers.Values)
                     t.Draw(gameTime, spriteBatch);
+                foreach (TradeChoice tc in selfChoices)
+                    tc.Draw(gameTime, spriteBatch);
             }
         }
 
@@ -363,6 +374,28 @@ namespace _7Wonders
             trade["westCoin"].setString(westCoin.ToString());
             trade["eastCoin"].setString(eastCoin.ToString());
             trade["selfCoin"].setString((self.getResourceNum(Resource.COIN) - westCoin - eastCoin).ToString());
+
+            selfChoices.Clear();
+            eastChoices.Clear();
+            westChoices.Clear();
+            int counter = 0;
+            foreach (List<Resource> choices in self.getTotalChoices())
+            {
+                selfChoices.Add(new TradeChoice(choices, new Vector2(pos.X + SECTIONWIDTH + MARGIN * 2, pos.Y + (RSIZE + MARGIN) * (4 + counter) + MARGIN * 3 - 1)));
+                counter++;
+            }
+            counter = 0;
+            foreach (List<Resource> choices in west.getTotalChoices())
+            {
+                westChoices.Add(new TradeChoice(choices, new Vector2(pos.X + MARGIN, pos.Y + (RSIZE + MARGIN) * (4 + counter) + MARGIN * 3 - 1)));
+                counter++;
+            }
+            counter = 0;
+            foreach (List<Resource> choices in east.getTotalChoices())
+            {
+                eastChoices.Add(new TradeChoice(choices, new Vector2(pos.X + (SECTIONWIDTH + MARGIN) * 2 + MARGIN, pos.Y + (RSIZE + MARGIN) * (4 + counter) + MARGIN * 3 - 1)));
+                counter++;
+            }
         }
 
         private static void updateCost()
@@ -394,6 +427,26 @@ namespace _7Wonders
                 if (kp.Key >= Resource.ORE) eastCoin += kp.Value.getValue() * Game1.client.getSelf().mcost;
                 else eastCoin += kp.Value.getValue() * Game1.client.getSelf().rcostEast;
             }
+
+            foreach (TradeChoice tc in westChoices)
+            {
+                if (tc.getSelected() != Resource.COIN)
+                {
+                    if (tc.getSelected() >= Resource.ORE) westCoin += (int)tc.getSelected() * Game1.client.getSelf().mcost;
+                    else westCoin += (int)tc.getSelected() * Game1.client.getSelf().rcostWest;
+                }
+            }
+
+            foreach (TradeChoice tc in eastChoices)
+            {
+                if (tc.getSelected() != Resource.COIN)
+                {
+                    if (tc.getSelected() >= Resource.ORE) eastCoin += (int)tc.getSelected() * Game1.client.getSelf().mcost;
+                    else eastCoin += (int)tc.getSelected() * Game1.client.getSelf().rcostEast;
+                }
+            }
+
+
             trade["westCoin"].setString(westCoin.ToString());
             trade["eastCoin"].setString(eastCoin.ToString());
             trade["selfCoin"].setString((self.getResourceNum(Resource.COIN) - westCoin - eastCoin).ToString());
@@ -527,6 +580,94 @@ namespace _7Wonders
             {
                 return new List<Visual>() { resource, plus, minus, total };
             }
+        }
+
+        private class TradeChoice
+        {
+            Dictionary<Resource, Visual> choices;
+            Visual glow;
+            Resource selected = Resource.COIN;
+            List<Visual> spliters;
+
+            public TradeChoice(List<Resource> _choices, Vector2 position)
+            {
+                choices = new Dictionary<Resource, Visual>();
+                spliters = new List<Visual>();
+
+                int i = 0;
+                foreach (Resource r in _choices)
+                {
+                    if (i > 0)
+                    {
+                        Visual v = new Visual(position + new Vector2((RSIZE * 2 + MARGIN) * i - RSIZE, 0), RSIZE, RSIZE, "rsplit");
+                        v.LoadContent();
+                        spliters.Add(v);
+                    }
+                    choices.Add(r, new Visual(position + new Vector2((RSIZE * 2 + MARGIN) * i, 0), RSIZE, RSIZE, r.ToString()));
+                    choices[r].LoadContent();
+                    i++;
+                }
+                glow = new Visual(position, RSIZE, RSIZE, "rglow");
+                glow.LoadContent();
+                glow.setVisible(false);
+            }
+
+            public void Update(GameTime gameTime, MouseState mouseState)
+            {
+                foreach (KeyValuePair<Resource, Visual> kp in choices)
+                {
+                    kp.Value.Update(gameTime, mouseState);
+
+                    if (kp.Value.isClicked())
+                    {
+                        kp.Value.reset();
+                        if (kp.Key == selected)
+                        {
+                            cost[selected]++;
+                            selected = Resource.COIN;
+                            glow.setVisible(false);
+                        }
+                        else
+                        {
+                            if (cost.ContainsKey(kp.Key)){
+                                if (selected != Resource.COIN) cost[selected]++;                            
+                                selected = kp.Key;
+                                cost[selected]--;
+                                glow.setPosition(kp.Value.getPosition()).setVisible(true);
+                            }
+                        }
+                        updateCost();
+                    }
+                }
+            }
+
+            public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+            {
+                
+                foreach (Visual v in choices.Values)
+                    v.Draw(gameTime, spriteBatch);
+                foreach (Visual v in spliters)
+                    v.Draw(gameTime, spriteBatch);
+
+                glow.Draw(gameTime, spriteBatch);
+            }
+
+            public void setVisible(bool _visible)
+            {
+                foreach (Visual v in choices.Values)
+                {
+                    v.setVisible(_visible);
+                }
+                foreach (Visual v in spliters)
+                    v.setVisible(_visible);
+            }
+
+            public Resource getSelected()
+            {
+                return selected;
+            }
+
+            
         }
     }
 }
