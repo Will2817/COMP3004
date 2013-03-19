@@ -126,6 +126,8 @@ namespace _7Wonders.Client
         {
             Player self = gameState.getPlayers()[netService.getID()];
             Card card = CardLibrary.getCard(cardID);
+            foreach (string c in self.getPlayed())
+                if (CardLibrary.getCard(c).name == card.name) return -1;
             if (ConstructionUtils.canChainBuild(self, card)) return 0;
             return ConstructionUtils.constructCost(self, getWestNeighbour(self), getEastNeighbour(self), card.cost);
         }

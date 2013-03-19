@@ -223,6 +223,7 @@ namespace _7Wonders.Server
 
                         // Play card and update the # of card colour 
                         p.addPlayed(c);
+                        if (c.cost.ContainsKey(Resource.COIN)) p.addResource(Resource.COIN, -1 * c.cost[Resource.COIN]);
 
                         // Only applies instant effects of cards, such as victory points, coins,
                         // resource choices, army, trade and science

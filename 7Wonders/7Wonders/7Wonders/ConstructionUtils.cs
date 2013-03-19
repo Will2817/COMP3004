@@ -81,8 +81,8 @@ namespace _7Wonders
         //Checks whether a player can build a card from a chain
         public static bool canChainBuild(Player player, Card card)
         {
-            foreach (string cid in card.chains)
-                if (player.getPlayed().Contains(cid)) return true;
+            foreach (string cardID in player.getPlayed())
+                if (card.chains.Contains(CardLibrary.getCard(cardID).name)) return true;
             return false;
         }
 

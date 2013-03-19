@@ -5,5 +5,6 @@
     "tag" : "7Wonders",
 	"discoverywait" : 1000,
 	"screenWidth": 800,
-	"screenHeight": 600
+	"screenHeight": 600,
+	"fullscreen": false
 }

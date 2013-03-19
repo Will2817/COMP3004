@@ -59,7 +59,7 @@ namespace _7Wonders
                 // Check Wonder board effects first
                 // This way if a player has guildCopy, it will take into account that the scientist guild
                 // card is added into the players played hand and counted
-                for (int i = 1; i <= curr.getBoard().getSide().stagesBuilt; i++)
+                for (int i = 0; i < curr.getBoard().getSide().stagesBuilt; i++)
                 {
                     foreach (Effect e in curr.getBoard().getSide().getStageEffects(i))
                     {
