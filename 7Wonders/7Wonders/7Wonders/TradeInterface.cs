@@ -273,6 +273,10 @@ namespace _7Wonders
                     t.Update(gameTime, mouseState);
                 foreach (TradeChoice tc in selfChoices)
                     tc.Update(gameTime, mouseState);
+                foreach (TradeChoice tc in westChoices)
+                    tc.Update(gameTime, mouseState);
+                foreach (TradeChoice tc in eastChoices)
+                    tc.Update(gameTime, mouseState);
             }
         }
 
@@ -287,6 +291,10 @@ namespace _7Wonders
                     t.Draw(gameTime, spriteBatch);
                 foreach (TradeHelper t in eastHelpers.Values)
                     t.Draw(gameTime, spriteBatch);
+                foreach (TradeChoice tc in selfChoices)
+                    tc.Draw(gameTime, spriteBatch);
+                foreach (TradeChoice tc in selfChoices)
+                    tc.Draw(gameTime, spriteBatch);
                 foreach (TradeChoice tc in selfChoices)
                     tc.Draw(gameTime, spriteBatch);
             }
