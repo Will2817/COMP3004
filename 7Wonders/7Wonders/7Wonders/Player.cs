@@ -8,30 +8,29 @@ namespace _7Wonders
 {
     public class Player
     {
-        protected string name;
-        protected long id;
-        protected int seatNumber;
-        protected Wonder board;
-        protected List<string> hand;
-        protected List<string> played;
-        protected bool ready;
-        protected ActionType action; // Players Action selected for the turn
-        
-        protected List<string> lastCardsPlayed; //Cards built on last turn
-        protected List<ActionType> lastActions; //Actions taken on last turn
+        private string name;
+        private long id;
+        private int seatNumber;
+        private Wonder board;
+        private List<string> hand;
+        private List<string> played;
+        private bool ready;
+
+        private List<string> lastCardsPlayed; //Cards built on last turn
+        private List<ActionType> lastActions; //Actions taken on last turn
 
         // Trading values for raw resources and manufactured resources
         public int rcostEast { get; set; }
         public int rcostWest { get; set;}
         public int mcost { get; set;}
 
-        protected Dictionary<Score, int> score; // Players Score - Victory Points, Army, etc...
-        protected Dictionary<Resource, int> resources; // Resources - Clay, Ore, etc... that are also purchasable by other players
-        protected Dictionary<CardColour, int> cardColour; // Used to keep count the number of structures
+        private Dictionary<Score, int> score; // Players Score - Victory Points, Army, etc...
+        private Dictionary<Resource, int> resources; // Resources - Clay, Ore, etc... that are also purchasable by other players
+        private Dictionary<CardColour, int> cardColour; // Used to keep count the number of structures
 
         // List of choices which are in lists
-        List<List<Resource>> publicChoices;
-        List<List<Resource>> privateChoices;
+        private List<List<Resource>> publicChoices;
+        private List<List<Resource>> privateChoices;
 
         // Default Player Constructor
         public Player(long _id, string _name)
@@ -43,7 +42,6 @@ namespace _7Wonders
             hand        = null;
             played      =  null;
             ready       = false;
-            action      = 0;
 
             Initializer();
         }
