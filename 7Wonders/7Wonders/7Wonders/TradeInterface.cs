@@ -95,8 +95,11 @@ namespace _7Wonders
             trade.Add("border3", new Visual(new Vector2(pos.X + (SECTIONWIDTH + MARGIN) * 2 + MARGIN - 1, pos.Y + (int)(RSIZE * 2.5) + MARGIN * 2 - 1), SECTIONWIDTH + 2, (int)(RSIZE * 1.5f) + 2, "border").setBorder(false));
 
             trade.Add("border4", new Visual(new Vector2(pos.X + (SECTIONWIDTH + MARGIN) * 0 + MARGIN - 1, pos.Y + RSIZE * 4 + MARGIN * 3 - 1), SECTIONWIDTH + 2, RSIZE * 6 + 2, "border").setBorder(false));
-            trade.Add("border5", new Visual(new Vector2(pos.X + (SECTIONWIDTH + MARGIN) * 1 + MARGIN - 1, pos.Y + RSIZE * 4 + MARGIN * 3 - 1), SECTIONWIDTH + 2, RSIZE * 6 + 2, "border").setBorder(false));
+            trade.Add("border5", new Visual(new Vector2(pos.X + (SECTIONWIDTH + MARGIN) * 1 + MARGIN - 1, pos.Y + RSIZE * 4 + MARGIN * 3 - 1), SECTIONWIDTH + 2, RSIZE * 9 + 2, "border").setBorder(false));
             trade.Add("border6", new Visual(new Vector2(pos.X + (SECTIONWIDTH + MARGIN) * 2 + MARGIN - 1, pos.Y + RSIZE * 4 + MARGIN * 3 - 1), SECTIONWIDTH + 2, RSIZE * 6 + 2, "border").setBorder(false));
+
+            trade.Add("border7", new Visual(new Vector2(pos.X + (SECTIONWIDTH + MARGIN) * 0 + MARGIN - 1, pos.Y + RSIZE * 10 + MARGIN * 3 - 1), SECTIONWIDTH + 2, RSIZE * 3 + 2, "border").setBorder(false));
+            trade.Add("border8", new Visual(new Vector2(pos.X + (SECTIONWIDTH + MARGIN) * 2 + MARGIN - 1, pos.Y + RSIZE * 10 + MARGIN * 3 - 1), SECTIONWIDTH + 2, RSIZE * 3 + 2, "border").setBorder(false));
 
             westHelpers = new Dictionary<Resource, TradeHelper>();
             eastHelpers = new Dictionary<Resource, TradeHelper>();
@@ -381,19 +384,19 @@ namespace _7Wonders
             int counter = 0;
             foreach (List<Resource> choices in self.getTotalChoices())
             {
-                selfChoices.Add(new TradeChoice(choices, new Vector2(pos.X + SECTIONWIDTH + MARGIN * 2, pos.Y + (RSIZE + MARGIN) * (4 + counter) + MARGIN * 3 - 1)));
+                selfChoices.Add(new TradeChoice(choices, new Vector2(pos.X + SECTIONWIDTH + MARGIN * 2, pos.Y + (RSIZE + MARGIN) * (3 + counter) + MARGIN * 5 - 1)));
                 counter++;
             }
             counter = 0;
-            foreach (List<Resource> choices in west.getTotalChoices())
+            foreach (List<Resource> choices in west.getPublicChoices())
             {
-                westChoices.Add(new TradeChoice(choices, new Vector2(pos.X + MARGIN, pos.Y + (RSIZE + MARGIN) * (4 + counter) + MARGIN * 3 - 1)));
+                westChoices.Add(new TradeChoice(choices, new Vector2(pos.X + MARGIN + ((counter>2)? SECTIONWIDTH/2: 0), pos.Y + (RSIZE + MARGIN) * (10 + counter % 3) + MARGIN * 3 - 1)));
                 counter++;
             }
             counter = 0;
-            foreach (List<Resource> choices in east.getTotalChoices())
+            foreach (List<Resource> choices in east.getPublicChoices())
             {
-                eastChoices.Add(new TradeChoice(choices, new Vector2(pos.X + (SECTIONWIDTH + MARGIN) * 2 + MARGIN, pos.Y + (RSIZE + MARGIN) * (4 + counter) + MARGIN * 3 - 1)));
+                eastChoices.Add(new TradeChoice(choices, new Vector2(pos.X + (SECTIONWIDTH + MARGIN) * 2 + MARGIN + ((counter > 2) ? SECTIONWIDTH / 2 : 0), pos.Y + (RSIZE + MARGIN) * (10 + counter % 3) + MARGIN * 3 - 1)));
                 counter++;
             }
         }
