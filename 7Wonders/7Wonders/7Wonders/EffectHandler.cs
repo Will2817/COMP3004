@@ -124,8 +124,9 @@ namespace _7Wonders
 
                 // Max Function, will add onto the max science value
                 AddScienceChoice(curr, schoiceCount);
+                curr.addScore(Score.VICTORY, CalculateScience(curr.getScoreNum(Score.GEAR),curr.getScoreNum(Score.COMPASS),curr.getScoreNum(Score.TABLET)));
                 curr.addScore(Score.VICTORY, curr.getScoreNum(Score.CONFLICT));
-                curr.addScore(Score.VICTORY, (int)curr.getScoreNum(Score.COIN) / 3);
+                curr.addScore(Score.VICTORY, (int)curr.getResourceNum(Resource.COIN) / 3);
             } // End Player Loop
         }
 
