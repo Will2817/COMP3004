@@ -279,6 +279,7 @@ namespace _7Wonders
                     }
                 }
                 activeInterface.reset();
+                client.registar(interfaces[message["nextInterface"]]);
                 activeInterface = interfaces[message["nextInterface"]];
                 activeInterface.receiveMessage(message);
             }

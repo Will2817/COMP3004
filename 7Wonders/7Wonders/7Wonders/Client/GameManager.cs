@@ -6,14 +6,16 @@ using Newtonsoft.Json.Linq;
 
 namespace _7Wonders.Client
 {
-    class GameManager
+    class GameManager: Subject
     {
+        Observer observer;
         GameState gameState;
         MessageSerializerService messageSerializer;
         NetService netService;
         bool handUpdated;
         bool playerUpdated;
         bool connected;
+
 
         public GameManager()
         {
@@ -36,31 +38,31 @@ namespace _7Wonders.Client
         public void updateLobby(string lobby)
         {
             gameState.lobbyFromJson(lobby);
-            playerUpdated = true;
+            if (observer != null) observer.stateUpdate(gameState, 1);
         }
 
         public void updatePlayers(string players)
         {
             gameState.playersFromJson(players);
-            playerUpdated = true;
+            if (observer != null) observer.stateUpdate(gameState, 1);
         }
 
         public void updateOptions(string options)
         {
             gameState.optionsFromJson(options);
-            playerUpdated = true;
+            if (observer != null) observer.stateUpdate(gameState, 1);
         }
 
         public void assignWonders(string json)
         {
             gameState.assignWonders(json);
-            playerUpdated = true;
+            if (observer != null) observer.stateUpdate(gameState, 1);
         }
 
         public void superUpdate(string json)
         {
             gameState.superParse(json);
-            playerUpdated = true;
+            if (observer != null) observer.stateUpdate(gameState, 1);
         }
 
         public GameState getGameState()
@@ -116,7 +118,7 @@ namespace _7Wonders.Client
         public void assignHand(string message)
         {
             gameState.setHand(netService.getID(), message);
-            handUpdated = true;
+            if (observer != null) observer.stateUpdate(gameState, 0);
         }
 
         //Returns the number of coins it would cost a player to build a card with cardID. -1 if the player cannot possibly build the
@@ -165,6 +167,12 @@ namespace _7Wonders.Client
                     return o;
             }
             return null;
+        }
+
+        //Observer pattern stuff
+        public void registar(Observer o)
+        {
+            observer = o;
         }
     }
 }

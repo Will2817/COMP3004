@@ -29,6 +29,8 @@ namespace _7Wonders
         private int DROPDOWNHEIGHT = (Game1.HEIGHT / 2 - (Game1.MAXPLAYER + 1) * MARGIN) / Game1.MAXPLAYER;
         private const int LABELHEIGHT = 35;
         private int LABELWIDTH;
+        private int LABELLENGTH;
+        private int RESOURCELENGTH;
 
         private int SCOREWIDTH = (int)(Game1.WIDTH / 2 * 0.609f / 7);
 
@@ -40,10 +42,13 @@ namespace _7Wonders
         protected bool showhand = false;
         protected int seatViewed = 0;
         protected Player player;
+        protected Player east;
+        protected Player west;
         protected Visual wonder;
         protected Button leftButton;
         protected bool showTrade = false;
         protected bool showScore = false;
+        protected bool init = false;
 
         protected MouseState mousestate;
 
@@ -53,6 +58,8 @@ namespace _7Wonders
             LABELWIDTH = SEC1WIDTH / 2 - MARGIN;
             CARDWIDTH = (Game1.WIDTH - 8 * (MARGIN * 2) - 30) / MAXHANDSIZE;
             CARDHEIGHT = (int) (CARDWIDTH * 1.612);
+            LABELLENGTH = (SEC1WIDTH - 2 * MARGIN) / 5;
+            RESOURCELENGTH = (SEC1WIDTH - 2 * MARGIN) * 4 / 5;
             player = null;
             wonder = null;
             hand = new SortedDictionary<string, Visual>();
@@ -78,6 +85,10 @@ namespace _7Wonders
         {
             trade = new TradeInterface();
             player = Game1.client.getSelf();
+            int westSeat = (player.getSeat() - 1 < 0) ? Game1.client.getState().getPlayers().Count - 1 : player.getSeat() - 1;
+            int eastSeat = (player.getSeat() + 1 > Game1.client.getState().getPlayers().Count - 1) ? 0 : player.getSeat() + 1;
+            east = Game1.client.getState().getPlayers().Values.ElementAt(eastSeat);
+            west = Game1.client.getState().getPlayers().Values.ElementAt(westSeat);
             foreach (Player p in Game1.client.getState().getPlayers().Values)
             {
                 Visual conflict = new Visual(new Vector2(Game1.WIDTH - MARGIN - 60, MARGIN * 2 + 75), 60, 60, "0", "Font1", null, Color.White, "conflict");
@@ -106,11 +117,6 @@ namespace _7Wonders
             baseVisuals.Add("eastresources", new Visual(new Vector2(LABELLENGTH + MARGIN, SEC1HEIGHT + LABELHEIGHT * 2 + MARGIN * 4), RESOURCELENGTH, LABELHEIGHT, "emptyResourceBar"));
             baseVisuals.Add("selfresources", new Visual(new Vector2(LABELLENGTH + MARGIN, Game1.HEIGHT - (MARGIN + LABELHEIGHT)), RESOURCELENGTH, LABELHEIGHT, "emptyResourceBar"));
 
-            int westSeat = (player.getSeat() - 1 < 0) ? Game1.client.getState().getPlayers().Count - 1 : player.getSeat() - 1;
-            int eastSeat = (player.getSeat() + 1 > Game1.client.getState().getPlayers().Count - 1) ? 0 : player.getSeat() + 1;
-            Player east = Game1.client.getState().getPlayers().Values.ElementAt(eastSeat);
-            Player west = Game1.client.getState().getPlayers().Values.ElementAt(westSeat);
-
             int RESOURCEHEIGHT = SEC1HEIGHT + LABELHEIGHT + MARGIN * 3;
 
             for (int i = 0; i < NUMRESOURCES; i++)
@@ -130,10 +136,10 @@ namespace _7Wonders
             }
             hand.Add("papermiddle", new Visual(new Vector2(MARGIN + 30 + (CARDWIDTH / 2 + MARGIN) * (7 - player.getHand().Count) + 1, 190), Game1.WIDTH - (MARGIN + 30 + (CARDWIDTH / 2 + MARGIN) * (7 - player.getHand().Count)), CARDHEIGHT + 25, "papermiddle"));
 
-            updatePlayed();
+            //updatePlayed();
             updateHands();
             updateScroll();
-            updatePlayers();
+            //updatePlayers();
             Game1.client.setHandChecked();
             Game1.client.setPlayerChecked();
 
@@ -169,7 +175,7 @@ namespace _7Wonders
 
         public override void receiveMessage(Dictionary<string, string> message)
         {
-            Initialize();
+            //Initialize();
         }
 
         public override void Update(GameTime gameTime, MouseState mouseState)
@@ -263,9 +269,11 @@ namespace _7Wonders
             }
             Game1.recordedPresses = "";
 
-            if (storeSeat != seatViewed)
+            if (storeSeat != seatViewed)// <------------This section should not get direct access to gamestate
             {
-                updatePlayers();
+                foreach (Player p in Game1.client.getState().getPlayers().Values)
+                    baseVisuals["player" + p.getSeat()].setColor((p.getReady()) ? Color.Green : Color.Gray);
+                baseVisuals["player" + seatViewed].setColor(Color.Orange);
             }
 
             if (leftButton.isClicked())
@@ -273,35 +281,6 @@ namespace _7Wonders
                 leftButton.reset();
                 showhand = !showhand;
                 updateScroll();
-            }
-
-            if (Game1.client.isUpdateAvailable())
-            {
-                if (Game1.client.isHandUpdated())
-                {
-                    showhand = false;
-                    updateHands();
-                    updateScroll();
-                    Game1.client.setHandChecked();
-                }
-                if (Game1.client.isPlayerUpdated())
-                {
-                    updatePlayed();
-                    updateResources();
-                    updatePlayers();
-                    Game1.client.setPlayerChecked();
-                }
-                if (!Game1.client.getState().isGameInProgress() && !showScore)
-                {
-                    showScore = true;
-                    baseVisuals["Scorehead"].setVisible(true);
-                    foreach (Player p in Game1.client.getState().getPlayers().Values)
-                    {
-                        baseVisuals["name" + p.getSeat()].setVisible(true);
-                        baseVisuals["score" + p.getSeat()].setVisible(true);
-                        baseVisuals["sum" + p.getSeat()].setString(p.getScoreNum(Score.VICTORY).ToString()).setVisible(true);
-                    }
-                }
             }
         }
 
@@ -349,13 +328,6 @@ namespace _7Wonders
                 {
                     {"nextInterface", "maingame"}
                 };
-        }
-
-        private void updatePlayers()
-        {
-            foreach (Player p in Game1.client.getState().getPlayers().Values)
-                baseVisuals["player" + p.getSeat()].setColor((p.getReady())? Color.Green : Color.Gray);
-            baseVisuals["player" + seatViewed].setColor(Color.Orange);
         }
 
         private void updateHands()
@@ -409,9 +381,16 @@ namespace _7Wonders
             }
         }
 
-        public void updatePlayed()
+        private void updatePlayers(GameState gameState)
         {
-            foreach (Player p in Game1.client.getState().getPlayers().Values)
+            foreach (Player p in gameState.getPlayers().Values)
+                baseVisuals["player" + p.getSeat()].setColor((p.getReady()) ? Color.Green : Color.Gray);
+            baseVisuals["player" + seatViewed].setColor(Color.Orange);
+        }
+
+        public void updatePlayed(GameState gameState)
+        {
+            foreach (Player p in gameState.getPlayers().Values)
             {
                 int played1 = 0;
                 int played2 = 0;
@@ -473,15 +452,8 @@ namespace _7Wonders
             }
         }
 
-        public void updateResources()
+        public void updateResources(GameState gameState)
         {
-            //these should be defined in the constructor
-            int westSeat = (player.getSeat() - 1 < 0) ? Game1.client.getState().getPlayers().Count - 1 : player.getSeat() - 1;
-            int eastSeat = (player.getSeat() + 1 > Game1.client.getState().getPlayers().Count - 1) ? 0 : player.getSeat() + 1;
-            Player east = Game1.client.getState().getPlayers().Values.ElementAt(eastSeat);
-            Player west = Game1.client.getState().getPlayers().Values.ElementAt(westSeat);
-            int LABELLENGTH = (SEC1WIDTH - 2 * MARGIN) / 5;
-            int RESOURCELENGTH = (SEC1WIDTH - 2 * MARGIN) * 4 / 5;
             for (int i = 0; i < NUMRESOURCES; i++)
             {
                 baseVisuals["east" + i].setString(east.getResourceNum((Resource) i) + "");
@@ -491,7 +463,7 @@ namespace _7Wonders
                 baseVisuals["self" + i].setString(player.getResourceNum((Resource)i) + "");
             }
 
-            foreach (Player p in Game1.client.getState().getPlayers().Values)
+            foreach (Player p in gameState.getPlayers().Values)
             {
                 baseVisuals["gear" + p.getSeat()].setString(p.getScoreNum(Score.GEAR).ToString());
                 baseVisuals["tablet" + p.getSeat()].setString(p.getScoreNum(Score.TABLET).ToString());
@@ -502,9 +474,42 @@ namespace _7Wonders
                 if (p.getBoard().getStagesBuilt() > 0) seatVisuals[p.getSeat()]["stages"].setTexture("stage" + p.getBoard().getStagesBuilt() + p.getBoard().getSide().getStageNum()).setVisible(true);
             }
 
-            baseVisuals["Age"].setTexture("age" + Game1.client.getState().getAge());
+            baseVisuals["Age"].setTexture("age" + gameState.getAge());
             baseVisuals["discard"].setString("0");//get actual number of discards
 
+        }
+
+        //observer code
+        public override void stateUpdate(GameState gameState, int code)
+        {
+            if (!init)
+            {
+                Initialize();
+                init = true;
+            }
+            if (code==0)
+            {
+                showhand = false;
+                updateHands();
+                updateScroll();
+            }
+            if (code==1)
+            {
+                updatePlayed(gameState);
+                updateResources(gameState);
+                updatePlayers(gameState);
+            }
+            if (code==2)
+            {
+                showScore = true;
+                baseVisuals["Scorehead"].setVisible(true);
+                foreach (Player p in gameState.getPlayers().Values)
+                {
+                    baseVisuals["name" + p.getSeat()].setVisible(true);
+                    baseVisuals["score" + p.getSeat()].setVisible(true);
+                    baseVisuals["sum" + p.getSeat()].setString(p.getScoreNum(Score.VICTORY).ToString()).setVisible(true);
+                }
+            }            
         }
     }
 }

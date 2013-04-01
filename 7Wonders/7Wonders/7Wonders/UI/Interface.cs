@@ -12,7 +12,7 @@ using Microsoft.Xna.Framework.Media;
 
 namespace _7Wonders
 {
-    public class Interface
+    public class Interface : Observer
         {
         protected Dictionary<String, Visual> activeVisuals;
         protected string backgroundText;
@@ -82,6 +82,11 @@ namespace _7Wonders
         public virtual void reset()
         {
             finished = false;
+        }
+
+        public virtual void stateUpdate(GameState gameState,int code)
+        {
+
         }
     }
 }

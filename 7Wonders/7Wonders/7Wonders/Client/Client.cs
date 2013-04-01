@@ -39,6 +39,10 @@ namespace _7Wonders.Client
             return null;
         }
 
+        public void registar(Observer o) { 
+            gameManager.registar(o); 
+        } 
+
         public void joinHost(bool host)
         {
             int i = netService.joinHost(host);

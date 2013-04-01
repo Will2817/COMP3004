@@ -153,7 +153,7 @@ namespace _7Wonders
                 }
             }
 
-            if (Game1.client.isUpdateAvailable()) updatePlayers();
+            //if (Game1.client.isUpdateAvailable()) updatePlayers();
 
             Player self = Game1.client.getSelf();
             if ((self!= null) && readyCBs[self.getSeat()].hasChanged())
@@ -183,10 +183,10 @@ namespace _7Wonders
                 };
         }
 
-        public virtual void updatePlayers()
+        public virtual void updatePlayers(GameState gameState)
         {
             Console.WriteLine("updating lobby...");
-            if (Game1.client.getState().isGameInProgress())
+            if (gameState.isGameInProgress())
             {
                 backToMenu = false;
                 finished = true;
@@ -200,7 +200,7 @@ namespace _7Wonders
             foreach (DropDown dd in dropDowns)
                 dd.setSelected("Open");
 
-            foreach (Player p in Game1.client.getState().getPlayers().Values)
+            foreach (Player p in gameState.getPlayers().Values)
             {
                 int seat = p.getSeat();
                 dropDowns[seat].setEnabled(false);
@@ -208,14 +208,14 @@ namespace _7Wonders
                 if (p.getID() == Game1.client.getId()) readyCBs[seat].setEnabled(true);
                 readyCBs[seat].setSelected(p.getReady());
             }
-            Console.WriteLine("Update side:" + Game1.client.getState().getOnlySideA());
-            if (Game1.client.getState().getOnlySideA())
+            Console.WriteLine("Update side:" + gameState.getOnlySideA());
+            if (gameState.getOnlySideA())
             {
                 viewSideB = false;
                 sideButton.setVisible(false);
             }
             else sideButton.setVisible(true);
-            Game1.client.setPlayerChecked();
+            //Game1.client.setPlayerChecked();
         }
 
         public virtual void updateHelper(int i)
@@ -223,6 +223,11 @@ namespace _7Wonders
             if (!playerTypes.Contains(dropDowns[i].getSelected())) dropDowns[i].setSelected("Open");
             readyCBs[i].setEnabled(false);
             readyCBs[i].setSelected(false);
+        }
+
+        public override void stateUpdate(GameState gameState, int code)
+        {
+            updatePlayers(gameState);
         }
     }
 }
