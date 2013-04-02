@@ -38,7 +38,13 @@ namespace _7Wonders
         protected bool border = true;
         protected int topmargin = 2;
         protected int leftmargin = 2;
-        public int z{get; set;} 
+        public int z{get; set;}
+
+        public Visual(Vector2 _pos)
+        {
+            position = _pos;
+            z = 0;
+        }
 
         // Constructor with Visual as a parameter
         public Visual(Visual v)
@@ -128,12 +134,12 @@ namespace _7Wonders
                 if (border) spriteBatch.Draw(texture, new Rectangle((int)position.X - 1, (int)position.Y - 1, width + 2, height + 2), Color.Black * opacity);
                 if (texture != null) spriteBatch.Draw(texture, new Rectangle((int)position.X, (int)position.Y, width, height), new Rectangle(0, 0, texture.Width, texture.Height), textureColor);
             }
-            if (text != null)
+            if (font != null)
             {
                 spriteBatch.DrawString(font, text, new Vector2(position.X + leftmargin, position.Y + topmargin), stringColor);
             }
         }
-
+        //remove
         public bool isMouseOver(MouseState mState)
         {
             if ((mState.X > position.X) && (mState.X < position.X + width) &&
@@ -142,41 +148,41 @@ namespace _7Wonders
             return false;
         }
 
-        public Visual setPosition(Vector2 _vec)
+        public virtual Visual setPosition(Vector2 _vec)
         {
             position = _vec;
             return this;
         }
-
+        //remove
         public Visual setWidth(int _w)
         {
             width = _w;
             return this;
         }
-
+        //remove
         public Visual setHeight(int _h)
         {
             height = _h;
             return this;
         }
-
+        //remove
         public Visual setTexture(string _texture)
         {
             textureName = _texture;
             texture = Game1.textures[textureName];
             return this;
         }
-
+        //remove
         public string getTexture()
         {
             return textureName;
         }
-
+        //remove
         public void setColor(Color _color)
         {
             textureColor = _color * opacity;
         }
-
+        //not sure what to do with this
         public void setOpacity(float _opacity)
         {
             textureColor *= 1 / opacity;
@@ -185,15 +191,15 @@ namespace _7Wonders
             textureColor *= opacity;
             stringColor *= opacity;
         }
-
+        //remove
         public void reset()
         {
             clicked = pressed = false;
         }
-
+        //remove
         public bool isClicked() { return clicked; }
 
-        public Visual setVisible(bool _visible) { 
+        public virtual Visual setVisible(bool _visible) { 
             visible = _visible; 
             return this; 
         }
@@ -221,18 +227,18 @@ namespace _7Wonders
             return this;
         }
 
-        public Visual setRelativePosition(Vector2 _vec)
+        public virtual Visual setRelativePosition(Vector2 _vec)
         {
             position += _vec;
             return this;
         }
-
+        //remove
         public Visual setRelativeWidth(int _w)
         {
             width += _w;
             return this;
         }
-
+        //remove
         public Visual setRelativeHeight(int _h)
         {
             height += _h;
