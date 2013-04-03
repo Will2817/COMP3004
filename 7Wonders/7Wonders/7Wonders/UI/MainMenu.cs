@@ -105,7 +105,6 @@ namespace _7Wonders
             if (JGame.isClicked())
             {
                 JGame.reset();
-                // activeVisuals = visuals3;
                 finished = true;
                 host = false;
             }

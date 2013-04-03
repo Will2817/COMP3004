@@ -141,7 +141,7 @@ namespace _7Wonders
             foreach (Visual v in activeVisuals.Values)
                 v.setVisible(true);
 
-            cardCost = Game1.client.constructCost(image);
+            cardCost = ConstructionUtils.constructCost(self,west,east,CardLibrary.getCard(image).cost);
             stageCost = -1;
             
             int temp = 0;
