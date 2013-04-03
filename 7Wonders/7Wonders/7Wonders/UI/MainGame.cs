@@ -173,11 +173,6 @@ namespace _7Wonders
             if (trade != null) trade.LoadContent();
         }
 
-        public override void receiveMessage(Dictionary<string, string> message)
-        {
-            //Initialize();
-        }
-
         public override void Update(GameTime gameTime, MouseState mouseState)
         {
             if (showTrade)
@@ -201,21 +196,25 @@ namespace _7Wonders
                 v.Update(gameTime, mouseState);
             }
 
-            foreach (Visual v in hand.Values)
+            lock (hand)
             {
-                v.Update(gameTime, mouseState);
-            }
-
-            for (int j = 0; j < MAXHANDSIZE; j++)
-            {
-                if (hand.ContainsKey("hand" + j))
+                foreach (Visual v in hand.Values)
                 {
-                    if (hand["hand" + j].isClicked())
-                    {
-                        hand["hand" + j].reset();
+                    v.Update(gameTime, mouseState);
+                }
 
-                        trade.showTrade(hand["hand" + j].getTexture(), j);
-                        showTrade = true;
+
+                for (int j = 0; j < MAXHANDSIZE; j++)
+                {
+                    if (hand.ContainsKey("hand" + j))
+                    {
+                        if (hand["hand" + j].isClicked())
+                        {
+                            hand["hand" + j].reset();
+
+                            trade.showTrade(hand["hand" + j].getTexture(), j);
+                            showTrade = true;
+                        }
                     }
                 }
             }
@@ -292,13 +291,16 @@ namespace _7Wonders
                 v.Draw(gameTime, spriteBatch);
             }
 
-            if (!showhand)
-	        {
-	            foreach (KeyValuePair<string,Visual> kp in activeVisuals)
-	            {
-                    if (kp.Key != "wonder" && kp.Key != "stages")
-	                    if (kp.Value.isMouseOver(mousestate)) kp.Value.Draw(gameTime, spriteBatch);
-	            }
+            lock (hand)
+            {
+                if (!showhand)
+                {
+                    foreach (KeyValuePair<string, Visual> kp in activeVisuals)
+                    {
+                        if (kp.Key != "wonder" && kp.Key != "stages")
+                            if (kp.Value.isMouseOver(mousestate)) kp.Value.Draw(gameTime, spriteBatch);
+                    }
+                }
             }
 
             foreach (Visual v in hand.Values.OrderBy(item => item.z))
@@ -332,52 +334,57 @@ namespace _7Wonders
 
         private void updateHands()
         {
-
-            for (int j = 0; j < MAXHANDSIZE; j++)
+            lock (hand)
             {
-                if (hand.ContainsKey("hand" + j)) hand.Remove("hand" + j);
-                if (hand.ContainsKey("glow" + j)) hand.Remove("glow" + j);
-            }
+                for (int j = 0; j < MAXHANDSIZE; j++)
+                {
+                    if (hand.ContainsKey("hand" + j)) hand.Remove("hand" + j);
+                    if (hand.ContainsKey("glow" + j)) hand.Remove("glow" + j);
+                }
 
 
-            int k = 0;
-            foreach (string c in player.getHand())
-            {
-                Game1.cards[c].setPosition(new Vector2(MARGIN + 40 + (CARDWIDTH + MARGIN * 2) * k + (CARDWIDTH / 2 + MARGIN) * (7 - player.getHand().Count), 205)).setWidth(CARDWIDTH).setHeight(CARDHEIGHT);
-                Game1.cards[c].z = 2;
-                hand.Add("hand" + k, Game1.cards[c]);
-                Visual v = new Visual(Game1.cards[c]).setRelativePosition(new Vector2(-1, -1)).setRelativeHeight(2).setRelativeWidth(2);
-                v.z = 3;
-                if (Game1.client.constructCost(c) == 0) v.setTexture("greenglow");
-                else if (Game1.client.constructCost(c) > 0) v.setTexture("goldglow");
-                else v.setTexture("redglow");
-                hand.Add("glow" + k, v);
-                k++;
+                int k = 0;
+                foreach (string c in player.getHand())
+                {
+                    Game1.cards[c].setPosition(new Vector2(MARGIN + 40 + (CARDWIDTH + MARGIN * 2) * k + (CARDWIDTH / 2 + MARGIN) * (7 - player.getHand().Count), 205)).setWidth(CARDWIDTH).setHeight(CARDHEIGHT);
+                    Game1.cards[c].z = 2;
+                    hand.Add("hand" + k, Game1.cards[c]);
+                    Visual v = new Visual(Game1.cards[c]).setRelativePosition(new Vector2(-1, -1)).setRelativeHeight(2).setRelativeWidth(2);
+                    v.z = 3;
+                    if (Game1.client.constructCost(c) == 0) v.setTexture("greenglow");
+                    else if (Game1.client.constructCost(c) > 0) v.setTexture("goldglow");
+                    else v.setTexture("redglow");
+                    hand.Add("glow" + k, v);
+                    k++;
+                }
+                hand["papermiddle"].setPosition(new Vector2(MARGIN + 30 + (CARDWIDTH / 2 + MARGIN) * (7 - player.getHand().Count) + 1, 190)).setWidth(Game1.WIDTH - (MARGIN + 30 + (CARDWIDTH / 2 + MARGIN) * (7 - player.getHand().Count) + 1));
             }
-            hand["papermiddle"].setPosition(new Vector2(MARGIN + 30 + (CARDWIDTH / 2 + MARGIN) * (7 - player.getHand().Count) + 1, 190)).setWidth(Game1.WIDTH - (MARGIN + 30 + (CARDWIDTH / 2 + MARGIN) * (7 - player.getHand().Count) + 1));
         }
 
         private void updateScroll()
         {
-            if (showhand)
+            lock (hand)
             {
-                hand["papermiddle"].setVisible(true);
-                leftButton.setTexture("right");
-                leftButton.setPosition(new Vector2(MARGIN + (CARDWIDTH / 2 + MARGIN) * (7 - player.getHand().Count) + 5, 200 + CARDHEIGHT / 2 - 7));
-                hand["paperleft"].setPosition(new Vector2(MARGIN + (CARDWIDTH / 2 + MARGIN) * (7 - player.getHand().Count), 190));
-            }
-            else
-            {
-                hand["papermiddle"].setVisible(false);
-                leftButton.setTexture("left");
-                leftButton.setPosition(new Vector2(Game1.WIDTH - 27, 200 + CARDHEIGHT / 2 - 7));
-                hand["paperleft"].setPosition(new Vector2(Game1.WIDTH - 30, 190));
-            }
+                if (showhand)
+                {
+                    hand["papermiddle"].setVisible(true);
+                    leftButton.setTexture("right");
+                    leftButton.setPosition(new Vector2(MARGIN + (CARDWIDTH / 2 + MARGIN) * (7 - player.getHand().Count) + 5, 200 + CARDHEIGHT / 2 - 7));
+                    hand["paperleft"].setPosition(new Vector2(MARGIN + (CARDWIDTH / 2 + MARGIN) * (7 - player.getHand().Count), 190));
+                }
+                else
+                {
+                    hand["papermiddle"].setVisible(false);
+                    leftButton.setTexture("left");
+                    leftButton.setPosition(new Vector2(Game1.WIDTH - 27, 200 + CARDHEIGHT / 2 - 7));
+                    hand["paperleft"].setPosition(new Vector2(Game1.WIDTH - 30, 190));
+                }
 
-            for (int j = 0; j < MAXHANDSIZE; j++)
-            {
-                if (hand.ContainsKey("hand" + j)) hand["hand" + j].setVisible(showhand);
-                if (hand.ContainsKey("glow" + j)) hand["glow" + j].setVisible(showhand);
+                for (int j = 0; j < MAXHANDSIZE; j++)
+                {
+                    if (hand.ContainsKey("hand" + j)) hand["hand" + j].setVisible(showhand);
+                    if (hand.ContainsKey("glow" + j)) hand["glow" + j].setVisible(showhand);
+                }
             }
         }
 
@@ -482,6 +489,7 @@ namespace _7Wonders
         //observer code
         public override void stateUpdate(GameState gameState, int code)
         {
+            Console.WriteLine("UPDATING STATE");
             if (!init)
             {
                 Initialize();
@@ -509,7 +517,7 @@ namespace _7Wonders
                     baseVisuals["score" + p.getSeat()].setVisible(true);
                     baseVisuals["sum" + p.getSeat()].setString(p.getScoreNum(Score.VICTORY).ToString()).setVisible(true);
                 }
-            }            
+            }
         }
     }
 }
