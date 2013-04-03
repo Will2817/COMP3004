@@ -31,5 +31,13 @@ namespace _7Wonders
             return null;
         }
 
+        public static List<Card> getCardList(int players)
+        {
+            List<Card> cardList = new List<Card>();
+            foreach (Card c in cards.Values)
+                if (c.players <= players) cardList.Add(c);
+            return cardList;
+        }
+
     }
 }

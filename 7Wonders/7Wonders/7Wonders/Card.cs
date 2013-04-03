@@ -39,7 +39,7 @@ namespace _7Wonders
             players = (int)_json["players"];
             age = (int)_json["age"];
             guild = (string)_json["guild"];
-            colour = getGuildType(guild);
+            colour = parseColour(guild);
 
             cost = new Dictionary<Resource, int>();
             cost = (new Cost((JObject)_json["cost"])).getCost(); // Setting up the cost
@@ -66,7 +66,7 @@ namespace _7Wonders
         }
 
         // Gets the full name of the Guild - used for display
-        public CardColour getGuildType(string _colour)
+        public CardColour parseColour(string _colour)
         {
             CardColour c = 0;
             switch (_colour)
@@ -93,7 +93,7 @@ namespace _7Wonders
                     c = CardColour.GREEN;
                     break;
                 default:
-                    Console.WriteLine("Error: Invalid Guild Colour, getGuildType(" + colour + ")");
+                    Console.WriteLine("Error: Invalid Guild Colour, getGuildType(" + _colour + ")");
                     break;
             }
             return c;

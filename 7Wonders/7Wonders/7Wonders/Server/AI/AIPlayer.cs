@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace _7Wonders.Server
+namespace _7Wonders.Server.AI
 {
     class AIPlayer//Need to add support for multiple strategies by moving card selection (and later, board selection) to another class
     {               //Will have an interface with required methods implemented by a different class for each strategy
         public enum AIType //The constructor will instantiate the correct implementing class based on the given type
         {
-            RANDOM,
+            GREEDY,
             MILITARY,
             SCIENCE,
             CIVILIAN,
@@ -21,7 +21,7 @@ namespace _7Wonders.Server
         private GameManager gameManager;
 
         public static Dictionary<string, AIType> aiTypes = new Dictionary<string, AIType> { 
-            {"Random AI", AIType.RANDOM}, 
+            {"Random AI", AIType.GREEDY}, 
             {"Military AI", AIType.MILITARY},
             {"Science AI", AIType.SCIENCE},
             {"Civilian AI", AIType.CIVILIAN},

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using _7Wonders.Server.AI;
 
 namespace _7Wonders.Server
 {
@@ -36,6 +37,26 @@ namespace _7Wonders.Server
         {
             Player newAI = new Player(System.DateTime.UtcNow.Ticks, type);
             newAI.setReady(true);
+            AIStrategy strategy;
+            switch (AIPlayer.aiTypes[type])
+            {
+                case AIPlayer.AIType.CIVILIAN:
+                    //strategy = new CivilianStrategy();
+                    break;
+                case AIPlayer.AIType.MILITARY:
+                    //strategy = new MilitaryStrategy();
+                    break;
+                case AIPlayer.AIType.COMMERCE:
+                    //strategy = new CommerceStrategy();
+                    break;
+                case AIPlayer.AIType.SCIENCE:
+                    //strategy = new ScienceStrategy();
+                    break;
+                case AIPlayer.AIType.GREEDY:
+                default:
+                    //strategy = new GreedyStrategy();
+                    break;
+            }
             aiPlayers.Add(newAI.getID(), new AIPlayer(type, newAI.getID(), this));
             addPlayer(newAI);
         }
