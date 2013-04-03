@@ -17,12 +17,12 @@ namespace _7Wonders
         protected const int MARGIN = 5;
         protected const int CHECKBOXDIM = 15;
         protected const int DIVIDERWIDTH = 2;
-        protected readonly int SEC1WIDTH = Game1.WIDTH / 3;
-        protected readonly int WONDERHEIGHT = (Game1.HEIGHT - 10) / 6;
-        protected readonly int WONDERWIDTH = Game1.WIDTH / 3 - 10;
-        protected readonly int SEC1HEIGHT = Game1.HEIGHT * 2 / 3;
-        protected readonly int DROPDOWNWIDTH = (int)((Game1.WIDTH / 3) * 0.70f);
-        protected readonly int DROPDOWNHEIGHT = (Game1.HEIGHT / 2 - (Game1.MAXPLAYER + 1) * MARGIN) / Game1.MAXPLAYER - (int)((Game1.HEIGHT - 600) * 0.04375f);        
+        protected int SEC1WIDTH = Game1.WIDTH / 3;
+        protected int WONDERHEIGHT = (Game1.HEIGHT - 10) / 6;
+        protected int WONDERWIDTH = Game1.WIDTH / 3 - 10;
+        protected int SEC1HEIGHT = Game1.HEIGHT * 2/3;
+        protected int DROPDOWNWIDTH = (int)((Game1.WIDTH / 3) * 0.70f);
+        protected int DROPDOWNHEIGHT = (Game1.HEIGHT/2 - (Game1.MAXPLAYER + 1) * MARGIN) / Game1.MAXPLAYER - (int)((Game1.HEIGHT - 600) * 0.04375f);        
 
         protected Dictionary<String, Visual> visuals1;
         protected List<Checkbox> readyCBs;
@@ -153,6 +153,8 @@ namespace _7Wonders
                 }
             }
 
+            //if (Game1.client.isUpdateAvailable()) updatePlayers();
+
             Player self = Game1.client.getSelf();
             if ((self!= null) && readyCBs[self.getSeat()].hasChanged())
             {
@@ -196,9 +198,7 @@ namespace _7Wonders
             }
 
             foreach (DropDown dd in dropDowns)
-            {
                 dd.setSelected("Open");
-            }
 
             foreach (Player p in gameState.getPlayers().Values)
             {

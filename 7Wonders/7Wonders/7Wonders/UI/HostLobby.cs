@@ -66,7 +66,6 @@ namespace _7Wonders
                 {
                     if (!dd.getDown())
                     {
-                        Console.WriteLine("SELECTED " + dd.getSelected());
                         if (dd.getSelected() != "Open") Game1.host.addAIPlayer(dd.getSelected());
                         dropped = null;
                         existsADrop = false;
