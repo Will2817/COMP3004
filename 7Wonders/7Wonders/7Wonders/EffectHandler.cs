@@ -19,21 +19,22 @@ namespace _7Wonders
 
 
         // Used for converting Resources
-        static Dictionary<string, Resource> resourceType = new Dictionary<string, Resource>
+        static Dictionary<Effect.TypeType, Resource> resourceType = new Dictionary<Effect.TypeType, Resource>
         {
-            {"w", Resource.WOOD}, {"s", Resource.STONE}, {"o", Resource.ORE},
-            {"c", Resource.CLAY}, {"g", Resource.GLASS}, {"p", Resource.PAPYRUS},
-            {"l", Resource.LOOM} // Coin is left out as there are other cases for it
+            {Effect.TypeType.WOOD, Resource.WOOD}, {Effect.TypeType.STONE, Resource.STONE}, {Effect.TypeType.ORE, Resource.ORE},
+            {Effect.TypeType.CLAY, Resource.CLAY}, {Effect.TypeType.GLASS, Resource.GLASS}, {Effect.TypeType.PAPYRUS, Resource.PAPYRUS},
+            {Effect.TypeType.LOOM, Resource.LOOM} // Coin is left out as there are other cases for it
         };
 
-        static Dictionary<string, CardColour> cardType = new Dictionary<string, CardColour>
+        static Dictionary<Effect.BasisType, CardColour> cardType = new Dictionary<Effect.BasisType, CardColour>
         {
-            {"brown", CardColour.BROWN}, {"gray", CardColour.GRAY}, {"blue", CardColour.BLUE}, 
-            {"green", CardColour.GREEN}, {"yellow", CardColour.YELLOW}, {"red", CardColour.RED}, 
-            {"purple", CardColour.PURPLE}
+            {Effect.BasisType.BROWN, CardColour.BROWN}, {Effect.BasisType.GRAY, CardColour.GRAY}, {Effect.BasisType.BLUE, CardColour.BLUE}, 
+            {Effect.BasisType.GREEN, CardColour.GREEN}, {Effect.BasisType.YELLOW, CardColour.YELLOW}, {Effect.BasisType.RED, CardColour.RED}, 
+            {Effect.BasisType.PURPLE, CardColour.PURPLE}
         };
 
-        static Dictionary<string, Score> scienceType = new Dictionary<string, Score> { { "tab", Score.TABLET }, { "comp", Score.COMPASS }, { "gear", Score.GEAR } };
+        static Dictionary<Effect.TypeType, Score> scienceType = new Dictionary<Effect.TypeType, Score> 
+        {   { Effect.TypeType.TABLET, Score.TABLET }, { Effect.TypeType.COMPASS, Score.COMPASS }, { Effect.TypeType.GEAR, Score.GEAR } };
 
         public static void ApplyEndGameEffect(GameState gameState)
         {
@@ -63,11 +64,11 @@ namespace _7Wonders
                 {
                     foreach (Effect e in curr.getBoard().getSide().getStageEffects(i))
                     {
-                        if (e.type.Equals("schoice"))
+                        if (e.type.Equals(Effect.TypeType.SCHOICE))
                             schoiceCount += 1;
                         // Loop through Wonder Effects for the players
                         // GUILD COPY - not finished
-                        else if (e.type.Equals("guildCopy"))
+                        else if (e.type.Equals(Effect.TypeType.GUILD))
                         {
                             CopyGuild(curr, east, west);
                         }
@@ -82,19 +83,19 @@ namespace _7Wonders
                     foreach (Effect e in c.effects)
                     {
                         // Victory Points
-                        if (e.type.Equals("victory"))
+                        if (e.type.Equals(Effect.TypeType.VICTORY))
                         {
                             // FROM: NEIGHBORS
                             // and BASIS: CardColour, Wonderstages, Defeat
-                            if (e.from != null && e.from.Equals("neighbors"))
+                            if (e.from != null && e.from.Equals(Effect.FromType.NEIGHBOURS))
                             {
                                 // Apply victory points awarded for each
                                 // Wonderstage neigboring cities own
-                                if (e.basis.Equals("wonderstages"))
+                                if (e.basis.Equals(Effect.BasisType.WONDER))
                                     AddVictoryAllWonders(curr, east, west);
 
                                 //Victory points given per neighbor's conlfict token
-                                else if (e.basis.Equals("defeat"))
+                                else if (e.basis.Equals(Effect.BasisType.DEFEAT))
                                     AddVictoryNeighboursConflict(curr, east, west);
 
                                  // Victory points awarded per certain structure built by neighbours
@@ -103,21 +104,21 @@ namespace _7Wonders
                             }
                             // FROM: PLAYER
                             // BASIS: CardColour, Wonderstages, 
-                            else if (e.from != null && e.from.Equals("player"))
+                            else if (e.from != Effect.FromType.NONE && e.from.Equals(Effect.FromType.PLAYER))
                             {
-                                if (e.basis.Equals("wonderstages"))
+                                if (e.basis.Equals(Effect.BasisType.WONDER))
                                     AddVictoryWonder(curr);
                                 else
                                     AddVictoryColour(curr, cardType[e.basis], e.amount);
                             }
                             // FROM: ALL
                             // BASIS: Wonderstages
-                            else if (e.from != null && e.from.Equals("all"))
+                            else if (e.from != Effect.FromType.NONE && e.from.Equals(Effect.FromType.ALL))
                                 AddVictoryAllWonders(curr, east, west);
                         } // End Victory Points
 
                         // SCIENCE CHOICE
-                        else if (e.type.Equals("schoice"))
+                        else if (e.type.Equals(Effect.TypeType.SCHOICE))
                             schoiceCount += 1;
                     } // End Effect Loop for Cards                    
                 } // End Current Player's Card Loop
@@ -139,7 +140,7 @@ namespace _7Wonders
                 Player curr = player.Value;
                 foreach (Effect effect in curr.getBoard().getSide().getStageEffects(gameState.getAge()))
                 {
-                    if (effect.basis.Equals("lastcard"))
+                    if (effect.type.Equals(Effect.TypeType.LASTCARD))
                     {
 
                     }
@@ -152,18 +153,18 @@ namespace _7Wonders
         public static void ApplyEffect(Player p, Player east, Player west, Effect e)
         {
             // RESOURCES
-            if (e.type.Length == 1)
+            if (resourceType.ContainsKey(e.type))
                 AddResource(p, resourceType[e.type], e.amount);
 
             // VICTORY POINTS
-            else if (e.type.Equals("victory"))
+            else if (e.type.Equals(Effect.TypeType.VICTORY))
             {
                 // NO FROM/BASIS - add to score
-                if (e.from == null && e.basis == null)
+                if (e.from == Effect.FromType.NONE && e.basis == Effect.BasisType.NONE)
                     AddScore(p, Score.VICTORY, e.amount);
 
                 // Adding to the Score for Blue Structures raised
-                else if (e.from == null && e.basis.Equals("blue"))
+                else if (e.from == Effect.FromType.NONE && e.basis.Equals(Effect.BasisType.BLUE))
                 {
                     AddScore(p, Score.VICTORY_BLUE, e.amount);
                     AddScore(p, Score.VICTORY, e.amount);
@@ -171,68 +172,68 @@ namespace _7Wonders
             }
 
             // COINS
-            else if (e.type.Equals("coin"))
+            else if (e.type.Equals(Effect.TypeType.COIN))
             {
                 // No FROM/BASIS - add coin
-                if (e.from == null && e.basis == null)
+                if (e.from == Effect.FromType.NONE && e.basis == Effect.BasisType.NONE)
                     AddResource(p, Resource.COIN, e.amount);
 
                 // FROM: PLAYER
                 // BASIS: CardColour, Wonderstages
-                else if (e.from.Equals("player"))
+                else if (e.from.Equals(Effect.FromType.PLAYER))
                 {
-                    if (e.basis.Equals("wonderstages"))
+                    if (e.basis.Equals(Effect.BasisType.WONDER))
                         AddCoinWonder(p, e.amount);
                     else
                         AddCoinColour(p, cardType[e.basis], e.amount);
                 }
                 // FROM: ALL
-                else if (e.from.Equals("all"))
+                else if (e.from.Equals(Effect.FromType.ALL))
                     AddCoinAllColour(p, east, west, cardType[e.basis], e.amount);
             }
 
             // RESOURCE CHOICE
-            else if (e.type.Equals("rchoice"))
+            else if (e.type.Equals(Effect.TypeType.RCHOICE))
             {
                 List<Resource> choice = new List<Resource>();
 
-                foreach (string c in e.list)
+                foreach (Effect.TypeType c in e.list)
                     choice.Add(resourceType[c]);
 
-                if ((e.basis != null) && (e.basis.Equals("yellow") || e.basis.Equals("wonder")))
+                if ((e.basis != Effect.BasisType.NONE) && (e.basis.Equals(Effect.BasisType.YELLOW) || e.basis.Equals(Effect.BasisType.WONDER)))
                     AddResourceUnPurchaseable(p, choice);
                 else
                     AddResourceChoice(p, choice);
             }
 
             // ARMY
-            else if (e.type.Equals("army"))
+            else if (e.type.Equals(Effect.TypeType.ARMY))
                 AddScore(p, Score.ARMY, e.amount);
 
             // Manufactured Resource Trade
-            else if (e.type.Equals("mcostBoth"))
+            else if (e.type.Equals(Effect.TypeType.MCOST))
                 SetManufactedTrade(p);
 
             // Raw Resource Trade
-            else if (e.type.Equals("rcostEast"))
+            else if (e.type.Equals(Effect.TypeType.RCOSTEAST))
                 SetRawTradeEast(p);
-            else if (e.type.Equals("rcostWest"))
+            else if (e.type.Equals(Effect.TypeType.RCOSTWEST))
                 SetRawTradeWest(p);
 
             // SCIENCE
-            else if (e.type.Equals("comp") || e.type.Equals("tab") || e.type.Equals("gear"))
+            else if (e.type.Equals(Effect.TypeType.COMPASS) || e.type.Equals(Effect.TypeType.TABLET) || e.type.Equals(Effect.TypeType.GEAR))
                 AddScore(p, scienceType[e.type], e.amount);
 
 
         // ===== WONDER SPECIFIC =====
             // FREE BUILD - not finished *wild card --> can be done at anytime during an age
-            else if (e.type.Equals("freeBuild"))
+            else if (e.type.Equals(Effect.TypeType.FREEBUILD))
             {
 
             }
 
             // DISCARD - End of turn the stage was built and build a card from discard pile for free
-            else if (e.type.Equals("discard"))
+            else if (e.type.Equals(Effect.TypeType.DISCARD))
             {
 
             }
@@ -455,8 +456,8 @@ namespace _7Wonders
             int bestScore = 0;
 
             // Guild Cards taken from East Player
-            foreach (string c in east.getPlayed())            
-                if (CardLibrary.getCard(c).colour.Equals("purple"))
+            foreach (string c in east.getPlayed())
+                if (CardLibrary.getCard(c).colour.Equals(CardColour.PURPLE))
                     guilds.Add(c);
 
             // Guild Cards taken from West Player
@@ -470,21 +471,21 @@ namespace _7Wonders
                 guildScore.Add(cardID, 0);
                 foreach (Effect e in CardLibrary.getCard(cardID).effects)
                 {
-                    if (e.type.Equals("victory") && e.from.Equals("neighbors"))
+                    if (e.type.Equals(Effect.TypeType.VICTORY) && e.from.Equals(Effect.FromType.NEIGHBOURS))
                     {
                         if (cardType.ContainsKey(e.basis))
                             guildScore[cardID] = GetVictoryNeighboursColour(east, west, cardType[e.basis], e.amount);
-                        else if (e.basis.Equals("defeat"))
+                        else if (e.basis.Equals(Effect.BasisType.DEFEAT))
                         {
                             //Need to finish the function called here
                             guildScore[cardID] = GetVictoryNeighboursConflict(east, west);
                         }
                     }
-                    else if (e.type.Equals("victory") && e.from.Equals("player") && cardType.ContainsKey(e.basis))
+                    else if (e.type.Equals(Effect.TypeType.VICTORY) && e.from.Equals(Effect.FromType.PLAYER) && cardType.ContainsKey(e.basis))
                         guildScore[cardID] += GetVictoryColour(p, cardType[e.basis], e.amount); // Added multiple times
-                    else if (e.type.Equals("victory") && e.from.Equals("all") && e.basis.Equals("wonderstages"))
+                    else if (e.type.Equals(Effect.TypeType.VICTORY) && e.from.Equals(Effect.FromType.ALL) && e.basis.Equals(Effect.BasisType.WONDER))
                         guildScore[cardID] = GetVictoryAllWonders(p, east, west);
-                    else if (e.type.Equals("schoice"))
+                    else if (e.type.Equals(Effect.TypeType.SCHOICE))
                     {
                         //CalculateScience(g c t)
                         int gear = p.getScoreNum(Score.GEAR);

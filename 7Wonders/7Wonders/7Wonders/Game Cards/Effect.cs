@@ -8,10 +8,10 @@ namespace _7Wonders.Game_Cards
 {
     public class Effect
     {
-        public static enum BasisType { NONE, BROWN, GRAY, YELLOW, GREEN, RED, DEFEAT, PURPLE, BLUE, WONDER };
-        public static enum FromType { NONE, PLAYER, NEIGHBOURS, ALL };
-        public static enum TypeType { NONE, CLAY, STONE, WOOD, ORE, GLASS, PAPYRUS, LOOM, COIN, RCHOICE,
-                                      RCOSTEAST, RCOSTWEST, MCOST, VICTORY, ARMY, TABLET, COMPASS, GEAR, SCHOICE };
+        public enum BasisType { NONE, BROWN, GRAY, YELLOW, GREEN, RED, DEFEAT, PURPLE, BLUE, WONDER };
+        public enum FromType { NONE, PLAYER, NEIGHBOURS, ALL };
+        public enum TypeType { NONE, CLAY, STONE, WOOD, ORE, GLASS, PAPYRUS, LOOM, COIN, RCHOICE, RCOSTEAST, RCOSTWEST,
+                                      MCOST, VICTORY, ARMY, TABLET, COMPASS, GEAR, SCHOICE, GUILD, FREEBUILD, DISCARD, LASTCARD };
         // Auto-Implementing Properites of Effect
         // from cards
         public TypeType type          { get; set; }
@@ -65,7 +65,7 @@ namespace _7Wonders.Game_Cards
         public void PrintEffect()
         {
             if (type != null)
-                Console.WriteLine("\tType:\t" + type);
+                Console.WriteLine("\tType:\t" + type.ToString());
             // Because of type int?
             Console.WriteLine("\tAmount:\t" + amount);
 
@@ -73,18 +73,18 @@ namespace _7Wonders.Game_Cards
             {
                 Console.Write("\tList:\t");
                 for (int i = 0; i < list.Count(); i++)
-                    Console.Write(list[i] + "\t");
+                    Console.Write(list[i].ToString() + "\t");
             }
             else
                 Console.WriteLine("\tList:\t NULL");
 
             if (from != null)
-                Console.WriteLine("\tFrom:\t" + from);
+                Console.WriteLine("\tFrom:\t" + from.ToString());
             else
                 Console.WriteLine("\tFrom:\t NULL");
 
             if (basis != null)
-                Console.WriteLine("\tBasis:\t" + basis);
+                Console.WriteLine("\tBasis:\t" + basis.ToString());
             else
                 Console.WriteLine("\tBasis:\t NULL\n");
 
@@ -110,6 +110,10 @@ namespace _7Wonders.Game_Cards
                 case "tab": return TypeType.TABLET;
                 case "comp": return TypeType.COMPASS;
                 case "gear": return TypeType.GEAR;
+                case "guildCopy": return TypeType.GUILD;
+                case "freeBuild": return TypeType.FREEBUILD;
+                case "discard": return TypeType.DISCARD;
+                case "lastcard": return TypeType.LASTCARD;
                 default: return TypeType.NONE;
             }
         }
