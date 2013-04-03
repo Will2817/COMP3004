@@ -15,17 +15,15 @@ namespace _7Wonders
     class DropDown : Visual
     {
         protected Dictionary<string,Visual> strings;
-        protected Visual selected;
         protected Button dropButton;
         protected bool isDown = false;
         protected bool dropRequest = false;
 
         public DropDown(Vector2 _pos, int _w, int _h, List<string> _options, bool? _enabled = true)
-            : base(_pos, _w, _h, "line", Color.White)
+            : base(_pos, _w, _h, _options[0], "Font1", Color.White, Color.Gray, "grayback")
         {
             enabled = (_enabled.HasValue) ? _enabled.Value : true;
             strings = new Dictionary<string, Visual>();
-            selected = new Visual(position, width, height, _options[0], "Font1", Color.White, Color.Gray, "grayback");
             int count=1;
             foreach (string s in _options)
             {
@@ -43,13 +41,13 @@ namespace _7Wonders
                 v.LoadContent();
             }
             dropButton.LoadContent();
-            selected.LoadContent();
+            base.LoadContent();
         }
 
         public override void Update(GameTime gameTime, MouseState mState)
         {
             if (!visible||!enabled) return;
-            selected.Update(gameTime, mState);
+            base.Update(gameTime, mState);
             dropButton.Update(gameTime, mState);
             
             foreach (Visual v in strings.Values)
@@ -61,7 +59,7 @@ namespace _7Wonders
             {
                 if (v.isClicked())
                 {
-                    selected.setString(v.getString());
+                    text = v.getString();
                     drop();
                     v.reset();
                 }
@@ -71,7 +69,7 @@ namespace _7Wonders
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             if (!visible) return;
-            selected.Draw(gameTime, spriteBatch);
+            base.Draw(gameTime, spriteBatch);
             if (!enabled) return;
             dropButton.Draw(gameTime, spriteBatch);            
             foreach (Visual v in strings.Values)
@@ -82,12 +80,12 @@ namespace _7Wonders
 
         public string getSelected()
         {
-            return selected.getString();
+            return text;
         }
 
         public DropDown setSelected(string _text)
         {
-            selected.setString(_text);
+            text = _text;
             return this;
         }
 
