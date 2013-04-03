@@ -12,44 +12,42 @@ using Microsoft.Xna.Framework.Media;
 
 namespace _7Wonders
 {
-    class Checkbox : CompositeVisual
+    class Checkbox : Visual
     {
-        private TextureVisual tv; 
-        private bool selected = false;
-        private bool changed = false;
+        protected bool selected = false;
+        protected bool changed = false;
 
         // Checkbox constructor - Virtual
         public Checkbox(Vector2 _pos, int _w, int _h)
-            : base(_pos)
+            : base(_pos, _w, _h, "line")
         {
-            tv = new TextureVisual(_pos, _w, _h, "line", Color.White);
-            visuals.Add(tv);
+            textureColor = new Color(255, 255, 255, opacity);
         }
 
         public Checkbox(Vector2 _pos)
-            : base(_pos)
+            : base(_pos, 15, 15, "line")
         {
-            tv = new TextureVisual(_pos, 15, 15, "line", Color.White);
-            visuals.Add(tv);
+            textureColor = new Color(255, 255, 255, opacity);
         }
 
         public override void Update(GameTime gameTime, MouseState mState)
         {
             if (!visible) return;
             base.Update(gameTime, mState);
-            if (tv.isClicked())
+            if (isClicked())
             {
                 changed = true;
                 selected = !selected;
                 swapColours();
-                tv.reset();
+                reset();
             }
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             if (!visible) return;
-            base.Draw(gameTime, spriteBatch);
+            spriteBatch.Draw(texture, new Rectangle((int)position.X-1, (int)position.Y-1, width+2, height+2), new Color(0,0,0,opacity));
+            spriteBatch.Draw(texture, new Rectangle((int)position.X, (int)position.Y, width, height), textureColor);
         }
 
         public bool hasChanged() { return changed; }
@@ -58,8 +56,8 @@ namespace _7Wonders
 
         private void swapColours()
         {
-            if (selected) tv.setColor(new Color(Color.Green.R, Color.Green.G, Color.Green.B, opacity));
-            else tv.setColor(Color.White);
+            if (selected) textureColor = new Color(Color.Green.R, Color.Green.G, Color.Green.B, opacity);
+            else textureColor = new Color(255, 255, 255, opacity);
         }
     }
 }

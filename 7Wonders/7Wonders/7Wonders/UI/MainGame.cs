@@ -36,19 +36,19 @@ namespace _7Wonders
 
         private TradeInterface trade;
 
-        private Dictionary<int, Dictionary<string, Visual>> seatVisuals;
-        private Dictionary<string, Visual> baseVisuals;
-        private SortedDictionary<string, Visual> hand;
-        private bool showhand = false;
-        private int seatViewed = 0;
-        private Player player;
-        private Player east;
-        private Player west;
-        private Visual wonder;
-        private Button leftButton;
-        private bool showTrade = false;
-        private bool showScore = false;
-        private bool init = false;
+        protected Dictionary<int, Dictionary<string, Visual>> seatVisuals;
+        protected Dictionary<string, Visual> baseVisuals;
+        protected SortedDictionary<string, Visual> hand;
+        protected bool showhand = false;
+        protected int seatViewed = 0;
+        protected Player player;
+        protected Player east;
+        protected Player west;
+        protected Visual wonder;
+        protected Button leftButton;
+        protected bool showTrade = false;
+        protected bool showScore = false;
+        protected bool init = false;
 
         protected MouseState mousestate;
 
@@ -81,15 +81,15 @@ namespace _7Wonders
 
         }
 
-        private void Initialize(GameState gameState)
+        private void Initialize()
         {
             trade = new TradeInterface();
             player = Game1.client.getSelf();
-            int westSeat = (player.getSeat() - 1 < 0) ? gameState.getPlayers().Count - 1 : player.getSeat() - 1;
-            int eastSeat = (player.getSeat() + 1 > gameState.getPlayers().Count - 1) ? 0 : player.getSeat() + 1;
-            east = gameState.getPlayers().Values.ElementAt(eastSeat);
-            west = gameState.getPlayers().Values.ElementAt(westSeat);
-            foreach (Player p in gameState.getPlayers().Values)
+            int westSeat = (player.getSeat() - 1 < 0) ? Game1.client.getState().getPlayers().Count - 1 : player.getSeat() - 1;
+            int eastSeat = (player.getSeat() + 1 > Game1.client.getState().getPlayers().Count - 1) ? 0 : player.getSeat() + 1;
+            east = Game1.client.getState().getPlayers().Values.ElementAt(eastSeat);
+            west = Game1.client.getState().getPlayers().Values.ElementAt(westSeat);
+            foreach (Player p in Game1.client.getState().getPlayers().Values)
             {
                 Visual conflict = new Visual(new Vector2(Game1.WIDTH - MARGIN - 60, MARGIN * 2 + 75), 60, 60, "0", "Font1", null, Color.White, "conflict");
                 conflict.setLeftMargin(19);
@@ -98,7 +98,7 @@ namespace _7Wonders
                 Visual stages = new Visual(new Vector2(Game1.WIDTH - 100, Game1.HEIGHT - 150), 100, 100, "stage13").setVisible(false);
                 Game1.wonders[p.getBoard().getName()].setPosition(new Vector2(5 + SEC1WIDTH, 5 + SEC1HEIGHT)).setWidth(WONDERWIDTH * 2 + 10).setHeight(WONDERHEIGHT * 2).setTexture(p.getBoard().getImageName());
                 seatVisuals.Add(p.getSeat(), new Dictionary<string, Visual>(){{"wonder", Game1.wonders[p.getBoard().getName()]}, {"conflict", conflict}, {"stages", stages}});
-                baseVisuals.Add("player" + p.getSeat(), new Visual(new Vector2(MARGIN, MARGIN * 2 + (MARGIN + LABELHEIGHT) * (p.getSeat() + 1)), DROPDOWNWIDTH, LABELHEIGHT, (p.getSeat()+1)+"|"+p.getName(), "Font1", Color.White, (p.getSeat() == player.getSeat()) ? Color.Orange : Color.Gray, "grayback"));
+                baseVisuals.Add("player" + p.getSeat(), new Visual(new Vector2(MARGIN, MARGIN * 2 + (MARGIN + LABELHEIGHT) * (p.getSeat() + 1)), DROPDOWNWIDTH, LABELHEIGHT, p.getName(), "Font1", Color.White, (p.getSeat() == player.getSeat()) ? Color.Orange : Color.Gray, "grayback"));
                 baseVisuals.Add("status" + p.getSeat(), new Visual(new Vector2(MARGIN + LABELWIDTH, MARGIN * 2 + (MARGIN + LABELHEIGHT) * (p.getSeat() + 1)), LABELWIDTH, LABELHEIGHT, "blank"));
                 baseVisuals.Add("gear" + p.getSeat(), new Visual(new Vector2(MARGIN + LABELWIDTH + (LABELWIDTH * 1 / 24), MARGIN * 2 + (MARGIN + LABELHEIGHT) * (p.getSeat() + 1)), p.getScoreNum(Score.GEAR).ToString(), "Font1"));
                 baseVisuals.Add("tablet" + p.getSeat(), new Visual(new Vector2(MARGIN + LABELWIDTH + (LABELWIDTH * 5 / 24), MARGIN * 2 + (MARGIN + LABELHEIGHT) * (p.getSeat() + 1)), p.getScoreNum(Score.TABLET).ToString(), "Font1"));
@@ -136,12 +136,16 @@ namespace _7Wonders
             }
             hand.Add("papermiddle", new Visual(new Vector2(MARGIN + 30 + (CARDWIDTH / 2 + MARGIN) * (7 - player.getHand().Count) + 1, 190), Game1.WIDTH - (MARGIN + 30 + (CARDWIDTH / 2 + MARGIN) * (7 - player.getHand().Count)), CARDHEIGHT + 25, "papermiddle"));
 
+            //updatePlayed();
             updateHands();
             updateScroll();
+            //updatePlayers();
+            Game1.client.setHandChecked();
+            Game1.client.setPlayerChecked();
 
             baseVisuals.Add("Scorehead", new Visual(new Vector2(Game1.WIDTH / 4, Game1.HEIGHT / 4), Game1.WIDTH / 2, 50, "scorehead").setVisible(false));
             int n = 1;
-            foreach (Player p in gameState.getPlayers().Values)
+            foreach (Player p in Game1.client.getState().getPlayers().Values)
             {
                 baseVisuals.Add("name"+p.getSeat(), new Visual(new Vector2(Game1.WIDTH / 4, Game1.HEIGHT / 4 + 40 * n), (int)(Game1.WIDTH / 2 * 0.296f), 40, p.getName(), "Font1", null, null, "line").setVisible(false));
                 baseVisuals.Add("score" + p.getSeat(), new Visual(new Vector2(Game1.WIDTH / 4 + (int)(Game1.WIDTH / 2 * 0.296f) , Game1.HEIGHT / 4 + 40 * n), SCOREWIDTH * 7, 40, "Score Stuff....", "Font1", null, null, "line").setVisible(false));
@@ -480,7 +484,7 @@ namespace _7Wonders
         {
             if (!init)
             {
-                Initialize(gameState);
+                Initialize();
                 init = true;
             }
             if (code==0)

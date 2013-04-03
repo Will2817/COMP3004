@@ -12,52 +12,56 @@ using Microsoft.Xna.Framework.Media;
 
 namespace _7Wonders
 {
-    class DropDown : CompositeVisual
+    class DropDown : Visual
     {
-        protected Dictionary<string,Button> buttons;
-        protected TextureVisual selected;
-        protected TextVisual selectText;
+        protected Dictionary<string,Visual> strings;
         protected Button dropButton;
         protected bool isDown = false;
         protected bool dropRequest = false;
 
-        public DropDown(Vector2 _pos, int _w, int _h, List<string> _options, bool _enabled = true)
-            : base(_pos)
+        public DropDown(Vector2 _pos, int _w, int _h, List<string> _options, bool? _enabled = true)
+            : base(_pos, _w, _h, _options[0], "Font1", Color.White, Color.Gray, "grayback")
         {
-            enabled = _enabled;
-            buttons = new Dictionary<string, Button>();
-            selected = new TextureVisual(_pos, _w, _h, "grayback", Color.Gray);
-            selectText = new TextVisual(_pos, _options[0], "Font1", Color.White, 10, 7);
-
-            visuals.Add(selected);
-            visuals.Add(selectText);
-
+            enabled = (_enabled.HasValue) ? _enabled.Value : true;
+            strings = new Dictionary<string, Visual>();
             int count=1;
             foreach (string s in _options)
             {
-                Button b;
-                buttons.Add(s, (b = new Button(_pos + new Vector2(0, count * _h), _w + 21, _h, s, "Font1", "grayback", true, Color.White, Color.Orange)));
-                buttons[s].setVisible(false);
-                visuals.Add(b);
+                strings.Add(s, (new Visual(position + new Vector2(0, count * height), width + 21, height, s, "Font1", Color.White, Color.Orange, "grayback")).setVisible(false));
                 count++;
             }
 
-            dropButton = new Button(_pos + new Vector2(_w + 1, 0), 20, _h, "", "Font1", "drop");
-            visuals.Add(dropButton);
+            dropButton = new Button(position + new Vector2(width + 1, 0), 20, height, "", "Font1", "drop");
+        }
+
+        public override void LoadContent()
+        {
+            foreach (Visual v in strings.Values)
+            {
+                v.LoadContent();
+            }
+            dropButton.LoadContent();
+            base.LoadContent();
         }
 
         public override void Update(GameTime gameTime, MouseState mState)
         {
             if (!visible||!enabled) return;
             base.Update(gameTime, mState);
+            dropButton.Update(gameTime, mState);
             
-            foreach (Button b in buttons.Values)
+            foreach (Visual v in strings.Values)
             {
-                if (b.isClicked())
+                v.Update(gameTime, mState);
+            }
+            
+            foreach (Visual v in strings.Values)
+            {
+                if (v.isClicked())
                 {
-                    selectText.setText(b.getText());
+                    text = v.getString();
                     drop();
-                    b.reset();
+                    v.reset();
                 }
             }
         }
@@ -65,11 +69,10 @@ namespace _7Wonders
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             if (!visible) return;
-            selected.Draw(gameTime, spriteBatch);
-            selectText.Draw(gameTime, spriteBatch);
+            base.Draw(gameTime, spriteBatch);
             if (!enabled) return;
             dropButton.Draw(gameTime, spriteBatch);            
-            foreach (Visual v in buttons.Values)
+            foreach (Visual v in strings.Values)
             {
                 v.Draw(gameTime, spriteBatch);
             }
@@ -77,12 +80,12 @@ namespace _7Wonders
 
         public string getSelected()
         {
-            return selectText.getText();
+            return text;
         }
 
         public DropDown setSelected(string _text)
         {
-            selectText.setText(_text);
+            text = _text;
             return this;
         }
 
@@ -104,24 +107,12 @@ namespace _7Wonders
 
         public void drop()
         {
-            foreach (Visual v in buttons.Values)
+            foreach (Visual v in strings.Values)
             {
                 if (!isDown) v.setVisible(true);
                 else v.setVisible(false);
             }
             isDown = !isDown;
-        }
-
-        public override Visual setEnabled(bool _enable)
-        {
-            enabled = _enable;
-            return base.setEnabled(_enable);
-        }
-
-        public override Visual setVisible(bool _visible)
-        {
-            visible = _visible;
-            return base.setVisible(_visible);
         }
     }
 }
