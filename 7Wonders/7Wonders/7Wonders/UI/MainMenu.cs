@@ -50,21 +50,21 @@ namespace _7Wonders
             visuals1.Add("HGame", HGame);
             visuals1.Add("JGame", JGame);
 
-            visuals2.Add("DBox", new Visual(new Vector2(Game1.WIDTH / 2 - 150, Game1.HEIGHT/2 - 150), 300, 300, "line", Color.Silver));
-            visuals2.Add("Box1", new Visual(new Vector2(Game1.WIDTH / 2 - 100, Game1.HEIGHT/2 - 125), 200, 50, "line", Color.SlateGray));
-            visuals2.Add("String1", new Visual(new Vector2(Game1.WIDTH / 2 - 85, Game1.HEIGHT / 2 - 125), "Room Setup", "Font1", Color.White));
-            visuals2.Add("Box2", new Visual(new Vector2(Game1.WIDTH / 2 - 100, Game1.HEIGHT / 2 - 50), 150, 50, "line", Color.SlateGray));
-            visuals2.Add("String2", new Visual(new Vector2(Game1.WIDTH / 2 - 95, Game1.HEIGHT / 2 - 50), "Assign boards", "Font1", Color.White));
+            visuals2.Add("DBox", new TextureVisual(new Vector2(Game1.WIDTH / 2 - 150, Game1.HEIGHT/2 - 150), 300, 300, "line", Color.Silver));
+            visuals2.Add("Box1", new TextureVisual(new Vector2(Game1.WIDTH / 2 - 100, Game1.HEIGHT/2 - 125), 200, 50, "line", Color.SlateGray));
+            visuals2.Add("String1", new TextVisual(new Vector2(Game1.WIDTH / 2 - 85, Game1.HEIGHT / 2 - 125), "Room Setup", "Font1", Color.White));
+            visuals2.Add("Box2", new TextureVisual(new Vector2(Game1.WIDTH / 2 - 100, Game1.HEIGHT / 2 - 50), 150, 50, "line", Color.SlateGray));
+            visuals2.Add("String2", new TextVisual(new Vector2(Game1.WIDTH / 2 - 95, Game1.HEIGHT / 2 - 50), "Assign boards", "Font1", Color.White));
             visuals2.Add("Check1", randomBox);
-            visuals2.Add("Box3", new Visual(new Vector2(Game1.WIDTH / 2 - 100, Game1.HEIGHT / 2 + 25), 150, 50, "line", Color.SlateGray));
-            visuals2.Add("String3", new Visual(new Vector2(Game1.WIDTH / 2 - 95, Game1.HEIGHT / 2 + 25), "Only Side A", "Font1", Color.White));
+            visuals2.Add("Box3", new TextureVisual(new Vector2(Game1.WIDTH / 2 - 100, Game1.HEIGHT / 2 + 25), 150, 50, "line", Color.SlateGray));
+            visuals2.Add("String3", new TextVisual(new Vector2(Game1.WIDTH / 2 - 95, Game1.HEIGHT / 2 + 25), "Only Side A", "Font1", Color.White));
             visuals2.Add("Check2", onlyABox);
             visuals2.Add("CRoom", CRoom);
             visuals2.Add("backButton", backButton);
 
-            connectDia.Add("connectBox", new Visual(new Vector2(Game1.WIDTH / 2 - 150, Game1.HEIGHT / 2 - 75), 300, 125, "line", Color.Silver));
-            connectDia.Add("Box", new Visual(new Vector2(Game1.WIDTH / 2 - 100, Game1.HEIGHT / 2 - 70), 225, 50, "line", Color.SlateGray));
-            connectDia.Add("message", new Visual(new Vector2(Game1.WIDTH / 2 - 90, Game1.HEIGHT / 2 - 65), "", "Font1", Color.White));
+            connectDia.Add("connectBox", new TextureVisual(new Vector2(Game1.WIDTH / 2 - 150, Game1.HEIGHT / 2 - 75), 300, 125, "line", Color.Silver));
+            connectDia.Add("Box", new TextureVisual(new Vector2(Game1.WIDTH / 2 - 100, Game1.HEIGHT / 2 - 70), 225, 50, "line", Color.SlateGray));
+            connectDia.Add("message", new TextVisual(new Vector2(Game1.WIDTH / 2 - 90, Game1.HEIGHT / 2 - 65), "", "Font1", Color.White));
             OK = new Button(new Vector2(Game1.WIDTH / 2 - 60, Game1.HEIGHT / 2 - 10), 120, 50, "Okay", "Font1");
             connectDia.Add("ok", OK);
 

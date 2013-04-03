@@ -12,7 +12,7 @@ using Microsoft.Xna.Framework.Media;
 
 namespace _7Wonders
 {
-    class Checkbox : Visual
+    class Checkbox : TextureVisual
     {
         protected bool selected = false;
         protected bool changed = false;
@@ -41,13 +41,6 @@ namespace _7Wonders
                 swapColours();
                 reset();
             }
-        }
-
-        public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
-        {
-            if (!visible) return;
-            spriteBatch.Draw(texture, new Rectangle((int)position.X-1, (int)position.Y-1, width+2, height+2), new Color(0,0,0,opacity));
-            spriteBatch.Draw(texture, new Rectangle((int)position.X, (int)position.Y, width, height), textureColor);
         }
 
         public bool hasChanged() { return changed; }

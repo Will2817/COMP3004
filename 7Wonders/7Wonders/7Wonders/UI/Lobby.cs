@@ -17,14 +17,14 @@ namespace _7Wonders
         protected const int MARGIN = 5;
         protected const int CHECKBOXDIM = 15;
         protected const int DIVIDERWIDTH = 2;
-        protected int SEC1WIDTH = Game1.WIDTH / 3;
-        protected int WONDERHEIGHT = (Game1.HEIGHT - 10) / 6;
-        protected int WONDERWIDTH = Game1.WIDTH / 3 - 10;
-        protected int SEC1HEIGHT = Game1.HEIGHT * 2/3;
-        protected int DROPDOWNWIDTH = (int)((Game1.WIDTH / 3) * 0.70f);
-        protected int DROPDOWNHEIGHT = (Game1.HEIGHT/2 - (Game1.MAXPLAYER + 1) * MARGIN) / Game1.MAXPLAYER - (int)((Game1.HEIGHT - 600) * 0.04375f);        
+        protected readonly int SEC1WIDTH = Game1.WIDTH / 3;
+        protected readonly int WONDERHEIGHT = (Game1.HEIGHT - 10) / 6;
+        protected readonly int WONDERWIDTH = Game1.WIDTH / 3 - 10;
+        protected readonly int SEC1HEIGHT = Game1.HEIGHT * 2 / 3;
+        protected readonly int DROPDOWNWIDTH = (int)((Game1.WIDTH / 3) * 0.70f);
+        protected readonly int DROPDOWNHEIGHT = (Game1.HEIGHT / 2 - (Game1.MAXPLAYER + 1) * MARGIN) / Game1.MAXPLAYER - (int)((Game1.HEIGHT - 600) * 0.04375f);
 
-        protected Dictionary<String, Visual> visuals1;
+        protected Dictionary<String, TextureVisual> visuals1;
         protected List<Checkbox> readyCBs;
         protected Dictionary<String, Visual> wonders;
         protected List<string> playerTypes;
@@ -57,11 +57,11 @@ namespace _7Wonders
 
             wonders = new Dictionary<String, Visual>();
 
-            visuals1 = new Dictionary<String, Visual>();
-            visuals1.Add("Divider1", new Visual(new Vector2(SEC1WIDTH - 1, 0), DIVIDERWIDTH, Game1.HEIGHT, "line", Color.Silver));
-            visuals1.Add("Divider2", new Visual(new Vector2(0, SEC1HEIGHT - 1), Game1.WIDTH, DIVIDERWIDTH, "line", Color.Silver));
-            visuals1.Add("label1", new Visual(new Vector2(MARGIN, MARGIN), DROPDOWNWIDTH, DROPDOWNHEIGHT, "Players", "Font1", Color.White, Color.DarkOrange, "grayback"));
-            visuals1.Add("label2", new Visual(new Vector2(MARGIN * 2 + DROPDOWNWIDTH, MARGIN), SEC1WIDTH - DROPDOWNWIDTH - MARGIN * 3, DROPDOWNHEIGHT, "Ready", "Font1", Color.White, Color.DarkOrange, "grayback"));
+            visuals1 = new Dictionary<String, TextureVisual>();
+            visuals1.Add("Divider1", new TextureVisual(new Vector2(SEC1WIDTH - 1, 0), DIVIDERWIDTH, Game1.HEIGHT, "line", Color.Silver));
+            visuals1.Add("Divider2", new TextureVisual(new Vector2(0, SEC1HEIGHT - 1), Game1.WIDTH, DIVIDERWIDTH, "line", Color.Silver));
+            visuals1.Add("label1", new TextPlusVisual(new Vector2(MARGIN, MARGIN), DROPDOWNWIDTH, DROPDOWNHEIGHT, "Players", "Font1", "grayback", Color.White, Color.DarkOrange));
+            visuals1.Add("label2", new TextPlusVisual(new Vector2(MARGIN * 2 + DROPDOWNWIDTH, MARGIN), SEC1WIDTH - DROPDOWNWIDTH - MARGIN * 3, DROPDOWNHEIGHT, "Ready", "Font1", "grayback", Color.White, Color.DarkOrange));
 
 
             dropDowns = new List<DropDown>();
@@ -85,7 +85,7 @@ namespace _7Wonders
             int count = 0;
             int count2 = 1;
             //need to work on this so that it adapts better to number of wonders
-            foreach (KeyValuePair<string, Visual> kvp in Game1.wonders)
+            foreach (KeyValuePair<string, TextureVisual> kvp in Game1.wonders)
             {
                 kvp.Value.setPosition(new Vector2(5 + SEC1WIDTH * count2, 5 + WONDERHEIGHT * count)).setWidth(WONDERWIDTH).setHeight(WONDERHEIGHT);
                 visuals1.Add(kvp.Key, kvp.Value);
@@ -99,7 +99,7 @@ namespace _7Wonders
                 
             }
 
-            visuals1.Add("selected", new Visual(new Vector2(5 + SEC1WIDTH, 5 + SEC1HEIGHT), WONDERWIDTH * 2 + 10, WONDERHEIGHT * 2, Game1.wonders.Values.First().getTexture()));
+            visuals1.Add("selected", new TextureVisual(new Vector2(5 + SEC1WIDTH, 5 + SEC1HEIGHT), WONDERWIDTH * 2 + 10, WONDERHEIGHT * 2, Game1.wonders.Values.First().getTexture()));
             visuals1.Add("toggleButton", sideButton);
             visuals1.Add("backButton", backButton);
             activeVisuals = visuals1;
@@ -120,7 +120,7 @@ namespace _7Wonders
             if (sideButton.isClicked())
             {
                 viewSideB = !viewSideB;
-                foreach (KeyValuePair<string, Visual> kvp in Game1.wonders)
+                foreach (KeyValuePair<string, TextureVisual> kvp in Game1.wonders)
                 {
                     if (viewSideB)
                         kvp.Value.setTexture(kvp.Key + "_B");

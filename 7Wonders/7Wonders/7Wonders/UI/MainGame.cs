@@ -36,19 +36,19 @@ namespace _7Wonders
 
         private TradeInterface trade;
 
-        protected Dictionary<int, Dictionary<string, Visual>> seatVisuals;
-        protected Dictionary<string, Visual> baseVisuals;
-        protected SortedDictionary<string, Visual> hand;
-        protected bool showhand = false;
-        protected int seatViewed = 0;
-        protected Player player;
-        protected Player east;
-        protected Player west;
-        protected Visual wonder;
-        protected Button leftButton;
-        protected bool showTrade = false;
-        protected bool showScore = false;
-        protected bool init = false;
+        private Dictionary<int, Dictionary<string, Visual>> seatVisuals;
+        private Dictionary<string, Visual> baseVisuals;
+        private SortedDictionary<string, TextureVisual> hand;
+        private bool showhand = false;
+        private int seatViewed = 0;
+        private Player player;
+        private Player east;
+        private Player west;
+        private Visual wonder;
+        private Button leftButton;
+        private bool showTrade = false;
+        private bool showScore = false;
+        private bool init = false;
 
         protected MouseState mousestate;
 
@@ -62,70 +62,65 @@ namespace _7Wonders
             RESOURCELENGTH = (SEC1WIDTH - 2 * MARGIN) * 4 / 5;
             player = null;
             wonder = null;
-            hand = new SortedDictionary<string, Visual>();
+            hand = new SortedDictionary<string, TextureVisual>();
             leftButton = new Button(new Vector2(Game1.WIDTH - 27, 200 + CARDHEIGHT / 2 - 7), 15, 15, "", "Font1", "left");
             leftButton.z = 1;
-            hand.Add("paperleft", new Visual(new Vector2(Game1.WIDTH - 27, 190), 30, CARDHEIGHT + 30, "paperleft"));
+            hand.Add("paperleft", new TextureVisual(new Vector2(Game1.WIDTH - 27, 190), 30, CARDHEIGHT + 30, "paperleft"));
             hand.Add("leftButton", leftButton.setBorder(false));
 
             seatVisuals = new Dictionary<int, Dictionary<string, Visual>>();
             baseVisuals = new Dictionary<String, Visual>();
-            baseVisuals.Add("Label1", new Visual(new Vector2(MARGIN, MARGIN), LABELWIDTH, LABELHEIGHT, "Players", "Font1", null, Color.Gray, "grayback"));
-            baseVisuals.Add("Label2", new Visual(new Vector2(MARGIN + LABELWIDTH, MARGIN), LABELWIDTH, LABELHEIGHT, "icons"));
-            baseVisuals.Add("Divider1", new Visual(new Vector2(SEC1WIDTH - 1, 0), DIVIDERWIDTH, Game1.HEIGHT, "line", Color.Silver));
-            baseVisuals.Add("Divider2", new Visual(new Vector2(0, SEC1HEIGHT - 1), Game1.WIDTH, DIVIDERWIDTH, "line", Color.Silver));
-            baseVisuals.Add("Age", new Visual(new Vector2(Game1.WIDTH - MARGIN - 75, MARGIN), 75, 75, "age1"));
-            baseVisuals.Add("discard", new Visual(new Vector2(Game1.WIDTH - MARGIN - 60, MARGIN * 3 + 120), 60, 60, "0", "Font1", null, Color.White, "deck"));
-            baseVisuals["discard"].setLeftMargin(15);
-            baseVisuals["discard"].setTopMargin(9);
-
+            baseVisuals.Add("Label1", new TextPlusVisual(new Vector2(MARGIN, MARGIN), LABELWIDTH, LABELHEIGHT, "Players", "Font1", "grayback", null, Color.Gray));
+            baseVisuals.Add("Label2", new TextureVisual(new Vector2(MARGIN + LABELWIDTH, MARGIN), LABELWIDTH, LABELHEIGHT, "icons"));
+            baseVisuals.Add("Divider1", new TextureVisual(new Vector2(SEC1WIDTH - 1, 0), DIVIDERWIDTH, Game1.HEIGHT, "line", Color.Silver));
+            baseVisuals.Add("Divider2", new TextureVisual(new Vector2(0, SEC1HEIGHT - 1), Game1.WIDTH, DIVIDERWIDTH, "line", Color.Silver));
+            baseVisuals.Add("Age", new TextureVisual(new Vector2(Game1.WIDTH - MARGIN - 75, MARGIN), 75, 75, "age1"));
+            baseVisuals.Add("discard", new TextPlusVisual(new Vector2(Game1.WIDTH - MARGIN - 60, MARGIN * 3 + 120), 60, 60, "0", "Font1", "deck", null, Color.White).setLeftMargin(15).setTopMargin(9));
         }
 
-        private void Initialize()
+        private void Initialize(GameState gameState)
         {
             trade = new TradeInterface();
             player = Game1.client.getSelf();
-            int westSeat = (player.getSeat() - 1 < 0) ? Game1.client.getState().getPlayers().Count - 1 : player.getSeat() - 1;
-            int eastSeat = (player.getSeat() + 1 > Game1.client.getState().getPlayers().Count - 1) ? 0 : player.getSeat() + 1;
-            east = Game1.client.getState().getPlayers().Values.ElementAt(eastSeat);
-            west = Game1.client.getState().getPlayers().Values.ElementAt(westSeat);
-            foreach (Player p in Game1.client.getState().getPlayers().Values)
+            int westSeat = (player.getSeat() - 1 < 0) ? gameState.getPlayers().Count - 1 : player.getSeat() - 1;
+            int eastSeat = (player.getSeat() + 1 > gameState.getPlayers().Count - 1) ? 0 : player.getSeat() + 1;
+            east = gameState.getPlayers().Values.ElementAt(eastSeat);
+            west = gameState.getPlayers().Values.ElementAt(westSeat);
+            foreach (Player p in gameState.getPlayers().Values)
             {
-                Visual conflict = new Visual(new Vector2(Game1.WIDTH - MARGIN - 60, MARGIN * 2 + 75), 60, 60, "0", "Font1", null, Color.White, "conflict");
-                conflict.setLeftMargin(19);
-                conflict.setTopMargin(20);
+                Visual conflict = new TextPlusVisual(new Vector2(Game1.WIDTH - MARGIN - 60, MARGIN * 2 + 75), 60, 60, "0", "Font1", "conflict", null, Color.White).setLeftMargin(19).setTopMargin(20);
                 conflict.LoadContent();//BAD HACKS
-                Visual stages = new Visual(new Vector2(Game1.WIDTH - 100, Game1.HEIGHT - 150), 100, 100, "stage13").setVisible(false);
+                Visual stages = new TextureVisual(new Vector2(Game1.WIDTH - 100, Game1.HEIGHT - 150), 100, 100, "stage13").setVisible(false);
                 Game1.wonders[p.getBoard().getName()].setPosition(new Vector2(5 + SEC1WIDTH, 5 + SEC1HEIGHT)).setWidth(WONDERWIDTH * 2 + 10).setHeight(WONDERHEIGHT * 2).setTexture(p.getBoard().getImageName());
                 seatVisuals.Add(p.getSeat(), new Dictionary<string, Visual>(){{"wonder", Game1.wonders[p.getBoard().getName()]}, {"conflict", conflict}, {"stages", stages}});
-                baseVisuals.Add("player" + p.getSeat(), new Visual(new Vector2(MARGIN, MARGIN * 2 + (MARGIN + LABELHEIGHT) * (p.getSeat() + 1)), DROPDOWNWIDTH, LABELHEIGHT, p.getName(), "Font1", Color.White, (p.getSeat() == player.getSeat()) ? Color.Orange : Color.Gray, "grayback"));
-                baseVisuals.Add("status" + p.getSeat(), new Visual(new Vector2(MARGIN + LABELWIDTH, MARGIN * 2 + (MARGIN + LABELHEIGHT) * (p.getSeat() + 1)), LABELWIDTH, LABELHEIGHT, "blank"));
-                baseVisuals.Add("gear" + p.getSeat(), new Visual(new Vector2(MARGIN + LABELWIDTH + (LABELWIDTH * 1 / 24), MARGIN * 2 + (MARGIN + LABELHEIGHT) * (p.getSeat() + 1)), p.getScoreNum(Score.GEAR).ToString(), "Font1"));
-                baseVisuals.Add("tablet" + p.getSeat(), new Visual(new Vector2(MARGIN + LABELWIDTH + (LABELWIDTH * 5 / 24), MARGIN * 2 + (MARGIN + LABELHEIGHT) * (p.getSeat() + 1)), p.getScoreNum(Score.TABLET).ToString(), "Font1"));
-                baseVisuals.Add("compas" + p.getSeat(), new Visual(new Vector2(MARGIN + LABELWIDTH + (LABELWIDTH * 9 / 24), MARGIN * 2 + (MARGIN + LABELHEIGHT) * (p.getSeat() + 1)), p.getScoreNum(Score.COMPASS).ToString(), "Font1"));
-                baseVisuals.Add("victory" + p.getSeat(), new Visual(new Vector2(MARGIN + LABELWIDTH + (LABELWIDTH * 13 / 24), MARGIN * 2 + (MARGIN + LABELHEIGHT) * (p.getSeat() + 1)), p.getScoreNum(Score.VICTORY_BLUE).ToString(), "Font1"));
-                baseVisuals.Add("army" + p.getSeat(), new Visual(new Vector2(MARGIN + LABELWIDTH + (LABELWIDTH * 19 / 24), MARGIN * 2 + (MARGIN + LABELHEIGHT) * (p.getSeat() + 1)), p.getScoreNum(Score.ARMY).ToString(), "Font1"));
+                baseVisuals.Add("player" + p.getSeat(), new TextPlusVisual(new Vector2(MARGIN, MARGIN * 2 + (MARGIN + LABELHEIGHT) * (p.getSeat() + 1)), DROPDOWNWIDTH, LABELHEIGHT, (p.getSeat() + 1) + "|" + p.getName(), "Font1", "grayback", Color.White, (p.getSeat() == player.getSeat()) ? Color.Orange : Color.Gray));
+                baseVisuals.Add("status" + p.getSeat(), new TextureVisual(new Vector2(MARGIN + LABELWIDTH, MARGIN * 2 + (MARGIN + LABELHEIGHT) * (p.getSeat() + 1)), LABELWIDTH, LABELHEIGHT, "blank"));
+                baseVisuals.Add("gear" + p.getSeat(), new TextVisual(new Vector2(MARGIN + LABELWIDTH + (LABELWIDTH * 1 / 24), MARGIN * 2 + (MARGIN + LABELHEIGHT) * (p.getSeat() + 1)), p.getScoreNum(Score.GEAR).ToString(), "Font1"));
+                baseVisuals.Add("tablet" + p.getSeat(), new TextVisual(new Vector2(MARGIN + LABELWIDTH + (LABELWIDTH * 5 / 24), MARGIN * 2 + (MARGIN + LABELHEIGHT) * (p.getSeat() + 1)), p.getScoreNum(Score.TABLET).ToString(), "Font1"));
+                baseVisuals.Add("compas" + p.getSeat(), new TextVisual(new Vector2(MARGIN + LABELWIDTH + (LABELWIDTH * 9 / 24), MARGIN * 2 + (MARGIN + LABELHEIGHT) * (p.getSeat() + 1)), p.getScoreNum(Score.COMPASS).ToString(), "Font1"));
+                baseVisuals.Add("victory" + p.getSeat(), new TextVisual(new Vector2(MARGIN + LABELWIDTH + (LABELWIDTH * 13 / 24), MARGIN * 2 + (MARGIN + LABELHEIGHT) * (p.getSeat() + 1)), p.getScoreNum(Score.VICTORY_BLUE).ToString(), "Font1"));
+                baseVisuals.Add("army" + p.getSeat(), new TextVisual(new Vector2(MARGIN + LABELWIDTH + (LABELWIDTH * 19 / 24), MARGIN * 2 + (MARGIN + LABELHEIGHT) * (p.getSeat() + 1)), p.getScoreNum(Score.ARMY).ToString(), "Font1"));
             }
 
             int LABELLENGTH = (SEC1WIDTH - 2 * MARGIN) / 5;
             int RESOURCELENGTH = (SEC1WIDTH - 2 * MARGIN) * 4 / 5;
-            baseVisuals.Add("resources", new Visual(new Vector2(LABELLENGTH + MARGIN, SEC1HEIGHT + MARGIN * 2), RESOURCELENGTH, LABELHEIGHT, "resourceBar"));
-            baseVisuals.Add("west", new Visual(new Vector2(MARGIN, SEC1HEIGHT + LABELHEIGHT + MARGIN * 3), LABELLENGTH, LABELHEIGHT, "West", "Font1", null, null, "grayback"));
-            baseVisuals.Add("east", new Visual(new Vector2(MARGIN, SEC1HEIGHT + LABELHEIGHT * 2 + MARGIN * 4), LABELLENGTH, LABELHEIGHT, "East", "Font1", null, null, "grayback"));
-            baseVisuals.Add("self", new Visual(new Vector2(MARGIN, Game1.HEIGHT - (MARGIN + LABELHEIGHT)), LABELLENGTH, LABELHEIGHT, "Self", "Font1", null, null, "grayback"));
-            baseVisuals.Add("westresources", new Visual(new Vector2(LABELLENGTH + MARGIN, SEC1HEIGHT + LABELHEIGHT + MARGIN * 3), RESOURCELENGTH, LABELHEIGHT, "emptyResourceBar"));
-            baseVisuals.Add("eastresources", new Visual(new Vector2(LABELLENGTH + MARGIN, SEC1HEIGHT + LABELHEIGHT * 2 + MARGIN * 4), RESOURCELENGTH, LABELHEIGHT, "emptyResourceBar"));
-            baseVisuals.Add("selfresources", new Visual(new Vector2(LABELLENGTH + MARGIN, Game1.HEIGHT - (MARGIN + LABELHEIGHT)), RESOURCELENGTH, LABELHEIGHT, "emptyResourceBar"));
+            baseVisuals.Add("resources", new TextureVisual(new Vector2(LABELLENGTH + MARGIN, SEC1HEIGHT + MARGIN * 2), RESOURCELENGTH, LABELHEIGHT, "resourceBar"));
+            baseVisuals.Add("west", new TextPlusVisual(new Vector2(MARGIN, SEC1HEIGHT + LABELHEIGHT + MARGIN * 3), LABELLENGTH, LABELHEIGHT, "West", "Font1", "grayback"));
+            baseVisuals.Add("east", new TextPlusVisual(new Vector2(MARGIN, SEC1HEIGHT + LABELHEIGHT * 2 + MARGIN * 4), LABELLENGTH, LABELHEIGHT, "East", "Font1", "grayback"));
+            baseVisuals.Add("self", new TextPlusVisual(new Vector2(MARGIN, Game1.HEIGHT - (MARGIN + LABELHEIGHT)), LABELLENGTH, LABELHEIGHT, "Self", "Font1", "grayback"));
+            baseVisuals.Add("westresources", new TextureVisual(new Vector2(LABELLENGTH + MARGIN, SEC1HEIGHT + LABELHEIGHT + MARGIN * 3), RESOURCELENGTH, LABELHEIGHT, "emptyResourceBar"));
+            baseVisuals.Add("eastresources", new TextureVisual(new Vector2(LABELLENGTH + MARGIN, SEC1HEIGHT + LABELHEIGHT * 2 + MARGIN * 4), RESOURCELENGTH, LABELHEIGHT, "emptyResourceBar"));
+            baseVisuals.Add("selfresources", new TextureVisual(new Vector2(LABELLENGTH + MARGIN, Game1.HEIGHT - (MARGIN + LABELHEIGHT)), RESOURCELENGTH, LABELHEIGHT, "emptyResourceBar"));
 
             int RESOURCEHEIGHT = SEC1HEIGHT + LABELHEIGHT + MARGIN * 3;
 
             for (int i = 0; i < NUMRESOURCES; i++)
             {
-                baseVisuals.Add("west" + i, new Visual(new Vector2(LABELLENGTH + MARGIN + RESOURCELENGTH * i / 8 + 5, RESOURCEHEIGHT), west.getResourceNum((Resource)i) + "", "Font1"));
+                baseVisuals.Add("west" + i, new TextVisual(new Vector2(LABELLENGTH + MARGIN + RESOURCELENGTH * i / 8 + 5, RESOURCEHEIGHT), west.getResourceNum((Resource)i) + "", "Font1"));
 
-                baseVisuals.Add("east" + i, new Visual(new Vector2(LABELLENGTH + MARGIN + RESOURCELENGTH * i / 8 + 5, RESOURCEHEIGHT + LABELHEIGHT + MARGIN), east.getResourceNum((Resource)i) + "", "Font1"));                
+                baseVisuals.Add("east" + i, new TextVisual(new Vector2(LABELLENGTH + MARGIN + RESOURCELENGTH * i / 8 + 5, RESOURCEHEIGHT + LABELHEIGHT + MARGIN), east.getResourceNum((Resource)i) + "", "Font1"));
 
-                baseVisuals.Add("self" + i, new Visual(new Vector2(LABELLENGTH + MARGIN + RESOURCELENGTH * i / 8 + 5, Game1.HEIGHT - (MARGIN + LABELHEIGHT)), player.getResourceNum((Resource)i) + "", "Font1"));
+                baseVisuals.Add("self" + i, new TextVisual(new Vector2(LABELLENGTH + MARGIN + RESOURCELENGTH * i / 8 + 5, Game1.HEIGHT - (MARGIN + LABELHEIGHT)), player.getResourceNum((Resource)i) + "", "Font1"));
 
                 if ((Resource)i == Resource.COIN)
                 {
@@ -134,22 +129,18 @@ namespace _7Wonders
                     baseVisuals["self" + i].setLeftMargin(-2);
                 }
             }
-            hand.Add("papermiddle", new Visual(new Vector2(MARGIN + 30 + (CARDWIDTH / 2 + MARGIN) * (7 - player.getHand().Count) + 1, 190), Game1.WIDTH - (MARGIN + 30 + (CARDWIDTH / 2 + MARGIN) * (7 - player.getHand().Count)), CARDHEIGHT + 25, "papermiddle"));
+            hand.Add("papermiddle", new TextureVisual(new Vector2(MARGIN + 30 + (CARDWIDTH / 2 + MARGIN) * (7 - player.getHand().Count) + 1, 190), Game1.WIDTH - (MARGIN + 30 + (CARDWIDTH / 2 + MARGIN) * (7 - player.getHand().Count)), CARDHEIGHT + 25, "papermiddle"));
 
-            //updatePlayed();
             updateHands();
             updateScroll();
-            //updatePlayers();
-            Game1.client.setHandChecked();
-            Game1.client.setPlayerChecked();
 
-            baseVisuals.Add("Scorehead", new Visual(new Vector2(Game1.WIDTH / 4, Game1.HEIGHT / 4), Game1.WIDTH / 2, 50, "scorehead").setVisible(false));
+            baseVisuals.Add("Scorehead", new TextureVisual(new Vector2(Game1.WIDTH / 4, Game1.HEIGHT / 4), Game1.WIDTH / 2, 50, "scorehead").setVisible(false));
             int n = 1;
-            foreach (Player p in Game1.client.getState().getPlayers().Values)
+            foreach (Player p in gameState.getPlayers().Values)
             {
-                baseVisuals.Add("name"+p.getSeat(), new Visual(new Vector2(Game1.WIDTH / 4, Game1.HEIGHT / 4 + 40 * n), (int)(Game1.WIDTH / 2 * 0.296f), 40, p.getName(), "Font1", null, null, "line").setVisible(false));
-                baseVisuals.Add("score" + p.getSeat(), new Visual(new Vector2(Game1.WIDTH / 4 + (int)(Game1.WIDTH / 2 * 0.296f) , Game1.HEIGHT / 4 + 40 * n), SCOREWIDTH * 7, 40, "Score Stuff....", "Font1", null, null, "line").setVisible(false));
-                baseVisuals.Add("sum" + p.getSeat(), new Visual(new Vector2(Game1.WIDTH / 4 + (int)(Game1.WIDTH / 2 * 0.296f) + SCOREWIDTH * 7, Game1.HEIGHT / 4 + 40 * n), 33, 40, p.getScoreNum(Score.VICTORY).ToString(), "Font1", null, null, "line").setVisible(false));
+                baseVisuals.Add("name" + p.getSeat(), new TextPlusVisual(new Vector2(Game1.WIDTH / 4, Game1.HEIGHT / 4 + 40 * n), (int)(Game1.WIDTH / 2 * 0.296f), 40, p.getName(), "Font1", "line").setVisible(false));
+                baseVisuals.Add("score" + p.getSeat(), new TextPlusVisual(new Vector2(Game1.WIDTH / 4 + (int)(Game1.WIDTH / 2 * 0.296f), Game1.HEIGHT / 4 + 40 * n), SCOREWIDTH * 7, 40, "Score Stuff....", "Font1", "line").setVisible(false));
+                baseVisuals.Add("sum" + p.getSeat(), new TextPlusVisual(new Vector2(Game1.WIDTH / 4 + (int)(Game1.WIDTH / 2 * 0.296f) + SCOREWIDTH * 7, Game1.HEIGHT / 4 + 40 * n), 33, 40, p.getScoreNum(Score.VICTORY).ToString(), "Font1", "line").setVisible(false));
                 n++;
             }
 
@@ -297,7 +288,7 @@ namespace _7Wonders
 	            foreach (KeyValuePair<string,Visual> kp in activeVisuals)
 	            {
                     if (kp.Key != "wonder" && kp.Key != "stages")
-	                    if (kp.Value.isMouseOver(mousestate)) kp.Value.Draw(gameTime, spriteBatch);
+	                    if (((TextureVisual) kp.Value).isMouseOver(mousestate)) kp.Value.Draw(gameTime, spriteBatch);
 	            }
             }
 
@@ -346,7 +337,7 @@ namespace _7Wonders
                 Game1.cards[c].setPosition(new Vector2(MARGIN + 40 + (CARDWIDTH + MARGIN * 2) * k + (CARDWIDTH / 2 + MARGIN) * (7 - player.getHand().Count), 205)).setWidth(CARDWIDTH).setHeight(CARDHEIGHT);
                 Game1.cards[c].z = 2;
                 hand.Add("hand" + k, Game1.cards[c]);
-                Visual v = new Visual(Game1.cards[c]).setRelativePosition(new Vector2(-1, -1)).setRelativeHeight(2).setRelativeWidth(2);
+                TextureVisual v = new TextureVisual(Game1.cards[c]).setRelativePosition(new Vector2(-1, -1)).setRelativeHeight(2).setRelativeWidth(2);
                 v.z = 3;
                 if (Game1.client.constructCost(c) == 0) v.setTexture("greenglow");
                 else if (Game1.client.constructCost(c) > 0) v.setTexture("goldglow");
@@ -484,7 +475,7 @@ namespace _7Wonders
         {
             if (!init)
             {
-                Initialize();
+                Initialize(gameState);
                 init = true;
             }
             if (code==0)

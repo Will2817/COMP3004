@@ -23,8 +23,8 @@ namespace _7Wonders
         public static Dictionary<String, Texture2D> textures;
         public static Dictionary<String, SpriteFont> fonts;
         public static Dictionary<String, Interface> interfaces;
-        public static Dictionary<String, Visual> wonders;
-        public static Dictionary<String, Visual> cards;
+        public static Dictionary<String, TextureVisual> wonders;
+        public static Dictionary<String, TextureVisual> cards;
 
         public static int MAXPLAYER = 7;
 
@@ -61,16 +61,16 @@ namespace _7Wonders
             client = new Client.Client();
 
             // Adding Wonders Visual
-            wonders = new Dictionary<String, Visual>();
+            wonders = new Dictionary<String, TextureVisual>();
             foreach (JObject j in (JArray)wondersJson["wonders"])
             {
-                wonders.Add((string)j["name"], new Visual(new Vector2(0, 0), 0, 0, (string)j["a"]["image"]));
+                wonders.Add((string)j["name"], new TextureVisual(new Vector2(0, 0), 0, 0, (string)j["a"]["image"]));
             }
 
-            cards = new Dictionary<string, Visual>();
+            cards = new Dictionary<string, TextureVisual>();
             foreach (JObject j in (JArray)cardsJson["cards"])
             {
-                cards.Add((string)j["name"] + "_" + j["age"] + "_" + j["players"], new Visual(new Vector2(0, 0), 0, 0, (string)j["name"] + "_" + j["age"] + "_" + j["players"]));
+                cards.Add((string)j["name"] + "_" + j["age"] + "_" + j["players"], new TextureVisual(new Vector2(0, 0), 0, 0, (string)j["name"] + "_" + j["age"] + "_" + j["players"]));
             }
 
             interfaces = new Dictionary<String, Interface>();

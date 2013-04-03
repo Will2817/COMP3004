@@ -25,11 +25,11 @@ namespace _7Wonders
         private Button back;
         private Button build;
 
-        private Visual card;
+        private TextureVisual card;
         private Dictionary<string, Visual> visuals1;
         private static Dictionary<string, Visual> trade;
         private static Dictionary<Resource, int> cost;
-        private static Dictionary<Visual, Resource> requirements;
+        private static Dictionary<TextureVisual, Resource> requirements;
         private static Dictionary<Resource, TradeHelper> westHelpers;
         private static Dictionary<Resource, TradeHelper> eastHelpers;
         private int cardSpot = 0;
@@ -65,12 +65,12 @@ namespace _7Wonders
 
             visuals1 = new Dictionary<string, Visual>();
             trade = new Dictionary<string, Visual>();
-            requirements = new Dictionary<Visual, Resource>();
+            requirements = new Dictionary<TextureVisual, Resource>();
             selfChoices = new List<TradeChoice>();
             eastChoices = new List<TradeChoice>();
             westChoices = new List<TradeChoice>();
 
-            card = new Visual(new Vector2(pos.X + MARGIN, pos.Y + MARGIN), CARDWIDTH, CARDHEIGHT, null);
+            card = new TextureVisual(new Vector2(pos.X + MARGIN, pos.Y + MARGIN), CARDWIDTH, CARDHEIGHT, null);
             buildCard = new Button(new Vector2(pos.X + width - 150, pos.Y + MARGIN + height * 0 / 4), 100, 50, "Card", "Font1");
             buildStage = new Button(new Vector2(pos.X + width - 150, pos.Y + MARGIN * 2 + height * 1 / 4), 100, 50, "Stage", "Font1");
             sellCard = new Button(new Vector2(pos.X + width - 150, pos.Y + MARGIN * 3 + height * 2 / 4), 100, 50, "Sell", "Font1");
@@ -85,21 +85,21 @@ namespace _7Wonders
             visuals1.Add("card", card);
             visuals1.Add("close", close);
 
-            trade.Add("discount", new Visual(new Vector2(pos.X + MARGIN * 2, pos.Y + MARGIN), "Requirements:", "Font1", Color.Black));
-            trade.Add("costborder", new Visual(new Vector2(pos.X + MARGIN - 1, pos.Y + MARGIN - 1), SECTIONWIDTH + 2, (int)(RSIZE * 2.5f) + 2, "border").setBorder(false));
-            trade.Add("label1", new Visual(new Vector2(pos.X + MARGIN * 2, pos.Y + (int)(RSIZE * 2.5) + MARGIN * 2), "West", "Font1", Color.Black));
-            trade.Add("border1", new Visual(new Vector2(pos.X + MARGIN - 1, pos.Y + (int)(RSIZE * 2.5) + MARGIN * 2 - 1), SECTIONWIDTH + 2, (int)(RSIZE * 1.5f) + 2, "border").setBorder(false));
-            trade.Add("label2", new Visual(new Vector2(pos.X + SECTIONWIDTH + MARGIN * 3, pos.Y + (int)(RSIZE * 2.5) + MARGIN * 2), "Self", "Font1", Color.Black));
-            trade.Add("border2", new Visual(new Vector2(pos.X + SECTIONWIDTH + MARGIN * 2 - 1, pos.Y + (int)(RSIZE * 2.5) + MARGIN * 2 - 1), SECTIONWIDTH + 2, (int)(RSIZE * 1.5f) + 2, "border").setBorder(false));
-            trade.Add("label3", new Visual(new Vector2(pos.X + (SECTIONWIDTH + MARGIN) * 2 + MARGIN * 2, pos.Y + (int)(RSIZE * 2.5) + MARGIN * 2), "East", "Font1", Color.Black));
-            trade.Add("border3", new Visual(new Vector2(pos.X + (SECTIONWIDTH + MARGIN) * 2 + MARGIN - 1, pos.Y + (int)(RSIZE * 2.5) + MARGIN * 2 - 1), SECTIONWIDTH + 2, (int)(RSIZE * 1.5f) + 2, "border").setBorder(false));
+            trade.Add("discount", new TextVisual(new Vector2(pos.X + MARGIN * 2, pos.Y + MARGIN), "Requirements:", "Font1", Color.Black));
+            trade.Add("costborder", new TextureVisual(new Vector2(pos.X + MARGIN - 1, pos.Y + MARGIN - 1), SECTIONWIDTH + 2, (int)(RSIZE * 2.5f) + 2, "border").setBorder(false));
+            trade.Add("label1", new TextVisual(new Vector2(pos.X + MARGIN * 2, pos.Y + (int)(RSIZE * 2.5) + MARGIN * 2), "West", "Font1", Color.Black));
+            trade.Add("border1", new TextureVisual(new Vector2(pos.X + MARGIN - 1, pos.Y + (int)(RSIZE * 2.5) + MARGIN * 2 - 1), SECTIONWIDTH + 2, (int)(RSIZE * 1.5f) + 2, "border").setBorder(false));
+            trade.Add("label2", new TextVisual(new Vector2(pos.X + SECTIONWIDTH + MARGIN * 3, pos.Y + (int)(RSIZE * 2.5) + MARGIN * 2), "Self", "Font1", Color.Black));
+            trade.Add("border2", new TextureVisual(new Vector2(pos.X + SECTIONWIDTH + MARGIN * 2 - 1, pos.Y + (int)(RSIZE * 2.5) + MARGIN * 2 - 1), SECTIONWIDTH + 2, (int)(RSIZE * 1.5f) + 2, "border").setBorder(false));
+            trade.Add("label3", new TextVisual(new Vector2(pos.X + (SECTIONWIDTH + MARGIN) * 2 + MARGIN * 2, pos.Y + (int)(RSIZE * 2.5) + MARGIN * 2), "East", "Font1", Color.Black));
+            trade.Add("border3", new TextureVisual(new Vector2(pos.X + (SECTIONWIDTH + MARGIN) * 2 + MARGIN - 1, pos.Y + (int)(RSIZE * 2.5) + MARGIN * 2 - 1), SECTIONWIDTH + 2, (int)(RSIZE * 1.5f) + 2, "border").setBorder(false));
 
-            trade.Add("border4", new Visual(new Vector2(pos.X + (SECTIONWIDTH + MARGIN) * 0 + MARGIN - 1, pos.Y + RSIZE * 4 + MARGIN * 3 - 1), SECTIONWIDTH + 2, RSIZE * 6 + 2, "border").setBorder(false));
-            trade.Add("border5", new Visual(new Vector2(pos.X + (SECTIONWIDTH + MARGIN) * 1 + MARGIN - 1, pos.Y + RSIZE * 4 + MARGIN * 3 - 1), SECTIONWIDTH + 2, RSIZE * 9 + 2, "border").setBorder(false));
-            trade.Add("border6", new Visual(new Vector2(pos.X + (SECTIONWIDTH + MARGIN) * 2 + MARGIN - 1, pos.Y + RSIZE * 4 + MARGIN * 3 - 1), SECTIONWIDTH + 2, RSIZE * 6 + 2, "border").setBorder(false));
+            trade.Add("border4", new TextureVisual(new Vector2(pos.X + (SECTIONWIDTH + MARGIN) * 0 + MARGIN - 1, pos.Y + RSIZE * 4 + MARGIN * 3 - 1), SECTIONWIDTH + 2, RSIZE * 6 + 2, "border").setBorder(false));
+            trade.Add("border5", new TextureVisual(new Vector2(pos.X + (SECTIONWIDTH + MARGIN) * 1 + MARGIN - 1, pos.Y + RSIZE * 4 + MARGIN * 3 - 1), SECTIONWIDTH + 2, RSIZE * 9 + 2, "border").setBorder(false));
+            trade.Add("border6", new TextureVisual(new Vector2(pos.X + (SECTIONWIDTH + MARGIN) * 2 + MARGIN - 1, pos.Y + RSIZE * 4 + MARGIN * 3 - 1), SECTIONWIDTH + 2, RSIZE * 6 + 2, "border").setBorder(false));
 
-            trade.Add("border7", new Visual(new Vector2(pos.X + (SECTIONWIDTH + MARGIN) * 0 + MARGIN - 1, pos.Y + RSIZE * 10 + MARGIN * 3 - 1), SECTIONWIDTH + 2, RSIZE * 3 + 2, "border").setBorder(false));
-            trade.Add("border8", new Visual(new Vector2(pos.X + (SECTIONWIDTH + MARGIN) * 2 + MARGIN - 1, pos.Y + RSIZE * 10 + MARGIN * 3 - 1), SECTIONWIDTH + 2, RSIZE * 3 + 2, "border").setBorder(false));
+            trade.Add("border7", new TextureVisual(new Vector2(pos.X + (SECTIONWIDTH + MARGIN) * 0 + MARGIN - 1, pos.Y + RSIZE * 10 + MARGIN * 3 - 1), SECTIONWIDTH + 2, RSIZE * 3 + 2, "border").setBorder(false));
+            trade.Add("border8", new TextureVisual(new Vector2(pos.X + (SECTIONWIDTH + MARGIN) * 2 + MARGIN - 1, pos.Y + RSIZE * 10 + MARGIN * 3 - 1), SECTIONWIDTH + 2, RSIZE * 3 + 2, "border").setBorder(false));
 
             westHelpers = new Dictionary<Resource, TradeHelper>();
             eastHelpers = new Dictionary<Resource, TradeHelper>();
@@ -115,19 +115,19 @@ namespace _7Wonders
             trade.Add("back", back);
             trade.Add("build", build);
 
-            trade.Add("rwest", new Visual(new Vector2(pos.X + width * 1 / 3 + MARGIN, pos.Y + MARGIN), 110, 45, "rwest"));
-            trade.Add("reast", new Visual(new Vector2(pos.X + width * 1 / 3 + MARGIN, pos.Y + MARGIN), 110, 45, "reast"));
-            trade.Add("rboth", new Visual(new Vector2(pos.X + width * 1 / 3 + MARGIN, pos.Y + MARGIN), 110, 45, "rboth"));
-            trade.Add("mboth", new Visual(new Vector2(pos.X + width * 2 / 3 + MARGIN * 2, pos.Y + MARGIN), 110, 45, "mboth"));
+            trade.Add("rwest", new TextureVisual(new Vector2(pos.X + width * 1 / 3 + MARGIN, pos.Y + MARGIN), 110, 45, "rwest"));
+            trade.Add("reast", new TextureVisual(new Vector2(pos.X + width * 1 / 3 + MARGIN, pos.Y + MARGIN), 110, 45, "reast"));
+            trade.Add("rboth", new TextureVisual(new Vector2(pos.X + width * 1 / 3 + MARGIN, pos.Y + MARGIN), 110, 45, "rboth"));
+            trade.Add("mboth", new TextureVisual(new Vector2(pos.X + width * 2 / 3 + MARGIN * 2, pos.Y + MARGIN), 110, 45, "mboth"));
 
-            trade.Add("westCoin", new Visual(new Vector2(pos.X + SECTIONWIDTH/3 + MARGIN - 1, pos.Y + (int)(RSIZE * 13) + MARGIN * 5 - 1), RSIZE * 2, RSIZE * 2, westCoin.ToString(), "Font1", Color.Black, Color.White, "coin", Game1.HEIGHT / 70).setBorder(false));
-            trade.Add("selfCoin", new Visual(new Vector2(pos.X + SECTIONWIDTH / 3 + (SECTIONWIDTH + MARGIN) * 1 + MARGIN - 1, pos.Y + (int)(RSIZE * 13) + MARGIN * 5 - 1), RSIZE * 2, RSIZE * 2, (self.getResourceNum(Resource.COIN) - westCoin - eastCoin).ToString(), "Font1", Color.Black, Color.White, "coin", Game1.HEIGHT / 70).setBorder(false));
-            trade.Add("eastCoin", new Visual(new Vector2(pos.X + SECTIONWIDTH / 3 + (SECTIONWIDTH + MARGIN) * 2 + MARGIN - 1, pos.Y + (int)(RSIZE * 13) + MARGIN * 5 - 1), RSIZE * 2, RSIZE * 2, eastCoin.ToString(), "Font1", Color.Black, Color.White, "coin", Game1.HEIGHT / 70).setBorder(false));            
+            trade.Add("westCoin", new TextPlusVisual(new Vector2(pos.X + SECTIONWIDTH / 3 + MARGIN - 1, pos.Y + (int)(RSIZE * 13) + MARGIN * 5 - 1), RSIZE * 2, RSIZE * 2, westCoin.ToString(), "Font1", "coin", Color.Black, Color.White, Game1.HEIGHT / 70, Game1.HEIGHT / 70).setBorder(false));
+            trade.Add("selfCoin", new TextPlusVisual(new Vector2(pos.X + SECTIONWIDTH / 3 + (SECTIONWIDTH + MARGIN) * 1 + MARGIN - 1, pos.Y + (int)(RSIZE * 13) + MARGIN * 5 - 1), RSIZE * 2, RSIZE * 2, (self.getResourceNum(Resource.COIN) - westCoin - eastCoin).ToString(), "Font1", "coin", Color.Black, Color.White, Game1.HEIGHT / 70, Game1.HEIGHT / 70).setBorder(false));
+            trade.Add("eastCoin", new TextPlusVisual(new Vector2(pos.X + SECTIONWIDTH / 3 + (SECTIONWIDTH + MARGIN) * 2 + MARGIN - 1, pos.Y + (int)(RSIZE * 13) + MARGIN * 5 - 1), RSIZE * 2, RSIZE * 2, eastCoin.ToString(), "Font1", "coin", Color.Black, Color.White, Game1.HEIGHT / 70, Game1.HEIGHT / 70).setBorder(false));            
 
 
             for (int i = 0; i < 7; i++)
             {
-                requirements.Add(new Visual(new Vector2(pos.X + MARGIN * 2 + RSIZE * i, pos.Y + MARGIN + 30), RSIZE, RSIZE, null).setVisible(false), Resource.CLAY);
+                requirements.Add(new TextureVisual(new Vector2(pos.X + MARGIN * 2 + RSIZE * i, pos.Y + MARGIN + 30), RSIZE, RSIZE, null).setVisible(false), Resource.CLAY);
             }
 
             activeVisuals = visuals1;
@@ -141,7 +141,7 @@ namespace _7Wonders
             foreach (Visual v in activeVisuals.Values)
                 v.setVisible(true);
 
-            cardCost = Game1.client.constructCost(image);
+            cardCost = ConstructionUtils.constructCost(self,west,east,CardLibrary.getCard(image).cost);
             stageCost = -1;
             
             int temp = 0;
@@ -360,7 +360,7 @@ namespace _7Wonders
             {
                 for (int j = 0; j < kp.Value; j++)
                 {
-                    Visual v = requirements.Keys.ElementAt(i).setTexture(kp.Key.ToString()).setVisible(true);
+                    TextureVisual v = requirements.Keys.ElementAt(i).setTexture(kp.Key.ToString()).setVisible(true);
                     requirements[v] = kp.Key;
                     i++;
                 }
@@ -420,7 +420,7 @@ namespace _7Wonders
             {
                 for (int j = 0; j < kp.Value; j++)
                 {
-                    Visual v = requirements.Keys.ElementAt(i).setTexture(kp.Key.ToString()).setVisible(true);
+                    TextureVisual v = requirements.Keys.ElementAt(i).setTexture(kp.Key.ToString()).setVisible(true);
                     requirements[v] = kp.Key;
                     i++;
                 }
@@ -484,7 +484,7 @@ namespace _7Wonders
         {
             private int max;
             private int num = 0;
-            private Visual resource;
+            private TextureVisual resource;
             private Button plus;
             private Button minus;
             private Visual total;
@@ -494,10 +494,10 @@ namespace _7Wonders
             {
                 r = _r;
                 max = _max;
-                resource = new Visual(position, RSIZE, RSIZE, _r.ToString()).setBorder(false);
+                resource = new TextureVisual(position, RSIZE, RSIZE, _r.ToString()).setBorder(false);
                 plus = new Button(position + new Vector2(RSIZE + MARGIN, 0), RSIZE, RSIZE, null, null, "plus", false);
                 minus = new Button(position + new Vector2((RSIZE + MARGIN) * 2, 0), RSIZE, RSIZE, null, null, "minus", false);
-                total = new Visual(position + new Vector2((RSIZE + MARGIN) * 3, 0), RSIZE, RSIZE, num.ToString(), "Font1", null, Color.Gray, "line", 0).setBorder(false);
+                total = new TextPlusVisual(position + new Vector2((RSIZE + MARGIN) * 3, 0), RSIZE, RSIZE, num.ToString(), "Font1", "line", null, Color.Gray, 0, 0).setBorder(false);
                 setVisible(false);
             }
 
@@ -595,14 +595,14 @@ namespace _7Wonders
 
         private class TradeChoice
         {
-            Dictionary<Resource, Visual> choices;
+            Dictionary<Resource, TextureVisual> choices;
             Visual glow;
             Resource selected = Resource.COIN;
             List<Visual> spliters;
 
             public TradeChoice(List<Resource> _choices, Vector2 position)
             {
-                choices = new Dictionary<Resource, Visual>();
+                choices = new Dictionary<Resource, TextureVisual>();
                 spliters = new List<Visual>();
 
                 int i = 0;
@@ -610,22 +610,22 @@ namespace _7Wonders
                 {
                     if (i > 0)
                     {
-                        Visual v = new Visual(position + new Vector2((RSIZE * 2 + MARGIN) * i - RSIZE, 0), RSIZE, RSIZE, "rsplit");
+                        Visual v = new TextureVisual(position + new Vector2((RSIZE * 2 + MARGIN) * i - RSIZE, 0), RSIZE, RSIZE, "rsplit");
                         v.LoadContent();
                         spliters.Add(v);
                     }
-                    choices.Add(r, new Visual(position + new Vector2((RSIZE * 2 + MARGIN) * i, 0), RSIZE, RSIZE, r.ToString()));
+                    choices.Add(r, new TextureVisual(position + new Vector2((RSIZE * 2 + MARGIN) * i, 0), RSIZE, RSIZE, r.ToString()));
                     choices[r].LoadContent();
                     i++;
                 }
-                glow = new Visual(position, RSIZE, RSIZE, "rglow");
+                glow = new TextureVisual(position, RSIZE, RSIZE, "rglow");
                 glow.LoadContent();
                 glow.setVisible(false);
             }
 
             public void Update(GameTime gameTime, MouseState mouseState)
             {
-                foreach (KeyValuePair<Resource, Visual> kp in choices)
+                foreach (KeyValuePair<Resource, TextureVisual> kp in choices)
                 {
                     kp.Value.Update(gameTime, mouseState);
 
