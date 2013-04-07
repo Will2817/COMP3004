@@ -27,7 +27,7 @@ namespace _7Wonders.Server
             {"Civilian AI", AIType.CIVILIAN},
             {"Commerce AI", AIType.COMMERCE} };
 
-        public AIPlayer(String type, long id, GameManager gameManager)
+        public AIPlayer(string type, long id, GameManager gameManager)
         {
             this.id = id;
             this.type = aiTypes[type];
