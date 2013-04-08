@@ -64,8 +64,7 @@ namespace _7Wonders.Game_Cards
 
         public void PrintEffect()
         {
-            if (type != null)
-                Console.WriteLine("\tType:\t" + type.ToString());
+            Console.WriteLine("\tType:\t" + type.ToString());
             // Because of type int?
             Console.WriteLine("\tAmount:\t" + amount);
 
@@ -78,15 +77,9 @@ namespace _7Wonders.Game_Cards
             else
                 Console.WriteLine("\tList:\t NULL");
 
-            if (from != null)
                 Console.WriteLine("\tFrom:\t" + from.ToString());
-            else
-                Console.WriteLine("\tFrom:\t NULL");
 
-            if (basis != null)
                 Console.WriteLine("\tBasis:\t" + basis.ToString());
-            else
-                Console.WriteLine("\tBasis:\t NULL\n");
 
         }
 
@@ -96,7 +89,8 @@ namespace _7Wonders.Game_Cards
             {
                 case "c": return TypeType.CLAY;
                 case "s": return TypeType.STONE;
-                case "w": return TypeType.ORE;
+                case "w": return TypeType.WOOD;
+                case "o": return TypeType.ORE;
                 case "g": return TypeType.GLASS;
                 case "p": return TypeType.PAPYRUS;
                 case "l": return TypeType.LOOM;

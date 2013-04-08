@@ -31,7 +31,7 @@ namespace _7Wonders.Client
             config = new NetPeerConfiguration(tag);
             config.EnableMessageType(NetIncomingMessageType.DiscoveryResponse);
             config.DisableMessageType(NetIncomingMessageType.DiscoveryRequest);
-            config.Port = clientport;
+            //config.Port = clientport;
             client = new NetClient(config);
             client.Start();
         }

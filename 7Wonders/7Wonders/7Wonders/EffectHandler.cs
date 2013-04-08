@@ -87,7 +87,7 @@ namespace _7Wonders
                         {
                             // FROM: NEIGHBORS
                             // and BASIS: CardColour, Wonderstages, Defeat
-                            if (e.from != null && e.from.Equals(Effect.FromType.NEIGHBOURS))
+                            if (e.from != Effect.FromType.NONE && e.from.Equals(Effect.FromType.NEIGHBOURS))
                             {
                                 // Apply victory points awarded for each
                                 // Wonderstage neigboring cities own

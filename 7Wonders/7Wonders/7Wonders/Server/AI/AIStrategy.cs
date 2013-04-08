@@ -7,8 +7,7 @@ namespace _7Wonders.Server.AI
 {
     public interface AIStrategy
     {
-        void initBuildPriorities();
-        void initHidePriorities();
+        void initPriorities(int players);
         Dictionary<string, ActionType> chooseActions();
         void chooseTrades();
     }
