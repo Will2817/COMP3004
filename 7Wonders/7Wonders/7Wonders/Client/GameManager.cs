@@ -38,61 +38,36 @@ namespace _7Wonders.Client
         public void updateLobby(string lobby)
         {
             gameState.lobbyFromJson(lobby);
-            if (observer != null) observer.stateUpdate(gameState, 1);
+            if (observer != null) observer.stateUpdate(gameState, UpdateType.PLAYER_UPDATE);
         }
 
         public void updatePlayers(string players)
         {
             gameState.playersFromJson(players);
-            if (observer != null) observer.stateUpdate(gameState, 1);
+            if (observer != null) observer.stateUpdate(gameState, UpdateType.PLAYER_UPDATE);
         }
 
         public void updateOptions(string options)
         {
             gameState.optionsFromJson(options);
-            if (observer != null) observer.stateUpdate(gameState, 1);
+            if (observer != null) observer.stateUpdate(gameState, UpdateType.PLAYER_UPDATE);
         }
 
         public void assignWonders(string json)
         {
             gameState.assignWonders(json);
-            if (observer != null) observer.stateUpdate(gameState, 1);
+            if (observer != null) observer.stateUpdate(gameState, UpdateType.PLAYER_UPDATE);
         }
 
         public void superUpdate(string json)
         {
             gameState.superParse(json);
-            if (observer != null) observer.stateUpdate(gameState, 1);
+            if (observer != null) observer.stateUpdate(gameState, UpdateType.PLAYER_UPDATE);
         }
 
         public GameState getGameState()
         {
             return gameState;
-        }
-
-        public bool isUpdateAvailable()
-        {
-            return playerUpdated || handUpdated;
-        }
-
-        public bool isHandUpdated()
-        {
-            return handUpdated;
-        }
-
-        public bool isPlayerUpdated()
-        {
-            return playerUpdated;
-        }
-
-        public void setHandChecked()
-        {
-            handUpdated = false;
-        }
-
-        public void setPlayerChecked()
-        {
-            playerUpdated = false;
         }
 
         public bool isConnected()
@@ -118,7 +93,7 @@ namespace _7Wonders.Client
         public void assignHand(string message)
         {
             gameState.setHand(netService.getID(), message);
-            if (observer != null) observer.stateUpdate(gameState, 0);
+            if (observer != null) observer.stateUpdate(gameState, UpdateType.HAND_UPDATE);
         }
 
         //Returns the number of coins it would cost a player to build a card with cardID. -1 if the player cannot possibly build the

@@ -225,7 +225,7 @@ namespace _7Wonders
             readyCBs[i].setSelected(false);
         }
 
-        public override void stateUpdate(GameState gameState, int code)
+        public override void stateUpdate(GameState gameState, UpdateType code)
         {
             updatePlayers(gameState);
         }

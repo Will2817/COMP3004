@@ -4,7 +4,7 @@
     "localhost" : "127.0.0.1",
     "tag" : "7Wonders",
 	"discoverywait" : 1000,
-	"screenWidth": 800,
-	"screenHeight": 600,
+	"screenWidth": 1024,
+	"screenHeight": 768,
 	"fullscreen": false
 }

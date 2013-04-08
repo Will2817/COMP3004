@@ -677,8 +677,6 @@ namespace _7Wonders
             {
                 return selected;
             }
-
-            
         }
     }
 }

@@ -140,8 +140,6 @@ namespace _7Wonders
             updateHands();
             updateScroll();
             //updatePlayers();
-            Game1.client.setHandChecked();
-            Game1.client.setPlayerChecked();
 
             baseVisuals.Add("Scorehead", new Visual(new Vector2(Game1.WIDTH / 4, Game1.HEIGHT / 4), Game1.WIDTH / 2, 50, "scorehead").setVisible(false));
             int n = 1;
@@ -291,21 +289,22 @@ namespace _7Wonders
                 v.Draw(gameTime, spriteBatch);
             }
 
-            lock (hand)
+
+            if (!showhand)
             {
-                if (!showhand)
+                foreach (KeyValuePair<string, Visual> kp in activeVisuals)
                 {
-                    foreach (KeyValuePair<string, Visual> kp in activeVisuals)
-                    {
-                        if (kp.Key != "wonder" && kp.Key != "stages")
-                            if (kp.Value.isMouseOver(mousestate)) kp.Value.Draw(gameTime, spriteBatch);
-                    }
+                    if (kp.Key != "wonder" && kp.Key != "stages")
+                        if (kp.Value.isMouseOver(mousestate)) kp.Value.Draw(gameTime, spriteBatch);
                 }
             }
 
-            foreach (Visual v in hand.Values.OrderBy(item => item.z))
+            lock (hand)
             {
-                v.Draw(gameTime, spriteBatch);
+                foreach (Visual v in hand.Values.OrderBy(item => item.z))
+                {
+                    v.Draw(gameTime, spriteBatch);
+                }
             }
 
             if (showTrade)
@@ -487,7 +486,7 @@ namespace _7Wonders
         }
 
         //observer code
-        public override void stateUpdate(GameState gameState, int code)
+        public override void stateUpdate(GameState gameState, UpdateType code)
         {
             Console.WriteLine("UPDATING STATE");
             if (!init)
@@ -495,19 +494,19 @@ namespace _7Wonders
                 Initialize();
                 init = true;
             }
-            if (code==0)
+            if (code==UpdateType.HAND_UPDATE)
             {
                 showhand = false;
                 updateHands();
                 updateScroll();
             }
-            if (code==1)
+            if (code == UpdateType.PLAYER_UPDATE)
             {
                 updatePlayed(gameState);
                 updateResources(gameState);
                 updatePlayers(gameState);
             }
-            if (code==2)
+            if (code == UpdateType.END_UPDATE)
             {
                 showScore = true;
                 baseVisuals["Scorehead"].setVisible(true);
