@@ -128,7 +128,7 @@ namespace _7Wonders
                 if (border) spriteBatch.Draw(texture, new Rectangle((int)position.X - 1, (int)position.Y - 1, width + 2, height + 2), Color.Black * opacity);
                 if (texture != null) spriteBatch.Draw(texture, new Rectangle((int)position.X, (int)position.Y, width, height), new Rectangle(0, 0, texture.Width, texture.Height), textureColor);
             }
-            if (text != null)
+            if (font != null)
             {
                 spriteBatch.DrawString(font, text, new Vector2(position.X + leftmargin, position.Y + topmargin), stringColor);
             }

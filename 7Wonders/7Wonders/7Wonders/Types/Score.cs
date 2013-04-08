@@ -16,6 +16,10 @@ namespace _7Wonders
         COMPASS,
         GEAR,
         VICTORY_BLUE,
-        DEFEAT
+        DEFEAT,
+        STAGES,
+        COMMERCE,
+        GUILD,
+        SCIENCE
     }
 }

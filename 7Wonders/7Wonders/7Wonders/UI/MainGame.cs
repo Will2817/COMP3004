@@ -39,6 +39,9 @@ namespace _7Wonders
         protected Dictionary<int, Dictionary<string, Visual>> seatVisuals;
         protected Dictionary<string, Visual> baseVisuals;
         protected SortedDictionary<string, Visual> hand;
+        protected Dictionary<string, Visual> lastPlayed;
+        protected Button close;
+
         protected bool showhand = false;
         protected int seatViewed = 0;
         protected Player player;
@@ -48,6 +51,7 @@ namespace _7Wonders
         protected Button leftButton;
         protected bool showTrade = false;
         protected bool showScore = false;
+        protected bool showLastTurn = false;
         protected bool init = false;
 
         protected MouseState mousestate;
@@ -58,15 +62,20 @@ namespace _7Wonders
             LABELWIDTH = SEC1WIDTH / 2 - MARGIN;
             CARDWIDTH = (Game1.WIDTH - 8 * (MARGIN * 2) - 30) / MAXHANDSIZE;
             CARDHEIGHT = (int) (CARDWIDTH * 1.612);
-            LABELLENGTH = (SEC1WIDTH - 2 * MARGIN) / 5;
-            RESOURCELENGTH = (SEC1WIDTH - 2 * MARGIN) * 4 / 5;
+            LABELLENGTH = (SEC1WIDTH - MARGIN) / 5;
+            RESOURCELENGTH = (SEC1WIDTH - 3 * MARGIN) * 4 / 5;
             player = null;
             wonder = null;
+            lastPlayed = new Dictionary<string, Visual>();
             hand = new SortedDictionary<string, Visual>();
             leftButton = new Button(new Vector2(Game1.WIDTH - 27, 200 + CARDHEIGHT / 2 - 7), 15, 15, "", "Font1", "left");
             leftButton.z = 1;
             hand.Add("paperleft", new Visual(new Vector2(Game1.WIDTH - 27, 190), 30, CARDHEIGHT + 30, "paperleft"));
             hand.Add("leftButton", leftButton.setBorder(false));
+
+            close = new Button(new Vector2(Game1.WIDTH - Game1.WIDTH / 9, Game1.HEIGHT * 5/ 8), 75, 40, "Close", "Font1");
+            lastPlayed.Add("bg", new Visual(new Vector2(Game1.WIDTH / 3, Game1.HEIGHT / 6), Game1.WIDTH * 2 / 3, Game1.HEIGHT * 2 / 3, "bg"));
+            lastPlayed.Add("close", close);
 
             seatVisuals = new Dictionary<int, Dictionary<string, Visual>>();
             baseVisuals = new Dictionary<String, Visual>();
@@ -83,6 +92,7 @@ namespace _7Wonders
 
         private void Initialize()
         {
+            
             trade = new TradeInterface();
             player = Game1.client.getSelf();
             int westSeat = (player.getSeat() - 1 < 0) ? Game1.client.getState().getPlayers().Count - 1 : player.getSeat() - 1;
@@ -98,7 +108,7 @@ namespace _7Wonders
                 Visual stages = new Visual(new Vector2(Game1.WIDTH - 100, Game1.HEIGHT - 150), 100, 100, "stage13").setVisible(false);
                 Game1.wonders[p.getBoard().getName()].setPosition(new Vector2(5 + SEC1WIDTH, 5 + SEC1HEIGHT)).setWidth(WONDERWIDTH * 2 + 10).setHeight(WONDERHEIGHT * 2).setTexture(p.getBoard().getImageName());
                 seatVisuals.Add(p.getSeat(), new Dictionary<string, Visual>(){{"wonder", Game1.wonders[p.getBoard().getName()]}, {"conflict", conflict}, {"stages", stages}});
-                baseVisuals.Add("player" + p.getSeat(), new Visual(new Vector2(MARGIN, MARGIN * 2 + (MARGIN + LABELHEIGHT) * (p.getSeat() + 1)), DROPDOWNWIDTH, LABELHEIGHT, p.getName(), "Font1", Color.White, (p.getSeat() == player.getSeat()) ? Color.Orange : Color.Gray, "grayback"));
+                baseVisuals.Add("player" + p.getSeat(), new Visual(new Vector2(MARGIN, MARGIN * 2 + (MARGIN + LABELHEIGHT) * (p.getSeat() + 1)), DROPDOWNWIDTH, LABELHEIGHT, (p.getSeat() + 1) + "|" + p.getName(), "Font1", Color.White, (p.getSeat() == player.getSeat()) ? Color.Orange : Color.Gray, "grayback"));
                 baseVisuals.Add("status" + p.getSeat(), new Visual(new Vector2(MARGIN + LABELWIDTH, MARGIN * 2 + (MARGIN + LABELHEIGHT) * (p.getSeat() + 1)), LABELWIDTH, LABELHEIGHT, "blank"));
                 baseVisuals.Add("gear" + p.getSeat(), new Visual(new Vector2(MARGIN + LABELWIDTH + (LABELWIDTH * 1 / 24), MARGIN * 2 + (MARGIN + LABELHEIGHT) * (p.getSeat() + 1)), p.getScoreNum(Score.GEAR).ToString(), "Font1"));
                 baseVisuals.Add("tablet" + p.getSeat(), new Visual(new Vector2(MARGIN + LABELWIDTH + (LABELWIDTH * 5 / 24), MARGIN * 2 + (MARGIN + LABELHEIGHT) * (p.getSeat() + 1)), p.getScoreNum(Score.TABLET).ToString(), "Font1"));
@@ -106,26 +116,23 @@ namespace _7Wonders
                 baseVisuals.Add("victory" + p.getSeat(), new Visual(new Vector2(MARGIN + LABELWIDTH + (LABELWIDTH * 13 / 24), MARGIN * 2 + (MARGIN + LABELHEIGHT) * (p.getSeat() + 1)), p.getScoreNum(Score.VICTORY_BLUE).ToString(), "Font1"));
                 baseVisuals.Add("army" + p.getSeat(), new Visual(new Vector2(MARGIN + LABELWIDTH + (LABELWIDTH * 19 / 24), MARGIN * 2 + (MARGIN + LABELHEIGHT) * (p.getSeat() + 1)), p.getScoreNum(Score.ARMY).ToString(), "Font1"));
             }
-
-            int LABELLENGTH = (SEC1WIDTH - 2 * MARGIN) / 5;
-            int RESOURCELENGTH = (SEC1WIDTH - 2 * MARGIN) * 4 / 5;
-            baseVisuals.Add("resources", new Visual(new Vector2(LABELLENGTH + MARGIN, SEC1HEIGHT + MARGIN * 2), RESOURCELENGTH, LABELHEIGHT, "resourceBar"));
-            baseVisuals.Add("west", new Visual(new Vector2(MARGIN, SEC1HEIGHT + LABELHEIGHT + MARGIN * 3), LABELLENGTH, LABELHEIGHT, "West", "Font1", null, null, "grayback"));
-            baseVisuals.Add("east", new Visual(new Vector2(MARGIN, SEC1HEIGHT + LABELHEIGHT * 2 + MARGIN * 4), LABELLENGTH, LABELHEIGHT, "East", "Font1", null, null, "grayback"));
+            baseVisuals.Add("resources", new Visual(new Vector2(LABELLENGTH + MARGIN * 2, SEC1HEIGHT + MARGIN * 2), RESOURCELENGTH, LABELHEIGHT, "resourceBar"));
+            baseVisuals.Add("west", new Visual(new Vector2(MARGIN, SEC1HEIGHT + LABELHEIGHT + MARGIN * 3), LABELLENGTH, LABELHEIGHT, (westSeat + 1) + "|" + "West", "Font1", null, null, "grayback"));
+            baseVisuals.Add("east", new Visual(new Vector2(MARGIN, SEC1HEIGHT + LABELHEIGHT * 2 + MARGIN * 4), LABELLENGTH, LABELHEIGHT, (eastSeat + 1) + "|" + "East", "Font1", null, null, "grayback"));
             baseVisuals.Add("self", new Visual(new Vector2(MARGIN, Game1.HEIGHT - (MARGIN + LABELHEIGHT)), LABELLENGTH, LABELHEIGHT, "Self", "Font1", null, null, "grayback"));
-            baseVisuals.Add("westresources", new Visual(new Vector2(LABELLENGTH + MARGIN, SEC1HEIGHT + LABELHEIGHT + MARGIN * 3), RESOURCELENGTH, LABELHEIGHT, "emptyResourceBar"));
-            baseVisuals.Add("eastresources", new Visual(new Vector2(LABELLENGTH + MARGIN, SEC1HEIGHT + LABELHEIGHT * 2 + MARGIN * 4), RESOURCELENGTH, LABELHEIGHT, "emptyResourceBar"));
-            baseVisuals.Add("selfresources", new Visual(new Vector2(LABELLENGTH + MARGIN, Game1.HEIGHT - (MARGIN + LABELHEIGHT)), RESOURCELENGTH, LABELHEIGHT, "emptyResourceBar"));
+            baseVisuals.Add("westresources", new Visual(new Vector2(LABELLENGTH + MARGIN * 2, SEC1HEIGHT + LABELHEIGHT + MARGIN * 3), RESOURCELENGTH, LABELHEIGHT, "emptyResourceBar"));
+            baseVisuals.Add("eastresources", new Visual(new Vector2(LABELLENGTH + MARGIN * 2, SEC1HEIGHT + LABELHEIGHT * 2 + MARGIN * 4), RESOURCELENGTH, LABELHEIGHT, "emptyResourceBar"));
+            baseVisuals.Add("selfresources", new Visual(new Vector2(LABELLENGTH + MARGIN * 2, Game1.HEIGHT - (MARGIN + LABELHEIGHT)), RESOURCELENGTH, LABELHEIGHT, "emptyResourceBar"));
 
             int RESOURCEHEIGHT = SEC1HEIGHT + LABELHEIGHT + MARGIN * 3;
 
             for (int i = 0; i < NUMRESOURCES; i++)
             {
-                baseVisuals.Add("west" + i, new Visual(new Vector2(LABELLENGTH + MARGIN + RESOURCELENGTH * i / 8 + 5, RESOURCEHEIGHT), west.getResourceNum((Resource)i) + "", "Font1"));
+                baseVisuals.Add("west" + i, new Visual(new Vector2(LABELLENGTH + MARGIN * 2 + RESOURCELENGTH * i / 8 + 5, RESOURCEHEIGHT), west.getResourceNum((Resource)i) + "", "Font1"));
 
-                baseVisuals.Add("east" + i, new Visual(new Vector2(LABELLENGTH + MARGIN + RESOURCELENGTH * i / 8 + 5, RESOURCEHEIGHT + LABELHEIGHT + MARGIN), east.getResourceNum((Resource)i) + "", "Font1"));                
+                baseVisuals.Add("east" + i, new Visual(new Vector2(LABELLENGTH + MARGIN * 2 + RESOURCELENGTH * i / 8 + 5, RESOURCEHEIGHT + LABELHEIGHT + MARGIN), east.getResourceNum((Resource)i) + "", "Font1"));
 
-                baseVisuals.Add("self" + i, new Visual(new Vector2(LABELLENGTH + MARGIN + RESOURCELENGTH * i / 8 + 5, Game1.HEIGHT - (MARGIN + LABELHEIGHT)), player.getResourceNum((Resource)i) + "", "Font1"));
+                baseVisuals.Add("self" + i, new Visual(new Vector2(LABELLENGTH + MARGIN * 2 + RESOURCELENGTH * i / 8 + 5, Game1.HEIGHT - (MARGIN + LABELHEIGHT)), player.getResourceNum((Resource)i) + "", "Font1"));
 
                 if ((Resource)i == Resource.COIN)
                 {
@@ -146,8 +153,10 @@ namespace _7Wonders
             foreach (Player p in Game1.client.getState().getPlayers().Values)
             {
                 baseVisuals.Add("name"+p.getSeat(), new Visual(new Vector2(Game1.WIDTH / 4, Game1.HEIGHT / 4 + 40 * n), (int)(Game1.WIDTH / 2 * 0.296f), 40, p.getName(), "Font1", null, null, "line").setVisible(false));
-                baseVisuals.Add("score" + p.getSeat(), new Visual(new Vector2(Game1.WIDTH / 4 + (int)(Game1.WIDTH / 2 * 0.296f) , Game1.HEIGHT / 4 + 40 * n), SCOREWIDTH * 7, 40, "Score Stuff....", "Font1", null, null, "line").setVisible(false));
+                baseVisuals.Add("score" + p.getSeat(), new Visual(new Vector2(Game1.WIDTH / 4 + (int)(Game1.WIDTH / 2 * 0.296f), Game1.HEIGHT / 4 + 40 * n), SCOREWIDTH * 7, 40, p.getScoreNum(Score.CONFLICT) + " " + p.getScoreNum(Score.COIN) + " " + p.getScoreNum(Score.STAGES) + " " + p.getScoreNum(Score.VICTORY_BLUE) + " " + p.getScoreNum(Score.COMMERCE) + " " + p.getScoreNum(Score.GUILD) + " " + p.getScoreNum(Score.SCIENCE), "Font1", null, null, "line").setVisible(false));
                 baseVisuals.Add("sum" + p.getSeat(), new Visual(new Vector2(Game1.WIDTH / 4 + (int)(Game1.WIDTH / 2 * 0.296f) + SCOREWIDTH * 7, Game1.HEIGHT / 4 + 40 * n), 33, 40, p.getScoreNum(Score.VICTORY).ToString(), "Font1", null, null, "line").setVisible(false));
+                lastPlayed.Add("player" + p.getSeat(), new Visual(new Vector2(Game1.WIDTH * ((n - 1) % 4 + 2) / 6 + MARGIN, Game1.HEIGHT * ((int)(n / 5) * 2 + 1) / 6 + MARGIN), Game1.WIDTH / 6 - MARGIN * 5, LABELHEIGHT, (p.getSeat() + 1) + "|" + p.getName(), "Font1", null, null, "grayback"));
+                lastPlayed.Add("action" + p.getSeat(), new Visual(new Vector2(Game1.WIDTH * ((n - 1) % 4 + 2) / 6 + MARGIN, Game1.HEIGHT * ((int)(n / 5) * 2 + 1) / 6 + LABELHEIGHT + MARGIN * 2), Game1.WIDTH / 6 - MARGIN * 2, Game1.HEIGHT / 3 - MARGIN * 3 - LABELHEIGHT, "coin"));
                 n++;
             }
 
@@ -169,10 +178,23 @@ namespace _7Wonders
                 v.LoadContent();
             }
             if (trade != null) trade.LoadContent();
+            foreach (Visual v in lastPlayed.Values)
+            {
+                v.LoadContent();
+            }
         }
 
         public override void Update(GameTime gameTime, MouseState mouseState)
         {
+            if (showLastTurn){
+                close.Update(gameTime, mouseState);
+                if (close.isClicked())
+                {
+                    close.reset();
+                    showLastTurn = false;
+                }
+                return;
+            }
             if (showTrade)
             {
                 trade.Update(gameTime, mouseState);
@@ -310,6 +332,12 @@ namespace _7Wonders
             if (showTrade)
             {
                 trade.Draw(gameTime, spriteBatch);
+            }
+
+            if (showLastTurn)
+            {
+                foreach (Visual v in lastPlayed.Values)
+                    v.Draw(gameTime, spriteBatch);
             }
         }
 
@@ -485,6 +513,19 @@ namespace _7Wonders
 
         }
 
+        public void updateLast(GameState gameState)
+        {
+            foreach (Player p in gameState.getPlayers().Values)
+            {
+                if (p.getLastActions()[0] == ActionType.BUILD_CARD)
+                    lastPlayed["action" + p.getSeat()].setTexture(p.getLastCardsPlayed()[0]);
+                else if (p.getLastActions()[0] == ActionType.BUILD_WONDER)
+                    lastPlayed["action" + p.getSeat()].setTexture("stage" + p.getBoard().getStagesBuilt() + p.getBoard().getSide().getStageNum());
+                else
+                    lastPlayed["action" + p.getSeat()].setTexture("coin");
+            }
+        }
+
         //observer code
         public override void stateUpdate(GameState gameState, UpdateType code)
         {
@@ -499,6 +540,13 @@ namespace _7Wonders
                 showhand = false;
                 updateHands();
                 updateScroll();
+                Console.WriteLine("UPDATING HAND");
+                if (gameState.getTurn() != 1 || gameState.getAge() != 1)
+                {
+                    Console.WriteLine("UPDATING SHOWLASTTURN");
+                    updateLast(gameState);
+                    showLastTurn = true;
+                }
             }
             if (code == UpdateType.PLAYER_UPDATE)
             {
@@ -506,7 +554,8 @@ namespace _7Wonders
                 updateResources(gameState);
                 updatePlayers(gameState);
             }
-            if (code == UpdateType.END_UPDATE)
+
+            if (code == UpdateType.END_UPDATE || !gameState.isGameInProgress()) //<--  fix this
             {
                 showScore = true;
                 baseVisuals["Scorehead"].setVisible(true);
@@ -514,6 +563,7 @@ namespace _7Wonders
                 {
                     baseVisuals["name" + p.getSeat()].setVisible(true);
                     baseVisuals["score" + p.getSeat()].setVisible(true);
+                    baseVisuals["score" + p.getSeat()].setString(p.getScoreNum(Score.CONFLICT) + " " + p.getScoreNum(Score.COIN) + " " + p.getScoreNum(Score.STAGES) + " " + p.getScoreNum(Score.VICTORY_BLUE) + " " + p.getScoreNum(Score.COMMERCE) + " " + p.getScoreNum(Score.GUILD) + " " + p.getScoreNum(Score.SCIENCE));  
                     baseVisuals["sum" + p.getSeat()].setString(p.getScoreNum(Score.VICTORY).ToString()).setVisible(true);
                 }
             }
