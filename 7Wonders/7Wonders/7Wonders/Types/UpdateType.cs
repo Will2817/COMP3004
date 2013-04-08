@@ -5,8 +5,10 @@ using System.Text;
 
 namespace _7Wonders
 {
-    public interface Observer
+    public enum UpdateType
     {
-        void stateUpdate(GameState state,UpdateType code);
+        HAND_UPDATE,
+        PLAYER_UPDATE,
+        END_UPDATE
     }
 }

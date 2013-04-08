@@ -84,7 +84,7 @@ namespace _7Wonders
             finished = false;
         }
 
-        public virtual void stateUpdate(GameState gameState,int code)
+        public virtual void stateUpdate(GameState gameState,UpdateType code)
         {
 
         }
