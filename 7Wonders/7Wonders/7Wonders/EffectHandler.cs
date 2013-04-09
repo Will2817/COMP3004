@@ -123,11 +123,22 @@ namespace _7Wonders
                     } // End Effect Loop for Cards                    
                 } // End Current Player's Card Loop
 
+                for (int i = 0; i < curr.getBoard().getSide().stagesBuilt; i++)
+                {
+                    foreach (Effect e in curr.getBoard().getSide().getStageEffects(i))
+                    {
+                        if (e.type.Equals("victory")) curr.addScore(Score.STAGES, e.amount);
+                    }
+                } 
+
+
                 // Max Function, will add onto the max science value
                 AddScienceChoice(curr, schoiceCount);
                 curr.addScore(Score.VICTORY, CalculateScience(curr.getScoreNum(Score.GEAR),curr.getScoreNum(Score.COMPASS),curr.getScoreNum(Score.TABLET)));
+                curr.addScore(Score.SCIENCE, CalculateScience(curr.getScoreNum(Score.GEAR), curr.getScoreNum(Score.COMPASS), curr.getScoreNum(Score.TABLET)));
                 curr.addScore(Score.VICTORY, curr.getScoreNum(Score.CONFLICT));
                 curr.addScore(Score.VICTORY, (int)curr.getResourceNum(Resource.COIN) / 3);
+                curr.addScore(Score.COIN, (int)curr.getResourceNum(Resource.COIN) / 3);
             } // End Player Loop
         }
 

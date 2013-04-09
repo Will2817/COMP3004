@@ -12,8 +12,6 @@ namespace _7Wonders.Client
         GameState gameState;
         MessageSerializerService messageSerializer;
         NetService netService;
-        bool handUpdated;
-        bool playerUpdated;
         bool connected;
 
 
@@ -21,8 +19,6 @@ namespace _7Wonders.Client
         {
             gameState = new GameState();
             connected = false;
-            handUpdated = false;
-            playerUpdated = false;
         }
 
         public void setMessageSerializer(MessageSerializerService messageSerializer)
