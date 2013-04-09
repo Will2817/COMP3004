@@ -201,10 +201,13 @@ namespace _7Wonders
                 Dictionary<string, string> message;
                 if ((message = trade.isFinished()) != null)
                 {
-                    showhand = false;
                     trade.reset();
                     showTrade = false;
-                    updateHands();
+                    leftButton.setEnabled(false);
+                    showhand = false;
+                    //updateHands();
+                    updateScroll();
+                    Console.WriteLine("Finished TRADING");
                 }
 
                 return;
@@ -390,28 +393,25 @@ namespace _7Wonders
 
         private void updateScroll()
         {
-            lock (hand)
+            if (showhand)
             {
-                if (showhand)
-                {
-                    hand["papermiddle"].setVisible(true);
-                    leftButton.setTexture("right");
-                    leftButton.setPosition(new Vector2(MARGIN + (CARDWIDTH / 2 + MARGIN) * (7 - player.getHand().Count) + 5, 200 + CARDHEIGHT / 2 - 7));
-                    hand["paperleft"].setPosition(new Vector2(MARGIN + (CARDWIDTH / 2 + MARGIN) * (7 - player.getHand().Count), 190));
-                }
-                else
-                {
-                    hand["papermiddle"].setVisible(false);
-                    leftButton.setTexture("left");
-                    leftButton.setPosition(new Vector2(Game1.WIDTH - 27, 200 + CARDHEIGHT / 2 - 7));
-                    hand["paperleft"].setPosition(new Vector2(Game1.WIDTH - 30, 190));
-                }
+                hand["papermiddle"].setVisible(true);
+                leftButton.setTexture("right");
+                leftButton.setPosition(new Vector2(MARGIN + (CARDWIDTH / 2 + MARGIN) * (7 - player.getHand().Count) + 5, 200 + CARDHEIGHT / 2 - 7));
+                hand["paperleft"].setPosition(new Vector2(MARGIN + (CARDWIDTH / 2 + MARGIN) * (7 - player.getHand().Count), 190));
+            }
+            else
+            {
+                hand["papermiddle"].setVisible(false);
+                leftButton.setTexture("left");
+                leftButton.setPosition(new Vector2(Game1.WIDTH - 27, 200 + CARDHEIGHT / 2 - 7));
+                hand["paperleft"].setPosition(new Vector2(Game1.WIDTH - 30, 190));
+            }
 
-                for (int j = 0; j < MAXHANDSIZE; j++)
-                {
-                    if (hand.ContainsKey("hand" + j)) hand["hand" + j].setVisible(showhand);
-                    if (hand.ContainsKey("glow" + j)) hand["glow" + j].setVisible(showhand);
-                }
+            for (int j = 0; j < MAXHANDSIZE; j++)
+            {
+                if (hand.ContainsKey("hand" + j)) hand["hand" + j].setVisible(showhand);
+                if (hand.ContainsKey("glow" + j)) hand["glow" + j].setVisible(showhand);
             }
         }
 
@@ -481,7 +481,7 @@ namespace _7Wonders
                         }
                     }
                     if (!seatVisuals[p.getSeat()].ContainsKey(c.getImageId())) 
-                        seatVisuals[p.getSeat()].Add(c.getImageId(), Game1.cards[c.getImageId()]);
+                        seatVisuals[p.getSeat()].Add(c.getImageId(), Game1.cards[c.getImageId()].setVisible(true));
                 }
             }
         }
@@ -509,7 +509,7 @@ namespace _7Wonders
             }
 
             baseVisuals["Age"].setTexture("age" + gameState.getAge());
-            baseVisuals["discard"].setString("0");//get actual number of discards
+            baseVisuals["discard"].setString(gameState.getDiscards().Count+"");//get actual number of discards
 
         }
 
@@ -537,6 +537,7 @@ namespace _7Wonders
             }
             if (code==UpdateType.HAND_UPDATE)
             {
+                leftButton.setEnabled(true);
                 showhand = false;
                 updateHands();
                 updateScroll();

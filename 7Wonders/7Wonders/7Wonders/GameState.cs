@@ -17,6 +17,7 @@ namespace _7Wonders
         private bool assign;
         private int age;
         private int turn;
+        private List<string> discards;
 
         public GameState()
         {
@@ -32,6 +33,7 @@ namespace _7Wonders
             {
                 wonders.Add((string)j["name"], new Wonder(j));
             }
+            discards = new List<string>();
         }
 
         public int getAge() { return age; }
@@ -62,6 +64,21 @@ namespace _7Wonders
         public Dictionary<string, Wonder> getWonders()
         {
             return wonders;
+        }
+
+        public List<string> getDiscards()
+        {
+            return discards;
+        }
+
+        public void addDiscard(string cardID)
+        {
+            discards.Add(cardID);
+        }
+
+        public void clearDiscard()
+        {
+            discards.Clear();
         }
 
         public string playersToJson()
@@ -114,10 +131,6 @@ namespace _7Wonders
                 else players.Add((long)j["id"], new Player(j));
             }
             players =  players.Where(x => temp.Contains(x.Key)).ToDictionary(x => x.Key, x => x.Value);
-    /*        foreach (long id in players.Keys)
-            {
-                if (!temp.Contains(id)) players.Remove(id);
-            }*/
         }
 
         public void lobbyFromJson(string json)
@@ -199,7 +212,13 @@ namespace _7Wonders
             {
                 jPlayers.Add(p.superJson());
             }
+            JArray jDiscards = new JArray();
+            foreach (string s in discards)
+            {
+                jDiscards.Add(new JValue(s));
+            }
             JObject super = new JObject(new JProperty("players", jPlayers),
+                                        new JProperty("discards", jDiscards),
                                         new JProperty("age", age),
                                         new JProperty("turn", turn),
                                         new JProperty("inprogress", gameInProgress));
@@ -208,6 +227,7 @@ namespace _7Wonders
 
         public void superParse(string json)
         {
+            discards.Clear();
             JObject obj = JObject.Parse(json);
 
             JArray ja = (JArray)obj["players"];
@@ -215,6 +235,13 @@ namespace _7Wonders
             {
                 players[(long)jo["id"]].superParse(jo);
             }
+
+            JArray jDiscards = (JArray)obj["discards"];
+            foreach (JValue jo in jDiscards)
+            {
+                discards.Add((string)jo);
+            }
+
             age = (int)obj["age"];
             turn = (int)obj["turn"];
             gameInProgress = (bool)obj["inprogress"];

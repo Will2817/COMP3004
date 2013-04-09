@@ -13,7 +13,6 @@ namespace _7Wonders.Server
         protected MessageSerializerService messageSerializer;
         protected NetService netService;
         protected Deck deck;
-        protected List<Card> discards;
 
         public GameManager()
         {
@@ -135,8 +134,8 @@ namespace _7Wonders.Server
         {
             if (gameState.getAssign()) //uncomment these sections when ready to implement selecting a board;
             {
+                gameState.clearDiscard();
                 deck = new Deck(gameState.getPlayers().Count);
-                discards = new List<Card>();
 
                 foreach (Player p in gameState.getPlayers().Values)
                 {
@@ -278,7 +277,7 @@ namespace _7Wonders.Server
                         p.getHand().Remove(card);
 
                         // Adding the sold card to the discard pile
-                        discards.Add(c);
+                        gameState.addDiscard(card);
                         EffectHandler.SellCard(p);
                         break;
 
