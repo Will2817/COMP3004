@@ -80,12 +80,15 @@ namespace _7Wonders
             return resources;
         }
 
-        private static int countPurchases(Dictionary<Resource, int> cost, List<List<Resource>> freeRes, List<List<Resource>> costRes)
+        private static int countPurchases(Dictionary<Resource, int> _cost, List<List<Resource>> freeRes, List<List<Resource>> costRes)
         {
             bool onlyChoicesLeft = false;
+            Dictionary<Resource, int> cost = new Dictionary<Resource,int>();
+            foreach (Resource r in _cost.Keys)
+                cost.Add(r, _cost[r]);
             while (!onlyChoicesLeft)
             {
-                freeRes = removeIrrelevant(cost, freeRes);
+                freeRes = removeIrrelevant(cost, freeRes); //remove irrelevant resources (i.e. resources not in cost)
                 onlyChoicesLeft = true;
                 List<List<Resource>> keepMe = new List<List<Resource>>();
                 foreach (List<Resource> choice in freeRes)
@@ -95,8 +98,6 @@ namespace _7Wonders
                         onlyChoicesLeft = false;
                         if (cost.ContainsKey(choice[0]) && cost[choice[0]] > 0)
                             cost[choice[0]]--;
-                        else
-                            keepMe.Add(choice);
                     }
                     else
                         keepMe.Add(choice);
@@ -106,12 +107,13 @@ namespace _7Wonders
             if (freeRes.Count > 0)
             {
                 List<int> costOptions = new List<int>();
+                List<int> validOptions = new List<int>();
                 List<List<List<Resource>>> configurations = enumerateCombos(freeRes);
                 foreach (List<List<Resource>> choiceConfig in configurations)
                     costOptions.Add(countPurchases(cost, choiceConfig, costRes));
                 foreach (int costOption in costOptions)
-                    if (costOption == -1) return -1;
-                return costOptions.Min();
+                    if (costOption > -1) validOptions.Add(costOption);
+                return validOptions.Count > 0?validOptions.Min():-1;
             }
             //take into account choices that don't resolve themselves?
             //e.g. need stone and clay and have s/c and w/o/s/c (->s/c)
@@ -143,12 +145,13 @@ namespace _7Wonders
             if (costRes.Count > 0)
             {
                 List<int> costOptions = new List<int>();
+                List<int> validOptions = new List<int>();
                 List<List<List<Resource>>> configurations = enumerateCombos(costRes);
                 foreach (List<List<Resource>> choiceConfig in configurations)
                     costOptions.Add(countPurchases(cost, new List<List<Resource>>(), choiceConfig));
                 foreach (int costOption in costOptions)
-                    if (costOption == -1) return -1;
-                return costOptions.Min();
+                    if (costOption > -1) validOptions.Add(costOption);
+                return validOptions.Count > 0 ? validOptions.Min() : -1;
             }
             bool costRemaining = false;
             foreach (int amt in cost.Values)
@@ -156,10 +159,13 @@ namespace _7Wonders
             return costRemaining?-1:purchases;
         }
 
-        private static int countPurchases(Dictionary<Resource, int> cost, List<List<Resource>> freeRes, List<List<Resource>> cheapRes, List<List<Resource>> costRes)
+        private static int countPurchases(Dictionary<Resource, int> _cost, List<List<Resource>> freeRes, List<List<Resource>> cheapRes, List<List<Resource>> costRes)
         {
             //free resources
             bool onlyChoicesLeft = false;
+            Dictionary<Resource, int> cost = new Dictionary<Resource, int>();
+            foreach (Resource r in _cost.Keys)
+                cost.Add(r, _cost[r]);
             while (!onlyChoicesLeft)
             {
                 freeRes = removeIrrelevant(cost, freeRes);
@@ -183,12 +189,13 @@ namespace _7Wonders
             if (freeRes.Count > 0)
             {
                 List<int> costOptions = new List<int>();
+                List<int> validOptions = new List<int>();
                 List<List<List<Resource>>> configurations = enumerateCombos(freeRes);
                 foreach (List<List<Resource>> choiceConfig in configurations)
                     costOptions.Add(countPurchases(cost, choiceConfig, cheapRes, costRes));
                 foreach (int costOption in costOptions)
-                    if (costOption == -1) return -1;
-                return costOptions.Min();
+                    if (costOption > -1) validOptions.Add(costOption);
+                return validOptions.Count > 0 ? validOptions.Min() : -1;
             }
             //cheap resources
             onlyChoicesLeft = false;
@@ -219,12 +226,13 @@ namespace _7Wonders
             if (cheapRes.Count > 0)
             {
                 List<int> costOptions = new List<int>();
+                List<int> validOptions = new List<int>();
                 List<List<List<Resource>>> configurations = enumerateCombos(cheapRes);
                 foreach (List<List<Resource>> choiceConfig in configurations)
                     costOptions.Add(countPurchases(cost, new List<List<Resource>>(), choiceConfig, costRes));
                 foreach (int costOption in costOptions)
-                    if (costOption == -1) return -1;
-                return costOptions.Min();
+                    if (costOption > -1) validOptions.Add(costOption);
+                return validOptions.Count > 0 ? validOptions.Min() : -1;
             }
             //costly resources
             onlyChoicesLeft = false;
@@ -255,12 +263,13 @@ namespace _7Wonders
             if (costRes.Count > 0)
             {
                 List<int> costOptions = new List<int>();
+                List<int> validOptions = new List<int>();
                 List<List<List<Resource>>> configurations = enumerateCombos(costRes);
                 foreach (List<List<Resource>> choiceConfig in configurations)
                     costOptions.Add(countPurchases(cost, new List<List<Resource>>(), new List<List<Resource>>(), choiceConfig));
                 foreach (int costOption in costOptions)
-                    if (costOption == -1) return -1;
-                return costOptions.Min();
+                    if (costOption > -1) validOptions.Add(costOption);
+                return validOptions.Count > 0 ? validOptions.Min() : -1;
             }
             bool costRemaining = false;
             foreach (int amt in cost.Values)
