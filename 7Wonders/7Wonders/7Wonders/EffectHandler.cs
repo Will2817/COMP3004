@@ -449,7 +449,7 @@ namespace _7Wonders
             p.addPlayed(c);
         }
 
-        public static bool checkFreeBuild(int age)
+        public static bool CheckFreeBuild(int age)
         {
             // stuff
             return freeBuild[age];
