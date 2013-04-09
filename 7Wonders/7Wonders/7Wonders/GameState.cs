@@ -113,10 +113,11 @@ namespace _7Wonders
                 if (players.ContainsKey((long)j["id"])) players[(long)j["id"]].updatePlayer(j);
                 else players.Add((long)j["id"], new Player(j));
             }
-            foreach (long id in players.Keys)
+            players =  players.Where(x => temp.Contains(x.Key)).ToDictionary(x => x.Key, x => x.Value);
+    /*        foreach (long id in players.Keys)
             {
                 if (!temp.Contains(id)) players.Remove(id);
-            }
+            }*/
         }
 
         public void lobbyFromJson(string json)

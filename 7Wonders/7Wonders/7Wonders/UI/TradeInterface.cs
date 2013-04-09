@@ -443,8 +443,8 @@ namespace _7Wonders
             {
                 if (tc.getSelected() != Resource.COIN)
                 {
-                    if (tc.getSelected() >= Resource.ORE) westCoin += (int)tc.getSelected() * Game1.client.getSelf().mcost;
-                    else westCoin += (int)tc.getSelected() * Game1.client.getSelf().rcostWest;
+                    if (tc.getSelected() >= Resource.ORE) westCoin += Game1.client.getSelf().mcost;
+                    else westCoin += Game1.client.getSelf().rcostWest;
                 }
             }
 
@@ -452,8 +452,8 @@ namespace _7Wonders
             {
                 if (tc.getSelected() != Resource.COIN)
                 {
-                    if (tc.getSelected() >= Resource.ORE) eastCoin += (int)tc.getSelected() * Game1.client.getSelf().mcost;
-                    else eastCoin += (int)tc.getSelected() * Game1.client.getSelf().rcostEast;
+                    if (tc.getSelected() >= Resource.ORE) eastCoin += Game1.client.getSelf().mcost;
+                    else eastCoin += Game1.client.getSelf().rcostEast;
                 }
             }
 

@@ -235,12 +235,21 @@ namespace _7Wonders
 
             if (!client.isConnected() && (activeInterface != interfaces["mainmenu"]))
             {
-                activeInterface.reset();
-                activeInterface = interfaces["mainmenu"];
-                message = new Dictionary<string, string>();
-                message.Add("connection", "Lost Connection");
-                activeInterface.receiveMessage(message);
-                client = new Client.Client();
+                if (client.getState().isGameInProgress() && activeInterface == interfaces["maingame"])
+                {
+                    client.disconnect();
+                    if (host != null) host.shutdown();
+                }
+                else
+                {
+
+                    activeInterface.reset();
+                    activeInterface = interfaces["mainmenu"];
+                    message = new Dictionary<string, string>();
+                    message.Add("connection", "Lost Connection");
+                    activeInterface.receiveMessage(message);
+                    client = new Client.Client();
+                }
             }
 
             else if ((message = activeInterface.isFinished()) != null)
