@@ -253,6 +253,16 @@ namespace _7Wonders
                 }
             }
 
+            else if (client.getState().isGameInProgress() && activeInterface == interfaces["lobby"])
+            {
+                message = MainGame.createMessage();
+                activeInterface.reset();
+                client.registar(interfaces[message["nextInterface"]]);
+                activeInterface = interfaces[message["nextInterface"]];
+                activeInterface.receiveMessage(message);
+            }
+
+
             else if ((message = activeInterface.isFinished()) != null)
             {
                 if (message["nextInterface"] == "hostlobby")
@@ -281,12 +291,9 @@ namespace _7Wonders
                 }
                 if ((message["nextInterface"] == "maingame"))
                 {
+                    if (activeInterface == interfaces["hostlobby"]) host.startGame();
                     while (!client.getState().isGameInProgress())
-                    { }
-                    foreach (Player p in client.getState().getPlayers().Values)
-                    {
-                        Console.WriteLine("HERE ARE the BOARDS: " + p.getBoard().getName());
-                    }
+                    { Console.WriteLine("stuck"); }
                 }
                 activeInterface.reset();
                 client.registar(interfaces[message["nextInterface"]]);
