@@ -248,6 +248,7 @@ namespace _7Wonders
                     message = new Dictionary<string, string>();
                     message.Add("connection", "Lost Connection");
                     activeInterface.receiveMessage(message);
+                    if (host != null) host.shutdown();
                     client = new Client.Client();
                 }
             }
