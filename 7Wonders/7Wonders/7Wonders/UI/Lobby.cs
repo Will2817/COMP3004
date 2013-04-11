@@ -189,7 +189,7 @@ namespace _7Wonders
             if (gameState.isGameInProgress())
             {
                 backToMenu = false;
-                finished = true;
+                //finished = true;
             }
 
             for (int i = 0; i < NUMPLAYERS; i++)
@@ -215,7 +215,6 @@ namespace _7Wonders
                 sideButton.setVisible(false);
             }
             else sideButton.setVisible(true);
-            //Game1.client.setPlayerChecked();
         }
 
         public virtual void updateHelper(int i)

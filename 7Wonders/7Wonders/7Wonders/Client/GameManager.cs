@@ -59,6 +59,7 @@ namespace _7Wonders.Client
         {
             gameState.superParse(json);
             if (observer != null) observer.stateUpdate(gameState, UpdateType.PLAYER_UPDATE);
+            if (!gameState.isGameInProgress() && observer != null) observer.stateUpdate(gameState, UpdateType.END_UPDATE);
         }
 
         public GameState getGameState()
