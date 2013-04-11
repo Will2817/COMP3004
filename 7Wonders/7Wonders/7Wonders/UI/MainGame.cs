@@ -320,7 +320,7 @@ namespace _7Wonders
             }
 
 
-            if (!showhand && !showLastTurn)
+            if (!showhand && !showLastTurn && !showScore)
             {
                 foreach (KeyValuePair<string, Visual> kp in activeVisuals)
                 {
@@ -444,26 +444,27 @@ namespace _7Wonders
                 foreach (string cardID in p.getPlayed())
                 {
                     Card c = CardLibrary.getCard(cardID);
+                    Game1.cards[c.getImageId()].setWidth(CARDWIDTH).setHeight(CARDHEIGHT);
                     if (c.colour == CardColour.BROWN || c.colour == CardColour.GRAY)
                     {
                         if (played1 < 5)
-                        { 
-                            Game1.cards[c.getImageId()].setPosition(new Vector2(SEC1WIDTH + MARGIN * 2, MARGIN + (MARGIN + ((int)(CARDHEIGHT * 0.25))) * played1)).setWidth(CARDWIDTH).setHeight(CARDHEIGHT);
+                        {
+                            Game1.cards[c.getImageId()].setPosition(new Vector2(SEC1WIDTH + MARGIN * 2, MARGIN + (MARGIN + ((int)(CARDHEIGHT * 0.25))) * played1));
                             played1++;
                         }
                         else if (played2 < 5)
                         {
-                            Game1.cards[c.getImageId()].setPosition(new Vector2(SEC1WIDTH + MARGIN * 2 + CARDWIDTH + MARGIN, MARGIN + (MARGIN + ((int)(CARDHEIGHT * 0.25))) * played2)).setWidth(CARDWIDTH).setHeight(CARDHEIGHT);
+                            Game1.cards[c.getImageId()].setPosition(new Vector2(SEC1WIDTH + MARGIN * 3 + CARDWIDTH, MARGIN + (MARGIN + ((int)(CARDHEIGHT * 0.25))) * played2));
                             played2++;
                         }
                         else if (played3 < 5)
                         {
-                            Game1.cards[c.getImageId()].setPosition(new Vector2(SEC1WIDTH + MARGIN * 2 + (CARDWIDTH + MARGIN) * 2, MARGIN + (MARGIN + ((int)(CARDHEIGHT * 0.25))) * played3)).setWidth(CARDWIDTH).setHeight(CARDHEIGHT);
+                            Game1.cards[c.getImageId()].setPosition(new Vector2(SEC1WIDTH + MARGIN * 4 + CARDWIDTH * 2, MARGIN + (MARGIN + ((int)(CARDHEIGHT * 0.25))) * played3));
                             played3++;
                         }
                         else
                         {
-                            Game1.cards[c.getImageId()].setPosition(new Vector2(SEC1WIDTH + MARGIN * 2 + (CARDWIDTH + MARGIN) * 3, MARGIN + (MARGIN + ((int)(CARDHEIGHT * 0.25))) * played4)).setWidth(CARDWIDTH).setHeight(CARDHEIGHT);
+                            Game1.cards[c.getImageId()].setPosition(new Vector2(SEC1WIDTH + MARGIN * 5 + CARDWIDTH * 3, MARGIN + (MARGIN + ((int)(CARDHEIGHT * 0.25))) * played4));
                             played4++;
                         }
                     }
@@ -471,22 +472,22 @@ namespace _7Wonders
                     {
                         if (played4 < 5)
                         {
-                            Game1.cards[c.getImageId()].setPosition(new Vector2(SEC1WIDTH + MARGIN * 2 + (CARDWIDTH + MARGIN) * 3, MARGIN + (MARGIN + ((int)(CARDHEIGHT * 0.25))) * played4)).setWidth(CARDWIDTH).setHeight(CARDHEIGHT);
+                            Game1.cards[c.getImageId()].setPosition(new Vector2(SEC1WIDTH + MARGIN * 5 + CARDWIDTH * 3, MARGIN + (MARGIN + ((int)(CARDHEIGHT * 0.25))) * played4));
                             played4++;
                         }
                         else if (played3 < 5)
                         {
-                            Game1.cards[c.getImageId()].setPosition(new Vector2(SEC1WIDTH + MARGIN * 2 + (CARDWIDTH + MARGIN) * 2, MARGIN + (MARGIN + ((int)(CARDHEIGHT * 0.25))) * played3)).setWidth(CARDWIDTH).setHeight(CARDHEIGHT);
+                            Game1.cards[c.getImageId()].setPosition(new Vector2(SEC1WIDTH + MARGIN * 4 + CARDWIDTH * 2, MARGIN + (MARGIN + ((int)(CARDHEIGHT * 0.25))) * played3));
                             played3++;
                         }
                         else if (played2 < 5)
                         {
-                            Game1.cards[c.getImageId()].setPosition(new Vector2(SEC1WIDTH + MARGIN * 2 + CARDWIDTH + MARGIN, MARGIN + (MARGIN + ((int)(CARDHEIGHT * 0.25))) * played2)).setWidth(CARDWIDTH).setHeight(CARDHEIGHT);
+                            Game1.cards[c.getImageId()].setPosition(new Vector2(SEC1WIDTH + MARGIN * 3 + CARDWIDTH, MARGIN + (MARGIN + ((int)(CARDHEIGHT * 0.25))) * played2));
                             played2++;
                         }
                         else
                         {
-                            Game1.cards[c.getImageId()].setPosition(new Vector2(SEC1WIDTH + MARGIN * 2 + CARDWIDTH, MARGIN + (MARGIN + ((int)(CARDHEIGHT * 0.25))) * played1)).setWidth(CARDWIDTH).setHeight(CARDHEIGHT);
+                            Game1.cards[c.getImageId()].setPosition(new Vector2(SEC1WIDTH + MARGIN * 2 + CARDWIDTH, MARGIN + (MARGIN + ((int)(CARDHEIGHT * 0.25))) * played1));
                             played1++;
                         }
                     }
@@ -563,7 +564,7 @@ namespace _7Wonders
                 updatePlayers(gameState);
             }
 
-            if (code == UpdateType.END_UPDATE || !gameState.isGameInProgress()) //<--  fix this
+            if (code == UpdateType.END_UPDATE) //<--  fix this
             {
                 showScore = true;
                 baseVisuals["Scorehead"].setVisible(true);
