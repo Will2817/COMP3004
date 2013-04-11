@@ -203,11 +203,12 @@ namespace _7Wonders
                 {
                     trade.reset();
                     showTrade = false;
-                    leftButton.setEnabled(false);
-                    showhand = false;
-                    //updateHands();
-                    updateScroll();
-                    Console.WriteLine("Finished TRADING");
+                    if (message["completeTrade"] == "true")
+                    {
+                        leftButton.setEnabled(false);
+                        showhand = false;
+                        updateScroll();
+                    }
                 }
 
                 return;
