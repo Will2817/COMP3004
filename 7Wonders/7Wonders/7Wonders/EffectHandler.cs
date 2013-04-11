@@ -535,5 +535,13 @@ namespace _7Wonders
             // stuff
             return null;
         }
+
+
+        // Handle seperate instances of Score type
+        public static int getPoints(Player p, Score s)
+        {
+
+            return 0;
+        }
     }
 }
