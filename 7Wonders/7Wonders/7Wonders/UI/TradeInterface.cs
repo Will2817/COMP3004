@@ -402,13 +402,13 @@ namespace _7Wonders
             counter = 0;
             foreach (List<Resource> choices in ConstructionUtils.getRelevantChoices(cost, west.getPublicChoices()))
             {
-                westChoices.Add(new TradeChoice(choices, new Vector2(pos.X + MARGIN + ((counter > 2) ? SECTIONWIDTH / 2 : 0), pos.Y + RSIZE * (10 + counter % 3) + MARGIN * (5 + counter % 3) - 1)));
+                westChoices.Add(new TradeChoice(choices, new Vector2(pos.X + MARGIN * 2+ ((counter > 2) ? SECTIONWIDTH / 2 : 0), pos.Y + RSIZE * (10 + counter % 3) + MARGIN * (4 + counter % 3) - 1)));
                 counter++;
             }
             counter = 0;
             foreach (List<Resource> choices in ConstructionUtils.getRelevantChoices(cost, east.getPublicChoices()))
             {
-                eastChoices.Add(new TradeChoice(choices, new Vector2(pos.X + (SECTIONWIDTH + MARGIN) * 2 + MARGIN + ((counter > 2) ? SECTIONWIDTH / 2 : 0), pos.Y + RSIZE * (11 + counter % 3) + MARGIN * (4 + counter % 3) - 1)));
+                eastChoices.Add(new TradeChoice(choices, new Vector2(pos.X + (SECTIONWIDTH + MARGIN) * 2 + MARGIN * 2 + ((counter > 2) ? SECTIONWIDTH / 2 : 0), pos.Y + RSIZE * (10 + counter % 3) + MARGIN * (4 + counter % 3) - 1)));
                 counter++;
             }
         }

@@ -33,7 +33,7 @@ namespace _7Wonders
         protected Button sideButton;
         protected Button backButton;
 
-        protected bool backToMenu = true;
+        protected bool backToMenu = false;
         protected const int NUMPLAYERS = 7;
         protected bool viewSideB = false;
 

@@ -316,7 +316,7 @@ namespace _7Wonders
             }
 
 
-            if (!showhand)
+            if (!showhand && !showLastTurn)
             {
                 foreach (KeyValuePair<string, Visual> kp in activeVisuals)
                 {
@@ -542,10 +542,8 @@ namespace _7Wonders
                 showhand = false;
                 updateHands();
                 updateScroll();
-                Console.WriteLine("UPDATING HAND");
                 if (gameState.getTurn() != 1 || gameState.getAge() != 1)
                 {
-                    Console.WriteLine("UPDATING SHOWLASTTURN");
                     updateLast(gameState);
                     showLastTurn = true;
                 }
