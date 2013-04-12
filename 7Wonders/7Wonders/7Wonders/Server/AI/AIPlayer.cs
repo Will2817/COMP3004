@@ -57,9 +57,7 @@ namespace _7Wonders.Server.AI
             Dictionary<string, ActionType> actions = new Dictionary<string,ActionType>();
             List<int> trades = new List<int>();
             strategy.chooseActions(actions, trades);
-            int westGold = 0;
-            int eastGold = 0;
-            gameManager.handleActions(id, actions, westGold, eastGold);
+            gameManager.handleActions(id, actions, trades[1], trades[0]);
         }
     }
 }

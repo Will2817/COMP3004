@@ -67,7 +67,7 @@ namespace _7Wonders
             List<List<Resource>> resources = new List<List<Resource>>();
             Dictionary<Resource, int> playerResources = p.getResources();
             List<List<Resource>> playerChoices = self?p.getTotalChoices():p.getPublicChoices();
-            foreach (Resource r in playerResources.Keys)
+            foreach (Resource r in rSet)
                 if (r != Resource.COIN)
                     for (int i = 0; i < playerResources[r]; i++)
                         resources.Add(new List<Resource> { r });
@@ -75,6 +75,7 @@ namespace _7Wonders
             {
                 List<Resource> l = new List<Resource>();
                 l.AddRange(choice);
+                if (!rSet.Contains(l[0])) continue;
                 resources.Add(l);
             }
             return resources;
@@ -243,6 +244,140 @@ namespace _7Wonders
             return combos;
         }
 
+        public static List<List<int>> getResourcePurchaseSplits(Dictionary<Resource, int> cost, Player player, Player east, Player west)
+        {
+            List<List<int>> splits = new List<List<int>>();
+
+
+            //check if cost is in coins
+            if (cost.ContainsKey(Resource.COIN))
+            {
+                splits.Add(new List<int> { 0, 0 });
+                return splits;
+            }
+            //split the cost into raw and manufactured goods to deal with them separately, as they do not affect each other
+            Dictionary<Resource, int> rawCost = new Dictionary<Resource, int>();
+            foreach (Resource r in rawGoods)
+                if (cost.ContainsKey(r)) rawCost.Add(r, cost[r]);
+            Dictionary<Resource, int> manCost = new Dictionary<Resource, int>();
+            foreach (Resource r in manGoods)
+                if (cost.ContainsKey(r)) manCost.Add(r, cost[r]);
+            //get resource lists
+            List<List<Resource>> playerRaw = buildResourceList(player, rawGoods, true);
+            List<List<Resource>> playerMan = buildResourceList(player, manGoods, true);
+            List<List<Resource>> eastRaw = buildResourceList(east, rawGoods, false);
+            List<List<Resource>> westRaw = buildResourceList(west, rawGoods, false);
+            List<List<Resource>> eastMan = buildResourceList(east, manGoods, false);
+            List<List<Resource>> westMan = buildResourceList(west, manGoods, false);
+            
+            getRemainingCostAndChoices(rawCost, playerRaw, rawCost, playerRaw);
+            //rawCost and playerRaw should now be updated to apply player's raw goods to the cost, including choices
+            //where only one choice is relevant, etc. playerRaw should only contain choices with multiple elements that
+            //can't be reconciled simply.
+            List<List<List<Resource>>> playerRawChoiceCombos = enumerateCombos(playerRaw);
+            List<List<int>> rawSplits = new List<List<int>>();
+            if (playerRawChoiceCombos.Count == 0)
+            {
+                List<List<Dictionary<Resource, int>>> rawCostSplits = splitCost(rawCost);
+                foreach (List<Dictionary<Resource, int>> costSplit in rawCostSplits)
+                {
+                    Dictionary<Resource, int> cantCover = new Dictionary<Resource, int>();
+                    List<List<Resource>> remainingResources = new List<List<Resource>>();
+                    getRemainingCostAndChoices(costSplit[0], eastRaw, cantCover, remainingResources);
+                    if (cantCover.Count > 0 && cantCover.Values.Count(x => x > 0) > 0) continue;
+                    getRemainingCostAndChoices(costSplit[1], westRaw, cantCover, remainingResources);
+                    if (cantCover.Count > 0 && cantCover.Values.Count(x => x > 0) > 0) continue;
+                    rawSplits.Add(new List<int> { costSplit[0].Values.Sum() * player.rcostEast, costSplit[1].Values.Sum() * player.rcostWest });
+                }
+
+            }
+            foreach (List<List<Resource>> combo in playerRawChoiceCombos)
+            {
+                Dictionary<Resource, int> remainingRawCost = new Dictionary<Resource, int>();
+                getRemainingCostAndChoices(rawCost, combo, remainingRawCost, combo);
+                List<List<Dictionary<Resource, int>>> rawCostSplits = splitCost(remainingRawCost);
+                foreach (List<Dictionary<Resource, int>> costSplit in rawCostSplits)
+                {
+                    Dictionary<Resource, int> cantCover = new Dictionary<Resource, int>();
+                    List<List<Resource>> remainingResources = new List<List<Resource>>();
+                    getRemainingCostAndChoices(costSplit[0], eastRaw, cantCover, remainingResources);
+                    if (cantCover.Count > 0 && cantCover.Values.Count(x => x > 0) > 0) continue;
+                    getRemainingCostAndChoices(costSplit[1], westRaw, cantCover, remainingResources);
+                    if (cantCover.Count > 0 && cantCover.Values.Count(x => x > 0) > 0) continue;
+                    rawSplits.Add(new List<int> { costSplit[0].Values.Sum()*player.rcostEast, costSplit[1].Values.Sum()*player.rcostWest });
+                }
+            }
+
+
+            getRemainingCostAndChoices(manCost, playerMan, manCost, playerMan);
+            //manCost and playerMan should now be updated to apply player's man goods to the cost, including choices
+            //where only one choice is relevant, etc. playerMan should only contain choices with multiple elements that
+            //can't be reconciled simply.
+            List<List<List<Resource>>> playerManChoiceCombos = enumerateCombos(playerMan);
+            List<List<int>> manSplits = new List<List<int>>();
+            if (playerManChoiceCombos.Count == 0)
+            {
+                List<List<Dictionary<Resource, int>>> manCostSplits = splitCost(manCost);
+                foreach (List<Dictionary<Resource, int>> costSplit in manCostSplits)
+                {
+                    Dictionary<Resource, int> cantCover = new Dictionary<Resource, int>();
+                    List<List<Resource>> remainingResources = new List<List<Resource>>();
+                    getRemainingCostAndChoices(costSplit[0], eastMan, cantCover, remainingResources);
+                    if (cantCover.Count > 0 && cantCover.Values.Count(x => x > 0) > 0) continue;
+                    getRemainingCostAndChoices(costSplit[1], westMan, cantCover, remainingResources);
+                    if (cantCover.Count > 0 && cantCover.Values.Count(x => x > 0) > 0) continue;
+                    rawSplits.Add(new List<int> { costSplit[0].Values.Sum() * player.mcost, costSplit[1].Values.Sum() * player.mcost });
+                }
+            }
+            foreach (List<List<Resource>> combo in playerManChoiceCombos)
+            {
+                Dictionary<Resource, int> remainingManCost = new Dictionary<Resource, int>();
+                getRemainingCostAndChoices(manCost, combo, remainingManCost, combo);
+                List<List<Dictionary<Resource, int>>> manCostSplits = splitCost(remainingManCost);
+                foreach (List<Dictionary<Resource, int>> costSplit in manCostSplits)
+                {
+                    Dictionary<Resource, int> cantCover = new Dictionary<Resource, int>();
+                    List<List<Resource>> remainingResources = new List<List<Resource>>();
+                    getRemainingCostAndChoices(costSplit[0], eastMan, cantCover, remainingResources);
+                    if (cantCover.Count > 0 && cantCover.Values.Count(x => x > 0) > 0) continue;
+                    getRemainingCostAndChoices(costSplit[1], westMan, cantCover, remainingResources);
+                    if (cantCover.Count > 0 && cantCover.Values.Count(x => x > 0) > 0) continue;
+                    rawSplits.Add(new List<int> { costSplit[0].Values.Sum() * player.mcost, costSplit[1].Values.Sum() * player.mcost });
+                }
+            }
+
+            if (rawSplits.Count == 0) rawSplits.Add(new List<int> { 0, 0 });
+            if (manSplits.Count == 0) manSplits.Add(new List<int> { 0, 0 });
+
+            foreach (List<int> option in rawSplits)
+                foreach (List<int> option2 in manSplits)
+                    splits.Add(new List<int> { option[0] + option2[0], option[1] + option2[1] });
+
+            return splits;
+        }
+
+        private static List<List<Dictionary<Resource, int>>> splitCost(Dictionary<Resource, int> cost)
+        {
+            List<List<Dictionary<Resource, int>>> splits = new List<List<Dictionary<Resource, int>>>();
+            if (cost == null || cost.Count == 0) return splits;
+            Resource first = cost.Keys.First();
+            for (int i = 0; i <= cost[first]; i++)
+            {
+                Dictionary<Resource, int> remainElements = new Dictionary<Resource, int>();
+                foreach (Resource r in cost.Keys)
+                    if (r != first) remainElements.Add(r, cost[r]);
+                List<List<Dictionary<Resource, int>>> subSplit = splitCost(remainElements);
+                if (subSplit.Count == 0) subSplit.Add(new List<Dictionary<Resource, int>> { new Dictionary<Resource, int>(), new Dictionary<Resource, int>() });
+                foreach (List<Dictionary<Resource, int>> l in subSplit)
+                {
+                    l[0].Add(first, i);
+                    l[1].Add(first, cost[first] - i);
+                }
+                splits.AddRange(subSplit);
+            }
+            return splits;
+        }
+
         //Checks whether a player can build a card from a chain
         public static bool canChainBuild(Player player, Card card)
         {
@@ -256,6 +391,9 @@ namespace _7Wonders
             return outsourcedCosts(player, cost, null, false);
         }
 
+
+        //OLD CODE
+
         //Returns the part of the given cost that the player cannot meet with his own single resources
         //Does not consider the player's resource choices
         private static Dictionary<Resource, int> outsourcedCosts(Player player, Dictionary<Resource, int> cost, List<List<Resource>> remainingPlayerChoices, bool self)
@@ -265,7 +403,7 @@ namespace _7Wonders
             foreach (Resource r in cost.Keys) coveredByChoices.Add(r, 0);
             if (remainingPlayerChoices != null)
             {
-                foreach (List<Resource> choice in self?player.getTotalChoices():player.getPublicChoices())
+                foreach (List<Resource> choice in self ? player.getTotalChoices() : player.getPublicChoices())
                 {
                     int numRelevant = 0;
                     Resource coveredResource = Resource.COIN;
@@ -286,20 +424,6 @@ namespace _7Wonders
                 if (cost[r] > player.getResourceNum(r) + coveredByChoices[r] && r != Resource.COIN)
                     remaining.Add(r, cost[r] - player.getResourceNum(r));
             }
-            return remaining;
-        }
-
-        //Returns the subset of a cost that cannot possibly be covered with a given set of choices
-        //E.g. if the cost includes 3W and there are only 2 choices that include W, will return a dictionary where [W]=1
-        //E.g. 2 if the cost includes manufactured goods and choices are only for raw goods, cost for man goods will remain same in return value
-        private static Dictionary<Resource, int> cantCoverWithChoices(Dictionary<Resource, int> cost, List<List<Resource>> choices)
-        {
-            Dictionary<Resource, int> remaining = new Dictionary<Resource, int>();
-            foreach (Resource r in cost.Keys)
-                remaining.Add(r, cost[r]);
-            foreach (List<Resource> choice in choices)
-                foreach (Resource r in choice)
-                    if (remaining.ContainsKey(r) && remaining[r] > 0) remaining[r]--;
             return remaining;
         }
 
