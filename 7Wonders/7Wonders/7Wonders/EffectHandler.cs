@@ -137,8 +137,10 @@ namespace _7Wonders
                 curr.addScore(Score.VICTORY, CalculateScience(curr.getScoreNum(Score.GEAR),curr.getScoreNum(Score.COMPASS),curr.getScoreNum(Score.TABLET)));
                 curr.addScore(Score.SCIENCE, CalculateScience(curr.getScoreNum(Score.GEAR), curr.getScoreNum(Score.COMPASS), curr.getScoreNum(Score.TABLET)));
                 curr.addScore(Score.VICTORY, curr.getScoreNum(Score.CONFLICT));
-                curr.addScore(Score.VICTORY, (int)curr.getResourceNum(Resource.COIN) / 3);
-                curr.addScore(Score.COIN, (int)curr.getResourceNum(Resource.COIN) / 3);
+                //curr.addScore(Score.VICTORY, (int)curr.getResourceNum(Resource.COIN) / 3);
+                //curr.addScore(Score.COIN, (int)curr.getResourceNum(Resource.COIN) / 3);
+                curr.addScore(Score.VICTORY, GetTreasuryScore(curr));
+                curr.addScore(Score.COIN, GetTreasuryScore(curr));
             } // End Player Loop
         }
 
@@ -321,6 +323,68 @@ namespace _7Wonders
                     p.addScore(Score.TABLET, 1);
                 }
             }
+        }
+
+        public Dictionary<Score, int> GetBestScienceChoice(Player p, int x)
+        {
+            Dictionary<Score, int> sciences = new Dictionary<Score, int>();
+            sciences.Add(Score.TABLET, 0);
+            sciences.Add(Score.COMPASS, 0);
+            sciences.Add(Score.GEAR, 0);
+
+            int gear = p.getScoreNum(Score.GEAR);
+            int compass = p.getScoreNum(Score.COMPASS);
+            int tablet = p.getScoreNum(Score.TABLET);
+
+            if (x == 1)
+            {
+                int max1 = CalculateScience((gear + 1), compass, tablet);
+                int max2 = CalculateScience(gear, (compass + 1), tablet);
+                int max3 = CalculateScience(gear, compass, (tablet + 1));
+
+                int maxScore = Math.Max(Math.Max(max1, max2), max3);
+                if (maxScore == max1)
+                    sciences[Score.GEAR] += 1;
+                else if (maxScore == max2)
+                    sciences[Score.COMPASS] += 1;
+                else if (maxScore == max3)
+                    sciences[Score.TABLET] += 1;
+            }
+            else if (x == 2)
+            {
+                int max1 = CalculateScience(gear + 2, compass, tablet);
+                int max2 = CalculateScience(gear, compass + 2, tablet);
+                int max3 = CalculateScience(gear, compass, tablet + 2);
+                int max4 = CalculateScience(gear + 1, compass + 1, tablet);
+                int max5 = CalculateScience(gear + 1, compass, tablet + 1);
+                int max6 = CalculateScience(gear, compass + 1, tablet + 1);
+
+                int maxScore = Math.Max(Math.Max(Math.Max(Math.Max(Math.Max(max1, max2), max3), max4), max5), max6);
+
+                if (maxScore == max1)
+                    sciences[Score.GEAR] += 2;
+                else if (maxScore == max2)
+                    sciences[Score.COMPASS] += 2;
+                else if (maxScore == max3)
+                    sciences[Score.TABLET] += 2;
+                else if (maxScore == max4)
+                {
+                    sciences[Score.GEAR] += 1;
+                    sciences[Score.COMPASS] += 1;
+                }
+                else if (maxScore == max5)
+                {
+                    sciences[Score.GEAR] += 1;
+                    sciences[Score.TABLET] += 1;
+                }
+                else if (maxScore == max6)
+                {
+                    sciences[Score.COMPASS] += 1;
+                    sciences[Score.TABLET] += 1;
+                }
+            }
+
+            return sciences;
         }
 
         public static int CalculateScience(int g, int c, int t)
@@ -537,11 +601,101 @@ namespace _7Wonders
         }
 
 
-        // Handle seperate instances of Score type
-        public static int getPoints(Player p, Score s)
+        // Returns the total score of the player, with the card or no card
+        public static int GetScore(Player p, Player east, Player west, Card c)
         {
+            int score = p.getScoreNum(Score.VICTORY) + p.getScoreNum(Score.CONFLICT);
+            int schoiceCount = 0;
+            if (c == null)
+            {
+                score += GetTreasuryScore(p);
+                score += GetCommercialScore(p);
+                score += GetGuildsScore(p, east, west);
+            }
 
-            return 0;
+            else
+            {
+
+            }
+            return score;
+        }
+
+        // Treasury contents
+        // For every 3 coins in their possesion at the end of the game, players score
+        // 1 victory point. Leftover coins score no points.
+        public static int GetTreasuryScore(Player p)
+        {
+            int treasury = p.getResourceNum(Resource.COIN) / 3;
+            return treasury;
+        }
+
+        // Commercial structures
+        // Some commercial structures from Age III grant victory points
+        // Return the victory points from Commercial structures
+        public static int GetCommercialScore(Player p)
+        {
+            int commercial = 0;
+
+            foreach (string c in p.getPlayed())
+            {
+                Card current = CardLibrary.getCard(c);
+                if (current.colour.Equals(CardColour.YELLOW) && current.age.Equals(3))
+                {
+                    foreach (Effect e in current.effects)
+                    {
+                        if (e.type.Equals(Effect.TypeType.VICTORY) && e.from.Equals(Effect.FromType.PLAYER))
+                        {
+                            if (e.basis.Equals(Effect.BasisType.WONDER))
+                                commercial += p.getBoard().getStagesBuilt();
+                            else
+                               commercial += GetVictoryColour(p, cardType[e.basis], e.amount);
+                        }
+                    }
+                }
+            }
+            return commercial;
+        }
+
+        public static int GetGuildsScore(Player p, Player east, Player west)
+        {
+            int guilds = 0;
+
+            foreach (string c in p.getPlayed())
+            {
+                Card current = CardLibrary.getCard(c);
+                if (current.colour.Equals(CardColour.PURPLE))
+                
+                    foreach (Effect e in current.effects)
+                    {
+                        if (e.type.Equals(Effect.TypeType.VICTORY))
+                        
+                            switch (e.from)
+                            {
+                                case Effect.FromType.ALL:
+
+                                    if (e.basis.Equals(Effect.BasisType.WONDER))
+                                        guilds += GetVictoryAllWonders(p, east, west);
+                                    break;
+
+                                case Effect.FromType.NEIGHBOURS:
+
+                                    if (cardType.ContainsKey(e.basis))
+                                        guilds += GetVictoryNeighboursColour(east, west, cardType[e.basis], e.amount);
+
+                                    else if (e.basis.Equals(Effect.BasisType.DEFEAT))
+                                        guilds += east.getScoreNum(Score.DEFEAT) + west.getScoreNum(Score.DEFEAT);                                   
+                                    break;
+
+                                case Effect.FromType.PLAYER:
+
+                                    if (cardType.ContainsKey(e.basis))
+                                        guilds += GetVictoryColour(p, cardType[e.basis], e.amount);
+                                    break;
+                            }
+                    }
+            }
+
+            return guilds;
         }
     }
 }
