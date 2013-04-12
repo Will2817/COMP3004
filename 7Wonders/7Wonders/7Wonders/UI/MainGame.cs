@@ -32,7 +32,7 @@ namespace _7Wonders
         private int LABELLENGTH;
         private int RESOURCELENGTH;
 
-        private int SCOREWIDTH = (int)(Game1.WIDTH / 2 * 0.609f / 7);
+        private int SCOREWIDTH = (int)(Game1.WIDTH / 2 * 0.62f / 7);
 
         private TradeInterface trade;
         private Button quit;
@@ -157,11 +157,17 @@ namespace _7Wonders
                 foreach (Player p in Game1.client.getState().getPlayers().Values)
                 {
                     baseVisuals.Add("name" + p.getSeat(), new Visual(new Vector2(Game1.WIDTH / 4, Game1.HEIGHT / 4 + 40 * n), (int)(Game1.WIDTH / 2 * 0.296f), 40, p.getName(), "Font1", null, null, "line").setVisible(false));
-                    baseVisuals.Add("score" + p.getSeat(), new Visual(new Vector2(Game1.WIDTH / 4 + (int)(Game1.WIDTH / 2 * 0.296f), Game1.HEIGHT / 4 + 40 * n), SCOREWIDTH * 7, 40, p.getScoreNum(Score.CONFLICT) + " " + p.getScoreNum(Score.COIN) + " " + p.getScoreNum(Score.STAGES) + " " + p.getScoreNum(Score.VICTORY_BLUE) + " " + p.getScoreNum(Score.COMMERCE) + " " + p.getScoreNum(Score.GUILD) + " " + p.getScoreNum(Score.SCIENCE), "Font1", null, null, "line").setVisible(false));
-                    baseVisuals.Add("sum" + p.getSeat(), new Visual(new Vector2(Game1.WIDTH / 4 + (int)(Game1.WIDTH / 2 * 0.296f) + SCOREWIDTH * 7, Game1.HEIGHT / 4 + 40 * n), 33, 40, p.getScoreNum(Score.VICTORY).ToString(), "Font1", null, null, "line").setVisible(false));
-                    lastPlayed.Add("player" + p.getSeat(), new Visual(new Vector2(Game1.WIDTH * ((n - 1) % 4 + 2) / 6 + MARGIN, Game1.HEIGHT * ((int)(n / 5) * 2 + 1) / 6 + MARGIN), Game1.WIDTH / 6 - MARGIN * 5, LABELHEIGHT, (p.getSeat() + 1) + "|" + p.getName(), "Font1", null, null, "grayback"));
+                    baseVisuals.Add("conflict" + p.getSeat(), new Visual(new Vector2(Game1.WIDTH / 4 + (int)(Game1.WIDTH / 2 * 0.296f), Game1.HEIGHT / 4 + 40 * n), SCOREWIDTH, 40, p.getScoreNum(Score.CONFLICT).ToString(), "Font1", null, null, "line").setVisible(false));
+                    baseVisuals.Add("coin" + p.getSeat(), new Visual(new Vector2(Game1.WIDTH / 4 + (int)(Game1.WIDTH / 2 * 0.296f) + SCOREWIDTH, Game1.HEIGHT / 4 + 40 * n), SCOREWIDTH, 40, p.getScoreNum(Score.COIN).ToString(), "Font1", null, null, "line").setVisible(false));
+                    baseVisuals.Add("stages" + p.getSeat(), new Visual(new Vector2(Game1.WIDTH / 4 + (int)(Game1.WIDTH / 2 * 0.296f) + SCOREWIDTH * 2, Game1.HEIGHT / 4 + 40 * n), SCOREWIDTH, 40, p.getScoreNum(Score.STAGES).ToString(), "Font1", null, null, "line").setVisible(false));
+                    baseVisuals.Add("blue" + p.getSeat(), new Visual(new Vector2(Game1.WIDTH / 4 + (int)(Game1.WIDTH / 2 * 0.296f) + SCOREWIDTH * 3, Game1.HEIGHT / 4 + 40 * n), SCOREWIDTH, 40, p.getScoreNum(Score.VICTORY_BLUE).ToString(), "Font1", null, null, "line").setVisible(false));
+                    baseVisuals.Add("commerce" + p.getSeat(), new Visual(new Vector2(Game1.WIDTH / 4 + (int)(Game1.WIDTH / 2 * 0.296f) + SCOREWIDTH * 4, Game1.HEIGHT / 4 + 40 * n), SCOREWIDTH, 40, p.getScoreNum(Score.COMMERCE).ToString(), "Font1", null, null, "line").setVisible(false));
+                    baseVisuals.Add("guild" + p.getSeat(), new Visual(new Vector2(Game1.WIDTH / 4 + (int)(Game1.WIDTH / 2 * 0.296f) + SCOREWIDTH * 5, Game1.HEIGHT / 4 + 40 * n), SCOREWIDTH, 40, p.getScoreNum(Score.GUILD).ToString(), "Font1", null, null, "line").setVisible(false));
+                    baseVisuals.Add("science" + p.getSeat(), new Visual(new Vector2(Game1.WIDTH / 4 + (int)(Game1.WIDTH / 2 * 0.296f) + SCOREWIDTH * 6, Game1.HEIGHT / 4 + 40 * n), SCOREWIDTH, 40, p.getScoreNum(Score.SCIENCE).ToString(), "Font1", null, null, "line").setVisible(false));
+                    baseVisuals.Add("sum" + p.getSeat(), new Visual(new Vector2(Game1.WIDTH / 4 + (int)(Game1.WIDTH / 2 * 0.296f) + SCOREWIDTH * 7, Game1.HEIGHT / 4 + 40 * n), SCOREWIDTH, 40, p.getScoreNum(Score.VICTORY).ToString(), "Font1", null, null, "line").setVisible(false));
+                    lastPlayed.Add("player" + p.getSeat(), new Visual(new Vector2(Game1.WIDTH * ((n - 1) % 4 + 2) / 6 + MARGIN, Game1.HEIGHT * ((int)(n / 5) * 2 + 1) / 6 + MARGIN), Game1.WIDTH / 6 - MARGIN * 5, LABELHEIGHT, (p.getSeat() +1) + "|" + p.getName(), "Font1", null, null, "grayback"));
                     lastPlayed.Add("action" + p.getSeat(), new Visual(new Vector2(Game1.WIDTH * ((n - 1) % 4 + 2) / 6 + MARGIN, Game1.HEIGHT * ((int)(n / 5) * 2 + 1) / 6 + LABELHEIGHT + MARGIN * 2), Game1.WIDTH / 6 - MARGIN * 6, Game1.HEIGHT / 3 - MARGIN * 3 - LABELHEIGHT, "coin"));
-                    n++;
+                    n++; 
                 }
                 quit = new Button(new Vector2(Game1.WIDTH / 2 - 70, Game1.HEIGHT / 4 + 40 * n + MARGIN), 140, 50, "Quit", "Font1");
                 baseVisuals.Add("quit", quit.setVisible(false));
@@ -538,14 +544,20 @@ namespace _7Wonders
 
         public void updateLast(GameState gameState)
         {
+            int n= 1;
             foreach (Player p in gameState.getPlayers().Values)
             {
+                lastPlayed["action" + p.getSeat()].setPosition(new Vector2(Game1.WIDTH * ((n - 1) % 4 + 2) / 6 + MARGIN, Game1.HEIGHT * ((int)(n / 5) * 2 + 1) / 6 + LABELHEIGHT + MARGIN * 2)).setWidth(Game1.WIDTH / 6 - MARGIN * 6).setHeight(Game1.HEIGHT / 3 - MARGIN * 3 - LABELHEIGHT);
                 if (p.getLastActions()[0] == ActionType.BUILD_CARD)
                     lastPlayed["action" + p.getSeat()].setTexture(p.getLastCardsPlayed()[0]);
                 else if (p.getLastActions()[0] == ActionType.BUILD_WONDER)
                     lastPlayed["action" + p.getSeat()].setTexture("stage" + p.getBoard().getStagesBuilt() + p.getBoard().getSide().getStageNum());
                 else
+                {
+                    lastPlayed["action" + p.getSeat()].setPosition(new Vector2(Game1.WIDTH * ((n - 1) % 4 + 2) / 6 + MARGIN + (Game1.WIDTH / 6 - MARGIN * 6) / 3, Game1.HEIGHT * ((int)(n / 5) * 2 + 1) / 6 + LABELHEIGHT + MARGIN * 2 + (Game1.HEIGHT / 3 - MARGIN * 3 - LABELHEIGHT)/3)).setWidth(Game1.WIDTH / 12 - MARGIN * 2).setHeight(Game1.HEIGHT / 9 - MARGIN - LABELHEIGHT / 3);
                     lastPlayed["action" + p.getSeat()].setTexture("coin");
+                }
+                n++;
             }
         }
 
@@ -584,8 +596,13 @@ namespace _7Wonders
                 foreach (Player p in gameState.getPlayers().Values)
                 {
                     baseVisuals["name" + p.getSeat()].setVisible(true);
-                    baseVisuals["score" + p.getSeat()].setVisible(true);
-                    baseVisuals["score" + p.getSeat()].setString(p.getScoreNum(Score.CONFLICT) + " " + p.getScoreNum(Score.COIN) + " " + p.getScoreNum(Score.STAGES) + " " + p.getScoreNum(Score.VICTORY_BLUE) + " " + p.getScoreNum(Score.COMMERCE) + " " + p.getScoreNum(Score.GUILD) + " " + p.getScoreNum(Score.SCIENCE));  
+                    baseVisuals["conflict" + p.getSeat()].setString(p.getScoreNum(Score.CONFLICT).ToString()).setVisible(true);
+                    baseVisuals["coin" + p.getSeat()].setString(p.getScoreNum(Score.COIN).ToString()).setVisible(true);
+                    baseVisuals["stages" + p.getSeat()].setString(p.getScoreNum(Score.STAGES).ToString()).setVisible(true);
+                    baseVisuals["blue" + p.getSeat()].setString(p.getScoreNum(Score.VICTORY_BLUE).ToString()).setVisible(true);
+                    baseVisuals["commerce" + p.getSeat()].setString(p.getScoreNum(Score.COMMERCE).ToString()).setVisible(true);
+                    baseVisuals["guild" + p.getSeat()].setString(p.getScoreNum(Score.GUILD).ToString()).setVisible(true);
+                    baseVisuals["science" + p.getSeat()].setString(p.getScoreNum(Score.SCIENCE).ToString()).setVisible(true);
                     baseVisuals["sum" + p.getSeat()].setString(p.getScoreNum(Score.VICTORY).ToString()).setVisible(true);
                 }
                 quit.setVisible(true);

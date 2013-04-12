@@ -248,6 +248,7 @@ namespace _7Wonders
                     message = new Dictionary<string, string>();
                     message.Add("connection", "Lost Connection");
                     activeInterface.receiveMessage(message);
+                    interfaces["maingame"] = new MainGame(this);
                     if (host != null) host.shutdown();
                     client = new Client.Client();
                 }
@@ -278,6 +279,7 @@ namespace _7Wonders
                     if (host != null) host.shutdown();
                     client.disconnect();
                     client = new Client.Client();
+                    interfaces["maingame"] = new MainGame(this);
                 }
                 if ((message["nextInterface"] == "lobby"))
                 {
