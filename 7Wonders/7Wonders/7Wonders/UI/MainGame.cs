@@ -296,7 +296,7 @@ namespace _7Wonders
             }
             Game1.recordedPresses = "";
 
-            if (storeSeat != seatViewed)// <------------This section should not get direct access to gamestate
+            if (storeSeat != seatViewed)
             {
                 foreach (Player p in Game1.client.getState().getPlayers().Values)
                     baseVisuals["player" + p.getSeat()].setColor((p.getReady()) ? Color.Green : Color.Gray);
@@ -569,6 +569,7 @@ namespace _7Wonders
 
             if (code == UpdateType.END_UPDATE)
             {
+                hand.Clear(); //<-- bit of a hack
                 showScore = true;
                 baseVisuals["Scorehead"].setVisible(true);
                 foreach (Player p in gameState.getPlayers().Values)

@@ -82,21 +82,9 @@ namespace _7Wonders
                 visuals1.Add("ready" + i, readyCBs[i]);
             }
 
-            int count = 0;
-            int count2 = 1;
-            //need to work on this so that it adapts better to number of wonders
             foreach (KeyValuePair<string, Visual> kvp in Game1.wonders)
             {
-                kvp.Value.setPosition(new Vector2(5 + SEC1WIDTH * count2, 5 + WONDERHEIGHT * count)).setWidth(WONDERWIDTH).setHeight(WONDERHEIGHT);
                 visuals1.Add(kvp.Key, kvp.Value);
-                count++;
-
-                if (count>3)
-                {
-                    count=0;
-                    count2++;
-                }
-                
             }
 
             visuals1.Add("selected", new Visual(new Vector2(5 + SEC1WIDTH, 5 + SEC1HEIGHT), WONDERWIDTH * 2 + 10, WONDERHEIGHT * 2, Game1.wonders.Values.First().getTexture()));
@@ -181,6 +169,26 @@ namespace _7Wonders
                     {"nextInterface", "lobby"},
                     {"role" , "join"}
                 };
+        }
+
+        public override void receiveMessage(Dictionary<string, string> message)
+        {
+            int count = 0;
+            int count2 = 1;
+            //need to work on this so that it adapts better to number of wonders
+            foreach (KeyValuePair<string, Visual> kvp in Game1.wonders)
+            {
+                kvp.Value.setTexture(kvp.Key + "_A");
+                kvp.Value.setPosition(new Vector2(5 + SEC1WIDTH * count2, 5 + WONDERHEIGHT * count)).setWidth(WONDERWIDTH).setHeight(WONDERHEIGHT);
+                count++;
+
+                if (count > 3)
+                {
+                    count = 0;
+                    count2++;
+                }
+
+            }
         }
 
         public virtual void updatePlayers(GameState gameState)

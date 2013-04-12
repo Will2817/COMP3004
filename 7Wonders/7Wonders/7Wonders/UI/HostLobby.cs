@@ -96,6 +96,7 @@ namespace _7Wonders
 
         public override void receiveMessage(Dictionary<string, string> message)
         {
+            base.receiveMessage(message);
             Game1.host.setOptions(Boolean.Parse(message["onlyA"]), Boolean.Parse(message["random"]));
         }
 
