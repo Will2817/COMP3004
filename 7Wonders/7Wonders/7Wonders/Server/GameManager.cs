@@ -85,7 +85,8 @@ namespace _7Wonders.Server
             }
             else
             {
-                //Handle in-game player drop here
+                gameState.setInProgress(false);
+                messageSerializer.broadcastSuperState(gameState.superJson());
             }
         }
 

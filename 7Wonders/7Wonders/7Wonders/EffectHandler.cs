@@ -214,7 +214,7 @@ namespace _7Wonders
                 foreach (Effect.TypeType c in e.list)
                     choice.Add(resourceType[c]);
 
-                if ((e.basis != Effect.BasisType.NONE) && (e.basis.Equals(Effect.BasisType.YELLOW) || e.basis.Equals(Effect.BasisType.WONDER)))
+                if ((e.basis.Equals(Effect.BasisType.YELLOW) || e.basis.Equals(Effect.BasisType.WONDER)))
                     AddResourceUnPurchaseable(p, choice);
                 else
                     AddResourceChoice(p, choice);
