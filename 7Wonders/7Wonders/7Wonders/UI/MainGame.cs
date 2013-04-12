@@ -314,11 +314,6 @@ namespace _7Wonders
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             base.Draw(gameTime, spriteBatch);
-            foreach (Visual v in baseVisuals.Values)
-            {
-                v.Draw(gameTime, spriteBatch);
-            }
-
 
             if (!showhand && !showLastTurn && !showScore)
             {
@@ -327,6 +322,11 @@ namespace _7Wonders
                     if (kp.Key != "wonder" && kp.Key != "stages")
                         if (kp.Value.isMouseOver(mousestate)) kp.Value.Draw(gameTime, spriteBatch);
                 }
+            }
+
+            foreach (Visual v in baseVisuals.Values)
+            {
+                v.Draw(gameTime, spriteBatch);
             }
 
             lock (hand)
@@ -443,6 +443,7 @@ namespace _7Wonders
 
                 foreach (string cardID in p.getPlayed())
                 {
+
                     Card c = CardLibrary.getCard(cardID);
                     Game1.cards[c.getImageId()].setWidth(CARDWIDTH).setHeight(CARDHEIGHT);
                     if (c.colour == CardColour.BROWN || c.colour == CardColour.GRAY)
@@ -491,8 +492,10 @@ namespace _7Wonders
                             played1++;
                         }
                     }
-                    if (!seatVisuals[p.getSeat()].ContainsKey(c.getImageId())) 
+                    if (!seatVisuals[p.getSeat()].ContainsKey(cardID))
+                    {
                         seatVisuals[p.getSeat()].Add(c.getImageId(), Game1.cards[c.getImageId()].setVisible(true));
+                    }
                 }
             }
         }
@@ -564,7 +567,7 @@ namespace _7Wonders
                 updatePlayers(gameState);
             }
 
-            if (code == UpdateType.END_UPDATE) //<--  fix this
+            if (code == UpdateType.END_UPDATE)
             {
                 showScore = true;
                 baseVisuals["Scorehead"].setVisible(true);
