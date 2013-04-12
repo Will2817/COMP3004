@@ -64,9 +64,20 @@ namespace _7Wonders.Server.AI
             Dictionary<string, int> handBuildPriorities = new Dictionary<string, int>();
             Dictionary<string, int> handHidePriorities = new Dictionary<string, int>();
             //wonder build priority (will be standard calculation + highest hide priority)
+            Boolean repeat = false;
             foreach (string c in self.getHand())
             {
                 Card card = CardLibrary.getCard(c);
+                repeat = false;
+                foreach (string played in self.getPlayed())
+                {
+                    if (CardLibrary.getCard(played).name == card.name)
+                    {
+                        repeat = true;
+                        break;
+                    }
+                }
+                if (repeat) continue;
                 int p = buildPriorities[card.name];
                 p += EffectHandler.GetScore(self, east, west, c) - EffectHandler.GetScore(self, east, west, null);
                 int cost = ConstructionUtils.canChainBuild(self, card) ? 0 : ConstructionUtils.constructCost(self, west, east, card.cost);
