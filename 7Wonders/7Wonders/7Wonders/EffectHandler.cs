@@ -8,9 +8,10 @@ namespace _7Wonders
     using Game_Cards;
 
     /* EffectHandler Class
-     * This Class has Global Functions!
-     * This class will be used to control the effects 
-     * of cards along with the effects of Wonders
+     * This Class has Global Functions where it will be will be used to control the effects 
+     * of cards along with the effects of Wonders.
+     * 
+     * It handles Victory Points to some of the specific Wonder board effects
      */
     public static class EffectHandler
     {
@@ -625,24 +626,33 @@ namespace _7Wonders
         {
             // Score for victory is automatically computing the Victory points for
             // Blue cards, Wonder stages, 
-            Player temp = p;
+            int score = 0;
             int schoiceCount = 0;
+
+            Dictionary<Score, int> oldScore = new Dictionary<Score, int>();
+            List<Card> played = new List<Card>();
+
+            foreach (KeyValuePair<Score, int> k in p.getScore())
+                oldScore[k.Key] = k.Value;
+
+            foreach (string card in p.getPlayed())
+                played.Add(CardLibrary.getCard(card));       
 
             // Card isn't NULL - returns the score of the player with the hypothetical card in the players
             // Played card list
             if (cardID != null)
             {
                 Card card = CardLibrary.getCard(cardID);
-                if (!temp.cardPlayed(cardID))
-                    temp.addPlayed(card);
+                if (!p.cardPlayed(cardID))
+                    played.Add(card);
             }
 
                 // Check Wonder board effects first
                 // This way if a player has guildCopy, it will take into account that the scientist guild
                 // card is added into the players played hand and counted
-                for (int i = 0; i < temp.getBoard().getStagesBuilt(); i++)
+                for (int i = 0; i < p.getBoard().getStagesBuilt(); i++)
                 {
-                    foreach (Effect e in temp.getBoard().getSide().getStageEffects(i))
+                    foreach (Effect e in p.getBoard().getSide().getStageEffects(i))
                     {
                         if (e.type.Equals(Effect.TypeType.SCHOICE))
                             schoiceCount += 1;
@@ -650,15 +660,14 @@ namespace _7Wonders
                         // GUILD COPY - not finished
                         else if (e.type.Equals(Effect.TypeType.GUILD))
                         {
-                            CopyGuild(temp, east, west);
+                            played.Add(GetGuildCopyCard(p, east, west));
                         }
                     } // Foreach loop through Wondestage effects
                 } // For loop through the stages
 
                 // Looping through the player's played cards
-                foreach (string c in temp.getPlayed())
+                foreach (Card card in played)
                 {
-                    Card card = CardLibrary.getCard(c);
                     // Looping through the effects of each Card for End Game purposes
                     foreach (Effect e in card.effects)
                     {
@@ -672,29 +681,29 @@ namespace _7Wonders
                                 // Apply victory points awarded for each
                                 // Wonderstage neigboring cities own
                                 if (e.basis.Equals(Effect.BasisType.WONDER))
-                                    AddVictoryAllWonders(temp, east, west);
+                                    score += GetVictoryAllWonders(p, east, west);
 
                                 //Victory points given per neighbor's conlfict token
                                 else if (e.basis.Equals(Effect.BasisType.DEFEAT))
-                                   AddVictoryNeighboursConflict(temp, east, west);
+                                   score += GetVictoryNeighboursConflict(east, west);
 
                                  // Victory points awarded per certain structure built by neighbours
                                 else
-                                    AddVictoryNeighboursColour(temp, east, west, cardType[e.basis], e.amount);
+                                   score += GetVictoryNeighboursColour(east, west, cardType[e.basis], e.amount);
                             }
                             // FROM: PLAYER
                             // BASIS: CardColour, Wonderstages, 
                             else if (e.from != Effect.FromType.NONE && e.from.Equals(Effect.FromType.PLAYER))
                             {
                                 if (e.basis.Equals(Effect.BasisType.WONDER))
-                                    AddVictoryWonder(temp);
+                                   score += p.getBoard().getStagesBuilt();
                                 else
-                                    AddVictoryColour(temp, cardType[e.basis], e.amount);
+                                    score += GetVictoryColour(p, cardType[e.basis], e.amount);
                             }
                             // FROM: ALL
                             // BASIS: Wonderstages
                             else if (e.from != Effect.FromType.NONE && e.from.Equals(Effect.FromType.ALL))
-                                AddVictoryAllWonders(temp, east, west);
+                              score +=  GetVictoryAllWonders(p, east, west);
                         } // End Victory Points
 
                         // SCIENCE CHOICE
@@ -703,21 +712,24 @@ namespace _7Wonders
                     } // End Effect Loop for Cards                    
                 } // End Current Player's Card Loop
 
-                for (int i = 0; i < temp.getBoard().getStagesBuilt(); i++)
+                for (int i = 0; i < p.getBoard().getStagesBuilt(); i++)
                 {
-                    foreach (Effect e in temp.getBoard().getSide().getStageEffects(i))
+                    foreach (Effect e in p.getBoard().getSide().getStageEffects(i))
                     {
-                        if (e.type.Equals(Effect.TypeType.VICTORY)) temp.addScore(Score.STAGES, e.amount);
+                        if (e.type.Equals(Effect.TypeType.VICTORY)) score += e.amount;
                     }
                 }
 
                 // Max Function, will add onto the max science value
-                AddScienceChoice(temp, schoiceCount);
-                temp.addScore(Score.VICTORY, CalculateScience(temp.getScoreNum(Score.GEAR), temp.getScoreNum(Score.COMPASS), temp.getScoreNum(Score.TABLET)));
-                temp.addScore(Score.VICTORY, temp.getScoreNum(Score.CONFLICT));
-                temp.addScore(Score.VICTORY, GetTreasuryScore(temp));
+                foreach (KeyValuePair<Score, int> k in GetBestScienceChoice(p, schoiceCount))
+                {
+                    oldScore[k.Key] += k.Value;
+                }
+                score += CalculateScience(oldScore[Score.GEAR], oldScore[Score.COMPASS], oldScore[Score.TABLET]);
+                score += p.getScoreNum(Score.CONFLICT);
+                score += GetTreasuryScore(p);
 
-            return temp.getScoreNum(Score.VICTORY);    
+                return score;    
         }
 
         // Treasury contents
@@ -837,6 +849,64 @@ namespace _7Wonders
             }
 
             return guilds;
+        }
+
+        public static string GetBestResourceCard(Player p, Player east, Player west)
+        {
+            Dictionary<Resource, double> priorityList = new Dictionary<Resource, double>();
+            Dictionary<Card, double> cardValue = new Dictionary<Card, double>();
+            List<string> hand = p.getHand();
+            List<Card>  cards = new List<Card>();
+
+            string candidate = null;
+
+            // Might not use this
+            double eastFactor = 1 - p.rcostEast/3;
+            double westFactor = 1 - p.rcostWest/3;
+            double mcost = 1 - p.mcost/3;
+
+            foreach (KeyValuePair<Resource, int> r in p.getResources())
+            {
+                priorityList[r.Key] += r.Value;
+            }
+
+            foreach (KeyValuePair<Resource, int> r in east.getResources())
+            {
+                priorityList[r.Key] += eastFactor * r.Value;
+            }
+
+            foreach (KeyValuePair<Resource, int> r in west.getResources())
+            {
+                priorityList[r.Key] += westFactor * r.Value;
+            }
+
+            foreach (string c in hand)
+            {   
+                Card currCard = CardLibrary.getCard(c);
+
+                foreach (Effect e in currCard.effects)
+                {
+                    if (resourceType.ContainsKey(e.type))
+                    {
+                        cards.Add(currCard);
+                        break;
+                    }
+                }
+            }
+
+            foreach (Card c in cards)
+            {
+                foreach (Effect e in c.effects)
+                {
+                    if (resourceType.ContainsKey(e.type))
+                    {
+               //         priorityList[e.type].
+                    }
+                }
+            }
+            
+
+            return null;
         }
     }
 }
