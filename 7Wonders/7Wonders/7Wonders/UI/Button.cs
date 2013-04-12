@@ -31,6 +31,14 @@ namespace _7Wonders
             text = t;
         }
 
+        public override void setColor(Color _color)
+        {
+            if (_color == Color.White)
+                textureColor = new Color(255 - highlight, 255 - highlight, 255 - highlight) * opacity;
+            else
+                base.setColor(_color);
+        }
+
         // Draw function
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {

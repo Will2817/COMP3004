@@ -500,7 +500,7 @@ namespace _7Wonders
         // Victory Points returned from the number of wonderstages built from each neighbour including the player
         private static int GetVictoryAllWonders(Player p, Player east, Player west)
         {
-            return p.getBoard()..getStagesBuilt() + east.getBoard().getStagesBuilt() + west.getBoard().getStagesBuilt();
+            return p.getBoard().getStagesBuilt() + east.getBoard().getStagesBuilt() + west.getBoard().getStagesBuilt();
         }
 
         // Trading Cost for East and West Raw Resources

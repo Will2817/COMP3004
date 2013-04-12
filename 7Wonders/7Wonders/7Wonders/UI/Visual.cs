@@ -172,7 +172,7 @@ namespace _7Wonders
             return textureName;
         }
 
-        public void setColor(Color _color)
+        public virtual void setColor(Color _color)
         {
             textureColor = _color * opacity;
         }

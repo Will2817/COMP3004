@@ -35,6 +35,7 @@ namespace _7Wonders
         private int SCOREWIDTH = (int)(Game1.WIDTH / 2 * 0.609f / 7);
 
         private TradeInterface trade;
+        private Button quit;
 
         protected Dictionary<int, Dictionary<string, Visual>> seatVisuals;
         protected Dictionary<string, Visual> baseVisuals;
@@ -74,6 +75,7 @@ namespace _7Wonders
             hand.Add("leftButton", leftButton.setBorder(false));
 
             close = new Button(new Vector2(Game1.WIDTH - Game1.WIDTH / 9, Game1.HEIGHT * 5/ 8), 75, 40, "Close", "Font1");
+
             lastPlayed.Add("bg", new Visual(new Vector2(Game1.WIDTH / 3, Game1.HEIGHT / 6), Game1.WIDTH * 2 / 3, Game1.HEIGHT * 2 / 3, "bg"));
             lastPlayed.Add("close", close);
 
@@ -158,9 +160,11 @@ namespace _7Wonders
                     baseVisuals.Add("score" + p.getSeat(), new Visual(new Vector2(Game1.WIDTH / 4 + (int)(Game1.WIDTH / 2 * 0.296f), Game1.HEIGHT / 4 + 40 * n), SCOREWIDTH * 7, 40, p.getScoreNum(Score.CONFLICT) + " " + p.getScoreNum(Score.COIN) + " " + p.getScoreNum(Score.STAGES) + " " + p.getScoreNum(Score.VICTORY_BLUE) + " " + p.getScoreNum(Score.COMMERCE) + " " + p.getScoreNum(Score.GUILD) + " " + p.getScoreNum(Score.SCIENCE), "Font1", null, null, "line").setVisible(false));
                     baseVisuals.Add("sum" + p.getSeat(), new Visual(new Vector2(Game1.WIDTH / 4 + (int)(Game1.WIDTH / 2 * 0.296f) + SCOREWIDTH * 7, Game1.HEIGHT / 4 + 40 * n), 33, 40, p.getScoreNum(Score.VICTORY).ToString(), "Font1", null, null, "line").setVisible(false));
                     lastPlayed.Add("player" + p.getSeat(), new Visual(new Vector2(Game1.WIDTH * ((n - 1) % 4 + 2) / 6 + MARGIN, Game1.HEIGHT * ((int)(n / 5) * 2 + 1) / 6 + MARGIN), Game1.WIDTH / 6 - MARGIN * 5, LABELHEIGHT, (p.getSeat() + 1) + "|" + p.getName(), "Font1", null, null, "grayback"));
-                    lastPlayed.Add("action" + p.getSeat(), new Visual(new Vector2(Game1.WIDTH * ((n - 1) % 4 + 2) / 6 + MARGIN, Game1.HEIGHT * ((int)(n / 5) * 2 + 1) / 6 + LABELHEIGHT + MARGIN * 2), Game1.WIDTH / 6 - MARGIN * 2, Game1.HEIGHT / 3 - MARGIN * 3 - LABELHEIGHT, "coin"));
+                    lastPlayed.Add("action" + p.getSeat(), new Visual(new Vector2(Game1.WIDTH * ((n - 1) % 4 + 2) / 6 + MARGIN, Game1.HEIGHT * ((int)(n / 5) * 2 + 1) / 6 + LABELHEIGHT + MARGIN * 2), Game1.WIDTH / 6 - MARGIN * 6, Game1.HEIGHT / 3 - MARGIN * 3 - LABELHEIGHT, "coin"));
                     n++;
                 }
+                quit = new Button(new Vector2(Game1.WIDTH / 2 - 70, Game1.HEIGHT / 4 + 40 * n + MARGIN), 140, 50, "Quit", "Font1");
+                baseVisuals.Add("quit", quit.setVisible(false));
 
 
                 seatViewed = player.getSeat();
@@ -308,6 +312,11 @@ namespace _7Wonders
                 leftButton.reset();
                 showhand = !showhand;
                 updateScroll();
+            }
+
+            if (quit.isClicked())
+            {
+                finished = true;
             }
         }
 
@@ -579,6 +588,7 @@ namespace _7Wonders
                     baseVisuals["score" + p.getSeat()].setString(p.getScoreNum(Score.CONFLICT) + " " + p.getScoreNum(Score.COIN) + " " + p.getScoreNum(Score.STAGES) + " " + p.getScoreNum(Score.VICTORY_BLUE) + " " + p.getScoreNum(Score.COMMERCE) + " " + p.getScoreNum(Score.GUILD) + " " + p.getScoreNum(Score.SCIENCE));  
                     baseVisuals["sum" + p.getSeat()].setString(p.getScoreNum(Score.VICTORY).ToString()).setVisible(true);
                 }
+                quit.setVisible(true);
             }
         }
     }
