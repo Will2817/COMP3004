@@ -631,7 +631,6 @@
             "age": 3,
             "guild": "purple",
             "cost": {
-                "coin": 1,
                 "o": 2,
                 "c": 1,
                 "s": 1,
@@ -770,8 +769,8 @@
             "guild": "purple",
             "cost": {
                 "w": 3,
-                "p": 1,
-                "g": 1
+                "g": 1,
+                "p": 1
             },
             "effects": [
                 {
@@ -1142,6 +1141,48 @@
                 "Theater"
             ]
         },
+		{
+            "name": "Courthouse",
+            "image": "/Age2/courthouse_2_3",
+            "players": 3,
+            "age": 2,
+            "guild": "blue",
+            "cost": {
+                "c": 2,
+                "l": 1
+            },
+            "effects": [
+                {
+                    "type": "victory",
+                    "amount": 4,
+					"basis": "blue"
+                }
+            ],
+            "chains": [
+                "Scriptorium"
+            ]
+        },
+        {
+            "name": "Courthouse",
+            "image": "/Age2/courthouse_2_5",
+            "players": 5,
+            "age": 2,
+            "guild": "blue",
+            "cost": {
+                "c": 2,
+                "l": 1
+            },
+            "effects": [
+                {
+                    "type": "victory",
+                    "amount": 4,
+					"basis": "blue"
+                }
+            ],
+            "chains": [
+                "Scriptorium"
+            ]
+        },
         {
             "name": "Pantheon",
             "image": "/Age3/pantheon_3_3",
@@ -1348,48 +1389,6 @@
             ],
             "chains": [
                 null
-            ]
-        },
-        {
-            "name": "Courthouse",
-            "image": "/Age2/courthouse_2_3",
-            "players": 3,
-            "age": 2,
-            "guild": "blue",
-            "cost": {
-                "c": 2,
-                "l": 1
-            },
-            "effects": [
-                {
-                    "type": "victory",
-                    "amount": 4,
-					"basis": "blue"
-                }
-            ],
-            "chains": [
-                "Scriptorium"
-            ]
-        },
-        {
-            "name": "Courthouse",
-            "image": "/Age2/courthouse_2_5",
-            "players": 5,
-            "age": 2,
-            "guild": "blue",
-            "cost": {
-                "c": 2,
-                "l": 1
-            },
-            "effects": [
-                {
-                    "type": "victory",
-                    "amount": 4,
-					"basis": "blue"
-                }
-            ],
-            "chains": [
-                "Scriptorium"
             ]
         },
         {
@@ -1648,6 +1647,88 @@
                 null
             ]
         },
+		{
+            "name": "Stables",
+            "image": "/Age2/stables_2_3",
+            "players": 3,
+            "age": 2,
+            "guild": "red",
+            "cost": {
+                "c": 1,
+                "w": 1,
+                "o": 1
+            },
+            "effects": [
+                {
+                    "type": "army",
+                    "amount": 2
+                }
+            ],
+            "chains": [
+                "Apothecary"
+            ]
+        },
+        {
+            "name": "Stables",
+            "image": "/Age2/stables_2_5",
+            "players": 5,
+            "age": 2,
+            "guild": "red",
+            "cost": {
+                "c": 1,
+                "w": 1,
+                "o": 1
+            },
+            "effects": [
+                {
+                    "type": "army",
+                    "amount": 2
+                }
+            ],
+            "chains": [
+                "Apothecary"
+            ]
+        },
+        {
+            "name": "Archery Range",
+            "image": "/Age2/archeryRange_2_3",
+            "players": 3,
+            "age": 2,
+            "guild": "red",
+            "cost": {
+                "w": 2,
+                "o": 1
+            },
+            "effects": [
+                {
+                    "type": "army",
+                    "amount": 2
+                }
+            ],
+            "chains": [
+                "Workshop"
+            ]
+        },
+        {
+            "name": "Archery Range",
+            "image": "/Age2/archeryRange_2_6",
+            "players": 6,
+            "age": 2,
+            "guild": "red",
+            "cost": {
+                "w": 2,
+                "o": 1
+            },
+            "effects": [
+                {
+                    "type": "army",
+                    "amount": 2
+                }
+            ],
+            "chains": [
+                "Workshop"
+            ]
+        },
         {
             "name": "Fortifications",
             "image": "/Age3/fortifications_3_3",
@@ -1809,88 +1890,6 @@
             ],
             "chains": [
                 null
-            ]
-        },
-        {
-            "name": "Stables",
-            "image": "/Age2/stables_2_3",
-            "players": 3,
-            "age": 2,
-            "guild": "red",
-            "cost": {
-                "c": 1,
-                "w": 1,
-                "o": 1
-            },
-            "effects": [
-                {
-                    "type": "army",
-                    "amount": 2
-                }
-            ],
-            "chains": [
-                "Apothecary"
-            ]
-        },
-        {
-            "name": "Stables",
-            "image": "/Age2/stables_2_5",
-            "players": 5,
-            "age": 2,
-            "guild": "red",
-            "cost": {
-                "c": 1,
-                "w": 1,
-                "o": 1
-            },
-            "effects": [
-                {
-                    "type": "army",
-                    "amount": 2
-                }
-            ],
-            "chains": [
-                "Apothecary"
-            ]
-        },
-        {
-            "name": "Archery Range",
-            "image": "/Age2/archeryRange_2_3",
-            "players": 3,
-            "age": 2,
-            "guild": "red",
-            "cost": {
-                "w": 2,
-                "o": 1
-            },
-            "effects": [
-                {
-                    "type": "army",
-                    "amount": 2
-                }
-            ],
-            "chains": [
-                "Workshop"
-            ]
-        },
-        {
-            "name": "Archery Range",
-            "image": "/Age2/archeryRange_2_6",
-            "players": 6,
-            "age": 2,
-            "guild": "red",
-            "cost": {
-                "w": 2,
-                "o": 1
-            },
-            "effects": [
-                {
-                    "type": "army",
-                    "amount": 2
-                }
-            ],
-            "chains": [
-                "Workshop"
             ]
         },
         {
@@ -2433,13 +2432,13 @@
             "effects": [
                 {
                     "type": "victory",
-                    "amount": 1,
+                    "amount": 2,
                     "from": "player",
                     "basis": "gray"
                 },
                 {
                     "type": "coin",
-                    "amount": 1,
+                    "amount": 2,
                     "from": "player",
                     "basis": "gray"
                 }
@@ -2461,13 +2460,13 @@
             "effects": [
                 {
                     "type": "victory",
-                    "amount": 1,
+                    "amount": 2,
                     "from": "player",
                     "basis": "gray"
                 },
                 {
                     "type": "coin",
-                    "amount": 1,
+                    "amount": 2,
                     "from": "player",
                     "basis": "gray"
                 }
@@ -3007,7 +3006,7 @@
             "age": 3,
             "guild": "green",
             "cost": {
-                "w": 2,
+                "w": 1,
                 "p": 1,
                 "l": 1
             },
@@ -3028,7 +3027,7 @@
             "age": 3,
             "guild": "green",
             "cost": {
-                "w": 2,
+                "w": 1,
                 "p": 1,
                 "l": 1
             },
