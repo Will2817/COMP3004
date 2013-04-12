@@ -127,7 +127,7 @@ namespace _7Wonders
                 {
                     foreach (Effect e in curr.getBoard().getSide().getStageEffects(i))
                     {
-                        if (e.type.Equals("victory")) curr.addScore(Score.STAGES, e.amount);
+                        if (e.type.Equals(Effect.TypeType.VICTORY)) curr.addScore(Score.STAGES, e.amount);
                     }
                 } 
 
@@ -137,8 +137,12 @@ namespace _7Wonders
                 curr.addScore(Score.VICTORY, CalculateScience(curr.getScoreNum(Score.GEAR),curr.getScoreNum(Score.COMPASS),curr.getScoreNum(Score.TABLET)));
                 curr.addScore(Score.SCIENCE, CalculateScience(curr.getScoreNum(Score.GEAR), curr.getScoreNum(Score.COMPASS), curr.getScoreNum(Score.TABLET)));
                 curr.addScore(Score.VICTORY, curr.getScoreNum(Score.CONFLICT));
-                curr.addScore(Score.VICTORY, (int)curr.getResourceNum(Resource.COIN) / 3);
-                curr.addScore(Score.COIN, (int)curr.getResourceNum(Resource.COIN) / 3);
+                //curr.addScore(Score.VICTORY, (int)curr.getResourceNum(Resource.COIN) / 3);
+                //curr.addScore(Score.COIN, (int)curr.getResourceNum(Resource.COIN) / 3);
+                curr.addScore(Score.VICTORY, GetTreasuryScore(curr));
+                curr.addScore(Score.COIN, GetTreasuryScore(curr));
+                curr.addScore(Score.COMMERCE, GetCommercialScore(curr));
+                curr.addScore(Score.GUILD, GetGuildsScore(curr,east,west));
             } // End Player Loop
         }
 
@@ -323,6 +327,68 @@ namespace _7Wonders
             }
         }
 
+        public static Dictionary<Score, int> GetBestScienceChoice(Player p, int x)
+        {
+            Dictionary<Score, int> sciences = new Dictionary<Score, int>();
+            sciences.Add(Score.TABLET, 0);
+            sciences.Add(Score.COMPASS, 0);
+            sciences.Add(Score.GEAR, 0);
+
+            int gear = p.getScoreNum(Score.GEAR);
+            int compass = p.getScoreNum(Score.COMPASS);
+            int tablet = p.getScoreNum(Score.TABLET);
+
+            if (x == 1)
+            {
+                int max1 = CalculateScience((gear + 1), compass, tablet);
+                int max2 = CalculateScience(gear, (compass + 1), tablet);
+                int max3 = CalculateScience(gear, compass, (tablet + 1));
+
+                int maxScore = Math.Max(Math.Max(max1, max2), max3);
+                if (maxScore == max1)
+                    sciences[Score.GEAR] += 1;
+                else if (maxScore == max2)
+                    sciences[Score.COMPASS] += 1;
+                else if (maxScore == max3)
+                    sciences[Score.TABLET] += 1;
+            }
+            else if (x == 2)
+            {
+                int max1 = CalculateScience(gear + 2, compass, tablet);
+                int max2 = CalculateScience(gear, compass + 2, tablet);
+                int max3 = CalculateScience(gear, compass, tablet + 2);
+                int max4 = CalculateScience(gear + 1, compass + 1, tablet);
+                int max5 = CalculateScience(gear + 1, compass, tablet + 1);
+                int max6 = CalculateScience(gear, compass + 1, tablet + 1);
+
+                int maxScore = Math.Max(Math.Max(Math.Max(Math.Max(Math.Max(max1, max2), max3), max4), max5), max6);
+
+                if (maxScore == max1)
+                    sciences[Score.GEAR] += 2;
+                else if (maxScore == max2)
+                    sciences[Score.COMPASS] += 2;
+                else if (maxScore == max3)
+                    sciences[Score.TABLET] += 2;
+                else if (maxScore == max4)
+                {
+                    sciences[Score.GEAR] += 1;
+                    sciences[Score.COMPASS] += 1;
+                }
+                else if (maxScore == max5)
+                {
+                    sciences[Score.GEAR] += 1;
+                    sciences[Score.TABLET] += 1;
+                }
+                else if (maxScore == max6)
+                {
+                    sciences[Score.COMPASS] += 1;
+                    sciences[Score.TABLET] += 1;
+                }
+            }
+
+            return sciences;
+        }
+
         public static int CalculateScience(int g, int c, int t)
         {
             int gear = g;
@@ -347,26 +413,40 @@ namespace _7Wonders
         // Coin awarded with no "basis" expect the construction of the structure
         private static void AddCoin(Player p, int coin) { p.addResource(Resource.COIN, coin); }
 
-        // Coin awarded on the number of wonderstages a player has buit
+        // Coin awarded on the number of wonderstages a player has built
         private static void AddCoinWonder(Player p, int amount)
         {
-            int coin = p.getBoard().getSide().stagesBuilt * amount;
-            p.addResource(Resource.COIN, coin);
+            p.addResource(Resource.COIN, GetCoinWonder(p, amount));
+        }
+
+        // Returns the number of coins awarded with the basis of Wonder stages built
+        private static int GetCoinWonder(Player p, int amount)
+        {
+            return p.getBoard().getStagesBuilt() * amount;
         }
 
         // Coin awarded with the basis of Card Colour the Player owns
         private static void AddCoinColour(Player p, CardColour c, int amount)
         {
-            int coin = p.getCardColourCount(c) * amount;
-            p.addResource(Resource.COIN, coin);
+            p.addResource(Resource.COIN, GetCoinColour(p, c, amount));
+        }
+
+        // Returns the number of coins awarded with the basis of a card colour the player owns
+        private static int GetCoinColour(Player p, CardColour c, int amount)
+        {
+            return p.getCardColourCount(c) * amount;
         }
 
         // Coin awarded from the number of specific structure colour each neighbours have constructed
         private static void AddCoinAllColour(Player p, Player east, Player west, CardColour c, int amount)
         {
-            int coin = p.getCardColourCount(c) + east.getCardColourCount(c) + west.getCardColourCount(c);
-            coin *= amount;
-            p.addResource(Resource.COIN, coin);
+            p.addResource(Resource.COIN, GetCoinAllColour(p, east, west, c, amount));
+        }
+
+        // Returns the number of coins awarded from the number of specific structure colour each neighbours have constructed
+        private static int GetCoinAllColour(Player p, Player east, Player west, CardColour c, int amount)
+        {
+            return (p.getCardColourCount(c) + east.getCardColourCount(c) + west.getCardColourCount(c)) * amount;
         }
 
         // Victory Points awarded from the number of specific structure colour each neighbours constructed
@@ -534,6 +614,145 @@ namespace _7Wonders
         {
             // stuff
             return null;
+        }
+
+
+        // Returns the total score of the player, with the card or no card
+        public static int GetScore(Player p, Player east, Player west, Card c)
+        {
+            int score = p.getScoreNum(Score.VICTORY) + p.getScoreNum(Score.CONFLICT);
+            int schoiceCount = 0;
+            if (c == null)
+            {
+                score += GetTreasuryScore(p);
+                score += GetCommercialScore(p);
+                score += GetGuildsScore(p, east, west);
+            }
+
+            else
+            {
+
+            }
+            return score;
+        }
+
+        // Treasury contents
+        // For every 3 coins in their possesion at the end of the game, players score
+        // 1 victory point. Leftover coins score no points.
+        public static int GetTreasuryScore(Player p)
+        {
+            int treasury = p.getResourceNum(Resource.COIN) / 3;
+            return treasury;
+        }
+
+        // Commercial structures
+        // Some commercial structures from Age III grant victory points
+        // Return the victory points from Commercial structures
+        public static int GetCommercialScore(Player p)
+        {
+            int commercial = 0;
+
+            foreach (string c in p.getPlayed())
+            {
+                Card current = CardLibrary.getCard(c);
+                if (current.colour.Equals(CardColour.YELLOW) && current.age.Equals(3))
+                    foreach (Effect e in current.effects)
+                    {
+                        if (e.type.Equals(Effect.TypeType.VICTORY) && e.from.Equals(Effect.FromType.PLAYER))
+                        {
+                            if (e.basis.Equals(Effect.BasisType.WONDER))
+                                commercial += p.getBoard().getStagesBuilt();
+                            else
+                               commercial += GetVictoryColour(p, cardType[e.basis], e.amount);
+                        }
+                    }
+            }
+
+            return commercial;
+        }
+
+        // Commercial structures
+        // Some commercial structures from Age III grant coins points
+        // Return the number of coins gained from Commercial structures
+        public static int GetCommercialCoin(Player p, Player east, Player west)
+        {
+            int commercial = 0;
+
+            foreach (string c in p.getPlayed())
+            {
+                Card current = CardLibrary.getCard(c);
+                if (current.colour.Equals(CardColour.YELLOW))
+                {
+                    foreach (Effect e in current.effects)
+                    {
+                        if (e.type.Equals(Effect.TypeType.COIN))
+                        {
+                            switch(e.from)
+                            {
+                                case Effect.FromType.ALL:
+                                    commercial += GetCoinAllColour(p, east, west, cardType[e.basis], e.amount);
+                                    break;
+
+                                case Effect.FromType.PLAYER:
+
+                                    if (cardType.ContainsKey(e.basis))
+                                        commercial += GetCoinColour(p, cardType[e.basis], e.amount);
+                                    else if (e.basis.Equals(Effect.BasisType.WONDER))
+                                        commercial += GetCoinWonder(p, e.amount);
+                                    break;
+
+                                default:
+                                    commercial += e.amount;
+                                    break;
+                            }
+                        }
+                    }
+                }
+            }
+
+            return commercial;
+        }
+
+        public static int GetGuildsScore(Player p, Player east, Player west)
+        {
+            int guilds = 0;
+
+            foreach (string c in p.getPlayed())
+            {
+                Card current = CardLibrary.getCard(c);
+                if (current.colour.Equals(CardColour.PURPLE))
+                
+                    foreach (Effect e in current.effects)
+                    {
+                        if (e.type.Equals(Effect.TypeType.VICTORY))
+                        
+                            switch (e.from)
+                            {
+                                case Effect.FromType.ALL:
+
+                                    if (e.basis.Equals(Effect.BasisType.WONDER))
+                                        guilds += GetVictoryAllWonders(p, east, west);
+                                    break;
+
+                                case Effect.FromType.NEIGHBOURS:
+
+                                    if (cardType.ContainsKey(e.basis))
+                                        guilds += GetVictoryNeighboursColour(east, west, cardType[e.basis], e.amount);
+
+                                    else if (e.basis.Equals(Effect.BasisType.DEFEAT))
+                                        guilds += east.getScoreNum(Score.DEFEAT) + west.getScoreNum(Score.DEFEAT);                                   
+                                    break;
+
+                                case Effect.FromType.PLAYER:
+
+                                    if (cardType.ContainsKey(e.basis))
+                                        guilds += GetVictoryColour(p, cardType[e.basis], e.amount);
+                                    break;
+                            }
+                    }
+            }
+
+            return guilds;
         }
     }
 }

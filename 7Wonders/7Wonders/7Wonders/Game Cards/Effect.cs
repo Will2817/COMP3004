@@ -108,6 +108,7 @@ namespace _7Wonders.Game_Cards
                 case "freeBuild": return TypeType.FREEBUILD;
                 case "discard": return TypeType.DISCARD;
                 case "lastcard": return TypeType.LASTCARD;
+                case "schoice": return TypeType.SCHOICE;
                 default: return TypeType.NONE;
             }
         }

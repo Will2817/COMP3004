@@ -235,7 +235,7 @@ namespace _7Wonders
 
             if (!client.isConnected() && (activeInterface != interfaces["mainmenu"]))
             {
-                if (client.getState().isGameInProgress() && activeInterface == interfaces["maingame"])
+                if (!client.getState().isGameInProgress() && activeInterface == interfaces["maingame"])
                 {
                     client.disconnect();
                     if (host != null) host.shutdown();
@@ -248,9 +248,20 @@ namespace _7Wonders
                     message = new Dictionary<string, string>();
                     message.Add("connection", "Lost Connection");
                     activeInterface.receiveMessage(message);
+                    if (host != null) host.shutdown();
                     client = new Client.Client();
                 }
             }
+
+            else if (client.getState().isGameInProgress() && activeInterface == interfaces["lobby"])
+            {
+                message = MainGame.createMessage();
+                activeInterface.reset();
+                client.registar(interfaces[message["nextInterface"]]);
+                activeInterface = interfaces[message["nextInterface"]];
+                activeInterface.receiveMessage(message);
+            }
+
 
             else if ((message = activeInterface.isFinished()) != null)
             {
@@ -280,12 +291,9 @@ namespace _7Wonders
                 }
                 if ((message["nextInterface"] == "maingame"))
                 {
+                    if (activeInterface == interfaces["hostlobby"]) host.startGame();
                     while (!client.getState().isGameInProgress())
-                    { }
-                    foreach (Player p in client.getState().getPlayers().Values)
-                    {
-                        Console.WriteLine("HERE ARE the BOARDS: " + p.getBoard().getName());
-                    }
+                    { Console.WriteLine("stuck"); }
                 }
                 activeInterface.reset();
                 client.registar(interfaces[message["nextInterface"]]);

@@ -37,6 +37,7 @@ namespace _7Wonders
         private bool buildingCard = false;
         private bool needTradeBuild = false;
         private bool needTradeStage = false;
+        private bool doNothing = false;
 
         private int cardCost = 0;
         private int stageCost = 0;
@@ -106,8 +107,8 @@ namespace _7Wonders
             foreach (Resource r in Enum.GetValues(typeof(Resource))){
                 if (r != Resource.COIN)
                 {
-                    westHelpers.Add(r, new TradeHelper(r, 3, new Vector2(pos.X + MARGIN, pos.Y + ((int)r + 4) * RSIZE + MARGIN * 3)));
-                    eastHelpers.Add(r, new TradeHelper(r, 3, new Vector2(pos.X + SECTIONWIDTH * 2+ MARGIN * 3, pos.Y + ((int)r + 4) * RSIZE + MARGIN * 3)));
+                    westHelpers.Add(r, new TradeHelper(r, 3, new Vector2(pos.X + MARGIN * 2, pos.Y + ((int)r + 4) * RSIZE + MARGIN * 3)));
+                    eastHelpers.Add(r, new TradeHelper(r, 3, new Vector2(pos.X + SECTIONWIDTH * 2 + MARGIN * 4, pos.Y + ((int)r + 4) * RSIZE + MARGIN * 3)));
                 }
 
             }
@@ -156,6 +157,7 @@ namespace _7Wonders
             if (stageCost < 0) buildStage.setEnabled(false).setColor(Color.Gray);
             needTradeBuild = (cardCost > 0 && !CardLibrary.getCard(image).cost.ContainsKey(Resource.COIN)) ? true : false;
             needTradeStage = (stageCost > 0) ? true : false;
+            doNothing = false;
             
         }
 
@@ -238,6 +240,7 @@ namespace _7Wonders
 
             if (close.isClicked())
             {
+                doNothing = true;
                 close.reset();
                 finished = true;
             }
@@ -312,7 +315,8 @@ namespace _7Wonders
         public override Dictionary<string, string> isFinished()
         {
             if (finished)
-                return new Dictionary<string, string>();
+                if (doNothing) return new Dictionary<string, string>() { { "completeTrade", "false" } };
+                else return new Dictionary<string, string>(){{"completeTrade","true"}};
             return null;
         }
 
@@ -392,19 +396,19 @@ namespace _7Wonders
             int counter = 0;
             foreach (List<Resource> choices in ConstructionUtils.getRelevantChoices(cost, self.getTotalChoices()))
             {
-                selfChoices.Add(new TradeChoice(choices, new Vector2(pos.X + SECTIONWIDTH + MARGIN * 2, pos.Y + (RSIZE + MARGIN) * (3 + counter) + MARGIN * 5 - 1)));
+                selfChoices.Add(new TradeChoice(choices, new Vector2(pos.X + SECTIONWIDTH + MARGIN * 3, pos.Y + (RSIZE + MARGIN) * (3 + counter) + MARGIN * 6 - 1)));
                 counter++;
             }
             counter = 0;
             foreach (List<Resource> choices in ConstructionUtils.getRelevantChoices(cost, west.getPublicChoices()))
             {
-                westChoices.Add(new TradeChoice(choices, new Vector2(pos.X + MARGIN + ((counter > 2) ? SECTIONWIDTH / 2 : 0), pos.Y + RSIZE * (10 + counter % 3) + MARGIN * (4 + counter % 3) - 1)));
+                westChoices.Add(new TradeChoice(choices, new Vector2(pos.X + MARGIN * 2+ ((counter > 2) ? SECTIONWIDTH / 2 : 0), pos.Y + RSIZE * (10 + counter % 3) + MARGIN * (4 + counter % 3) - 1)));
                 counter++;
             }
             counter = 0;
             foreach (List<Resource> choices in ConstructionUtils.getRelevantChoices(cost, east.getPublicChoices()))
             {
-                eastChoices.Add(new TradeChoice(choices, new Vector2(pos.X + (SECTIONWIDTH + MARGIN) * 2 + MARGIN + ((counter > 2) ? SECTIONWIDTH / 2 : 0), pos.Y + RSIZE * (10 + counter % 3) + MARGIN * (4 + counter % 3) - 1)));
+                eastChoices.Add(new TradeChoice(choices, new Vector2(pos.X + (SECTIONWIDTH + MARGIN) * 2 + MARGIN * 2 + ((counter > 2) ? SECTIONWIDTH / 2 : 0), pos.Y + RSIZE * (10 + counter % 3) + MARGIN * (4 + counter % 3) - 1)));
                 counter++;
             }
         }
