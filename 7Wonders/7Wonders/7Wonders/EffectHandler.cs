@@ -411,26 +411,40 @@ namespace _7Wonders
         // Coin awarded with no "basis" expect the construction of the structure
         private static void AddCoin(Player p, int coin) { p.addResource(Resource.COIN, coin); }
 
-        // Coin awarded on the number of wonderstages a player has buit
+        // Coin awarded on the number of wonderstages a player has built
         private static void AddCoinWonder(Player p, int amount)
         {
-            int coin = p.getBoard().getSide().stagesBuilt * amount;
-            p.addResource(Resource.COIN, coin);
+            p.addResource(Resource.COIN, GetCoinWonder(p, amount));
+        }
+
+        // Returns the number of coins awarded with the basis of Wonder stages built
+        private static int GetCoinWonder(Player p, int amount)
+        {
+            return p.getBoard().getStagesBuilt() * amount;
         }
 
         // Coin awarded with the basis of Card Colour the Player owns
         private static void AddCoinColour(Player p, CardColour c, int amount)
         {
-            int coin = p.getCardColourCount(c) * amount;
-            p.addResource(Resource.COIN, coin);
+            p.addResource(Resource.COIN, GetCoinColour(p, c, amount));
+        }
+
+        // Returns the number of coins awarded with the basis of a card colour the player owns
+        private static int GetCoinColour(Player p, CardColour c, int amount)
+        {
+            return p.getCardColourCount(c) * amount;
         }
 
         // Coin awarded from the number of specific structure colour each neighbours have constructed
         private static void AddCoinAllColour(Player p, Player east, Player west, CardColour c, int amount)
         {
-            int coin = p.getCardColourCount(c) + east.getCardColourCount(c) + west.getCardColourCount(c);
-            coin *= amount;
-            p.addResource(Resource.COIN, coin);
+            p.addResource(Resource.COIN, GetCoinAllColour(p, east, west, c, amount));
+        }
+
+        // Returns the number of coins awarded from the number of specific structure colour each neighbours have constructed
+        private static int GetCoinAllColour(Player p, Player east, Player west, CardColour c, int amount)
+        {
+            return (p.getCardColourCount(c) + east.getCardColourCount(c) + west.getCardColourCount(c)) * amount;
         }
 
         // Victory Points awarded from the number of specific structure colour each neighbours constructed
@@ -640,7 +654,6 @@ namespace _7Wonders
             {
                 Card current = CardLibrary.getCard(c);
                 if (current.colour.Equals(CardColour.YELLOW) && current.age.Equals(3))
-                {
                     foreach (Effect e in current.effects)
                     {
                         if (e.type.Equals(Effect.TypeType.VICTORY) && e.from.Equals(Effect.FromType.PLAYER))
@@ -651,8 +664,50 @@ namespace _7Wonders
                                commercial += GetVictoryColour(p, cardType[e.basis], e.amount);
                         }
                     }
+            }
+
+            return commercial;
+        }
+
+        // Commercial structures
+        // Some commercial structures from Age III grant coins points
+        // Return the number of coins gained from Commercial structures
+        public static int GetCommercialCoin(Player p, Player east, Player west)
+        {
+            int commercial = 0;
+
+            foreach (string c in p.getPlayed())
+            {
+                Card current = CardLibrary.getCard(c);
+                if (current.colour.Equals(CardColour.YELLOW))
+                {
+                    foreach (Effect e in current.effects)
+                    {
+                        if (e.type.Equals(Effect.TypeType.COIN))
+                        {
+                            switch(e.from)
+                            {
+                                case Effect.FromType.ALL:
+                                    commercial += GetCoinAllColour(p, east, west, cardType[e.basis], e.amount);
+                                    break;
+
+                                case Effect.FromType.PLAYER:
+
+                                    if (cardType.ContainsKey(e.basis))
+                                        commercial += GetCoinColour(p, cardType[e.basis], e.amount);
+                                    else if (e.basis.Equals(Effect.BasisType.WONDER))
+                                        commercial += GetCoinWonder(p, e.amount);
+                                    break;
+
+                                default:
+                                    commercial += e.amount;
+                                    break;
+                            }
+                        }
+                    }
                 }
             }
+
             return commercial;
         }
 
