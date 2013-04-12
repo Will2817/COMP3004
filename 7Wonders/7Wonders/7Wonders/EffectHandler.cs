@@ -127,7 +127,7 @@ namespace _7Wonders
                 {
                     foreach (Effect e in curr.getBoard().getSide().getStageEffects(i))
                     {
-                        if (e.type.Equals("victory")) curr.addScore(Score.STAGES, e.amount);
+                        if (e.type.Equals(Effect.TypeType.VICTORY)) curr.addScore(Score.STAGES, e.amount);
                     }
                 } 
 
@@ -141,6 +141,8 @@ namespace _7Wonders
                 //curr.addScore(Score.COIN, (int)curr.getResourceNum(Resource.COIN) / 3);
                 curr.addScore(Score.VICTORY, GetTreasuryScore(curr));
                 curr.addScore(Score.COIN, GetTreasuryScore(curr));
+                curr.addScore(Score.COMMERCE, GetCommercialScore(curr));
+                curr.addScore(Score.GUILD, GetGuildsScore(curr,east,west));
             } // End Player Loop
         }
 
@@ -325,7 +327,7 @@ namespace _7Wonders
             }
         }
 
-        public Dictionary<Score, int> GetBestScienceChoice(Player p, int x)
+        public static Dictionary<Score, int> GetBestScienceChoice(Player p, int x)
         {
             Dictionary<Score, int> sciences = new Dictionary<Score, int>();
             sciences.Add(Score.TABLET, 0);

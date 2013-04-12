@@ -235,7 +235,7 @@ namespace _7Wonders
 
             if (!client.isConnected() && (activeInterface != interfaces["mainmenu"]))
             {
-                if (client.getState().isGameInProgress() && activeInterface == interfaces["maingame"])
+                if (!client.getState().isGameInProgress() && activeInterface == interfaces["maingame"])
                 {
                     client.disconnect();
                     if (host != null) host.shutdown();

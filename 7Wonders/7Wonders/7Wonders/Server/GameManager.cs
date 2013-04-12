@@ -28,6 +28,13 @@ namespace _7Wonders.Server
             {
                 netService.blockConnections();
             }
+            foreach (KeyValuePair<long, Player> kp in gameState.getPlayers())
+            {
+                if (!aiPlayers.ContainsKey(kp.Key))
+                {
+                    kp.Value.setReady(false);
+                }
+            }
             messageSerializer.notifyPlayerJoined(gameState.lobbyToJson());
             updateAIs();
         }
@@ -66,6 +73,13 @@ namespace _7Wonders.Server
             {
                 int emptySeat = gameState.getPlayers()[id].getSeat();
                 gameState.removePlayer(id);
+                foreach (KeyValuePair<long, Player> kp in gameState.getPlayers())
+                {
+                    if (!aiPlayers.ContainsKey(kp.Key))
+                    {
+                        kp.Value.setReady(false);
+                    }
+                }
                 adjustSeats(emptySeat);
             }
             else
