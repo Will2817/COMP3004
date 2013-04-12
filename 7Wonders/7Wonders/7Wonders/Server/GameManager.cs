@@ -290,15 +290,16 @@ namespace _7Wonders.Server
             foreach (long id in ids) pendingTrades[id] = 0;
             if (gameState.getTurn() == 6)
             {
+                foreach (Player p in gameState.getPlayers().Values)
+                    gameState.addDiscard(p.getHand()[0]);
+                resolveMilitaryConflicts();
                 if (gameState.getAge() == 3)
                 {
-                    resolveMilitaryConflicts();
                     endGame();
                     gameState.setInProgress(false);
                     messageSerializer.broadcastSuperState(gameState.superJson());
                     return;
                 }
-                resolveMilitaryConflicts();
                 gameState.incrementAge();
                 gameState.resetTurn();
                 foreach (Player p in gameState.getPlayers().Values)
