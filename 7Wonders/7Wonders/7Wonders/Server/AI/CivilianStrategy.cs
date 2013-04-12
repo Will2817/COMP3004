@@ -80,7 +80,7 @@ namespace _7Wonders.Server.AI
                 int p = buildPriorities[card.name];
                 int cost = ConstructionUtils.canChainBuild(self, card) ? 0 : ConstructionUtils.constructCost(self, west, east, card.cost);
                 //using 0 here only for testing purposes. should be changed to > -1 once AIs can analyze trade situations
-                if (cost == 0) handBuildPriorities.Add(c, p-cost);
+                if (cost > -1) handBuildPriorities.Add(c, p-cost);
                 handHidePriorities.Add(c, 0);
             }
             string maxBuild = null;
@@ -100,7 +100,13 @@ namespace _7Wonders.Server.AI
             if (maxBuild != null)
             {
                 actions.Add(maxBuild, ActionType.BUILD_CARD);
-                outTrades.AddRange(chooseTrades(CardLibrary.getCard(maxBuild).cost));
+                if (!ConstructionUtils.canChainBuild(self, CardLibrary.getCard(maxBuild)))
+                    outTrades.AddRange(chooseTrades(CardLibrary.getCard(maxBuild).cost));
+                else
+                {
+                    outTrades.Add(0);
+                    outTrades.Add(0);
+                }
             }
             else
             {
@@ -120,14 +126,13 @@ namespace _7Wonders.Server.AI
 
         private List<int> chooseTrades(Dictionary<Resource, int> cost)
         {
-            int eastTrade = 0;
-            int westTrade = 0;
+            if (cost.Count == 0 || cost.Values.Count(x => x > 0) == 0) return new List<int> { 0, 0 };
+            List<List<int>> options = ConstructionUtils.getResourcePurchaseSplits(cost, self, east, west);
+            List<int> min = options.First();
+            foreach (List<int> option in options)
+                if (option.Sum() < min.Sum()) min = option;
 
-            //calculate best strategy for trading
-
-
-
-            return new List<int> {eastTrade, westTrade};
+            return min;
         }
     }
 }
