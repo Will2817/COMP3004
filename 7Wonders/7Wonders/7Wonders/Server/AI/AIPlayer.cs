@@ -16,7 +16,6 @@ namespace _7Wonders.Server.AI
             COMMERCE
         }
         private GameState gameState;
-        private AIType type;
         private long id;
         private GameManager gameManager;
         private AIStrategy strategy;

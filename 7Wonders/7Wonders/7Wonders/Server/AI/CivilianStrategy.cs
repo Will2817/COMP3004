@@ -39,9 +39,7 @@ namespace _7Wonders.Server.AI
             {
                 p = 0;
                 if (c.colour == pref)
-                {
                     p += c.effects[0].amount;
-                }
                 else if (secondPrefs.Contains(c.colour))
                     p += 1;
                 else if (c.effects[0].type == Effect.TypeType.RCOSTEAST || c.effects[0].type == Effect.TypeType.RCOSTWEST || c.effects[0].type == Effect.TypeType.MCOST)

@@ -49,18 +49,18 @@ namespace _7Wonders.Server
                 case AIPlayer.AIType.CIVILIAN:
                     strategy = new CivilianStrategy();
                     break;
+                case AIPlayer.AIType.SCIENCE:
+                    strategy = new ScienceStrategy();
+                    break;
                 case AIPlayer.AIType.MILITARY:
-                    //strategy = new MilitaryStrategy();
+                    strategy = new MilitaryStrategy();
                     break;
                 case AIPlayer.AIType.COMMERCE:
-                    //strategy = new CommerceStrategy();
-                    break;
-                case AIPlayer.AIType.SCIENCE:
-                    //strategy = new ScienceStrategy();
+                    strategy = new CommerceStrategy();
                     break;
                 case AIPlayer.AIType.GREEDY:
                 default:
-                    strategy = new CivilianStrategy(); //should be greedy once greedy is implemented
+                    strategy = new GreedyStrategy();
                     break;
             }
             //replace 'type' by strategy
