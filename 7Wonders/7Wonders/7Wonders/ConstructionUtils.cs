@@ -82,28 +82,8 @@ namespace _7Wonders
 
         private static int countPurchases(Dictionary<Resource, int> _cost, List<List<Resource>> freeRes, List<List<Resource>> costRes)
         {
-            bool onlyChoicesLeft = false;
             Dictionary<Resource, int> cost = new Dictionary<Resource,int>();
-            foreach (Resource r in _cost.Keys)
-                cost.Add(r, _cost[r]);
-            while (!onlyChoicesLeft)
-            {
-                freeRes = removeIrrelevant(cost, freeRes); //remove irrelevant resources (i.e. resources not in cost)
-                onlyChoicesLeft = true;
-                List<List<Resource>> keepMe = new List<List<Resource>>();
-                foreach (List<Resource> choice in freeRes)
-                {
-                    if (choice.Count == 1)
-                    {
-                        onlyChoicesLeft = false;
-                        if (cost.ContainsKey(choice[0]) && cost[choice[0]] > 0)
-                            cost[choice[0]]--;
-                    }
-                    else
-                        keepMe.Add(choice);
-                }
-                freeRes = keepMe;
-            }
+            getRemainingCostAndChoices(_cost, freeRes, cost, freeRes);
             if (freeRes.Count > 0)
             {
                 List<int> costOptions = new List<int>();
@@ -115,33 +95,8 @@ namespace _7Wonders
                     if (costOption > -1) validOptions.Add(costOption);
                 return validOptions.Count > 0?validOptions.Min():-1;
             }
-            //take into account choices that don't resolve themselves?
-            //e.g. need stone and clay and have s/c and w/o/s/c (->s/c)
-            onlyChoicesLeft = false;
             int purchases = 0;
-            while (!onlyChoicesLeft)
-            {
-                costRes = removeIrrelevant(cost, costRes);
-                onlyChoicesLeft = true;
-                List<List<Resource>> keepMe = new List<List<Resource>>();
-                foreach (List<Resource> choice in costRes)
-                {
-                    if (choice.Count == 1)
-                    {
-                        onlyChoicesLeft = false;
-                        if (cost.ContainsKey(choice[0]) && cost[choice[0]] > 0)
-                        {
-                            cost[choice[0]]--;
-                            purchases++;
-                        }
-                        else
-                            keepMe.Add(choice);
-                    }
-                    else
-                        keepMe.Add(choice);
-                }
-                costRes = keepMe;
-            }
+            purchases += getRemainingCostAndChoices(cost, costRes, cost, costRes);
             if (costRes.Count > 0)
             {
                 List<int> costOptions = new List<int>();
@@ -161,31 +116,8 @@ namespace _7Wonders
 
         private static int countPurchases(Dictionary<Resource, int> _cost, List<List<Resource>> freeRes, List<List<Resource>> cheapRes, List<List<Resource>> costRes)
         {
-            //free resources
-            bool onlyChoicesLeft = false;
             Dictionary<Resource, int> cost = new Dictionary<Resource, int>();
-            foreach (Resource r in _cost.Keys)
-                cost.Add(r, _cost[r]);
-            while (!onlyChoicesLeft)
-            {
-                freeRes = removeIrrelevant(cost, freeRes);
-                onlyChoicesLeft = true;
-                List<List<Resource>> keepMe = new List<List<Resource>>();
-                foreach (List<Resource> choice in freeRes)
-                {
-                    if (choice.Count == 1)
-                    {
-                        onlyChoicesLeft = false;
-                        if (cost.ContainsKey(choice[0]) && cost[choice[0]] > 0)
-                            cost[choice[0]]--;
-                        else
-                            keepMe.Add(choice);
-                    }
-                    else
-                        keepMe.Add(choice);
-                }
-                freeRes = keepMe;
-            }
+            getRemainingCostAndChoices(_cost, freeRes, cost, freeRes);
             if (freeRes.Count > 0)
             {
                 List<int> costOptions = new List<int>();
@@ -198,31 +130,8 @@ namespace _7Wonders
                 return validOptions.Count > 0 ? validOptions.Min() : -1;
             }
             //cheap resources
-            onlyChoicesLeft = false;
             int purchases = 0;
-            while (!onlyChoicesLeft)
-            {
-                cheapRes = removeIrrelevant(cost, cheapRes);
-                onlyChoicesLeft = true;
-                List<List<Resource>> keepMe = new List<List<Resource>>();
-                foreach (List<Resource> choice in cheapRes)
-                {
-                    if (choice.Count == 1)
-                    {
-                        onlyChoicesLeft = false;
-                        if (cost.ContainsKey(choice[0]) && cost[choice[0]] > 0)
-                        {
-                            cost[choice[0]]--;
-                            purchases++;
-                        }
-                        else
-                            keepMe.Add(choice);
-                    }
-                    else
-                        keepMe.Add(choice);
-                }
-                cheapRes = keepMe;
-            }
+            purchases += getRemainingCostAndChoices(cost, cheapRes, cost, cheapRes);
             if (cheapRes.Count > 0)
             {
                 List<int> costOptions = new List<int>();
@@ -235,31 +144,8 @@ namespace _7Wonders
                 return validOptions.Count > 0 ? validOptions.Min() : -1;
             }
             //costly resources
-            onlyChoicesLeft = false;
             int purchases2 = 0;
-            while (!onlyChoicesLeft)
-            {
-                costRes = removeIrrelevant(cost, costRes);
-                onlyChoicesLeft = true;
-                List<List<Resource>> keepMe = new List<List<Resource>>();
-                foreach (List<Resource> choice in costRes)
-                {
-                    if (choice.Count == 1)
-                    {
-                        onlyChoicesLeft = false;
-                        if (cost.ContainsKey(choice[0]) && cost[choice[0]] > 0)
-                        {
-                            cost[choice[0]]--;
-                            purchases2++;
-                        }
-                        else
-                            keepMe.Add(choice);
-                    }
-                    else
-                        keepMe.Add(choice);
-                }
-                costRes = keepMe;
-            }
+            purchases2 += getRemainingCostAndChoices(cost, costRes, cost, costRes);
             if (costRes.Count > 0)
             {
                 List<int> costOptions = new List<int>();
@@ -275,6 +161,52 @@ namespace _7Wonders
             foreach (int amt in cost.Values)
                 if (amt > 0) costRemaining = true;
             return costRemaining ? -1 : purchases + 2 * purchases2;
+        }
+
+        public static int getRemainingCostAndChoices(Dictionary<Resource, int> cost, List<List<Resource>> resources, Dictionary<Resource, int> remainingCost, List<List<Resource>> remainingChoices)
+        {
+            Dictionary<Resource, int> rCost = new Dictionary<Resource, int>();
+            foreach (Resource r in cost.Keys)
+                rCost.Add(r, cost[r]);
+            List<List<Resource>> rChoices = new List<List<Resource>>();
+            foreach (List<Resource> choice in resources)
+            {
+                List<Resource> l = new List<Resource>();
+                l.AddRange(choice);
+                rChoices.Add(l);
+            }
+            int n = 0; //the number of resources being covered by this set (the number being purchased if the resources are a neighbour's)
+
+            bool onlyChoicesLeft = false;
+            while (!onlyChoicesLeft)
+            {
+                rChoices = removeIrrelevant(rCost, rChoices);
+                onlyChoicesLeft = true;
+                List<List<Resource>> keepMe = new List<List<Resource>>();
+                foreach (List<Resource> choice in rChoices)
+                {
+                    if (choice.Count == 1)
+                    {
+                        onlyChoicesLeft = false;
+                        if (rCost.ContainsKey(choice[0]) && rCost[choice[0]] > 0)
+                        {
+                            rCost[choice[0]]--;
+                            n++;
+                        }
+                        else
+                            keepMe.Add(choice);
+                    }
+                    else
+                        keepMe.Add(choice);
+                }
+                rChoices = keepMe;
+            }
+
+            remainingCost.Clear();
+            foreach (Resource r in rCost.Keys) remainingCost.Add(r, rCost[r]);
+            remainingChoices.Clear();
+            remainingChoices.AddRange(rChoices);
+            return n;
         }
 
         private static List<List<Resource>> removeIrrelevant(Dictionary<Resource, int> cost, List<List<Resource>> resources)
@@ -310,72 +242,6 @@ namespace _7Wonders
             }
             return combos;
         }
-
-
-        /*
-        public static int constructCost(Player player, Player west, Player east, Dictionary<Resource, int> cost)
-        {
-            //check if cost is in coins
-            if (cost.ContainsKey(Resource.COIN))
-                return (cost[Resource.COIN] > player.getResourceNum(Resource.COIN)) ? -1 : cost[Resource.COIN];
-
-
-            //subtract the player's resources from the cost (any individual resources and any choices, only one choice in which could be used to satisfy the cost)
-            List<List<Resource>> remainingPlayerChoices = new List<List<Resource>>();
-            Dictionary<Resource, int> costAfterPlayerResources = outsourcedCosts(player, cost, remainingPlayerChoices, true);
-
-            int totalCost = 0;
-            foreach (Resource r in cost.Keys) totalCost += cost[r];
-
-            List<List<Resource>> totalChoices = new List<List<Resource>>();
-            totalChoices.AddRange(player.getTotalChoices());
-            totalChoices.AddRange(west.getPublicChoices());
-            totalChoices.AddRange(east.getPublicChoices());
-            totalChoices = getRelevantChoices(cost, totalChoices);
-
-            
-            bool eastCheaper = player.rcostEast < player.rcostWest;
-            Player cheaper = eastCheaper? east : west;
-            Player notCheaper = eastCheaper? west : east;
-            int cheaperCost = eastCheaper? player.rcostEast : player.rcostWest;
-            int notCheaperCost = eastCheaper? player.rcostWest : player.rcostEast;
-            
-            List<List<Resource>> remainingChoices = new List<List<Resource>>();
-
-            Dictionary<Resource, int> afterPlayer = outsourcedCosts(player, cost, remainingChoices, true);
-            foreach (Resource r in cost.Keys)
-                totalCost -= cost[r] - (afterPlayer.ContainsKey(r) ? afterPlayer[r] : 0);
-            if (afterPlayer.Count == 0 || canChoicesCover(remainingChoices, afterPlayer)) return 0;
-
-            Dictionary<Resource, int> afterCheaper = outsourcedCosts(cheaper, afterPlayer, remainingChoices, false);
-            if (cheaperCost > 1)
-                foreach (Resource r in afterPlayer.Keys.Intersect(rawGoods))
-                    totalCost += (afterPlayer[r] - (afterCheaper.ContainsKey(r) ? afterCheaper[r] : 0));
-            Dictionary<Resource, int> afterNotCheaper;
-            if (!(afterCheaper.Count == 0 || canChoicesCover(remainingChoices, afterPlayer)))
-            {
-                afterNotCheaper = outsourcedCosts(notCheaper, afterCheaper, remainingChoices, false);
-                if (notCheaperCost > 1)
-                    foreach (Resource r in afterCheaper.Keys.Intersect(rawGoods))
-                        totalCost += (afterCheaper[r] - (afterNotCheaper.ContainsKey(r) ? afterNotCheaper[r] : 0));
-            }
-            else
-            {
-                afterNotCheaper = afterCheaper;
-            }
-
-            if (player.mcost > 1)
-                foreach (Resource r in afterPlayer.Keys.Intersect(manGoods))
-                    totalCost += (afterPlayer[r] - (afterNotCheaper.ContainsKey(r) ? afterNotCheaper[r] : 0));
-
-            if (afterNotCheaper.Count > 0 && !canChoicesCover(remainingChoices, afterNotCheaper)) return -1;
-
-
-
-            return totalCost > player.getResourceNum(Resource.COIN) ? -1 : totalCost;
-
-            
-        }*/
 
         //Checks whether a player can build a card from a chain
         public static bool canChainBuild(Player player, Card card)

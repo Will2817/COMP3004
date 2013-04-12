@@ -13,6 +13,7 @@ namespace _7Wonders.Server
         protected MessageSerializerService messageSerializer;
         protected NetService netService;
         protected Deck deck;
+        protected Dictionary<long, int> pendingTrades;
 
         public GameManager()
         {
@@ -29,18 +30,17 @@ namespace _7Wonders.Server
                 netService.blockConnections();
             }
             messageSerializer.notifyPlayerJoined(gameState.lobbyToJson());
-            updateAIs();
         }
 
         public void addAI(string type)
         {
             Player newAI = new Player(System.DateTime.UtcNow.Ticks, type);
             newAI.setReady(true);
-            AIStrategy strategy;
+            AIStrategy strategy = null;
             switch (AIPlayer.aiTypes[type])
             {
                 case AIPlayer.AIType.CIVILIAN:
-                    //strategy = new CivilianStrategy();
+                    strategy = new CivilianStrategy();
                     break;
                 case AIPlayer.AIType.MILITARY:
                     //strategy = new MilitaryStrategy();
@@ -53,10 +53,11 @@ namespace _7Wonders.Server
                     break;
                 case AIPlayer.AIType.GREEDY:
                 default:
-                    //strategy = new GreedyStrategy();
+                    strategy = new CivilianStrategy(); //should be greedy once greedy is implemented
                     break;
             }
-            aiPlayers.Add(newAI.getID(), new AIPlayer(type, newAI.getID(), this));
+            //replace 'type' by strategy
+            aiPlayers.Add(newAI.getID(), new AIPlayer(strategy, newAI.getID(), this));
             addPlayer(newAI);
         }
 
@@ -93,21 +94,18 @@ namespace _7Wonders.Server
             foreach (Player p in gameState.getPlayers().Values)
                 if (p.getSeat() > seatNumber) p.setSeat(p.getSeat() - 1);
             messageSerializer.notifyPlayerDropped(gameState.playersToJson());
-            updateAIs();
         }
 
         public void setPlayerReady(long id, bool ready)
         {
             gameState.getPlayers()[id].setReady(ready);
             messageSerializer.notifyReadyChanged(gameState.playersToJson());
-            updateAIs();
         }
 
         public void setOptions(bool onlySideA, bool assign)
         {
             gameState.setOptions(onlySideA, assign);
             messageSerializer.notifyOptionsChanged(gameState.optionsToJson());
-            updateAIs();
         }
 
         public Player getWestNeighbour(Player p)
@@ -158,13 +156,15 @@ namespace _7Wonders.Server
                     p.addResource(Resource.COIN, 3);
                     p.setReady(false);
                 }
+                pendingTrades = new Dictionary<long, int>();
+                foreach (long id in gameState.getPlayers().Keys) pendingTrades.Add(id, 0);
                 gameState.setInProgress(true);
 
                 messageSerializer.notifyWonderAssign(gameState.wonderAssignToJson());
                 messageSerializer.broadcastSuperState(gameState.superJson());
+                foreach (AIPlayer ai in aiPlayers.Values)
+                    ai.init();
                 sendHands();
-                updateAIs();
-                
                 return 0;
             }
             else
@@ -179,11 +179,6 @@ namespace _7Wonders.Server
             foreach (Player p in gameState.getPlayers().Values)
                 if (!p.getReady()) return false;
             return true;
-        }
-
-        private void updateAIs()
-        {
-            foreach (AIPlayer ai in aiPlayers.Values) ai.updateGameState(gameState);
         }
 
         public GameState getGameState() { return gameState; }
@@ -201,7 +196,7 @@ namespace _7Wonders.Server
                 if (!aiPlayers.ContainsKey(id))
                     messageSerializer.notifyHand(id, gameState.handToJson(id));
             foreach (long id in aiPlayers.Keys)
-                aiPlayers[id].selectAction(gameState);
+                aiPlayers[id].selectAction();
         }
 
         public void handleActions(long id, Dictionary<string, ActionType> actions, int westGold, int eastGold)
@@ -220,75 +215,24 @@ namespace _7Wonders.Server
                 if (o.getSeat() == p.getSeat() + 1 || (o.getSeat() == 0 && p.getSeat() == gameState.getPlayers().Count - 1))
                     east =  o;
             }
-            west.addResource(Resource.COIN, westGold);
-            east.addResource(Resource.COIN, eastGold);
-            p.addResource(Resource.COIN, -1 * (westGold + eastGold));
+            pendingTrades[p.getID()] -= westGold + eastGold;
+            pendingTrades[west.getID()] += westGold;
+            pendingTrades[east.getID()] += eastGold;
+            //List of cards the player built this turn
             List<string> playedCards = new List<string>();
-            List<ActionType> playedActions = new List<ActionType>();
             Console.WriteLine("Testing Handled Actions");
-            foreach (KeyValuePair<string, ActionType> action in actions)
+            foreach (string c in actions.Keys)
             {
-                string card = action.Key;
-                Card c = CardLibrary.getCard(card);
-                switch (action.Value)
-                {                       
-                    case ActionType.BUILD_CARD:
-                        Console.WriteLine("Player is building card");
-                        // Consider validating move/checking whether player has already played card.
-                                
-                        // Add to list of lastPlayedCards and lastActions
-                        playedCards.Add(card);
-                        playedActions.Add(ActionType.BUILD_CARD);
-
-                        // Remove card from player's hand
-                        p.getHand().Remove(card);
-
-                        // Play card and update the # of card colour 
-                        p.addPlayed(c);
-                        if (c.cost.ContainsKey(Resource.COIN)) p.addResource(Resource.COIN, -1 * c.cost[Resource.COIN]);
-
-                        // Only applies instant effects of cards, such as victory points, coins,
-                        // resource choices, army, trade and science
-                        foreach (Game_Cards.Effect e in c.effects)
-                            EffectHandler.ApplyEffect(p, getEastNeighbour(p), getWestNeighbour(p),e);
-                        break;
-
-                    case ActionType.BUILD_WONDER:
-                        Console.WriteLine(id + ": BUILDING WONDER" + action.Key);
-                        Side pBoard = p.getBoard().getSide();
-                        //Consider checking whether player has stages left to build/can afford to build next stage
-                        // Add to list of lastActions
-                        playedActions.Add(ActionType.BUILD_WONDER);
-
-                        // Build Board and place effect into players effect list                      
-                        pBoard.stagesBuilt += 1;
-
-                        // Must take into account freebuild still or anything specific to wonders atm
-                        foreach (Game_Cards.Effect e in pBoard.getStageEffects(pBoard.stagesBuilt - 1))
-                            EffectHandler.ApplyEffect(p, getEastNeighbour(p), getWestNeighbour(p), e);
-                        break;
-
-                    case ActionType.SELL_CARD:
-                        Console.WriteLine(id + ": DISCARDING " + action.Key);
-                        // Add to list of lastActions
-                        playedActions.Add(ActionType.SELL_CARD);
-
-                        // Setting Hand with the card removed and in play
-                        p.getHand().Remove(card);
-
-                        // Adding the sold card to the discard pile
-                        gameState.addDiscard(card);
-                        EffectHandler.SellCard(p);
-                        break;
-
-                    default:
-                        Console.WriteLine("Action Error: " + action.Value);
-                        break;
-                } // End switch
-            } // End foreach
+                // Remove card from player's hand
+                p.getHand().Remove(c);
+                //If the player is building, add the built cards to list
+                if (actions[c] == ActionType.BUILD_CARD) playedCards.Add(c);
+                // Adding the sold card to the discard pile
+                else if (actions[c] == ActionType.SELL_CARD) gameState.addDiscard(c);
+            }
 
             // Setting the players last action/cards played and player to READY
-            p.setLastActions(playedActions);
+            p.setLastActions(actions.Values.ToList());
             p.setLastCardsPlayed(playedCards);
             setPlayerReady(id, true);
 
@@ -298,7 +242,38 @@ namespace _7Wonders.Server
         private void endTurn()
         {
             foreach (Player p in gameState.getPlayers().Values)
+            {
                 p.setReady(false);
+                foreach (string c in p.getLastCardsPlayed())
+                {
+                    Card card = CardLibrary.getCard(c);
+                    p.addPlayed(card);
+                    if (card.cost.ContainsKey(Resource.COIN)) p.addResource(Resource.COIN, -1 * card.cost[Resource.COIN]);
+                    foreach (Game_Cards.Effect e in card.effects)
+                        EffectHandler.ApplyEffect(p, getEastNeighbour(p), getWestNeighbour(p), e);
+                }
+                foreach (ActionType action in p.getLastActions())
+                {
+                    switch (action)
+                    {
+                        case ActionType.BUILD_WONDER:
+                            Side boardSide = p.getBoard().getSide();
+                            boardSide.stagesBuilt += 1;
+                            foreach (Game_Cards.Effect e in boardSide.getStageEffects(boardSide.stagesBuilt - 1))
+                                EffectHandler.ApplyEffect(p, getEastNeighbour(p), getWestNeighbour(p), e);
+                            break;
+                        case ActionType.SELL_CARD:
+                            EffectHandler.SellCard(p);
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                p.addResource(Resource.COIN, pendingTrades[p.getID()]);
+            }
+            List<long> ids = new List<long>();
+            ids.AddRange(pendingTrades.Keys);
+            foreach (long id in ids) pendingTrades[id] = 0;
             if (gameState.getTurn() == 6)
             {
                 if (gameState.getAge() == 3)
