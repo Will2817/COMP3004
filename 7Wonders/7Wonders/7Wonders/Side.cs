@@ -23,8 +23,6 @@ namespace _7Wonders
         private int stageNum;
         public int stagesBuilt { get; set; }
 
-        // I don't think we need the stages antmore
-        List<Structure> stages;
         Resource initialResource;
 
 
@@ -81,7 +79,6 @@ namespace _7Wonders
                     break;
             }
 
-            stages = new List<Structure>();
             stageNum = stageCosts.Count;
         }
 
@@ -112,18 +109,6 @@ namespace _7Wonders
         public List<List<Effect>> getAllStageEffects()
         {
             return stageEffects;
-        }
-
-        // Print out the Effects of the Wonder
-        public void printWonderEffects()
-        {
-            Console.WriteLine("Stage#: " + stages);
-            for (int i = 0; i < stageEffects.Count; i++)
-            {
-                Console.WriteLine("\tStage " + (i + 1));
-                for (int j = 0; j < stageEffects[i].Count; j++)
-                    stageEffects[i][j].PrintEffect();
-            }
         }
     }
 }
