@@ -851,14 +851,14 @@ namespace _7Wonders
             return guilds;
         }
 
-        public static string GetBestResourceCard(Player p, Player east, Player west)
+        public static Card GetBestResourceCard(Player p, Player east, Player west)
         {
             Dictionary<Resource, double> priorityList = new Dictionary<Resource, double>();
             Dictionary<Card, double> cardValue = new Dictionary<Card, double>();
             List<string> hand = p.getHand();
             List<Card>  cards = new List<Card>();
 
-            string candidate = null;
+            Card candidate = null;
 
             // Might not use this
             double eastFactor = 1 - p.rcostEast/3;
@@ -896,17 +896,37 @@ namespace _7Wonders
 
             foreach (Card c in cards)
             {
+                cardValue.Add(c, 0);
                 foreach (Effect e in c.effects)
                 {
                     if (resourceType.ContainsKey(e.type))
                     {
-               //         priorityList[e.type].
+                        if (cardValue[c] == 0)
+                        {
+                            cardValue[c] += priorityList[resourceType[e.type]];
+                            break;
+                        }
+
+                        else
+                        {
+                            cardValue[c] += cardValue[c] + priorityList[resourceType[e.type]];
+                            break;
+                        }
+
                     }
                 }
             }
-            
 
-            return null;
+            foreach (KeyValuePair<Card, double> k in cardValue)
+            {
+                if (candidate == null)
+                    candidate = k.Key;
+
+                if (cardValue[candidate] > k.Value)
+                    candidate = k.Key;           
+            }            
+
+            return candidate;
         }
     }
 }
