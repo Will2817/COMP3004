@@ -16,9 +16,9 @@ namespace _7Wonders.Server.AI
             COMMERCE
         }
         private GameState gameState;
-        private AIType type;
         private long id;
         private GameManager gameManager;
+        private AIStrategy strategy;
 
         public static Dictionary<string, AIType> aiTypes = new Dictionary<string, AIType> { 
             {"Random AI", AIType.GREEDY}, 
@@ -27,47 +27,39 @@ namespace _7Wonders.Server.AI
             {"Civilian AI", AIType.CIVILIAN},
             {"Commerce AI", AIType.COMMERCE} };
 
-        public AIPlayer(string type, long id, GameManager gameManager)
+        public AIPlayer(AIStrategy strategy, long id, GameManager gameManager)
         {
             this.id = id;
-            this.type = aiTypes[type];
+            this.strategy = strategy;
             this.gameManager = gameManager;
+            this.gameState = gameManager.getGameState();
         }
 
-        public void updateGameState(GameState gameState)
+        public void init()
         {
-            this.gameState = gameState;
-        }
-
-        public void selectAction(GameState gameState)
-        {
-            Console.WriteLine("AI: Selecting Card");
-            this.gameState = gameState;
             Player self = gameState.getPlayers()[id];
             Player west = null;
             Player east = null;
+            List<Player> opponents = new List<Player>();
             foreach (Player o in gameState.getPlayers().Values)
             {
+                if (o.getID() != id) opponents.Add(o);
                 if (o.getSeat() == self.getSeat() - 1 || (self.getSeat() == 0 && o.getSeat() == gameState.getPlayers().Count - 1))
                     west = o;
                 if (o.getSeat() == self.getSeat() + 1 || (o.getSeat() == 0 && self.getSeat() == gameState.getPlayers().Count - 1))
-                    east =  o;
+                    east = o;
             }
-            Dictionary<string, ActionType> actions = new Dictionary<string, ActionType>();
-            foreach (string c in self.getHand())
-            {
-                Card card = CardLibrary.getCard(c);
-                
-                if (ConstructionUtils.canChainBuild(self, card) || ConstructionUtils.constructCost(self, west, east, card.cost) == 0)
-                {
-                    actions.Add(c, ActionType.BUILD_CARD);
-                    gameManager.handleActions(id, actions, 0, 0);
-                    return;
-                }
-            }
-            actions.Add(self.getHand()[0], ActionType.SELL_CARD);
-            gameManager.handleActions(id, actions, 0, 0);
-            Console.WriteLine("AI: Actions handled");
+            strategy.initPriorities(gameState.getPlayers().Count, self, east, west, opponents);
+        }
+
+        public void selectAction()
+        {
+            Dictionary<string, ActionType> actions = new Dictionary<string,ActionType>();
+            List<int> trades = new List<int>();
+            strategy.chooseActions(actions, trades);
+            int westGold = 0;
+            int eastGold = 0;
+            gameManager.handleActions(id, actions, westGold, eastGold);
         }
     }
 }

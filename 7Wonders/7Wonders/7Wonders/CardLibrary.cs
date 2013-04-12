@@ -27,7 +27,15 @@ namespace _7Wonders
 
         public static Card getCard(string cardKey)
         {
+            if (cardKey == null) return null;
             if (cards.ContainsKey(cardKey)) return cards[cardKey];
+            return null;
+        }
+
+        public static Card getCardWithName(string cardName)
+        {
+            foreach (Card c in cards.Values)
+                if (c.name == cardName) return c;
             return null;
         }
 
@@ -36,6 +44,7 @@ namespace _7Wonders
             List<Card> cardList = new List<Card>();
             foreach (Card c in cards.Values)
                 if (c.players <= players) cardList.Add(c);
+            cardList.Sort((x, y) => x.age.CompareTo(y.age));
             return cardList;
         }
 

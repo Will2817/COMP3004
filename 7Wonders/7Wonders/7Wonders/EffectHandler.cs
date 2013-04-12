@@ -17,7 +17,6 @@ namespace _7Wonders
         // Wonder effects boolean
         static bool[] freeBuild = { true, true, true }; // Once per age a player can build for free
 
-
         // Used for converting Resources
         static Dictionary<Effect.TypeType, Resource> resourceType = new Dictionary<Effect.TypeType, Resource>
         {
@@ -60,7 +59,7 @@ namespace _7Wonders
                 // Check Wonder board effects first
                 // This way if a player has guildCopy, it will take into account that the scientist guild
                 // card is added into the players played hand and counted
-                for (int i = 0; i < curr.getBoard().getSide().stagesBuilt; i++)
+                for (int i = 0; i < curr.getBoard().getStagesBuilt(); i++)
                 {
                     foreach (Effect e in curr.getBoard().getSide().getStageEffects(i))
                     {
@@ -123,14 +122,13 @@ namespace _7Wonders
                     } // End Effect Loop for Cards                    
                 } // End Current Player's Card Loop
 
-                for (int i = 0; i < curr.getBoard().getSide().stagesBuilt; i++)
+                for (int i = 0; i < curr.getBoard().getStagesBuilt(); i++)
                 {
                     foreach (Effect e in curr.getBoard().getSide().getStageEffects(i))
                     {
                         if (e.type.Equals(Effect.TypeType.VICTORY)) curr.addScore(Score.STAGES, e.amount);
                     }
                 } 
-
 
                 // Max Function, will add onto the max science value
                 AddScienceChoice(curr, schoiceCount);
@@ -413,26 +411,40 @@ namespace _7Wonders
         // Coin awarded with no "basis" expect the construction of the structure
         private static void AddCoin(Player p, int coin) { p.addResource(Resource.COIN, coin); }
 
-        // Coin awarded on the number of wonderstages a player has buit
+        // Coin awarded on the number of wonderstages a player has built
         private static void AddCoinWonder(Player p, int amount)
         {
-            int coin = p.getBoard().getSide().stagesBuilt * amount;
-            p.addResource(Resource.COIN, coin);
+            p.addResource(Resource.COIN, GetCoinWonder(p, amount));
+        }
+
+        // Returns the number of coins awarded with the basis of Wonder stages built
+        private static int GetCoinWonder(Player p, int amount)
+        {
+            return p.getBoard().getStagesBuilt() * amount;
         }
 
         // Coin awarded with the basis of Card Colour the Player owns
         private static void AddCoinColour(Player p, CardColour c, int amount)
         {
-            int coin = p.getCardColourCount(c) * amount;
-            p.addResource(Resource.COIN, coin);
+            p.addResource(Resource.COIN, GetCoinColour(p, c, amount));
+        }
+
+        // Returns the number of coins awarded with the basis of a card colour the player owns
+        private static int GetCoinColour(Player p, CardColour c, int amount)
+        {
+            return p.getCardColourCount(c) * amount;
         }
 
         // Coin awarded from the number of specific structure colour each neighbours have constructed
         private static void AddCoinAllColour(Player p, Player east, Player west, CardColour c, int amount)
         {
-            int coin = p.getCardColourCount(c) + east.getCardColourCount(c) + west.getCardColourCount(c);
-            coin *= amount;
-            p.addResource(Resource.COIN, coin);
+            p.addResource(Resource.COIN, GetCoinAllColour(p, east, west, c, amount));
+        }
+
+        // Returns the number of coins awarded from the number of specific structure colour each neighbours have constructed
+        private static int GetCoinAllColour(Player p, Player east, Player west, CardColour c, int amount)
+        {
+            return (p.getCardColourCount(c) + east.getCardColourCount(c) + west.getCardColourCount(c)) * amount;
         }
 
         // Victory Points awarded from the number of specific structure colour each neighbours constructed
@@ -476,8 +488,7 @@ namespace _7Wonders
         // Victory Points awarded from the number of wonderstages the player has built
         private static void AddVictoryWonder(Player p)
         {
-            int points = p.getBoard().getSide().stagesBuilt;
-            p.addScore(Score.VICTORY, points);
+            p.addScore(Score.VICTORY, p.getBoard().getStagesBuilt());
         }
 
         // Victory Points awarded from the number of wonderstages built from each neighbour including the player
@@ -489,7 +500,7 @@ namespace _7Wonders
         // Victory Points returned from the number of wonderstages built from each neighbour including the player
         private static int GetVictoryAllWonders(Player p, Player east, Player west)
         {
-            return p.getBoard().getSide().stagesBuilt + east.getBoard().getSide().stagesBuilt + west.getBoard().getSide().stagesBuilt;
+            return p.getBoard()..getStagesBuilt() + east.getBoard().getStagesBuilt() + west.getBoard().getStagesBuilt();
         }
 
         // Trading Cost for East and West Raw Resources
@@ -527,8 +538,14 @@ namespace _7Wonders
         // their choice built by one of their two neighboring cities at the end of the game
         private static void CopyGuild(Player p, Player east, Player west)
         {
+            p.addPlayed(GetGuildCopyCard(p, east, west));
+        }
+
+        // Returns the best Guild Card to copy from the player's neighbours
+        private static Card GetGuildCopyCard(Player p, Player east, Player west)
+        {
             List<string> guilds = new List<string>();
-            Dictionary<string, int> guildScore = new Dictionary<string,int>();
+            Dictionary<string, int> guildScore = new Dictionary<string, int>();
             string bestCard = null;
             int bestScore = 0;
 
@@ -540,7 +557,7 @@ namespace _7Wonders
             // Guild Cards taken from West Player
             foreach (string c in west.getPlayed())
                 if (CardLibrary.getCard(c).colour.Equals(CardColour.PURPLE))
-                    guilds.Add(c);                
+                    guilds.Add(c);
 
             // Looping through the Guild Cards available to calculate the best guild
             foreach (string cardID in guilds)
@@ -568,10 +585,10 @@ namespace _7Wonders
                         int gear = p.getScoreNum(Score.GEAR);
                         int comp = p.getScoreNum(Score.COMPASS);
                         int tab = p.getScoreNum(Score.TABLET);
-                        
+
                         int maxScience = Math.Max(Math.Max(
-                            CalculateScience(gear + 1, comp, tab), 
-                            CalculateScience(gear, comp + 1, tab)), 
+                            CalculateScience(gear + 1, comp, tab),
+                            CalculateScience(gear, comp + 1, tab)),
                             CalculateScience(gear, comp, tab + 1));
 
                         guildScore[cardID] = maxScience;
@@ -589,8 +606,8 @@ namespace _7Wonders
                 }
             }
 
-            // Best Guild Card
-            p.addPlayed(CardLibrary.getCard(bestCard));
+            // Returning the Best Guild Card
+            return CardLibrary.getCard(bestCard);
         }
 
         // Halikarnassos A [2nd/3rd stage]
@@ -604,22 +621,103 @@ namespace _7Wonders
 
 
         // Returns the total score of the player, with the card or no card
-        public static int GetScore(Player p, Player east, Player west, Card c)
+        public static int GetScore(Player p, Player east, Player west, string cardID)
         {
-            int score = p.getScoreNum(Score.VICTORY) + p.getScoreNum(Score.CONFLICT);
+            // Score for victory is automatically computing the Victory points for
+            // Blue cards, Wonder stages, 
+            Player temp = p;
             int schoiceCount = 0;
-            if (c == null)
+
+            // Card isn't NULL - returns the score of the player with the hypothetical card in the players
+            // Played card list
+            if (cardID != null)
             {
-                score += GetTreasuryScore(p);
-                score += GetCommercialScore(p);
-                score += GetGuildsScore(p, east, west);
+                Card card = CardLibrary.getCard(cardID);
+                if (!temp.cardPlayed(cardID))
+                    temp.addPlayed(card);
             }
 
-            else
-            {
+                // Check Wonder board effects first
+                // This way if a player has guildCopy, it will take into account that the scientist guild
+                // card is added into the players played hand and counted
+                for (int i = 0; i < temp.getBoard().getStagesBuilt(); i++)
+                {
+                    foreach (Effect e in temp.getBoard().getSide().getStageEffects(i))
+                    {
+                        if (e.type.Equals(Effect.TypeType.SCHOICE))
+                            schoiceCount += 1;
+                        // Loop through Wonder Effects for the players
+                        // GUILD COPY - not finished
+                        else if (e.type.Equals(Effect.TypeType.GUILD))
+                        {
+                            CopyGuild(temp, east, west);
+                        }
+                    } // Foreach loop through Wondestage effects
+                } // For loop through the stages
 
-            }
-            return score;
+                // Looping through the player's played cards
+                foreach (string c in temp.getPlayed())
+                {
+                    Card card = CardLibrary.getCard(c);
+                    // Looping through the effects of each Card for End Game purposes
+                    foreach (Effect e in card.effects)
+                    {
+                        // Victory Points
+                        if (e.type.Equals(Effect.TypeType.VICTORY))
+                        {
+                            // FROM: NEIGHBORS
+                            // and BASIS: CardColour, Wonderstages, Defeat
+                            if (e.from != Effect.FromType.NONE && e.from.Equals(Effect.FromType.NEIGHBOURS))
+                            {
+                                // Apply victory points awarded for each
+                                // Wonderstage neigboring cities own
+                                if (e.basis.Equals(Effect.BasisType.WONDER))
+                                    AddVictoryAllWonders(temp, east, west);
+
+                                //Victory points given per neighbor's conlfict token
+                                else if (e.basis.Equals(Effect.BasisType.DEFEAT))
+                                   AddVictoryNeighboursConflict(temp, east, west);
+
+                                 // Victory points awarded per certain structure built by neighbours
+                                else
+                                    AddVictoryNeighboursColour(temp, east, west, cardType[e.basis], e.amount);
+                            }
+                            // FROM: PLAYER
+                            // BASIS: CardColour, Wonderstages, 
+                            else if (e.from != Effect.FromType.NONE && e.from.Equals(Effect.FromType.PLAYER))
+                            {
+                                if (e.basis.Equals(Effect.BasisType.WONDER))
+                                    AddVictoryWonder(temp);
+                                else
+                                    AddVictoryColour(temp, cardType[e.basis], e.amount);
+                            }
+                            // FROM: ALL
+                            // BASIS: Wonderstages
+                            else if (e.from != Effect.FromType.NONE && e.from.Equals(Effect.FromType.ALL))
+                                AddVictoryAllWonders(temp, east, west);
+                        } // End Victory Points
+
+                        // SCIENCE CHOICE
+                        else if (e.type.Equals(Effect.TypeType.SCHOICE))
+                            schoiceCount += 1;
+                    } // End Effect Loop for Cards                    
+                } // End Current Player's Card Loop
+
+                for (int i = 0; i < temp.getBoard().getStagesBuilt(); i++)
+                {
+                    foreach (Effect e in temp.getBoard().getSide().getStageEffects(i))
+                    {
+                        if (e.type.Equals(Effect.TypeType.VICTORY)) temp.addScore(Score.STAGES, e.amount);
+                    }
+                }
+
+                // Max Function, will add onto the max science value
+                AddScienceChoice(temp, schoiceCount);
+                temp.addScore(Score.VICTORY, CalculateScience(temp.getScoreNum(Score.GEAR), temp.getScoreNum(Score.COMPASS), temp.getScoreNum(Score.TABLET)));
+                temp.addScore(Score.VICTORY, temp.getScoreNum(Score.CONFLICT));
+                temp.addScore(Score.VICTORY, GetTreasuryScore(temp));
+
+            return temp.getScoreNum(Score.VICTORY);    
         }
 
         // Treasury contents
@@ -642,7 +740,6 @@ namespace _7Wonders
             {
                 Card current = CardLibrary.getCard(c);
                 if (current.colour.Equals(CardColour.YELLOW) && current.age.Equals(3))
-                {
                     foreach (Effect e in current.effects)
                     {
                         if (e.type.Equals(Effect.TypeType.VICTORY) && e.from.Equals(Effect.FromType.PLAYER))
@@ -653,8 +750,50 @@ namespace _7Wonders
                                commercial += GetVictoryColour(p, cardType[e.basis], e.amount);
                         }
                     }
+            }
+
+            return commercial;
+        }
+
+        // Commercial structures
+        // Some commercial structures from Age III grant coins points
+        // Return the number of coins gained from Commercial structures
+        public static int GetCommercialCoin(Player p, Player east, Player west)
+        {
+            int commercial = 0;
+
+            foreach (string c in p.getPlayed())
+            {
+                Card current = CardLibrary.getCard(c);
+                if (current.colour.Equals(CardColour.YELLOW))
+                {
+                    foreach (Effect e in current.effects)
+                    {
+                        if (e.type.Equals(Effect.TypeType.COIN))
+                        {
+                            switch(e.from)
+                            {
+                                case Effect.FromType.ALL:
+                                    commercial += GetCoinAllColour(p, east, west, cardType[e.basis], e.amount);
+                                    break;
+
+                                case Effect.FromType.PLAYER:
+
+                                    if (cardType.ContainsKey(e.basis))
+                                        commercial += GetCoinColour(p, cardType[e.basis], e.amount);
+                                    else if (e.basis.Equals(Effect.BasisType.WONDER))
+                                        commercial += GetCoinWonder(p, e.amount);
+                                    break;
+
+                                default:
+                                    commercial += e.amount;
+                                    break;
+                            }
+                        }
+                    }
                 }
             }
+
             return commercial;
         }
 
